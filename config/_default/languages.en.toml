@@ -2,7 +2,7 @@ disabled = false
 languageCode = "en"
 languageName = "English"
 weight = 1
-title = "Blowfish"
+title = "massalia.events"
 
 [params]
   displayName = "EN"
@@ -11,7 +11,7 @@ title = "Blowfish"
   dateFormat = "2 January 2006"
   # logo = "img/logo.png"
   # secondaryLogo = "img/secondary-logo.png"
-  # description = "My awesome website"
+  # description = "A vibe coded aggregator of events in culture, arts, music and concerts events in Marseille"
   # copyright = "Copy, _right?_ :thinking_face:"
 
 # [params.author]
