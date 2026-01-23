@@ -26,10 +26,11 @@ enableEmoji = true
   anchor = 'Center'
 
 [taxonomies]
-  tag = "tags"
   category = "categories"
+  location = "locations"
+  date = "dates" 
+  tag = "tags"
   author = "authors"
-  series = "series"
 
 [sitemap]
   changefreq = 'daily'
