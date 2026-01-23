@@ -1,17 +1,18 @@
 disabled = false
-languageCode = "en"
-languageName = "English"
+languageCode = "fr"
+languageName = "Français"
 weight = 1
 title = "massalia.events"
 
 [params]
-  displayName = "EN"
-  isoCode = "en"
+  displayName = "FR"
+  isoCode = "fr"
   rtl = false
   dateFormat = "2 January 2006"
   # logo = "img/logo.png"
   # secondaryLogo = "img/secondary-logo.png"
-  # description = "A vibe coded aggregator of events in culture, arts, music and concerts events in Marseille"
+  # description = "Un agrégateur crée par vibcoding d'événements culturels, artistiques, musicaux et de concerts à Marseille.
+  # bio = "A little bit about you""
   # copyright = "Copy, _right?_ :thinking_face:"
 
 # [params.author]
