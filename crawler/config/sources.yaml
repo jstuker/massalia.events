@@ -34,6 +34,15 @@ sources:
     selectors:
       event_list: ".agenda-list"
       event_item: ".event-card"
+      name: "h2, h3, .event-title, .title"
+      date: ".date, .event-date, time"
+      time: ".time, .event-time, .hour"
+      location: ".location, .venue"
+      description: ".description, .excerpt, p"
+      category: ".category, .tag, .type"
+      image: "img"
+      link: "a"
+      tags: ".tag, .label"
     categories_map:
       "Spectacle": "theatre"
       "Concert": "musique"
