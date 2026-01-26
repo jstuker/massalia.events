@@ -13,7 +13,7 @@ enableRobotsTXT = true
 summaryLength = 0
 
 buildDrafts = false
-buildFuture = false
+buildFuture = true
 
 enableEmoji = true
 
@@ -45,27 +45,27 @@ enableEmoji = true
   toLower = false
 
     [[related.indices]]
-        name = "tags"
-        weight = 100
-
-    [[related.indices]]
         name = "categories"
         weight = 100
 
     [[related.indices]]
-        name = "series"
-        weight = 50
+        name = "locations"
+        weight = 80
+
+    [[related.indices]]
+        name = "dates"
+        weight = 60
+
+    [[related.indices]]
+        name = "tags"
+        weight = 40
 
     [[related.indices]]
         name = "authors"
-        weight = 20
-
-    [[related.indices]]
-        name = "date"
         weight = 10
 
     [[related.indices]]
       applyFilter = false
       name = 'fragmentrefs'
       type = 'fragments'
-      weight = 10
+      weight = 5
