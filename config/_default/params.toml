@@ -87,7 +87,7 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
   showTableOfContents = false
   # showRelatedContent = false
   # relatedContentLimit = 3
-  showTaxonomies = false # use showTaxonomies OR showCategoryOnly, not both
+  showTaxonomies = true # use showTaxonomies OR showCategoryOnly, not both
   showCategoryOnly = false # use showTaxonomies OR showCategoryOnly, not both
   showAuthorsBadges = false
   showWordCount = true
@@ -119,21 +119,21 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
   showTermCount = true
   showHero = false
   # heroStyle = "background" # valid options: basic, big, background, thumbAndBackground
-  showBreadcrumbs = false
+  showBreadcrumbs = true
   showViews = false
   showLikes = false
   showTableOfContents = false
-  cardView = false
+  cardView = true
 
 [term]
   showHero = false
   # heroStyle = "background" # valid options: basic, big, background, thumbAndBackground
-  showBreadcrumbs = false
+  showBreadcrumbs = true
   showViews = false
   showLikes = false
-  showTableOfContents = true
+  showTableOfContents = false
   groupByYear = false
-  cardView = false
+  cardView = true
   cardViewScreenWidth = false
 
 [firebase]
