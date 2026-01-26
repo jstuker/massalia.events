@@ -17,14 +17,17 @@
   {{ partial "day-selector.html" . }}
 
   {{/* Event Cards Grid */}}
+  {{/* Filter events: not draft, not expired, sorted by start time */}}
   {{ $events := where site.RegularPages "Section" "events" }}
   {{ $events = where $events ".Draft" false }}
+  {{ $events = where $events ".Params.expired" "!=" true }}
+  {{ $events = sort $events ".Params.startTime" "asc" }}
 
   {{ if gt (len $events) 0 }}
     <div class="event-cards-container mt-8" role="region" aria-label="Liste des événements" aria-live="polite">
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {{ range $events }}
-          <div class="event-card-wrapper" data-event-date="{{ .Date.Format "2006-01-02" }}">
+          <div class="event-card-wrapper" data-event-date="{{ .Date.Format "2006-01-02" }}" data-start-time="{{ .Params.startTime | default "00:00" }}">
             {{ partial "event-card.html" . }}
           </div>
         {{ end }}
@@ -71,30 +74,48 @@
   'use strict';
 
   /**
-   * Filter events by selected date
+   * Filter events by selected date and sort by start time
    * @param {string} selectedDate - Date in YYYY-MM-DD format
    */
   function filterEventsByDate(selectedDate) {
-    const cards = document.querySelectorAll('.event-card-wrapper');
+    const cardsContainer = document.querySelector('.event-cards-container .grid');
+    const cards = Array.from(document.querySelectorAll('.event-card-wrapper'));
     const noEventsMessage = document.querySelector('.no-events-message');
     const eventCount = document.getElementById('event-count');
-    let visibleCount = 0;
+
+    // Filter cards by date
+    const visibleCards = [];
+    const hiddenCards = [];
 
     cards.forEach(card => {
       const eventDate = card.getAttribute('data-event-date');
       if (eventDate === selectedDate) {
         card.classList.remove('hidden');
         card.setAttribute('aria-hidden', 'false');
-        visibleCount++;
+        visibleCards.push(card);
       } else {
         card.classList.add('hidden');
         card.setAttribute('aria-hidden', 'true');
+        hiddenCards.push(card);
       }
     });
 
+    // Sort visible cards by start time (earliest first)
+    visibleCards.sort((a, b) => {
+      const timeA = a.getAttribute('data-start-time') || '00:00';
+      const timeB = b.getAttribute('data-start-time') || '00:00';
+      return timeA.localeCompare(timeB);
+    });
+
+    // Reorder DOM: visible cards first (sorted), then hidden cards
+    if (cardsContainer) {
+      visibleCards.forEach(card => cardsContainer.appendChild(card));
+      hiddenCards.forEach(card => cardsContainer.appendChild(card));
+    }
+
     // Show/hide empty state
     if (noEventsMessage) {
-      if (visibleCount === 0) {
+      if (visibleCards.length === 0) {
         noEventsMessage.classList.remove('hidden');
       } else {
         noEventsMessage.classList.add('hidden');
@@ -103,12 +124,12 @@
 
     // Update screen reader announcement
     if (eventCount) {
-      if (visibleCount === 0) {
+      if (visibleCards.length === 0) {
         eventCount.textContent = 'Aucun événement pour cette date';
-      } else if (visibleCount === 1) {
+      } else if (visibleCards.length === 1) {
         eventCount.textContent = '1 événement trouvé';
       } else {
-        eventCount.textContent = visibleCount + ' événements trouvés';
+        eventCount.textContent = visibleCards.length + ' événements trouvés';
       }
     }
   }
