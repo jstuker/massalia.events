@@ -11,49 +11,26 @@
 # ordered by weight from lowest to highest.
 
 [[main]]
-  name = "Événements"
-  pageRef = "events"
-  weight = 10
-
-[[main]]
-  name = "Catégories"
-  pageRef = "categories"
-  weight = 20
-
-[[main]]
-  name = "Lieux"
-  pageRef = "locations"
-  weight = 30
-
-[[main]]
-  name = "Dates"
-  pageRef = "dates"
-  weight = 40
-
-# -- Subnavigation --
-# Quick access to popular categories
-
-[[subnavigation]]
   name = "Danse"
   pageRef = "categories/danse"
   weight = 10
 
-[[subnavigation]]
+[[main]]
   name = "Musique"
   pageRef = "categories/musique"
   weight = 20
 
-[[subnavigation]]
+[[main]]
   name = "Théâtre"
   pageRef = "categories/theatre"
   weight = 30
 
-[[subnavigation]]
+[[main]]
   name = "Art"
   pageRef = "categories/art"
   weight = 40
 
-[[subnavigation]]
+[[main]]
   name = "Communauté"
   pageRef = "categories/communaute"
   weight = 50
@@ -61,13 +38,4 @@
 # -- Footer Menu --
 # The footer menu is displayed at the bottom of the page, just before
 # the copyright notice. Configure as per the main menu above.
-
-[[footer]]
-  name = "Catégories"
-  pageRef = "categories"
-  weight = 10
-
-[[footer]]
-  name = "Lieux"
-  pageRef = "locations"
-  weight = 20
+# (Footer menu items removed per issue #49)

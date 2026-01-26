@@ -4,11 +4,8 @@
 {{/* Main page header */}}
 <header class="text-center mb-8 px-4">
   <h1 class="text-4xl sm:text-5xl font-extrabold text-neutral-900 dark:text-neutral-100 mb-2">
-    Événements à Marseille
+    Les prochains jours à Marseille
   </h1>
-  <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-    Découvrez les événements culturels des 7 prochains jours
-  </p>
 </header>
 
 {{/* Day Selector Navigation - Prominent and centered */}}
@@ -25,7 +22,7 @@
 
   {{ if gt (len $events) 0 }}
     <div class="event-cards-container mt-8" role="region" aria-label="Liste des événements" aria-live="polite">
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mx-auto max-w-5xl">
         {{ range $events }}
           <div class="event-card-wrapper" data-event-date="{{ .Date.Format "2006-01-02" }}" data-start-time="{{ .Params.startTime | default "00:00" }}">
             {{ partial "event-card.html" . }}
