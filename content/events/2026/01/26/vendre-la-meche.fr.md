@@ -11,7 +11,7 @@ startTime: "19:00"
 
 # Taxonomies
 categories:
-  - "dance"
+  - "danse"
 locations:
   - "klap-maison-pour-la-danse"
 dates:
