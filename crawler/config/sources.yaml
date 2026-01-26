@@ -1,0 +1,136 @@
+# Event Source Configuration
+# ==========================
+# This file defines the event source websites to crawl.
+# Each source specifies where to find events, which parser to use,
+# and how to map categories to our taxonomy.
+
+sources:
+  # KLAP - Maison pour la danse
+  # Major dance venue in Marseille
+  - name: "KLAP Maison pour la danse"
+    id: "klap"
+    url: "https://www.kelemenis.fr/fr/les-spectacles"
+    parser: "kelemenis"
+    enabled: true
+    rate_limit:
+      requests_per_second: 1
+      delay_between_pages: 2.0
+    categories_map:
+      "Spectacle": "danse"
+      "Danse": "danse"
+      "Performance": "danse"
+      "Atelier": "communaute"
+
+  # La Friche la Belle de Mai
+  # Major cultural center with diverse programming
+  - name: "La Friche la Belle de Mai"
+    id: "lafriche"
+    url: "https://www.lafriche.org/agenda"
+    parser: "lafriche"
+    enabled: true
+    rate_limit:
+      requests_per_second: 1
+      delay_between_pages: 2.0
+    selectors:
+      event_list: ".agenda-list"
+      event_item: ".event-card"
+    categories_map:
+      "Spectacle": "theatre"
+      "Concert": "musique"
+      "Danse": "danse"
+      "Exposition": "art"
+      "Atelier": "communaute"
+      "Projection": "art"
+      "Performance": "theatre"
+
+  # Shotgun - Electronic music events
+  # Platform for electronic music events in Marseille
+  - name: "Shotgun"
+    id: "shotgun"
+    url: "https://shotgun.live/fr/cities/marseille"
+    parser: "shotgun"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Clubbing": "musique"
+      "Festival": "musique"
+      "Concert": "musique"
+      "DJ Set": "musique"
+
+  # La Criée - Théâtre National de Marseille
+  # Major theatre venue
+  - name: "La Criée - Théâtre National de Marseille"
+    id: "lacriee"
+    url: "https://theatre-lacriee.com/programmation"
+    parser: "lacriee"
+    enabled: true
+    rate_limit:
+      requests_per_second: 1
+      delay_between_pages: 2.0
+    categories_map:
+      "Théâtre": "theatre"
+      "Theatre": "theatre"
+      "Danse": "danse"
+      "Musique": "musique"
+      "Jeune public": "communaute"
+
+  # Sortir à Marseille
+  # Event aggregator for Marseille area
+  - name: "Sortir à Marseille"
+    id: "sortiramarseille"
+    url: "https://www.sortiramarseille.fr/agenda"
+    parser: "sortiramarseille"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Concert": "musique"
+      "Spectacle": "theatre"
+      "Exposition": "art"
+      "Festival": "musique"
+      "Danse": "danse"
+      "Théâtre": "theatre"
+      "Cinéma": "art"
+
+  # Made in Marseille
+  # Local events and cultural news
+  - name: "Made in Marseille"
+    id: "madeinmarseille"
+    url: "https://madeinmarseille.net/evenements"
+    parser: "madeinmarseille"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Concert": "musique"
+      "Exposition": "art"
+      "Spectacle": "theatre"
+      "Festival": "musique"
+      "Marché": "communaute"
+      "Atelier": "communaute"
+
+  # Château de Servières
+  # Contemporary art center
+  - name: "Château de Servières"
+    id: "chateau-servieres"
+    url: "https://www.chateaudeservieres.org/expositions"
+    parser: "chateauservieres"
+    enabled: false  # Parser not yet implemented
+    rate_limit:
+      requests_per_second: 1
+      delay_between_pages: 2.0
+    categories_map:
+      "Exposition": "art"
+      "Vernissage": "art"
+      "Rencontre": "communaute"
+
+# Default settings applied to all sources unless overridden
+defaults:
+  enabled: true
+  rate_limit:
+    requests_per_second: 1
+    delay_between_pages: 2.0

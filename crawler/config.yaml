@@ -1,5 +1,10 @@
 # Crawler Configuration
 # ====================
+# Main configuration file for the Massalia Events Crawler.
+# Source websites are configured separately in config/sources.yaml
+
+# Sources configuration file (relative to this file)
+sources_file: "config/sources.yaml"
 
 # Output directories (relative to crawler/ directory)
 output_dir: "../content/events"
@@ -9,7 +14,7 @@ image_dir: "../static/images/events"
 log_level: "INFO"
 log_file: "crawler.log"
 
-# HTTP settings
+# HTTP settings (global defaults, can be overridden per source)
 http:
   timeout: 30
   retry_count: 3
@@ -22,23 +27,3 @@ image_settings:
   max_width: 1200
   quality: 85
   format: "webp"
-
-# Event sources
-sources:
-  - name: "La Friche"
-    url: "https://lafriche.org/agenda"
-    parser: "lafriche"
-    enabled: true
-    # Category mapping for this source
-    category_map:
-      "Spectacle": "theatre"
-      "Concert": "musique"
-      "Danse": "danse"
-      "Exposition": "art"
-      "Atelier": "communaute"
-
-  # Add more sources here:
-  # - name: "La Criee"
-  #   url: "https://www.theatre-lacriee.com/saison"
-  #   parser: "lacriee"
-  #   enabled: false

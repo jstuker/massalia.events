@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://massalia.events/schemas/sources.schema.json",
+  "title": "Event Sources Configuration",
+  "description": "Configuration schema for Massalia Events crawler source websites",
+  "type": "object",
+  "required": ["sources"],
+  "properties": {
+    "sources": {
+      "type": "array",
+      "description": "List of event source websites to crawl",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "description": "Default settings applied to all sources",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "rate_limit": {
+          "$ref": "#/$defs/rateLimit"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "description": "Configuration for a single event source website",
+      "required": ["name", "id", "url", "parser"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human-readable display name for the source",
+          "minLength": 1,
+          "examples": ["La Friche la Belle de Mai"]
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier slug for the source (used in sourceId)",
+          "pattern": "^[a-z0-9-]+$",
+          "minLength": 1,
+          "examples": ["lafriche", "klap", "shotgun"]
+        },
+        "url": {
+          "type": "string",
+          "description": "Base URL or agenda page URL to crawl",
+          "format": "uri",
+          "pattern": "^https?://",
+          "examples": ["https://www.lafriche.org/agenda"]
+        },
+        "parser": {
+          "type": "string",
+          "description": "Name of the parser module to use for this source",
+          "pattern": "^[a-z0-9_]+$",
+          "examples": ["lafriche", "kelemenis", "shotgun"]
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether this source should be crawled",
+          "default": true
+        },
+        "rate_limit": {
+          "$ref": "#/$defs/rateLimit"
+        },
+        "selectors": {
+          "$ref": "#/$defs/selectors"
+        },
+        "categories_map": {
+          "$ref": "#/$defs/categoriesMap"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rateLimit": {
+      "type": "object",
+      "description": "Rate limiting settings for HTTP requests",
+      "properties": {
+        "requests_per_second": {
+          "type": "number",
+          "description": "Maximum requests per second",
+          "minimum": 0.1,
+          "maximum": 10,
+          "default": 1
+        },
+        "delay_between_pages": {
+          "type": "number",
+          "description": "Delay in seconds between page requests",
+          "minimum": 0,
+          "maximum": 60,
+          "default": 2
+        }
+      },
+      "additionalProperties": false
+    },
+    "selectors": {
+      "type": "object",
+      "description": "CSS selectors for extracting events (override parser defaults)",
+      "properties": {
+        "event_list": {
+          "type": "string",
+          "description": "CSS selector for the events container",
+          "examples": [".agenda-list", "#events-container"]
+        },
+        "event_item": {
+          "type": "string",
+          "description": "CSS selector for individual event cards",
+          "examples": [".event-card", "article.event"]
+        },
+        "event_title": {
+          "type": "string",
+          "description": "CSS selector for event title"
+        },
+        "event_date": {
+          "type": "string",
+          "description": "CSS selector for event date"
+        },
+        "event_time": {
+          "type": "string",
+          "description": "CSS selector for event time"
+        },
+        "event_link": {
+          "type": "string",
+          "description": "CSS selector for event detail link"
+        },
+        "event_image": {
+          "type": "string",
+          "description": "CSS selector for event image"
+        },
+        "event_description": {
+          "type": "string",
+          "description": "CSS selector for event description"
+        },
+        "event_category": {
+          "type": "string",
+          "description": "CSS selector for event category"
+        }
+      },
+      "additionalProperties": false
+    },
+    "categoriesMap": {
+      "type": "object",
+      "description": "Mapping from source category names to standard taxonomy",
+      "additionalProperties": {
+        "type": "string",
+        "enum": ["danse", "musique", "theatre", "art", "communaute"],
+        "description": "Standard category slug"
+      },
+      "examples": [
+        {
+          "Spectacle": "theatre",
+          "Concert": "musique",
+          "Danse": "danse"
+        }
+      ]
+    }
+  }
+}

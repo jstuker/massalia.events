@@ -7,7 +7,7 @@ Main entry point for crawling Marseille cultural event websites.
 
 Usage:
     python crawl.py                    # Run all enabled sources
-    python crawl.py --source lafriche  # Run specific source
+    python crawl.py --source lafriche  # Run specific source (by ID)
     python crawl.py --dry-run          # Preview without writing files
     python crawl.py --log-level DEBUG  # Verbose output
 """
@@ -18,10 +18,11 @@ from pathlib import Path
 import click
 import yaml
 
-from src.logger import setup_logging, get_logger
+from src.config import ConfigurationError, load_sources_config
+from src.generators import MarkdownGenerator
+from src.logger import get_logger, setup_logging
 from src.parsers import get_parser
 from src.utils import HTTPClient, ImageDownloader
-from src.generators import MarkdownGenerator
 
 
 def load_config(config_path: Path) -> dict:
@@ -29,7 +30,7 @@ def load_config(config_path: Path) -> dict:
     if not config_path.exists():
         raise FileNotFoundError(f"Config file not found: {config_path}")
 
-    with open(config_path, "r", encoding="utf-8") as f:
+    with open(config_path, encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -46,7 +47,7 @@ def load_config(config_path: Path) -> dict:
     "-s",
     type=str,
     default=None,
-    help="Run only specified source (by parser name)",
+    help="Run only specified source (by source ID)",
 )
 @click.option(
     "--dry-run",
@@ -62,14 +63,26 @@ def load_config(config_path: Path) -> dict:
     default=None,
     help="Override log level from config",
 )
-def main(config: Path, source: str | None, dry_run: bool, log_level: str | None):
+@click.option(
+    "--list-sources",
+    is_flag=True,
+    default=False,
+    help="List all configured sources and exit",
+)
+def main(
+    config: Path,
+    source: str | None,
+    dry_run: bool,
+    log_level: str | None,
+    list_sources: bool,
+):
     """
     Crawl Marseille event websites and generate Hugo content.
 
     This crawler fetches events from configured sources, extracts event data,
     downloads images, and generates Hugo-compatible markdown files.
     """
-    # Load configuration
+    # Load main configuration
     cfg = load_config(config)
 
     # Setup logging
@@ -80,13 +93,33 @@ def main(config: Path, source: str | None, dry_run: bool, log_level: str | None)
     )
     logger = get_logger(__name__)
 
+    # Load sources configuration
+    config_dir = config.parent
+    sources_file = config_dir / cfg.get("sources_file", "config/sources.yaml")
+
+    try:
+        sources_config = load_sources_config(sources_file)
+    except ConfigurationError as e:
+        logger.error(f"Configuration error: {e}")
+        sys.exit(1)
+
+    # Handle --list-sources
+    if list_sources:
+        click.echo("\nConfigured sources:")
+        click.echo("-" * 60)
+        for src in sources_config.sources:
+            status = "enabled" if src.enabled else "disabled"
+            click.echo(f"  {src.id:20} {src.name:30} [{status}]")
+        click.echo(f"\nTotal: {len(sources_config.sources)} sources "
+                   f"({len(sources_config.get_enabled_sources())} enabled)")
+        return
+
     logger.info("Massalia Events Crawler starting...")
 
     if dry_run:
         logger.info("DRY RUN MODE - No files will be written")
 
     # Resolve output paths relative to config file location
-    config_dir = config.parent
     output_dir = config_dir / cfg.get("output_dir", "../content/events")
     image_dir = config_dir / cfg.get("image_dir", "../static/images/events")
 
@@ -119,36 +152,52 @@ def main(config: Path, source: str | None, dry_run: bool, log_level: str | None)
     )
 
     # Get sources to process
-    sources = cfg.get("sources", [])
-    if not sources:
-        logger.warning("No sources configured")
-        return
-
-    # Filter to specific source if requested
     if source:
-        sources = [s for s in sources if s.get("parser", "").lower() == source.lower()]
-        if not sources:
-            logger.error(f"No source found with parser: {source}")
-            sys.exit(1)
+        # Find source by ID
+        src = sources_config.get_source_by_id(source)
+        if not src:
+            # Try matching by parser name for backwards compatibility
+            sources_list = sources_config.get_source_by_parser(source)
+            if not sources_list:
+                logger.error(f"No source found with ID or parser: {source}")
+                sys.exit(1)
+        else:
+            sources_list = [src]
+    else:
+        sources_list = sources_config.get_enabled_sources()
+
+    if not sources_list:
+        logger.warning("No sources to process")
+        return
 
     # Process each source
     total_events = 0
-    for source_cfg in sources:
-        if not source_cfg.get("enabled", True):
-            logger.debug(f"Skipping disabled source: {source_cfg.get('name')}")
+    for src in sources_list:
+        if not src.enabled:
+            logger.debug(f"Skipping disabled source: {src.name}")
             continue
 
-        source_name = source_cfg.get("name", "Unknown")
-        parser_name = source_cfg.get("parser")
+        logger.info(f"Processing source: {src.name} ({src.id})")
 
-        if not parser_name:
-            logger.warning(f"Source '{source_name}' has no parser configured")
-            continue
-
-        logger.info(f"Processing source: {source_name}")
+        # Build source config dict for parser (backwards compatibility)
+        source_cfg = {
+            "name": src.name,
+            "id": src.id,
+            "url": src.url,
+            "parser": src.parser,
+            "enabled": src.enabled,
+            "rate_limit": {
+                "requests_per_second": src.rate_limit.requests_per_second,
+                "delay_between_pages": src.rate_limit.delay_between_pages,
+            },
+            "selectors": {
+                k: v for k, v in vars(src.selectors).items() if v is not None
+            },
+            "category_map": src.categories_map,
+        }
 
         try:
-            parser_class = get_parser(parser_name)
+            parser_class = get_parser(src.parser)
             parser = parser_class(
                 config=source_cfg,
                 http_client=http_client,
@@ -160,10 +209,12 @@ def main(config: Path, source: str | None, dry_run: bool, log_level: str | None)
             event_count = len(events)
             total_events += event_count
 
-            logger.info(f"  Found {event_count} events from {source_name}")
+            logger.info(f"  Found {event_count} events from {src.name}")
 
+        except ValueError as e:
+            logger.warning(f"Parser not available for {src.name}: {e}")
         except Exception as e:
-            logger.error(f"Error processing {source_name}: {e}")
+            logger.error(f"Error processing {src.name}: {e}")
             if effective_log_level == "DEBUG":
                 logger.exception("Full traceback:")
 
