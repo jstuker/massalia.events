@@ -9,6 +9,7 @@ from .utils.parser import HTMLParser
 
 if TYPE_CHECKING:
     from .generators.markdown import MarkdownGenerator
+    from .selection import SelectionCriteria
     from .utils.http import HTTPClient
     from .utils.images import ImageDownloader
 
@@ -49,8 +50,17 @@ class BaseCrawler(ABC):
         self.markdown_generator = markdown_generator
 
         self.source_name = config.get("name", self.source_name)
+        self.source_id = config.get("id", "unknown")
         self.base_url = config.get("url", "")
         self.category_map = config.get("category_map", {})
+
+        # Selection criteria (optional)
+        self.selection_criteria: SelectionCriteria | None = config.get(
+            "selection_criteria"
+        )
+
+        # Track selection statistics
+        self.selection_stats = {"accepted": 0, "rejected": 0}
 
     def crawl(self) -> list[Event]:
         """
@@ -61,6 +71,9 @@ class BaseCrawler(ABC):
         """
         logger.info(f"Starting crawl for {self.source_name}")
         logger.debug(f"Base URL: {self.base_url}")
+
+        # Reset selection stats
+        self.selection_stats = {"accepted": 0, "rejected": 0}
 
         # Fetch the page
         html = self.fetch_page(self.base_url)
@@ -120,14 +133,32 @@ class BaseCrawler(ABC):
 
     def process_event(self, event: Event) -> Event | None:
         """
-        Process a single event: download image and generate markdown.
+        Process a single event: apply selection, download image, generate markdown.
 
         Args:
             event: Event to process
 
         Returns:
-            Processed event, or None if skipped
+            Processed event, or None if skipped/rejected
         """
+        # Apply selection criteria if configured
+        if self.selection_criteria:
+            result = self.selection_criteria.evaluate(
+                name=event.name,
+                date=event.start_datetime,
+                location=" ".join(event.locations) if event.locations else "",
+                description=event.description,
+                category=" ".join(event.categories) if event.categories else "",
+                url=event.event_url,
+            )
+
+            if not result.accepted:
+                logger.debug(f"Rejected: {event.name} - {result.reason}")
+                self.selection_stats["rejected"] += 1
+                return None
+            else:
+                logger.debug(f"Accepted: {event.name} - {result.reason}")
+
         # Check for duplicates by source ID
         if event.source_id:
             existing = self.markdown_generator.find_by_source_id(event.source_id)
@@ -147,11 +178,15 @@ class BaseCrawler(ABC):
         # Generate markdown file
         self.markdown_generator.generate(event)
 
+        self.selection_stats["accepted"] += 1
         return event
 
     def map_category(self, raw_category: str) -> str:
         """
         Map source category to standard taxonomy.
+
+        Uses selection criteria category mapping if available,
+        otherwise falls back to source-specific or default mapping.
 
         Args:
             raw_category: Category from source site
@@ -159,7 +194,11 @@ class BaseCrawler(ABC):
         Returns:
             Standard category slug
         """
-        # Look up in category map
+        # Try selection criteria mapping first
+        if self.selection_criteria:
+            return self.selection_criteria.map_category(raw_category)
+
+        # Look up in source-specific category map
         if self.category_map:
             for source_cat, target_cat in self.category_map.items():
                 if source_cat.lower() in raw_category.lower():
