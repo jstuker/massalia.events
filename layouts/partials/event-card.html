@@ -110,7 +110,7 @@
 
 <article class="event-card group relative flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-neutral-700 dark:bg-neutral-800">
   {{/* Image section */}}
-  <div class="relative aspect-[16/9] overflow-hidden bg-neutral-100 dark:bg-neutral-700">
+  <div class="aspect-[16/9] overflow-hidden bg-neutral-100 dark:bg-neutral-700" style="position: relative;">
     {{ if ne $imageURL "" }}
       <img
         src="{{ $imageURL }}"
@@ -130,11 +130,9 @@
 
     {{/* Category badge - positioned over image */}}
     {{ if ne $categoryTitle "" }}
-      <div class="absolute left-3 top-3">
-        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold" style="{{ $categoryColor | safeCSS }}">
-          {{ $categoryTitle }}
-        </span>
-      </div>
+      <span style="position: absolute; left: 12px; top: 12px; z-index: 10; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; {{ $categoryColor | safeCSS }}">
+        {{ $categoryTitle }}
+      </span>
     {{ end }}
   </div>
 
