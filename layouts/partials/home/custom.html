@@ -1,52 +1,19 @@
-{{/* Custom homepage layout with day selector */}}
-{{ $disableImageOptimization := .Site.Params.disableImageOptimization | default false }}
+{{/* Landing page layout - Event-focused homepage for massalia.events */}}
+{{/* Displays today's events by default with 7-day navigation */}}
 
-<article class="flex flex-col items-center justify-center text-center">
-  <header class="relative px-1 py-1 flex flex-col items-center mb-3">
-    {{ with .Site.Params.Author.image }}
-      {{ $authorImage := "" }}
-      {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
-        {{ $authorImage = resources.GetRemote . }}
-      {{ else }}
-        {{ $authorImage = resources.Get . }}
-      {{ end }}
-      {{ if $authorImage }}
-        {{ $final := $authorImage }}
-        {{ $squareImage := $authorImage }}
-        {{ if not (or $disableImageOptimization (eq $authorImage.MediaType.SubType "svg")) }}
-          {{ $final = $authorImage.Fill (print "288x288 q" ( $.Site.Params.Author.imagequality | default "96" )) }}
-          {{ $shortSide := int (math.Min $authorImage.Width $authorImage.Height) }}
-          {{ $squareImage = $authorImage.Crop (printf "%dx%d" $shortSide $shortSide ) }}
-        {{ end }}
-        <img
-          class="mb-2 h-36 w-36 rounded-full"
-          width="144"
-          height="144"
-          alt="{{ $.Site.Params.Author.name | default `Author` }}"
-          src="{{ $final.RelPermalink }}"
-          data-zoom-src="{{ $squareImage.RelPermalink }}">
-      {{ end }}
-    {{ end }}
-    <h1 class="text-4xl font-extrabold">
-      {{ .Site.Params.Author.name | default .Site.Title }}
-    </h1>
-    {{ with .Site.Params.Author.headline }}
-      <h2 class="text-xl text-neutral-500 dark:text-neutral-400">
-        {{ . | markdownify }}
-      </h2>
-    {{ end }}
-    <div class="mt-1 text-2xl">
-      {{ partialCached "author-links.html" . }}
-    </div>
-  </header>
-  <section class="prose dark:prose-invert w-full">{{ .Content }}</section>
-</article>
+{{/* Main page header */}}
+<header class="text-center mb-8 px-4">
+  <h1 class="text-4xl sm:text-5xl font-extrabold text-neutral-900 dark:text-neutral-100 mb-2">
+    Événements à Marseille
+  </h1>
+  <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+    Découvrez les événements culturels des 7 prochains jours
+  </p>
+</header>
 
-{{/* Day Selector Navigation */}}
-<section class="w-full max-w-6xl mx-auto mt-8">
-  <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-100 mb-4 text-center">
-    Événements à venir
-  </h2>
+{{/* Day Selector Navigation - Prominent and centered */}}
+<section class="w-full max-w-6xl mx-auto" aria-labelledby="events-heading">
+  <h2 id="events-heading" class="sr-only">Sélection du jour</h2>
   {{ partial "day-selector.html" . }}
 
   {{/* Event Cards Grid */}}
@@ -54,7 +21,7 @@
   {{ $events = where $events ".Draft" false }}
 
   {{ if gt (len $events) 0 }}
-    <div class="event-cards-container mt-6">
+    <div class="event-cards-container mt-8" role="region" aria-label="Liste des événements" aria-live="polite">
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {{ range $events }}
           <div class="event-card-wrapper" data-event-date="{{ .Date.Format "2006-01-02" }}">
@@ -63,38 +30,65 @@
         {{ end }}
       </div>
 
-      {{/* Empty state message */}}
-      <div class="no-events-message hidden py-12 text-center">
-        <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <p class="mt-4 text-lg font-medium text-neutral-600 dark:text-neutral-400">Aucun événement ce jour</p>
-        <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-500">Sélectionnez un autre jour pour voir les événements.</p>
+      {{/* Empty state message - shown when no events for selected day */}}
+      <div class="no-events-message hidden py-16 text-center" role="status">
+        <div class="mx-auto w-16 h-16 mb-4 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
+          <svg class="h-8 w-8 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
+          Aucun événement ce jour
+        </h3>
+        <p class="text-neutral-500 dark:text-neutral-400 max-w-md mx-auto">
+          Sélectionnez un autre jour dans le calendrier pour découvrir les événements à venir.
+        </p>
       </div>
     </div>
   {{ else }}
-    <div class="py-12 text-center">
-      <p class="text-lg text-neutral-600 dark:text-neutral-400">Aucun événement programmé.</p>
+    {{/* No events at all in the system */}}
+    <div class="py-16 text-center" role="status">
+      <div class="mx-auto w-16 h-16 mb-4 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
+        <svg class="h-8 w-8 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
+        Aucun événement programmé
+      </h3>
+      <p class="text-neutral-500 dark:text-neutral-400">
+        Revenez bientôt pour découvrir les prochains événements.
+      </p>
     </div>
   {{ end }}
 </section>
+
+{{/* Event count indicator - shows number of visible events */}}
+<div id="event-count" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
 <script>
 (function() {
   'use strict';
 
+  /**
+   * Filter events by selected date
+   * @param {string} selectedDate - Date in YYYY-MM-DD format
+   */
   function filterEventsByDate(selectedDate) {
     const cards = document.querySelectorAll('.event-card-wrapper');
     const noEventsMessage = document.querySelector('.no-events-message');
+    const eventCount = document.getElementById('event-count');
     let visibleCount = 0;
 
     cards.forEach(card => {
       const eventDate = card.getAttribute('data-event-date');
       if (eventDate === selectedDate) {
         card.classList.remove('hidden');
+        card.setAttribute('aria-hidden', 'false');
         visibleCount++;
       } else {
         card.classList.add('hidden');
+        card.setAttribute('aria-hidden', 'true');
       }
     });
 
@@ -106,26 +100,46 @@
         noEventsMessage.classList.add('hidden');
       }
     }
+
+    // Update screen reader announcement
+    if (eventCount) {
+      if (visibleCount === 0) {
+        eventCount.textContent = 'Aucun événement pour cette date';
+      } else if (visibleCount === 1) {
+        eventCount.textContent = '1 événement trouvé';
+      } else {
+        eventCount.textContent = visibleCount + ' événements trouvés';
+      }
+    }
   }
 
-  // Listen for day selection changes
-  document.addEventListener('daySelected', function(e) {
-    filterEventsByDate(e.detail.date);
-  });
-
-  // Filter by today's date on initial load
+  /**
+   * Initialize event filtering on page load
+   */
   function initFilter() {
-    const today = new Date().toISOString().split('T')[0];
-    filterEventsByDate(today);
+    // Get today's date in local timezone
+    const today = new Date();
+    const todayStr = today.getFullYear() + '-' +
+      String(today.getMonth() + 1).padStart(2, '0') + '-' +
+      String(today.getDate()).padStart(2, '0');
 
-    // Check for hash-based date
+    // Check for hash-based date first
     const hash = window.location.hash.slice(1);
     if (hash.startsWith('day-')) {
       const dateFromHash = hash.slice(4);
       filterEventsByDate(dateFromHash);
+    } else {
+      // Default to today
+      filterEventsByDate(todayStr);
     }
   }
 
+  // Listen for day selection changes from day-selector component
+  document.addEventListener('daySelected', function(e) {
+    filterEventsByDate(e.detail.date);
+  });
+
+  // Initialize when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initFilter);
   } else {
