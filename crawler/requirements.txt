@@ -8,6 +8,7 @@ Pillow>=10.0.0
 
 # YAML handling
 PyYAML>=6.0.0
+python-frontmatter>=1.1.0
 
 # Configuration validation
 jsonschema>=4.21.0
