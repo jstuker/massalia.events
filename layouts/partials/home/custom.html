@@ -1,0 +1,51 @@
+{{/* Custom homepage layout with day selector */}}
+{{ $disableImageOptimization := .Site.Params.disableImageOptimization | default false }}
+
+<article class="flex flex-col items-center justify-center text-center">
+  <header class="relative px-1 py-1 flex flex-col items-center mb-3">
+    {{ with .Site.Params.Author.image }}
+      {{ $authorImage := "" }}
+      {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
+        {{ $authorImage = resources.GetRemote . }}
+      {{ else }}
+        {{ $authorImage = resources.Get . }}
+      {{ end }}
+      {{ if $authorImage }}
+        {{ $final := $authorImage }}
+        {{ $squareImage := $authorImage }}
+        {{ if not (or $disableImageOptimization (eq $authorImage.MediaType.SubType "svg")) }}
+          {{ $final = $authorImage.Fill (print "288x288 q" ( $.Site.Params.Author.imagequality | default "96" )) }}
+          {{ $shortSide := int (math.Min $authorImage.Width $authorImage.Height) }}
+          {{ $squareImage = $authorImage.Crop (printf "%dx%d" $shortSide $shortSide ) }}
+        {{ end }}
+        <img
+          class="mb-2 h-36 w-36 rounded-full"
+          width="144"
+          height="144"
+          alt="{{ $.Site.Params.Author.name | default `Author` }}"
+          src="{{ $final.RelPermalink }}"
+          data-zoom-src="{{ $squareImage.RelPermalink }}">
+      {{ end }}
+    {{ end }}
+    <h1 class="text-4xl font-extrabold">
+      {{ .Site.Params.Author.name | default .Site.Title }}
+    </h1>
+    {{ with .Site.Params.Author.headline }}
+      <h2 class="text-xl text-neutral-500 dark:text-neutral-400">
+        {{ . | markdownify }}
+      </h2>
+    {{ end }}
+    <div class="mt-1 text-2xl">
+      {{ partialCached "author-links.html" . }}
+    </div>
+  </header>
+  <section class="prose dark:prose-invert w-full">{{ .Content }}</section>
+</article>
+
+{{/* Day Selector Navigation */}}
+<section class="w-full max-w-4xl mx-auto mt-8">
+  <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-100 mb-4 text-center">
+    Événements à venir
+  </h2>
+  {{ partial "day-selector.html" . }}
+</section>
