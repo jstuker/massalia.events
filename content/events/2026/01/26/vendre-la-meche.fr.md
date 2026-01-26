@@ -1,8 +1,8 @@
 ---
 title: "Vendre la mèche"
-date: 2025-01-26T19:00:00+01:00
+date: 2026-01-26T19:00:00+01:00
 draft: false
-expiryDate: 2025-01-27T00:00:00+01:00
+expiryDate: 2026-01-27T00:00:00+01:00
 
 # Event metadata
 eventName: "Vendre la mèche"
@@ -15,7 +15,7 @@ categories:
 locations:
   - "klap-maison-pour-la-danse"
 dates:
-  - "dimanche-26-janvier"
+  - "lundi-26-janvier"
 tags:
   - "danse contemporaine"
   - "spectacle"

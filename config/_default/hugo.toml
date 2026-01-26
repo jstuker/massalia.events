@@ -13,7 +13,7 @@ enableRobotsTXT = true
 summaryLength = 0
 
 buildDrafts = false
-buildFuture = false
+buildFuture = true
 
 enableEmoji = true
 

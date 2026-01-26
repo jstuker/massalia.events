@@ -1,8 +1,8 @@
 ---
 title: "Les Généreux / El Ajouad"
-date: 2025-01-27T20:00:00+01:00
+date: 2026-01-27T20:00:00+01:00
 draft: false
-expiryDate: 2025-01-28T00:00:00+01:00
+expiryDate: 2026-01-28T00:00:00+01:00
 
 # Event metadata
 eventName: "Les Généreux / El Ajouad"
@@ -15,7 +15,7 @@ categories:
 locations:
   - "la-criee"
 dates:
-  - "lundi-27-janvier"
+  - "mardi-27-janvier"
 tags:
   - "théâtre"
   - "spectacle vivant"
