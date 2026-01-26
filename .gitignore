@@ -1,9 +1,37 @@
+# macOS
 .DS_Store
+
+# Hugo
 .hugo_build.lock
-node_modules/
 public/
+resources/_gen/
+
+# Node.js
+node_modules/
 
 # Playwright
 test-results/
 playwright-report/
 playwright/.cache/
+
+# IDE/Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.*
+
+# Claude Code
+.claude/
+
+# Python (in case scripts run at root)
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+
+# Logs
+*.log
