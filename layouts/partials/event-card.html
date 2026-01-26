@@ -1,0 +1,191 @@
+{{/* Event card component for displaying event information */}}
+{{/* Usage: {{ partial "event-card.html" . }} */}}
+{{/* Expects a page context with event front matter */}}
+
+{{ $page := . }}
+{{ $disableImageOptimization := site.Params.disableImageOptimization | default false }}
+
+{{/* French month abbreviations */}}
+{{ $frenchMonths := dict
+    "1" "jan"
+    "2" "fév"
+    "3" "mar"
+    "4" "avr"
+    "5" "mai"
+    "6" "juin"
+    "7" "juil"
+    "8" "août"
+    "9" "sep"
+    "10" "oct"
+    "11" "nov"
+    "12" "déc"
+}}
+
+{{/* Category color mappings */}}
+{{ $categoryColors := dict
+    "danse" "bg-pink-500 text-white"
+    "musique" "bg-purple-500 text-white"
+    "theatre" "bg-amber-500 text-white"
+    "art" "bg-teal-500 text-white"
+    "communaute" "bg-blue-500 text-white"
+}}
+
+{{/* Get event image */}}
+{{ $imageURL := "" }}
+{{ with $page.Params.image }}
+  {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
+    {{ $imageURL = . }}
+  {{ else if ne . "" }}
+    {{ $img := resources.Get . }}
+    {{ with $img }}
+      {{ if not $disableImageOptimization }}
+        {{ $imageURL = (.Resize "400x").RelPermalink }}
+      {{ else }}
+        {{ $imageURL = .RelPermalink }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Fallback to page resources */}}
+{{ if eq $imageURL "" }}
+  {{ $images := $page.Resources.ByType "image" }}
+  {{ range slice "*feature*" "*cover*" "*thumbnail*" }}
+    {{ if eq $imageURL "" }}
+      {{ $img := $images.GetMatch . }}
+      {{ with $img }}
+        {{ if not $disableImageOptimization }}
+          {{ $imageURL = ($img.Resize "400x").RelPermalink }}
+        {{ else }}
+          {{ $imageURL = $img.RelPermalink }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Get category info */}}
+{{ $categorySlug := "" }}
+{{ $categoryTitle := "" }}
+{{ $categoryColor := "bg-neutral-500 text-white" }}
+{{ with $page.Params.categories }}
+  {{ $categorySlug = index . 0 }}
+  {{ with site.GetPage (printf "/categories/%s" $categorySlug) }}
+    {{ $categoryTitle = .Title }}
+  {{ end }}
+  {{ if eq $categoryTitle "" }}
+    {{ $categoryTitle = $categorySlug | title }}
+  {{ end }}
+  {{ with index $categoryColors $categorySlug }}
+    {{ $categoryColor = . }}
+  {{ end }}
+{{ end }}
+
+{{/* Get location info */}}
+{{ $locationTitle := "" }}
+{{ with $page.Params.locations }}
+  {{ $locationSlug := index . 0 }}
+  {{ with site.GetPage (printf "/locations/%s" $locationSlug) }}
+    {{ $locationTitle = .Title }}
+  {{ end }}
+  {{ if eq $locationTitle "" }}
+    {{ $locationTitle = $locationSlug | humanize | title }}
+  {{ end }}
+{{ end }}
+
+{{/* Get event name - fallback to title */}}
+{{ $eventName := $page.Params.name | default $page.Params.eventName | default $page.Title }}
+
+{{/* Format date in French */}}
+{{ $eventDate := $page.Date }}
+{{ $dayOfMonth := $eventDate.Day }}
+{{ $monthNum := $eventDate.Month | int | string }}
+{{ $monthName := index $frenchMonths $monthNum }}
+
+{{/* Get start time */}}
+{{ $startTime := $page.Params.startTime | default "" }}
+
+{{/* Multi-day indicator */}}
+{{ $dayOf := $page.Params.dayOf | default "" }}
+
+<article class="event-card group relative flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-neutral-700 dark:bg-neutral-800">
+  {{/* Image section */}}
+  <div class="relative aspect-[16/9] overflow-hidden bg-neutral-100 dark:bg-neutral-700">
+    {{ if ne $imageURL "" }}
+      <img
+        src="{{ $imageURL }}"
+        alt="{{ $eventName }}"
+        loading="lazy"
+        decoding="async"
+        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+    {{ else }}
+      {{/* Placeholder with category-based gradient */}}
+      <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-200 to-neutral-300 dark:from-neutral-600 dark:to-neutral-700">
+        <svg class="h-12 w-12 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+    {{ end }}
+
+    {{/* Category badge - positioned over image */}}
+    {{ if ne $categoryTitle "" }}
+      <div class="absolute left-3 top-3">
+        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold {{ $categoryColor }}">
+          {{ $categoryTitle }}
+        </span>
+      </div>
+    {{ end }}
+  </div>
+
+  {{/* Content section */}}
+  <div class="flex flex-1 flex-col p-4">
+    {{/* Event name - clickable */}}
+    <h3 class="mb-2 line-clamp-2 text-lg font-bold leading-tight text-neutral-900 dark:text-neutral-100">
+      <a href="{{ $page.RelPermalink }}" class="before:absolute before:inset-0 hover:text-primary-500 dark:hover:text-primary-400">
+        {{ $eventName }}
+      </a>
+    </h3>
+
+    {{/* Location */}}
+    {{ if ne $locationTitle "" }}
+      <div class="mb-3 flex items-center gap-1.5 text-sm text-neutral-600 dark:text-neutral-400">
+        <svg class="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span class="truncate">{{ $locationTitle }}</span>
+      </div>
+    {{ end }}
+
+    {{/* Date and time row */}}
+    <div class="mt-auto flex items-center justify-between border-t border-neutral-100 pt-3 dark:border-neutral-700">
+      {{/* Date */}}
+      <div class="flex items-center gap-1.5 text-sm text-neutral-600 dark:text-neutral-400">
+        <svg class="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span>{{ $dayOfMonth }} {{ $monthName }}</span>
+      </div>
+
+      {{/* Start time */}}
+      {{ if ne $startTime "" }}
+        <div class="flex items-center gap-1.5 text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+          <svg class="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{{ $startTime }}</span>
+        </div>
+      {{ end }}
+    </div>
+
+    {{/* Multi-day indicator */}}
+    {{ if ne $dayOf "" }}
+      <div class="mt-2 text-center">
+        <span class="inline-flex items-center rounded-md bg-neutral-100 px-2 py-1 text-xs font-medium text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300">
+          {{ $dayOf }}
+        </span>
+      </div>
+    {{ end }}
+  </div>
+</article>
