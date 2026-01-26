@@ -1,0 +1,90 @@
+{{/*
+  French date formatting partial
+  Usage: {{ partial "functions/french-date.html" (dict "date" .Date "format" "long") }}
+
+  Formats:
+  - "long": Dimanche 26 janvier 2026
+  - "medium": 26 janvier 2026
+  - "short": 26 jan
+  - "day-month": 26 janvier
+  - "numeric": 26/01/2026
+*/}}
+
+{{ $date := .date }}
+{{ $format := .format | default "medium" }}
+
+{{/* French day names (0=Sunday through 6=Saturday) */}}
+{{ $frenchDaysFull := dict
+    "0" "Dimanche"
+    "1" "Lundi"
+    "2" "Mardi"
+    "3" "Mercredi"
+    "4" "Jeudi"
+    "5" "Vendredi"
+    "6" "Samedi"
+}}
+
+{{/* French month names (1-12) - full */}}
+{{ $frenchMonthsFull := dict
+    "1" "janvier"
+    "2" "février"
+    "3" "mars"
+    "4" "avril"
+    "5" "mai"
+    "6" "juin"
+    "7" "juillet"
+    "8" "août"
+    "9" "septembre"
+    "10" "octobre"
+    "11" "novembre"
+    "12" "décembre"
+}}
+
+{{/* French month names (1-12) - abbreviated */}}
+{{ $frenchMonthsShort := dict
+    "1" "jan"
+    "2" "fév"
+    "3" "mar"
+    "4" "avr"
+    "5" "mai"
+    "6" "juin"
+    "7" "juil"
+    "8" "août"
+    "9" "sep"
+    "10" "oct"
+    "11" "nov"
+    "12" "déc"
+}}
+
+{{ $dayNum := $date.Weekday | int | string }}
+{{ $dayOfMonth := $date.Day }}
+{{ $monthNum := $date.Month | int | string }}
+{{ $year := $date.Year }}
+
+{{ $dayName := index $frenchDaysFull $dayNum }}
+{{ $monthNameFull := index $frenchMonthsFull $monthNum }}
+{{ $monthNameShort := index $frenchMonthsShort $monthNum }}
+
+{{ $result := "" }}
+
+{{ if eq $format "long" }}
+  {{/* Dimanche 26 janvier 2026 */}}
+  {{ $result = printf "%s %d %s %d" $dayName $dayOfMonth $monthNameFull $year }}
+{{ else if eq $format "medium" }}
+  {{/* 26 janvier 2026 */}}
+  {{ $result = printf "%d %s %d" $dayOfMonth $monthNameFull $year }}
+{{ else if eq $format "short" }}
+  {{/* 26 jan */}}
+  {{ $result = printf "%d %s" $dayOfMonth $monthNameShort }}
+{{ else if eq $format "day-month" }}
+  {{/* 26 janvier */}}
+  {{ $result = printf "%d %s" $dayOfMonth $monthNameFull }}
+{{ else if eq $format "numeric" }}
+  {{/* 26/01/2026 */}}
+  {{ $result = $date.Format "02/01/2006" }}
+{{ else }}
+  {{/* Default to medium */}}
+  {{ $result = printf "%d %s %d" $dayOfMonth $monthNameFull $year }}
+{{ end }}
+
+{{ return $result }}
