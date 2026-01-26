@@ -29,7 +29,7 @@ description: "Exposition d'art contemporain présentant les œuvres de jeunes ar
 categories:
   - "art"
 locations:
-  - "galerie-chateau-de-servieres"
+  - "chateau-de-servieres"
 dates:
   - "mercredi-29-janvier"
 tags:

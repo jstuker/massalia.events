@@ -13,7 +13,7 @@ startTime: "19:00"
 categories:
   - "danse"
 locations:
-  - "klap-maison-pour-la-danse"
+  - "klap"
 dates:
   - "lundi-26-janvier"
 tags:
