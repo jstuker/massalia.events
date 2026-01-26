@@ -59,6 +59,7 @@
       <button
         type="button"
         role="tab"
+        tabindex="{{ if $isToday }}0{{ else }}-1{{ end }}"
         aria-selected="{{ if $isToday }}true{{ else }}false{{ end }}"
         aria-label="{{ if $isToday }}Aujourd'hui{{ else }}{{ $dayNameFull }}{{ end }}, {{ $dayOfMonth }} {{ $monthName }}"
         data-date="{{ $dateStr }}"
@@ -152,8 +153,9 @@
     tabs.forEach(tab => {
       const isSelected = tab === selectedTab;
 
-      // Update ARIA
+      // Update ARIA and tabindex (roving tabindex pattern)
       tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+      tab.setAttribute('tabindex', isSelected ? '0' : '-1');
 
       // Update data attribute
       if (isSelected) {
