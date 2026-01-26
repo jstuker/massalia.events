@@ -1,0 +1,5 @@
+{{/*
+  Override Blowfish theme's date.html to use French locale formatting
+  This partial is called by the theme for article dates
+*/}}
+{{ return partial "functions/french-date.html" (dict "date" . "format" "medium") }}

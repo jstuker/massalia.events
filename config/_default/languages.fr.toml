@@ -8,7 +8,9 @@ title = "massalia.events"
   displayName = "FR"
   isoCode = "fr"
   rtl = false
-  dateFormat = "2 January 2006"
+  # Date format is handled by custom French date partial
+  # See layouts/partials/functions/french-date.html
+  dateFormat = ":date_long"
   # logo = "img/logo.png"
   # secondaryLogo = "img/secondary-logo.png"
   # description = "Un agrégateur crée par vibcoding d'événements culturels, artistiques, musicaux et de concerts à Marseille.
