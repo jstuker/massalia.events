@@ -5,9 +5,9 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
+from ..logger import get_logger
 from ..models.event import Event
 from ..utils.parser import HTMLParser
-from ..logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -199,7 +199,6 @@ class LaFricheParser(BaseCrawler):
         """
         # Extract path or ID from URL
         # Example: https://lafriche.org/event/concert-123 -> lafriche:concert-123
-        import re
         from urllib.parse import urlparse
 
         parsed = urlparse(url)

@@ -8,9 +8,9 @@ from .models.event import Event
 from .utils.parser import HTMLParser
 
 if TYPE_CHECKING:
+    from .generators.markdown import MarkdownGenerator
     from .utils.http import HTTPClient
     from .utils.images import ImageDownloader
-    from .generators.markdown import MarkdownGenerator
 
 logger = get_logger(__name__)
 

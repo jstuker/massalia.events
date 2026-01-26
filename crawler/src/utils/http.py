@@ -1,7 +1,6 @@
 """HTTP client with rate limiting and retries."""
 
 import time
-from typing import Optional
 
 import httpx
 
@@ -45,7 +44,7 @@ class HTTPClient:
         self.rate_limit_delay = rate_limit_delay
         self.user_agent = user_agent
 
-        self._last_request_time: Optional[float] = None
+        self._last_request_time: float | None = None
         self._client = httpx.Client(
             timeout=timeout,
             headers={"User-Agent": user_agent},

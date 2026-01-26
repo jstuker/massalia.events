@@ -3,7 +3,6 @@
 import logging
 import sys
 from pathlib import Path
-from typing import Optional
 
 # Color codes for terminal output
 COLORS = {
@@ -31,8 +30,8 @@ class ColorFormatter(logging.Formatter):
 
 def setup_logging(
     level: str = "INFO",
-    log_file: Optional[str] = None,
-    log_dir: Optional[Path] = None,
+    log_file: str | None = None,
+    log_dir: Path | None = None,
 ):
     """
     Configure logging for the crawler.

@@ -3,7 +3,7 @@
 import hashlib
 from io import BytesIO
 from pathlib import Path
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from urllib.parse import urlparse
 
 from PIL import Image
@@ -54,7 +54,7 @@ class ImageDownloader:
         self.http_client = http_client
         self.dry_run = dry_run
 
-    def download(self, url: str, event_slug: str = "") -> Optional[str]:
+    def download(self, url: str, event_slug: str = "") -> str | None:
         """
         Download and optimize an image.
 

@@ -2,7 +2,6 @@
 
 import re
 from datetime import datetime
-from typing import Optional
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup, Tag
@@ -43,7 +42,7 @@ class HTMLParser:
         """
         return self.soup.select(selector)
 
-    def select_one(self, selector: str) -> Optional[Tag]:
+    def select_one(self, selector: str) -> Tag | None:
         """
         Select first matching element.
 
@@ -140,13 +139,23 @@ class HTMLParser:
             return urljoin(self.base_url, src)
         return src
 
+    # French month names for parsing
+    FRENCH_MONTHS = {
+        "janvier": 1, "février": 2, "fevrier": 2, "mars": 3,
+        "avril": 4, "mai": 5, "juin": 6, "juillet": 7,
+        "août": 8, "aout": 8, "septembre": 9, "octobre": 10,
+        "novembre": 11, "décembre": 12, "decembre": 12,
+    }
+
     @staticmethod
     def parse_date(
         text: str,
-        formats: Optional[list[str]] = None,
-    ) -> Optional[datetime]:
+        formats: list[str] | None = None,
+    ) -> datetime | None:
         """
         Parse date from text using various formats.
+
+        Supports French date formats like "26 janvier 2026".
 
         Args:
             text: Text containing date
@@ -159,17 +168,47 @@ class HTMLParser:
             return None
 
         # Clean text
-        text = text.strip()
+        text = text.strip().lower()
 
-        # Default formats to try
+        # Try French date pattern first: "26 janvier 2026" or "26 janvier"
+        french_pattern = r"(\d{1,2})\s+(\w+)(?:\s+(\d{4}))?"
+        match = re.search(french_pattern, text)
+        if match:
+            day = int(match.group(1))
+            month_name = match.group(2)
+            year = int(match.group(3)) if match.group(3) else datetime.now().year
+
+            month = HTMLParser.FRENCH_MONTHS.get(month_name)
+            if month:
+                try:
+                    return datetime(year, month, day)
+                except ValueError:
+                    pass
+
+        # Try slash date pattern: "26/01/2026" or "26/01/26" or "26/01"
+        slash_pattern = r"(\d{1,2})/(\d{1,2})(?:/(\d{2,4}))?"
+        match = re.search(slash_pattern, text)
+        if match:
+            day = int(match.group(1))
+            month = int(match.group(2))
+            year_str = match.group(3)
+            if year_str:
+                year = int(year_str)
+                if year < 100:
+                    year += 2000
+            else:
+                year = datetime.now().year
+
+            try:
+                return datetime(year, month, day)
+            except ValueError:
+                pass
+
+        # Try standard formats
         if formats is None:
             formats = [
-                "%d/%m/%Y",
                 "%d-%m-%Y",
                 "%Y-%m-%d",
-                "%d %B %Y",  # French: "26 janvier 2026"
-                "%d %b %Y",
-                "%A %d %B %Y",  # "Lundi 26 janvier 2026"
             ]
 
         for fmt in formats:
@@ -182,7 +221,7 @@ class HTMLParser:
         return None
 
     @staticmethod
-    def parse_time(text: str) -> Optional[str]:
+    def parse_time(text: str) -> str | None:
         """
         Extract time in HH:MM format from text.
 

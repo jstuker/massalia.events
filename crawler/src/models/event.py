@@ -1,9 +1,8 @@
 """Event data model matching Hugo front matter schema."""
 
+import re
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
-from typing import Optional
-import re
 
 
 def slugify(text: str) -> str:
@@ -61,17 +60,17 @@ class Event:
 
     # Optional fields with defaults
     description: str = ""
-    image: Optional[str] = None
+    image: str | None = None
     categories: list[str] = field(default_factory=list)
     locations: list[str] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
 
     # Multi-day event support
-    event_group_id: Optional[str] = None
-    day_of: Optional[str] = None  # e.g., "Jour 1 sur 3"
+    event_group_id: str | None = None
+    day_of: str | None = None  # e.g., "Jour 1 sur 3"
 
     # Tracking fields
-    source_id: Optional[str] = None
+    source_id: str | None = None
     draft: bool = False
 
     def __post_init__(self):
