@@ -1,0 +1,179 @@
+# =============================================================================
+# French translations for massalia.events
+# =============================================================================
+# Custom translations for the event aggregator application
+# Extends/overrides Blowfish theme translations
+
+# -----------------------------------------------------------------------------
+# Navigation
+# -----------------------------------------------------------------------------
+nav:
+  home: "Accueil"
+  events: "Événements"
+  categories: "Catégories"
+  locations: "Lieux"
+  dates: "Dates"
+  search: "Rechercher"
+  skip_to_main: "Aller au contenu principal"
+  scroll_to_top_title: "Retour en haut"
+
+# -----------------------------------------------------------------------------
+# Search
+# -----------------------------------------------------------------------------
+search:
+  open_button_title: "Rechercher (/)"
+  close_button_title: "Fermer (Échap)"
+  input_placeholder: "Rechercher un événement..."
+  no_results: "Aucun résultat trouvé"
+  searching: "Recherche en cours..."
+
+# -----------------------------------------------------------------------------
+# Day Selector
+# -----------------------------------------------------------------------------
+day_selector:
+  today: "Aujourd'hui"
+  tomorrow: "Demain"
+  day_label: "Sélecteur de jour"
+
+# French day names (abbreviated)
+days:
+  sun: "Dim"
+  mon: "Lun"
+  tue: "Mar"
+  wed: "Mer"
+  thu: "Jeu"
+  fri: "Ven"
+  sat: "Sam"
+
+# French day names (full)
+days_full:
+  sun: "Dimanche"
+  mon: "Lundi"
+  tue: "Mardi"
+  wed: "Mercredi"
+  thu: "Jeudi"
+  fri: "Vendredi"
+  sat: "Samedi"
+
+# French month names (abbreviated)
+months:
+  jan: "jan"
+  feb: "fév"
+  mar: "mar"
+  apr: "avr"
+  may: "mai"
+  jun: "juin"
+  jul: "juil"
+  aug: "août"
+  sep: "sep"
+  oct: "oct"
+  nov: "nov"
+  dec: "déc"
+
+# French month names (full)
+months_full:
+  jan: "janvier"
+  feb: "février"
+  mar: "mars"
+  apr: "avril"
+  may: "mai"
+  jun: "juin"
+  jul: "juillet"
+  aug: "août"
+  sep: "septembre"
+  oct: "octobre"
+  nov: "novembre"
+  dec: "décembre"
+
+# -----------------------------------------------------------------------------
+# Events
+# -----------------------------------------------------------------------------
+events:
+  title: "Événements à Marseille"
+  subtitle: "Découvrez les événements culturels des 7 prochains jours"
+  more_info: "Plus d'infos"
+  source: "Source"
+  view_original: "Voir sur le site original"
+  back_to_events: "Retour aux événements"
+
+  # Event metadata
+  at: "à"
+  from: "à partir de"
+  until: "jusqu'à"
+
+  # Multi-day events
+  day_of: "Jour"
+  of: "sur"
+  other_dates: "Voir les autres dates de cet événement"
+
+  # Count
+  event_count:
+    zero: "Aucun événement"
+    one: "1 événement"
+    other: "{{ .Count }} événements"
+
+  events_found:
+    zero: "Aucun événement pour cette date"
+    one: "1 événement trouvé"
+    other: "{{ .Count }} événements trouvés"
+
+# -----------------------------------------------------------------------------
+# Empty States
+# -----------------------------------------------------------------------------
+empty:
+  no_events_today: "Aucun événement prévu pour aujourd'hui"
+  no_events_day: "Aucun événement ce jour"
+  no_events_scheduled: "Aucun événement programmé"
+  select_another_day: "Sélectionnez un autre jour dans le calendrier pour découvrir les événements à venir."
+  check_back: "Revenez bientôt pour découvrir de nouveaux événements !"
+
+# -----------------------------------------------------------------------------
+# Categories
+# -----------------------------------------------------------------------------
+categories:
+  dance: "Danse"
+  music: "Musique"
+  theater: "Théâtre"
+  art: "Art"
+  community: "Communauté"
+
+# -----------------------------------------------------------------------------
+# Accessibility
+# -----------------------------------------------------------------------------
+a11y:
+  toggle_theme: "Changer le thème"
+  dark_mode: "Mode sombre"
+  light_mode: "Mode clair"
+  toggle_menu: "Ouvrir le menu"
+  close_menu: "Fermer le menu"
+  event_list: "Liste des événements"
+  day_selection: "Sélection du jour"
+
+# -----------------------------------------------------------------------------
+# Errors
+# -----------------------------------------------------------------------------
+error:
+  404_title: "Page non trouvée"
+  404_error: "Erreur 404"
+  404_description: "La page que vous recherchez n'existe pas ou a été déplacée."
+  back_home: "Retour à l'accueil"
+
+# -----------------------------------------------------------------------------
+# Footer
+# -----------------------------------------------------------------------------
+footer:
+  powered_by: "Propulsé par {{ .Hugo }} et {{ .Theme }}"
+  copyright: "Tous droits réservés"
+  contact: "Contact"
+  source_code: "Code source"
+  dark_appearance: "Passer au thème sombre"
+  light_appearance: "Passer au thème clair"
+
+# -----------------------------------------------------------------------------
+# Sharing
+# -----------------------------------------------------------------------------
+sharing:
+  share: "Partager"
+  share_on: "Partager sur"
+  copy_link: "Copier le lien"
+  link_copied: "Lien copié !"
