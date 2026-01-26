@@ -21,13 +21,13 @@
     "12" "déc"
 }}
 
-{{/* Category color mappings */}}
+{{/* Category color mappings - using inline styles for reliable rendering */}}
 {{ $categoryColors := dict
-    "danse" "bg-pink-500 text-white"
-    "musique" "bg-purple-500 text-white"
-    "theatre" "bg-amber-500 text-white"
-    "art" "bg-teal-500 text-white"
-    "communaute" "bg-blue-500 text-white"
+    "danse" "background-color: #ec4899; color: white;"
+    "musique" "background-color: #a855f7; color: white;"
+    "theatre" "background-color: #f59e0b; color: white;"
+    "art" "background-color: #14b8a6; color: white;"
+    "communaute" "background-color: #3b82f6; color: white;"
 }}
 
 {{/* Get event image */}}
@@ -67,7 +67,7 @@
 {{/* Get category info */}}
 {{ $categorySlug := "" }}
 {{ $categoryTitle := "" }}
-{{ $categoryColor := "bg-neutral-500 text-white" }}
+{{ $categoryColor := "background-color: #737373; color: white;" }}
 {{ with $page.Params.categories }}
   {{ $categorySlug = index . 0 }}
   {{ with site.GetPage (printf "/categories/%s" $categorySlug) }}
@@ -131,7 +131,7 @@
     {{/* Category badge - positioned over image */}}
     {{ if ne $categoryTitle "" }}
       <div class="absolute left-3 top-3">
-        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold {{ $categoryColor }}">
+        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold" style="{{ $categoryColor }}">
           {{ $categoryTitle }}
         </span>
       </div>
