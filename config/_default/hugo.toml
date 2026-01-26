@@ -32,6 +32,10 @@ enableEmoji = true
   tag = "tags"
   author = "authors"
 
+[permalinks]
+  # Events use date-based URLs: /events/2025/01/26/event-name/
+  events = "/events/:year/:month/:day/:slug/"
+
 [sitemap]
   changefreq = 'daily'
   filename = 'sitemap.xml'
