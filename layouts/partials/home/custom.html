@@ -43,9 +43,93 @@
 </article>
 
 {{/* Day Selector Navigation */}}
-<section class="w-full max-w-4xl mx-auto mt-8">
+<section class="w-full max-w-6xl mx-auto mt-8">
   <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-100 mb-4 text-center">
     Événements à venir
   </h2>
   {{ partial "day-selector.html" . }}
+
+  {{/* Event Cards Grid */}}
+  {{ $events := where site.RegularPages "Section" "events" }}
+  {{ $events = where $events ".Draft" false }}
+
+  {{ if gt (len $events) 0 }}
+    <div class="event-cards-container mt-6">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {{ range $events }}
+          <div class="event-card-wrapper" data-event-date="{{ .Date.Format "2006-01-02" }}">
+            {{ partial "event-card.html" . }}
+          </div>
+        {{ end }}
+      </div>
+
+      {{/* Empty state message */}}
+      <div class="no-events-message hidden py-12 text-center">
+        <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <p class="mt-4 text-lg font-medium text-neutral-600 dark:text-neutral-400">Aucun événement ce jour</p>
+        <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-500">Sélectionnez un autre jour pour voir les événements.</p>
+      </div>
+    </div>
+  {{ else }}
+    <div class="py-12 text-center">
+      <p class="text-lg text-neutral-600 dark:text-neutral-400">Aucun événement programmé.</p>
+    </div>
+  {{ end }}
 </section>
+
+<script>
+(function() {
+  'use strict';
+
+  function filterEventsByDate(selectedDate) {
+    const cards = document.querySelectorAll('.event-card-wrapper');
+    const noEventsMessage = document.querySelector('.no-events-message');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const eventDate = card.getAttribute('data-event-date');
+      if (eventDate === selectedDate) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    // Show/hide empty state
+    if (noEventsMessage) {
+      if (visibleCount === 0) {
+        noEventsMessage.classList.remove('hidden');
+      } else {
+        noEventsMessage.classList.add('hidden');
+      }
+    }
+  }
+
+  // Listen for day selection changes
+  document.addEventListener('daySelected', function(e) {
+    filterEventsByDate(e.detail.date);
+  });
+
+  // Filter by today's date on initial load
+  function initFilter() {
+    const today = new Date().toISOString().split('T')[0];
+    filterEventsByDate(today);
+
+    // Check for hash-based date
+    const hash = window.location.hash.slice(1);
+    if (hash.startsWith('day-')) {
+      const dateFromHash = hash.slice(4);
+      filterEventsByDate(dateFromHash);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFilter);
+  } else {
+    initFilter();
+  }
+})();
+</script>
