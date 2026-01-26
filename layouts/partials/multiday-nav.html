@@ -1,0 +1,33 @@
+{{/* Multi-day event navigation partial */}}
+{{/* Usage: {{ partial "multiday-nav.html" . }} */}}
+
+{{ if .Params.eventGroupId }}
+  {{ $groupId := .Params.eventGroupId }}
+  {{ $currentPage := . }}
+  {{ $relatedPages := where .Site.RegularPages "Params.eventGroupId" $groupId }}
+
+  {{ if gt (len $relatedPages) 1 }}
+  <div class="multiday-nav my-6 p-4 rounded-lg bg-neutral-100 dark:bg-neutral-800">
+    <p class="text-sm font-semibold text-neutral-600 dark:text-neutral-400 mb-2">
+      {{ with .Params.dayOf }}{{ . }}{{ else }}Événement multi-jours{{ end }}
+    </p>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-3">
+      Voir les autres dates de cet événement :
+    </p>
+    <div class="flex flex-wrap gap-2">
+      {{ range $relatedPages.ByDate }}
+        {{ if eq .Permalink $currentPage.Permalink }}
+          <span class="px-3 py-1 text-sm rounded-full bg-primary-500 text-white">
+            {{ .Params.dayOf | default (dateFormat "2 January" .Date) }}
+          </span>
+        {{ else }}
+          <a href="{{ .Permalink }}"
+             class="px-3 py-1 text-sm rounded-full border border-primary-400 text-primary-600 hover:bg-primary-100 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900">
+            {{ .Params.dayOf | default (dateFormat "2 January" .Date) }}
+          </a>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+{{ end }}

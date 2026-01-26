@@ -75,13 +75,20 @@ tags: []
 # -----------------------------------------------------------------------------
 # ÉVÉNEMENTS MULTI-JOURS
 # -----------------------------------------------------------------------------
+# Pour un festival de 3 jours, créer 3 fichiers avec le même eventGroupId:
+#   /events/2026/02/06/festival-jour-1.fr.md (dayOf: "Jour 1 sur 3")
+#   /events/2026/02/07/festival-jour-2.fr.md (dayOf: "Jour 2 sur 3")
+#   /events/2026/02/08/festival-jour-3.fr.md (dayOf: "Jour 3 sur 3")
+# Chaque jour expire indépendamment via son propre expiryDate.
 
 # Identifiant de groupe pour événements sur plusieurs jours
 # Même valeur pour toutes les pages d'un même événement
+# Format suggéré: "nom-evenement-annee" (ex: "festival-marseille-2026")
 # Laisser vide pour événement sur un seul jour
 eventGroupId: ""
 
 # Numéro du jour pour événements multi-jours
+# Format: "Jour X sur Y"
 # Exemple: "Jour 2 sur 5"
 dayOf: ""
 
