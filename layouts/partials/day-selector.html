@@ -1,0 +1,198 @@
+{{/* 7-day navigation selector with French day names */}}
+{{/* Usage: {{ partial "day-selector.html" . }} */}}
+
+{{/* French day name mappings (0=Sunday through 6=Saturday) */}}
+{{ $frenchDays := dict
+    "0" "Dim"
+    "1" "Lun"
+    "2" "Mar"
+    "3" "Mer"
+    "4" "Jeu"
+    "5" "Ven"
+    "6" "Sam"
+}}
+
+{{ $frenchDaysFull := dict
+    "0" "Dimanche"
+    "1" "Lundi"
+    "2" "Mardi"
+    "3" "Mercredi"
+    "4" "Jeudi"
+    "5" "Vendredi"
+    "6" "Samedi"
+}}
+
+{{/* French 3-letter month abbreviations (1-12) */}}
+{{ $frenchMonths := dict
+    "1" "jan"
+    "2" "fév"
+    "3" "mar"
+    "4" "avr"
+    "5" "mai"
+    "6" "juin"
+    "7" "juil"
+    "8" "août"
+    "9" "sep"
+    "10" "oct"
+    "11" "nov"
+    "12" "déc"
+}}
+
+{{ $today := now }}
+
+<nav class="day-selector my-6" role="tablist" aria-label="Sélecteur de jour">
+  <div class="flex overflow-x-auto gap-1 sm:gap-2 pb-2 scrollbar-hide">
+    {{ range $i := seq 0 6 }}
+      {{ $date := $today.AddDate 0 0 $i }}
+      {{ $dayNum := $date.Weekday | int | string }}
+      {{ $monthNum := $date.Month | int | string }}
+      {{ $dayName := index $frenchDays $dayNum }}
+      {{ $dayNameFull := index $frenchDaysFull $dayNum }}
+      {{ $monthName := index $frenchMonths $monthNum }}
+      {{ $dateStr := $date.Format "2006-01-02" }}
+      {{ $dayOfMonth := $date.Day }}
+
+      {{ $isToday := eq $i 0 }}
+      {{ $activeClass := "bg-primary-500 text-white shadow-md" }}
+      {{ $inactiveClass := "bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700" }}
+
+      <button
+        type="button"
+        role="tab"
+        aria-selected="{{ if $isToday }}true{{ else }}false{{ end }}"
+        aria-label="{{ if $isToday }}Aujourd'hui{{ else }}{{ $dayNameFull }}{{ end }}, {{ $dayOfMonth }} {{ $monthName }}"
+        data-date="{{ $dateStr }}"
+        data-day-index="{{ $i }}"
+        class="day-tab flex-shrink-0 px-3 py-2 sm:px-4 sm:py-3 rounded-lg text-center cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 {{ if $isToday }}{{ $activeClass }}{{ else }}{{ $inactiveClass }}{{ end }}"
+        {{ if $isToday }}data-active="true"{{ end }}
+      >
+        <span class="block text-xs sm:text-sm font-semibold whitespace-nowrap">
+          {{ if $isToday }}
+            Aujourd'hui
+          {{ else }}
+            {{ $dayName }}
+          {{ end }}
+        </span>
+        <span class="block text-xs sm:text-sm mt-0.5 whitespace-nowrap {{ if $isToday }}opacity-90{{ else }}opacity-70{{ end }}">
+          {{ $dayOfMonth }} {{ $monthName }}
+        </span>
+      </button>
+    {{ end }}
+  </div>
+</nav>
+
+{{/* Hide scrollbar but allow scrolling */}}
+<style>
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+</style>
+
+<script>
+(function() {
+  'use strict';
+
+  const HASH_PREFIX = 'day-';
+
+  function initDaySelector() {
+    const tabs = document.querySelectorAll('.day-tab');
+    if (!tabs.length) return;
+
+    // Handle click events
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => selectDay(tab));
+    });
+
+    // Handle keyboard navigation
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('keydown', (e) => {
+        let targetIndex = index;
+
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          targetIndex = (index + 1) % tabs.length;
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          targetIndex = (index - 1 + tabs.length) % tabs.length;
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          targetIndex = 0;
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          targetIndex = tabs.length - 1;
+        }
+
+        if (targetIndex !== index) {
+          tabs[targetIndex].focus();
+          selectDay(tabs[targetIndex]);
+        }
+      });
+    });
+
+    // Check for hash on load
+    const hash = window.location.hash.slice(1);
+    if (hash.startsWith(HASH_PREFIX)) {
+      const dateFromHash = hash.slice(HASH_PREFIX.length);
+      const matchingTab = document.querySelector(`.day-tab[data-date="${dateFromHash}"]`);
+      if (matchingTab) {
+        selectDay(matchingTab, false);
+      }
+    }
+  }
+
+  function selectDay(selectedTab, updateHash = true) {
+    const tabs = document.querySelectorAll('.day-tab');
+    const activeClass = 'bg-primary-500 text-white shadow-md';
+    const inactiveClass = 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700';
+
+    tabs.forEach(tab => {
+      const isSelected = tab === selectedTab;
+
+      // Update ARIA
+      tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+
+      // Update data attribute
+      if (isSelected) {
+        tab.setAttribute('data-active', 'true');
+      } else {
+        tab.removeAttribute('data-active');
+      }
+
+      // Update classes
+      if (isSelected) {
+        tab.classList.remove(...inactiveClass.split(' '));
+        tab.classList.add(...activeClass.split(' '));
+      } else {
+        tab.classList.remove(...activeClass.split(' '));
+        tab.classList.add(...inactiveClass.split(' '));
+      }
+    });
+
+    // Update URL hash
+    if (updateHash) {
+      const date = selectedTab.getAttribute('data-date');
+      history.replaceState(null, '', `#${HASH_PREFIX}${date}`);
+    }
+
+    // Dispatch custom event for other components to listen to
+    const event = new CustomEvent('daySelected', {
+      detail: {
+        date: selectedTab.getAttribute('data-date'),
+        dayIndex: parseInt(selectedTab.getAttribute('data-day-index'), 10)
+      }
+    });
+    document.dispatchEvent(event);
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDaySelector);
+  } else {
+    initDaySelector();
+  }
+})();
+</script>
