@@ -9,6 +9,8 @@ colorScheme = "blowfish"
 defaultAppearance = "light" # valid options: light or dark
 autoSwitchAppearance = true
 
+logo = "img/logo.png"
+
 enableA11y = false
 enableSearch = true
 enableCodeCopy = false
@@ -22,7 +24,7 @@ replyByEmail = false
 
 disableImageOptimization = false
 disableImageOptimizationMD = false
-disableTextInHeader = false
+disableTextInHeader = true
 # backgroundImageWidth = 1200
 
 # defaultBackgroundImage = "IMAGE.jpg" # used as default for background images
