@@ -2,8 +2,8 @@
 {{/* Displays today's events by default with 7-day navigation */}}
 
 {{/* Main page header */}}
-<header class="text-center mb-6 sm:mb-8 px-4 sm:px-6">
-  <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-neutral-900 dark:text-neutral-100 mb-2">
+<header class="text-center mb-8 px-4">
+  <h1 class="text-4xl sm:text-5xl font-extrabold text-neutral-900 dark:text-neutral-100 mb-2">
     Les prochains jours à Marseille
   </h1>
 </header>
@@ -21,8 +21,8 @@
   {{ $events = sort $events ".Params.startTime" "asc" }}
 
   {{ if gt (len $events) 0 }}
-    <div class="event-cards-container mt-6 sm:mt-8 px-4 sm:px-6 lg:px-0" role="region" aria-label="Liste des événements" aria-live="polite">
-      <div class="grid grid-cols-1 gap-4 sm:gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mx-auto max-w-5xl">
+    <div class="event-cards-container mt-8" role="region" aria-label="Liste des événements" aria-live="polite">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mx-auto max-w-5xl">
         {{ range $events }}
           <div class="event-card-wrapper" data-event-date="{{ .Date.Format "2006-01-02" }}" data-start-time="{{ .Params.startTime | default "00:00" }}">
             {{ partial "event-card.html" . }}
@@ -31,32 +31,32 @@
       </div>
 
       {{/* Empty state message - shown when no events for selected day */}}
-      <div class="no-events-message hidden py-12 sm:py-16 text-center px-4" role="status">
-        <div class="mx-auto w-14 h-14 sm:w-16 sm:h-16 mb-4 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
-          <svg class="h-7 w-7 sm:h-8 sm:w-8 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="no-events-message hidden py-16 text-center" role="status">
+        <div class="mx-auto w-16 h-16 mb-4 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
+          <svg class="h-8 w-8 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
         </div>
-        <h3 class="text-lg sm:text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
+        <h3 class="text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
           Aucun événement ce jour
         </h3>
-        <p class="text-sm sm:text-base text-neutral-500 dark:text-neutral-400 max-w-md mx-auto">
+        <p class="text-neutral-500 dark:text-neutral-400 max-w-md mx-auto">
           Sélectionnez un autre jour dans le calendrier pour découvrir les événements à venir.
         </p>
       </div>
     </div>
   {{ else }}
     {{/* No events at all in the system */}}
-    <div class="py-12 sm:py-16 text-center px-4" role="status">
-      <div class="mx-auto w-14 h-14 sm:w-16 sm:h-16 mb-4 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
-        <svg class="h-7 w-7 sm:h-8 sm:w-8 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="py-16 text-center" role="status">
+      <div class="mx-auto w-16 h-16 mb-4 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
+        <svg class="h-8 w-8 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </div>
-      <h3 class="text-lg sm:text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
+      <h3 class="text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
         Aucun événement programmé
       </h3>
-      <p class="text-sm sm:text-base text-neutral-500 dark:text-neutral-400">
+      <p class="text-neutral-500 dark:text-neutral-400">
         Revenez bientôt pour découvrir les prochains événements.
       </p>
     </div>
