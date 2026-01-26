@@ -10,6 +10,7 @@ Usage:
     python crawl.py --source lafriche  # Run specific source (by ID)
     python crawl.py --dry-run          # Preview without writing files
     python crawl.py --log-level DEBUG  # Verbose output
+    python crawl.py --skip-selection   # Skip selection criteria filtering
 """
 
 import sys
@@ -22,6 +23,7 @@ from src.config import ConfigurationError, load_sources_config
 from src.generators import MarkdownGenerator
 from src.logger import get_logger, setup_logging
 from src.parsers import get_parser
+from src.selection import load_selection_criteria
 from src.utils import HTTPClient, ImageDownloader
 
 
@@ -69,18 +71,28 @@ def load_config(config_path: Path) -> dict:
     default=False,
     help="List all configured sources and exit",
 )
+@click.option(
+    "--skip-selection",
+    is_flag=True,
+    default=False,
+    help="Skip selection criteria filtering (include all events)",
+)
 def main(
     config: Path,
     source: str | None,
     dry_run: bool,
     log_level: str | None,
     list_sources: bool,
+    skip_selection: bool,
 ):
     """
     Crawl Marseille event websites and generate Hugo content.
 
     This crawler fetches events from configured sources, extracts event data,
     downloads images, and generates Hugo-compatible markdown files.
+
+    Events are filtered using selection criteria defined in
+    config/selection-criteria.yaml before being added to the calendar.
     """
     # Load main configuration
     cfg = load_config(config)
@@ -102,6 +114,16 @@ def main(
     except ConfigurationError as e:
         logger.error(f"Configuration error: {e}")
         sys.exit(1)
+
+    # Load selection criteria
+    selection_file = config_dir / cfg.get(
+        "selection_file", "config/selection-criteria.yaml"
+    )
+    if skip_selection:
+        logger.info("Selection criteria filtering DISABLED")
+        selection_criteria = None
+    else:
+        selection_criteria = load_selection_criteria(selection_file)
 
     # Handle --list-sources
     if list_sources:
@@ -172,6 +194,9 @@ def main(
 
     # Process each source
     total_events = 0
+    total_accepted = 0
+    total_rejected = 0
+
     for src in sources_list:
         if not src.enabled:
             logger.debug(f"Skipping disabled source: {src.name}")
@@ -194,6 +219,7 @@ def main(
                 k: v for k, v in vars(src.selectors).items() if v is not None
             },
             "category_map": src.categories_map,
+            "selection_criteria": selection_criteria,
         }
 
         try:
@@ -209,7 +235,18 @@ def main(
             event_count = len(events)
             total_events += event_count
 
-            logger.info(f"  Found {event_count} events from {src.name}")
+            # Track selection stats if available
+            if hasattr(parser, "selection_stats"):
+                stats = parser.selection_stats
+                total_accepted += stats.get("accepted", event_count)
+                total_rejected += stats.get("rejected", 0)
+                logger.info(
+                    f"  {src.name}: {stats.get('accepted', event_count)} accepted, "
+                    f"{stats.get('rejected', 0)} rejected"
+                )
+            else:
+                total_accepted += event_count
+                logger.info(f"  Found {event_count} events from {src.name}")
 
         except ValueError as e:
             logger.warning(f"Parser not available for {src.name}: {e}")
@@ -219,7 +256,9 @@ def main(
                 logger.exception("Full traceback:")
 
     # Summary
-    logger.info(f"Crawl complete. Total events processed: {total_events}")
+    logger.info(f"Crawl complete. Total events processed: {total_accepted}")
+    if total_rejected > 0:
+        logger.info(f"Events rejected by selection criteria: {total_rejected}")
 
     if dry_run:
         logger.info("DRY RUN - No files were written")

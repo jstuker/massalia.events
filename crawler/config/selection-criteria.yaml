@@ -1,0 +1,296 @@
+# Selection Criteria for Massalia Events Crawler
+# ==============================================
+# This document defines which events should be included in the calendar.
+# It is continuously refined based on crawling results.
+#
+# Events are evaluated against these criteria before being added.
+# Rejected events are logged but not saved.
+
+version: "1.0"
+last_updated: "2026-01-26"
+
+# ============================================================================
+# Geographic Scope
+# ============================================================================
+# Focus on Marseille and nearby cultural venues
+
+geography:
+  # Primary location - events must be in or near this city
+  required_location: "Marseille"
+
+  # Nearby cities/areas to include
+  include_nearby:
+    - "Aix-en-Provence"
+    - "Aubagne"
+    - "Cassis"
+    - "La Ciotat"
+    - "Martigues"
+    - "Vitrolles"
+    - "Istres"
+    - "Salon-de-Provence"
+
+  # Locations to explicitly exclude (if detected)
+  exclude_locations:
+    - "Paris"
+    - "Lyon"
+    - "Nice"
+    - "Toulouse"
+    - "Bordeaux"
+    - "Lille"
+    - "Strasbourg"
+    - "Nantes"
+
+  # Keywords that indicate local events (positive signal)
+  local_keywords:
+    - "marseille"
+    - "13001"
+    - "13002"
+    - "13003"
+    - "13004"
+    - "13005"
+    - "13006"
+    - "13007"
+    - "13008"
+    - "13009"
+    - "13010"
+    - "13011"
+    - "13012"
+    - "13013"
+    - "13014"
+    - "13015"
+    - "13016"
+    - "bouches-du-rhône"
+    - "vieux-port"
+    - "la friche"
+    - "mucem"
+
+# ============================================================================
+# Date Constraints
+# ============================================================================
+# Only import events within a reasonable time window
+
+dates:
+  # Minimum days ahead (0 = include today)
+  min_days_ahead: 0
+
+  # Maximum days ahead (don't import events too far in future)
+  max_days_ahead: 90
+
+  # Automatically exclude past events
+  exclude_past: true
+
+# ============================================================================
+# Event Type Filters
+# ============================================================================
+# Define which types of events to include or exclude
+
+event_types:
+  # Event types/categories to include
+  include:
+    - "concert"
+    - "spectacle"
+    - "exposition"
+    - "théâtre"
+    - "theatre"
+    - "danse"
+    - "festival"
+    - "vernissage"
+    - "performance"
+    - "projection"
+    - "cinéma"
+    - "musique"
+    - "art"
+    - "bal"
+    - "soirée"
+    - "fête"
+    - "carnaval"
+    - "opéra"
+    - "cirque"
+    - "humour"
+    - "one man show"
+
+  # Event types to exclude (educational, professional, etc.)
+  exclude:
+    - "formation"
+    - "cours"
+    - "stage professionnel"
+    - "conférence professionnelle"
+    - "séminaire"
+    - "réunion"
+    - "assemblée générale"
+    - "salon professionnel"
+    - "job dating"
+    - "recrutement"
+
+# ============================================================================
+# Keyword Filters
+# ============================================================================
+# Fine-grained control using keyword matching
+
+keywords:
+  # Positive keywords - boost inclusion likelihood
+  # Events containing these are more likely to be included
+  positive:
+    - "gratuit"
+    - "entrée libre"
+    - "free"
+    - "vernissage"
+    - "première"
+    - "avant-première"
+    - "ouverture"
+    - "inauguration"
+    - "festival"
+    - "live"
+    - "en direct"
+
+  # Negative keywords - trigger exclusion
+  # Events containing these will be rejected
+  negative:
+    - "complet"
+    - "sold out"
+    - "annulé"
+    - "cancelled"
+    - "reporté"
+    - "postponed"
+    - "privé"
+    - "private"
+    - "réservé aux adhérents"
+    - "membres uniquement"
+    - "sur invitation"
+    - "invitation only"
+    - "fermé"
+    - "closed"
+
+# ============================================================================
+# Required Fields
+# ============================================================================
+# Events must have these fields to be valid
+
+required_fields:
+  - "name"
+  - "date"
+
+# Optional but recommended fields
+recommended_fields:
+  - "location"
+  - "description"
+  - "url"
+
+# ============================================================================
+# Category Mapping
+# ============================================================================
+# Map source categories to our standard taxonomy
+# Standard categories: danse, musique, theatre, art, communaute
+
+category_mapping:
+  # Default category if no match found
+  default: "communaute"
+
+  # Explicit mappings (source category → our category)
+  mappings:
+    # Music
+    "concert": "musique"
+    "musique": "musique"
+    "music": "musique"
+    "dj": "musique"
+    "dj set": "musique"
+    "électro": "musique"
+    "electro": "musique"
+    "jazz": "musique"
+    "rock": "musique"
+    "hip-hop": "musique"
+    "rap": "musique"
+    "classique": "musique"
+    "opéra": "musique"
+    "chorale": "musique"
+
+    # Theatre
+    "spectacle": "theatre"
+    "théâtre": "theatre"
+    "theatre": "theatre"
+    "comédie": "theatre"
+    "tragédie": "theatre"
+    "one man show": "theatre"
+    "humour": "theatre"
+    "stand-up": "theatre"
+    "cirque": "theatre"
+    "marionnettes": "theatre"
+    "conte": "theatre"
+
+    # Dance
+    "danse": "danse"
+    "dance": "danse"
+    "ballet": "danse"
+    "contemporain": "danse"
+    "hip hop": "danse"
+    "flamenco": "danse"
+    "tango": "danse"
+    "salsa": "danse"
+    "bal": "danse"
+
+    # Art
+    "exposition": "art"
+    "expo": "art"
+    "art": "art"
+    "vernissage": "art"
+    "galerie": "art"
+    "musée": "art"
+    "photographie": "art"
+    "photo": "art"
+    "peinture": "art"
+    "sculpture": "art"
+    "installation": "art"
+    "street art": "art"
+    "cinéma": "art"
+    "projection": "art"
+    "film": "art"
+
+    # Community
+    "festival": "communaute"
+    "fête": "communaute"
+    "marché": "communaute"
+    "brocante": "communaute"
+    "vide-grenier": "communaute"
+    "carnaval": "communaute"
+    "défilé": "communaute"
+    "atelier": "communaute"
+    "workshop": "communaute"
+    "rencontre": "communaute"
+    "conférence": "communaute"
+    "débat": "communaute"
+    "lecture": "communaute"
+
+# ============================================================================
+# Examples (for documentation)
+# ============================================================================
+# These are examples to illustrate the criteria, not used in code
+
+examples:
+  included:
+    - event: "Concert Jazz à La Friche"
+      reason: "Music event at known Marseille venue"
+
+    - event: "Exposition La Relève au MUCEM"
+      reason: "Art exhibition at Marseille museum"
+
+    - event: "Festival de danse contemporaine"
+      reason: "Dance event, positive category match"
+
+    - event: "Vernissage gratuit - Galerie du Panier"
+      reason: "Free art event with positive keywords"
+
+  excluded:
+    - event: "Formation Python pour débutants"
+      reason: "Contains excluded type 'formation'"
+
+    - event: "Soirée privée au Château"
+      reason: "Contains negative keyword 'privé'"
+
+    - event: "Concert à Paris - Olympia"
+      reason: "Outside geographic scope (Paris)"
+
+    - event: "Spectacle complet"
+      reason: "Contains negative keyword 'complet'"
+
+    - event: "Conférence professionnelle RH"
+      reason: "Professional conference, excluded type"
