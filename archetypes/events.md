@@ -58,7 +58,7 @@ categories:
   - ""
 
 # Lieu de l'événement - slug du lieu
-# Exemple: "klap-maison-pour-la-danse"
+# Valeurs: klap, la-friche, la-criee, chateau-de-servieres, notre-dame-de-la-garde
 locations:
   - ""
 
