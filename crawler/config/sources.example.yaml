@@ -1,0 +1,126 @@
+# Example Source Configuration
+# ============================
+# This file documents all available configuration options for event sources.
+# Copy this file or add entries to sources.yaml to configure new sources.
+#
+# Required fields: name, id, url, parser
+# Optional fields: enabled, rate_limit, selectors, categories_map
+
+sources:
+  # ========================================================================
+  # EXAMPLE: Fully documented source with all options
+  # ========================================================================
+  - name: "Example Event Source"
+    # Human-readable name displayed in logs and reports
+
+    id: "example-source"
+    # Unique identifier (lowercase, hyphens allowed)
+    # Used in sourceId field: "example-source:event-123"
+    # Must match pattern: ^[a-z0-9-]+$
+
+    url: "https://example.com/events"
+    # Base URL of the events page to crawl
+    # Can be the main agenda page or a specific section
+
+    parser: "example"
+    # Parser module to use (in src/parsers/)
+    # Must match an existing parser class name
+    # Available parsers: lafriche, kelemenis, shotgun, lacriee, etc.
+
+    enabled: true
+    # Whether to crawl this source (default: true)
+    # Set to false to temporarily disable without removing
+
+    # --------------------------------------------------------------------
+    # Rate Limiting (optional)
+    # Controls request frequency to avoid overloading source servers
+    # --------------------------------------------------------------------
+    rate_limit:
+      requests_per_second: 1
+      # Maximum requests per second (default: 1)
+      # Lower values are more polite to servers
+      # Range: 0.1 to 10
+
+      delay_between_pages: 2.0
+      # Delay in seconds between page requests (default: 2)
+      # Used when paginating through event lists
+      # Range: 0 to 60
+
+    # --------------------------------------------------------------------
+    # CSS Selectors (optional)
+    # Override default parser selectors for this source
+    # Useful when a source's HTML structure differs from parser defaults
+    # --------------------------------------------------------------------
+    selectors:
+      event_list: ".events-container"
+      # Container element holding all event cards
+
+      event_item: ".event-card"
+      # Individual event card within the list
+
+      event_title: "h2.title"
+      # Event title/name
+
+      event_date: ".date"
+      # Date element (text will be parsed)
+
+      event_time: ".time"
+      # Time element (text will be parsed)
+
+      event_link: "a.details"
+      # Link to event detail page
+
+      event_image: "img.hero"
+      # Event hero/thumbnail image
+
+      event_description: ".excerpt"
+      # Short description or teaser text
+
+      event_category: ".category"
+      # Category/tag element
+
+    # --------------------------------------------------------------------
+    # Category Mapping (optional)
+    # Maps source-specific category names to our standard taxonomy
+    # Standard categories: danse, musique, theatre, art, communaute
+    # --------------------------------------------------------------------
+    categories_map:
+      "Concert": "musique"
+      "Spectacle": "theatre"
+      "Danse": "danse"
+      "Exposition": "art"
+      "Atelier": "communaute"
+      "Performance": "theatre"
+      "Festival": "musique"
+      # Source category (case-sensitive) -> Standard category
+
+  # ========================================================================
+  # MINIMAL: Source with only required fields
+  # ========================================================================
+  - name: "Minimal Source"
+    id: "minimal"
+    url: "https://minimal.example.com/events"
+    parser: "generic"
+    # Uses default settings for rate_limit, selectors, and categories
+
+# ========================================================================
+# Defaults Section (optional)
+# Settings applied to all sources unless overridden
+# ========================================================================
+defaults:
+  enabled: true
+  rate_limit:
+    requests_per_second: 1
+    delay_between_pages: 2.0
+
+# ========================================================================
+# Environment Variable Overrides
+# ========================================================================
+# Sensitive data can be provided via environment variables:
+#
+# CRAWLER_SOURCE_<ID>_URL - Override URL for a specific source
+# CRAWLER_SOURCE_<ID>_ENABLED - Override enabled flag (true/false)
+#
+# Example:
+#   export CRAWLER_SOURCE_SHOTGUN_ENABLED=false
+#   export CRAWLER_SOURCE_LAFRICHE_URL=https://staging.lafriche.org/agenda
