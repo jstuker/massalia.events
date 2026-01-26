@@ -53,7 +53,7 @@ description: ""
 # -----------------------------------------------------------------------------
 
 # Catégorie de l'événement
-# Valeurs: dance, music, theatre, art, community
+# Valeurs: danse, musique, theatre, art, communaute
 categories:
   - ""
 

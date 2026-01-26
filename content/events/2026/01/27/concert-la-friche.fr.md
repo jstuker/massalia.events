@@ -11,7 +11,7 @@ startTime: "21:00"
 
 # Taxonomies
 categories:
-  - "music"
+  - "musique"
 locations:
   - "la-friche"
 dates:

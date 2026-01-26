@@ -35,12 +35,12 @@
 
 [[subnavigation]]
   name = "Danse"
-  pageRef = "categories/dance"
+  pageRef = "categories/danse"
   weight = 10
 
 [[subnavigation]]
   name = "Musique"
-  pageRef = "categories/music"
+  pageRef = "categories/musique"
   weight = 20
 
 [[subnavigation]]
@@ -55,7 +55,7 @@
 
 [[subnavigation]]
   name = "Communauté"
-  pageRef = "categories/community"
+  pageRef = "categories/communaute"
   weight = 50
 
 # -- Footer Menu --
