@@ -1,0 +1,44 @@
+# Crawler Configuration
+# ====================
+
+# Output directories (relative to crawler/ directory)
+output_dir: "../content/events"
+image_dir: "../static/images/events"
+
+# Logging configuration
+log_level: "INFO"
+log_file: "crawler.log"
+
+# HTTP settings
+http:
+  timeout: 30
+  retry_count: 3
+  retry_delay: 1.0
+  rate_limit_delay: 1.0
+  user_agent: "MassaliaEventsCrawler/1.0 (+https://massalia.events)"
+
+# Image processing settings
+image_settings:
+  max_width: 1200
+  quality: 85
+  format: "webp"
+
+# Event sources
+sources:
+  - name: "La Friche"
+    url: "https://lafriche.org/agenda"
+    parser: "lafriche"
+    enabled: true
+    # Category mapping for this source
+    category_map:
+      "Spectacle": "theatre"
+      "Concert": "musique"
+      "Danse": "danse"
+      "Exposition": "art"
+      "Atelier": "communaute"
+
+  # Add more sources here:
+  # - name: "La Criee"
+  #   url: "https://www.theatre-lacriee.com/saison"
+  #   parser: "lacriee"
+  #   enabled: false
