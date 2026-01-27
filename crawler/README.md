@@ -33,39 +33,87 @@ The crawler fetches events from configured sources, extracts event data, downloa
 
 ## Usage
 
-### Basic Usage
+### Quick Start
 
-Run all enabled sources:
 ```bash
+# Show help and available commands
 python crawl.py
+
+# Run full crawl
+python crawl.py run
+
+# Preview what would be created (dry run)
+python crawl.py run --dry-run
+
+# List configured sources
+python crawl.py list-sources
+
+# Check configuration
+python crawl.py validate
+
+# Show last crawl results
+python crawl.py status
+
+# Clean expired events
+python crawl.py clean
 ```
 
-### Command Line Options
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `run` | Execute crawler for all/specific sources |
+| `list-sources` | Show configured event sources |
+| `validate` | Check configuration for errors |
+| `status` | Show last crawl results |
+| `clean` | Mark old events as expired |
+
+### Global Options
 
 | Option | Short | Description |
 |--------|-------|-------------|
 | `--config PATH` | `-c` | Path to configuration file (default: config.yaml) |
-| `--source NAME` | `-s` | Run only the specified source by ID or parser name |
-| `--dry-run` | `-n` | Preview actions without writing files |
 | `--log-level LEVEL` | `-l` | Override log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) |
 | `--log-file PATH` | | Override log file path from config |
-| `--list-sources` | | List all configured sources and exit |
+| `--version` | | Show version and exit |
+| `--help` | | Show help message |
+
+### Run Command Options
+
+| Option | Short | Description |
+|--------|-------|-------------|
+| `--source NAME` | `-s` | Run only the specified source by ID |
+| `--dry-run` | `-n` | Preview actions without writing files |
 | `--skip-selection` | | Skip selection criteria filtering (include all events) |
+
+### Clean Command Options
+
+| Option | Short | Description |
+|--------|-------|-------------|
+| `--before DATE` | `-b` | Clean events before this date (default: today) |
+| `--dry-run` | `-n` | Preview what would be cleaned |
+| `--delete` | | Delete files instead of marking as expired |
 
 ### Examples
 
 ```bash
-# Run only La Friche parser
-python crawl.py --source lafriche
+# Run specific source
+python crawl.py run --source lafriche
 
-# Preview what would be created
-python crawl.py --dry-run
+# Preview crawl results
+python crawl.py run --dry-run
 
 # Verbose output for debugging
-python crawl.py --log-level DEBUG
+python crawl.py run --log-level DEBUG
 
-# Use custom config file
-python crawl.py --config /path/to/config.yaml
+# Clean events older than a specific date
+python crawl.py clean --before 2026-01-01
+
+# Preview what would be cleaned
+python crawl.py clean --dry-run
+
+# Delete old event files instead of marking expired
+python crawl.py clean --delete
 ```
 
 ## Logging
