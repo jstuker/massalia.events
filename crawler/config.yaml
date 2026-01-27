@@ -8,7 +8,7 @@ sources_file: "config/sources.yaml"
 
 # Output directories (relative to crawler/ directory)
 output_dir: "../content/events"
-image_dir: "../static/images/events"
+image_dir: "../assets/images/events"
 
 # Logging configuration
 # log_level: DEBUG, INFO, WARNING, ERROR, CRITICAL
@@ -18,7 +18,7 @@ image_dir: "../static/images/events"
 # - ERROR: Failures that skip items (parse errors, download fails)
 # - CRITICAL: Fatal errors that stop execution
 logging:
-  log_level: "INFO"
+  log_level: "DEBUG"
   log_file: "logs/crawler.log"
   log_format: "text"  # "text" for human-readable, "json" for structured
   max_file_size: 10485760  # 10MB in bytes
