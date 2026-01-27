@@ -51,9 +51,8 @@
 
 {{/* Event Cards Grid - uses same event-card.html partial as homepage */}}
 {{ if gt (len $activeEvents) 0 }}
-  {{/* Sort events by date, then by start time */}}
+  {{/* Sort events chronologically (soonest first) */}}
   {{ $sortedEvents := sort $activeEvents ".Date" "asc" }}
-  {{ $sortedEvents = sort $sortedEvents ".Params.startTime" "asc" }}
 
   <section class="event-cards-container" role="region" aria-label="Liste des événements">
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mx-auto max-w-5xl">
