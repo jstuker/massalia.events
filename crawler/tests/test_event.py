@@ -56,7 +56,9 @@ class TestEvent:
         return Event(
             name="Concert de Jazz",
             event_url="https://lafriche.org/concert-jazz",
-            start_datetime=datetime(2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")),
+            start_datetime=datetime(
+                2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")
+            ),
             description="Un concert de jazz exceptionnel à La Friche.",
             categories=["Musique"],
             locations=["La Friche"],

@@ -385,7 +385,9 @@ class EventClassifier:
                 keyword_lower = keyword.lower()
                 if keyword_lower in name_norm:
                     scores[category] += 2.0
-                    logger.debug(f"Name keyword match: '{keyword}' → '{category}' (+2.0)")
+                    logger.debug(
+                        f"Name keyword match: '{keyword}' → '{category}' (+2.0)"
+                    )
 
         # 4. Keyword matching in description
         for category, keywords in self.keyword_mappings.items():
@@ -393,7 +395,9 @@ class EventClassifier:
                 keyword_lower = keyword.lower()
                 if keyword_lower in desc_norm and keyword_lower not in name_norm:
                     scores[category] += 1.0
-                    logger.debug(f"Desc keyword match: '{keyword}' → '{category}' (+1.0)")
+                    logger.debug(
+                        f"Desc keyword match: '{keyword}' → '{category}' (+1.0)"
+                    )
 
         # Find best category
         sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
@@ -410,9 +414,7 @@ class EventClassifier:
             confidence = 0.0
 
         # Build alternatives list
-        alternatives = [
-            (cat, score) for cat, score in sorted_scores[1:4] if score > 0
-        ]
+        alternatives = [(cat, score) for cat, score in sorted_scores[1:4] if score > 0]
 
         # Use default if no clear match
         if best_score == 0:

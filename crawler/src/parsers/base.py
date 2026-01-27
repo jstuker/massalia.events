@@ -187,9 +187,7 @@ class ConfigurableEventParser:
         logger.warning("No event items found with any selector")
         return []
 
-    def _parse_event_item(
-        self, item: "Tag", parser: HTMLParser
-    ) -> ParsedEvent | None:
+    def _parse_event_item(self, item: "Tag", parser: HTMLParser) -> ParsedEvent | None:
         """
         Parse a single event item element.
 
@@ -379,9 +377,7 @@ class ConfigurableEventParser:
 
         return f"{self.source_id}:{event_id}"
 
-    def parse_and_convert(
-        self, html: str, default_time: str = "20:00"
-    ) -> list[Event]:
+    def parse_and_convert(self, html: str, default_time: str = "20:00") -> list[Event]:
         """
         Parse HTML and return list of Event models.
 

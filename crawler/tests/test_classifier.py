@@ -243,9 +243,7 @@ class TestEventClassifierCustomMappings:
     """Tests for custom configuration."""
 
     def test_custom_source_mapping(self):
-        classifier = EventClassifier(
-            source_mappings={"spectacle vivant": "theatre"}
-        )
+        classifier = EventClassifier(source_mappings={"spectacle vivant": "theatre"})
         result = classifier.classify(
             name="Performance",
             source_category="Spectacle Vivant",
@@ -253,9 +251,7 @@ class TestEventClassifierCustomMappings:
         assert result.category == "theatre"
 
     def test_custom_venue_mapping(self):
-        classifier = EventClassifier(
-            venue_mappings={"salle xyz": "musique"}
-        )
+        classifier = EventClassifier(venue_mappings={"salle xyz": "musique"})
         result = classifier.classify(
             name="Événement",
             location="Salle XYZ",

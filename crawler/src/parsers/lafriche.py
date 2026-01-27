@@ -143,9 +143,7 @@ class LaFricheParser(BaseCrawler):
 
         event_time = parser.parse_time(time_text) or "20:00"
         hour, minute = map(int, event_time.split(":"))
-        event_datetime = event_date.replace(
-            hour=hour, minute=minute, tzinfo=PARIS_TZ
-        )
+        event_datetime = event_date.replace(hour=hour, minute=minute, tzinfo=PARIS_TZ)
 
         # Extract description
         description = parser.get_text(card, selectors.description)
@@ -177,7 +175,9 @@ class LaFricheParser(BaseCrawler):
             source_id=source_id,
         )
 
-    def _try_parse_date_from_text(self, text: str, parser: HTMLParser) -> datetime | None:
+    def _try_parse_date_from_text(
+        self, text: str, parser: HTMLParser
+    ) -> datetime | None:
         """
         Try to extract date from text content.
 
