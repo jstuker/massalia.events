@@ -33,5 +33,8 @@ __pycache__/
 .ruff_cache/
 .pytest_cache/
 
+# Crawler
+.crawl_status.json
+
 # Logs
 *.log
