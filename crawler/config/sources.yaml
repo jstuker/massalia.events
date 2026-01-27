@@ -9,8 +9,8 @@ sources:
   # Major dance venue in Marseille
   - name: "KLAP Maison pour la danse"
     id: "klap"
-    url: "https://www.kelemenis.fr/fr/les-spectacles"
-    parser: "kelemenis"
+    url: "https://www.kelemenis.fr/fr/agenda"
+    parser: "klemenis"
     enabled: true
     rate_limit:
       requests_per_second: 1

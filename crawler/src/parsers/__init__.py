@@ -1,10 +1,12 @@
 """Site-specific event parsers."""
 
 from .base import ConfigurableEventParser, ParsedEvent, SelectorConfig
+from .klemenis import KlemenisParser
 from .lafriche import LaFricheParser
 
 PARSERS = {
     "lafriche": LaFricheParser,
+    "klemenis": KlemenisParser,
     "generic": ConfigurableEventParser,
 }
 
@@ -44,6 +46,7 @@ __all__ = [
     "ParsedEvent",
     "SelectorConfig",
     "LaFricheParser",
+    "KlemenisParser",
     "get_parser",
     "list_parsers",
 ]
