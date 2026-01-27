@@ -273,9 +273,7 @@ class EventDeduplicator:
             should_merge=should_merge,
         )
 
-    def merge_event(
-        self, existing_file: Path, new_event: "Event"
-    ) -> MergeResult:
+    def merge_event(self, existing_file: Path, new_event: "Event") -> MergeResult:
         """
         Merge new event data into existing event file.
 

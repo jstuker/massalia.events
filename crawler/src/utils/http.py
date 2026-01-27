@@ -308,7 +308,9 @@ class HTTPClient:
                 # Check for server errors (5xx) - these should be retried
                 if response.status_code >= 500:
                     last_error = f"HTTP {response.status_code}"
-                    logger.warning(f"HTTP {response.status_code} for {url}, retrying...")
+                    logger.warning(
+                        f"HTTP {response.status_code} for {url}, retrying..."
+                    )
                     # Fall through to retry logic
                 else:
                     result = FetchResult(

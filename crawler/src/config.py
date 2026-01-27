@@ -143,7 +143,9 @@ def load_sources_config(config_path: Path) -> SourcesConfig:
             source_name = raw_source.get("name", f"source #{i + 1}")
             raise ConfigurationError(f"Invalid source '{source_name}': {e}") from e
 
-    logger.info(f"Loaded {len(sources)} sources ({len([s for s in sources if s.enabled])} enabled)")
+    logger.info(
+        f"Loaded {len(sources)} sources ({len([s for s in sources if s.enabled])} enabled)"
+    )
 
     return SourcesConfig(sources=sources, defaults=defaults)
 
@@ -227,7 +229,11 @@ def validate_sources_config(config: dict, config_dir: Path) -> None:
         jsonschema.validate(instance=config, schema=schema)
     except jsonschema.ValidationError as e:
         # Format a helpful error message
-        path = " -> ".join(str(p) for p in e.absolute_path) if e.absolute_path else "root"
-        raise ConfigurationError(f"Configuration validation failed at '{path}': {e.message}") from e
+        path = (
+            " -> ".join(str(p) for p in e.absolute_path) if e.absolute_path else "root"
+        )
+        raise ConfigurationError(
+            f"Configuration validation failed at '{path}': {e.message}"
+        ) from e
 
     logger.debug("Configuration validated against schema")

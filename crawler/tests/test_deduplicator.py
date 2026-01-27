@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from src.deduplicator import DuplicateResult, EventDeduplicator, MergeResult
+from src.deduplicator import DuplicateResult, EventDeduplicator
 from src.models.event import Event
 
 

@@ -1,6 +1,5 @@
 """Tests for HTML parser utilities."""
 
-
 import pytest
 
 from src.utils.parser import HTMLParser

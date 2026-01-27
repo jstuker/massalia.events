@@ -86,7 +86,9 @@ class SelectionCriteria:
     keywords: KeywordsConfig = field(default_factory=KeywordsConfig)
     required_fields: list[str] = field(default_factory=lambda: ["name", "date"])
     recommended_fields: list[str] = field(default_factory=list)
-    category_mapping: CategoryMappingConfig = field(default_factory=CategoryMappingConfig)
+    category_mapping: CategoryMappingConfig = field(
+        default_factory=CategoryMappingConfig
+    )
 
     def evaluate(
         self,
@@ -112,12 +114,14 @@ class SelectionCriteria:
             SelectionResult with accepted status and reason
         """
         # Combine all text for keyword matching
-        all_text = " ".join([
-            name or "",
-            location or "",
-            description or "",
-            category or "",
-        ]).lower()
+        all_text = " ".join(
+            [
+                name or "",
+                location or "",
+                description or "",
+                category or "",
+            ]
+        ).lower()
 
         # 1. Check required fields
         result = self._check_required_fields(name, date, location)

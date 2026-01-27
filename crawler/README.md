@@ -45,9 +45,12 @@ python crawl.py
 | Option | Short | Description |
 |--------|-------|-------------|
 | `--config PATH` | `-c` | Path to configuration file (default: config.yaml) |
-| `--source NAME` | `-s` | Run only the specified source by parser name |
+| `--source NAME` | `-s` | Run only the specified source by ID or parser name |
 | `--dry-run` | `-n` | Preview actions without writing files |
-| `--log-level LEVEL` | `-l` | Override log level (DEBUG, INFO, WARNING, ERROR) |
+| `--log-level LEVEL` | `-l` | Override log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) |
+| `--log-file PATH` | | Override log file path from config |
+| `--list-sources` | | List all configured sources and exit |
+| `--skip-selection` | | Skip selection criteria filtering (include all events) |
 
 ### Examples
 
@@ -65,9 +68,67 @@ python crawl.py --log-level DEBUG
 python crawl.py --config /path/to/config.yaml
 ```
 
+## Logging
+
+The crawler includes a comprehensive logging system with configurable levels, colored console output, and optional file logging with rotation.
+
+### Log Levels
+
+| Level | Use For |
+|-------|---------|
+| DEBUG | Detailed info for debugging (URLs, selectors, data) |
+| INFO | Normal operations (sources crawled, events created) |
+| WARNING | Non-critical issues (missing fields, retries) |
+| ERROR | Failures that skip items (parse errors, download fails) |
+| CRITICAL | Fatal errors that stop execution |
+
+### Example Log Output
+
+```
+2026-01-27 10:30:15 INFO     [src.crawl] Massalia Events Crawler starting...
+2026-01-27 10:30:15 INFO     [src.config] Loaded 6 sources (3 enabled)
+2026-01-27 10:30:16 INFO     [src.crawler] Starting crawl for La Friche
+2026-01-27 10:30:18 INFO     [src.parsers.base] Parsed 12 events from lafriche
+2026-01-27 10:30:18 DEBUG    [src.selection] Evaluating: Concert Jazz
+2026-01-27 10:30:18 INFO     [src.selection] INCLUDE: Concert Jazz -> Musique
+2026-01-27 10:30:19 WARNING  [src.selection] EXCLUDE: Formation Python - excluded type
+2026-01-27 10:30:20 INFO     [src.generators.markdown] Created: content/events/2026/01/26/concert-jazz.fr.md
+2026-01-27 10:30:45 INFO     [src.crawl] Crawl complete. Total events processed: 8
+```
+
+### CLI Log Level Override
+
+```bash
+# Verbose debugging output
+python crawl.py --log-level DEBUG
+
+# Quiet mode (only warnings and errors)
+python crawl.py --log-level WARNING
+
+# Custom log file location
+python crawl.py --log-file /var/log/crawler.log
+```
+
 ## Configuration
 
 The crawler is configured via `config.yaml`. Key settings:
+
+### Logging Configuration
+
+```yaml
+logging:
+  log_level: "INFO"           # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_file: "logs/crawler.log"  # Log file path (optional)
+  log_format: "text"          # "text" or "json" for structured logging
+  max_file_size: 10485760     # 10MB - file rotates when exceeded
+  backup_count: 5             # Number of rotated files to keep
+```
+
+**Notes:**
+- Console output is always human-readable with ANSI colors
+- File logging uses rotation to prevent unbounded growth
+- JSON format is useful for log aggregation systems
+- Log files are created relative to the config file directory
 
 ### Output Directories
 

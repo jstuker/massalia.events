@@ -1,9 +1,9 @@
 """Tests for the markdown generator."""
 
 import tempfile
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -86,7 +86,9 @@ class TestMarkdownGenerator:
         return Event(
             name="Concert de Jazz",
             event_url="https://lafriche.org/concert-jazz",
-            start_datetime=datetime(2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")),
+            start_datetime=datetime(
+                2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")
+            ),
             description="Un concert de jazz exceptionnel.",
             categories=["musique"],
             locations=["la-friche"],
@@ -263,21 +265,27 @@ class TestMarkdownGeneratorBatch:
             Event(
                 name="Concert Jazz",
                 event_url="https://example.com/jazz",
-                start_datetime=datetime(2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")),
+                start_datetime=datetime(
+                    2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")
+                ),
                 categories=["musique"],
                 locations=["opera"],
             ),
             Event(
                 name="Exposition Art",
                 event_url="https://example.com/art",
-                start_datetime=datetime(2026, 1, 27, 10, 0, tzinfo=ZoneInfo("Europe/Paris")),
+                start_datetime=datetime(
+                    2026, 1, 27, 10, 0, tzinfo=ZoneInfo("Europe/Paris")
+                ),
                 categories=["art"],
                 locations=["mucem"],
             ),
             Event(
                 name="Spectacle Danse",
                 event_url="https://example.com/danse",
-                start_datetime=datetime(2026, 1, 28, 19, 0, tzinfo=ZoneInfo("Europe/Paris")),
+                start_datetime=datetime(
+                    2026, 1, 28, 19, 0, tzinfo=ZoneInfo("Europe/Paris")
+                ),
                 categories=["danse"],
                 locations=["klap"],
             ),
@@ -425,7 +433,9 @@ class TestMarkdownGeneratorWithDeduplicator:
         return Event(
             name="Concert Test",
             event_url="https://example.com/concert",
-            start_datetime=datetime(2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")),
+            start_datetime=datetime(
+                2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")
+            ),
             categories=["musique"],
         )
 
@@ -527,7 +537,9 @@ class TestMarkdownGeneratorFrenchDates:
         event = Event(
             name="Test Event",
             event_url="https://example.com",
-            start_datetime=datetime(2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")),
+            start_datetime=datetime(
+                2026, 1, 26, 20, 0, tzinfo=ZoneInfo("Europe/Paris")
+            ),
             categories=["test"],
         )
 
@@ -543,7 +555,9 @@ class TestMarkdownGeneratorFrenchDates:
         event = Event(
             name="Tuesday Event",
             event_url="https://example.com/tue",
-            start_datetime=datetime(2026, 1, 27, 20, 0, tzinfo=ZoneInfo("Europe/Paris")),
+            start_datetime=datetime(
+                2026, 1, 27, 20, 0, tzinfo=ZoneInfo("Europe/Paris")
+            ),
             categories=["test"],
         )
         result = generator.generate(event)
@@ -554,7 +568,9 @@ class TestMarkdownGeneratorFrenchDates:
         event2 = Event(
             name="Saturday Event",
             event_url="https://example.com/sat",
-            start_datetime=datetime(2026, 1, 31, 20, 0, tzinfo=ZoneInfo("Europe/Paris")),
+            start_datetime=datetime(
+                2026, 1, 31, 20, 0, tzinfo=ZoneInfo("Europe/Paris")
+            ),
             categories=["test"],
         )
         result2 = generator.generate(event2)

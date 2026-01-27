@@ -61,9 +61,17 @@ def load_config(config_path: Path) -> dict:
 @click.option(
     "--log-level",
     "-l",
-    type=click.Choice(["DEBUG", "INFO", "WARNING", "ERROR"], case_sensitive=False),
+    type=click.Choice(
+        ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"], case_sensitive=False
+    ),
     default=None,
     help="Override log level from config",
+)
+@click.option(
+    "--log-file",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Override log file path from config",
 )
 @click.option(
     "--list-sources",
@@ -82,6 +90,7 @@ def main(
     source: str | None,
     dry_run: bool,
     log_level: str | None,
+    log_file: Path | None,
     list_sources: bool,
     skip_selection: bool,
 ):
@@ -97,16 +106,34 @@ def main(
     # Load main configuration
     cfg = load_config(config)
 
-    # Setup logging
-    effective_log_level = log_level or cfg.get("log_level", "INFO")
+    # Get logging configuration (support both old flat format and new nested format)
+    logging_cfg = cfg.get("logging", {})
+    if not logging_cfg:
+        # Backwards compatibility with old flat config format
+        logging_cfg = {
+            "log_level": cfg.get("log_level", "INFO"),
+            "log_file": cfg.get("log_file"),
+        }
+
+    # CLI flags override config file settings
+    effective_log_level = log_level or logging_cfg.get("log_level", "INFO")
+    effective_log_file = log_file or logging_cfg.get("log_file")
+
+    # Get log directory relative to config file location
+    config_dir = config.parent
+    log_dir = config_dir if effective_log_file else None
+
     setup_logging(
         level=effective_log_level,
-        log_file=cfg.get("log_file"),
+        log_file=str(effective_log_file) if effective_log_file else None,
+        log_dir=log_dir,
+        log_format=logging_cfg.get("log_format", "text"),
+        max_bytes=logging_cfg.get("max_file_size", 10 * 1024 * 1024),
+        backup_count=logging_cfg.get("backup_count", 5),
     )
     logger = get_logger(__name__)
 
     # Load sources configuration
-    config_dir = config.parent
     sources_file = config_dir / cfg.get("sources_file", "config/sources.yaml")
 
     try:
@@ -132,8 +159,10 @@ def main(
         for src in sources_config.sources:
             status = "enabled" if src.enabled else "disabled"
             click.echo(f"  {src.id:20} {src.name:30} [{status}]")
-        click.echo(f"\nTotal: {len(sources_config.sources)} sources "
-                   f"({len(sources_config.get_enabled_sources())} enabled)")
+        click.echo(
+            f"\nTotal: {len(sources_config.sources)} sources "
+            f"({len(sources_config.get_enabled_sources())} enabled)"
+        )
         return
 
     logger.info("Massalia Events Crawler starting...")

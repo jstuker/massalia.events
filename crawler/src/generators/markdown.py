@@ -271,14 +271,18 @@ class MarkdownGenerator:
                 tags=base_event.tags,
                 event_group_id=group_id,
                 day_of=f"Jour {i} sur {total_days}",
-                source_id=f"{base_event.source_id}:day{i}" if base_event.source_id else None,
+                source_id=f"{base_event.source_id}:day{i}"
+                if base_event.source_id
+                else None,
                 draft=base_event.draft,
             )
 
             result = self.generate(day_event, check_duplicate=True)
             results.append(result)
 
-        logger.info(f"Generated {len(results)} files for multi-day event: {base_event.name}")
+        logger.info(
+            f"Generated {len(results)} files for multi-day event: {base_event.name}"
+        )
         return results
 
     def _build_content(self, front_matter: dict, body_content: str = "") -> str:

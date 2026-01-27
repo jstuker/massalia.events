@@ -105,8 +105,16 @@ class ImageDownloader:
         # Determine output path
         subdir = self._get_date_subdir(event_date) if self.use_date_dirs else ""
         filename = self._generate_filename(url, event_slug)
-        relative_path = f"/images/events/{subdir}{filename}" if subdir else f"/images/events/{filename}"
-        output_path = self.output_dir / subdir / filename if subdir else self.output_dir / filename
+        relative_path = (
+            f"/images/events/{subdir}{filename}"
+            if subdir
+            else f"/images/events/{filename}"
+        )
+        output_path = (
+            self.output_dir / subdir / filename
+            if subdir
+            else self.output_dir / filename
+        )
 
         # Check cache - skip if image already exists
         if output_path.exists() and not self.dry_run:
@@ -251,7 +259,9 @@ class ImageDownloader:
         new_width = int(width * ratio)
         new_height = int(height * ratio)
 
-        logger.debug(f"Resizing image from {width}x{height} to {new_width}x{new_height}")
+        logger.debug(
+            f"Resizing image from {width}x{height} to {new_width}x{new_height}"
+        )
         return img.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
     def _generate_filename(

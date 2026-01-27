@@ -11,13 +11,23 @@ def slugify(text: str) -> str:
     slug = text.lower()
     # Replace accented characters
     replacements = {
-        "é": "e", "è": "e", "ê": "e", "ë": "e",
-        "à": "a", "â": "a", "ä": "a",
-        "î": "i", "ï": "i",
-        "ô": "o", "ö": "o",
-        "û": "u", "ü": "u", "ù": "u",
+        "é": "e",
+        "è": "e",
+        "ê": "e",
+        "ë": "e",
+        "à": "a",
+        "â": "a",
+        "ä": "a",
+        "î": "i",
+        "ï": "i",
+        "ô": "o",
+        "ö": "o",
+        "û": "u",
+        "ü": "u",
+        "ù": "u",
         "ç": "c",
-        "œ": "oe", "æ": "ae",
+        "œ": "oe",
+        "æ": "ae",
     }
     for char, replacement in replacements.items():
         slug = slug.replace(char, replacement)
@@ -31,13 +41,27 @@ def slugify(text: str) -> str:
 def format_french_date(dt: datetime) -> str:
     """Format date as French taxonomy slug: 'jour-DD-mois'."""
     days = {
-        0: "lundi", 1: "mardi", 2: "mercredi", 3: "jeudi",
-        4: "vendredi", 5: "samedi", 6: "dimanche",
+        0: "lundi",
+        1: "mardi",
+        2: "mercredi",
+        3: "jeudi",
+        4: "vendredi",
+        5: "samedi",
+        6: "dimanche",
     }
     months = {
-        1: "janvier", 2: "fevrier", 3: "mars", 4: "avril",
-        5: "mai", 6: "juin", 7: "juillet", 8: "aout",
-        9: "septembre", 10: "octobre", 11: "novembre", 12: "decembre",
+        1: "janvier",
+        2: "fevrier",
+        3: "mars",
+        4: "avril",
+        5: "mai",
+        6: "juin",
+        7: "juillet",
+        8: "aout",
+        9: "septembre",
+        10: "octobre",
+        11: "novembre",
+        12: "decembre",
     }
     day_name = days[dt.weekday()]
     month_name = months[dt.month]
@@ -140,6 +164,7 @@ class Event:
 
         Returns a dict ready for YAML serialization.
         """
+
         # Format datetime with timezone for Hugo
         def format_datetime(dt: datetime) -> str:
             if dt.tzinfo:
