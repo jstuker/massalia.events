@@ -49,72 +49,20 @@
 {{ $allPages := .Pages }}
 {{ $activeEvents := partial "filter-active-events.html" (dict "pages" $allPages) }}
 
-{{/* Article Grid */}}
+{{/* Event Cards Grid - uses same event-card.html partial as homepage */}}
 {{ if gt (len $activeEvents) 0 }}
-  {{ $cardView := .Params.cardView | default (site.Params.term.cardView | default false) }}
-  {{ $cardViewScreenWidth := .Params.cardViewScreenWidth | default (site.Params.term.cardViewScreenWidth | default false) }}
-  {{ $groupByYear := .Params.groupByYear | default (site.Params.term.groupByYear | default false) }}
+  {{/* Sort events chronologically (soonest first) */}}
+  {{ $sortedEvents := sort $activeEvents ".Date" "asc" }}
 
-  {{ if not $cardView }}
-    <section class="space-y-10 w-full">
-      {{ range ($activeEvents.GroupByDate "2006") }}
-        {{ if $groupByYear }}
-          <h2 class="mt-12 text-2xl font-bold text-neutral-700 first:mt-8 dark:text-neutral-300">
-            {{ .Key }}
-          </h2>
-        {{ end }}
-        {{ range .Pages }}
-          {{ partial "article-link/simple.html" . }}
-        {{ end }}
-      {{ end }}
-    </section>
-  {{ else }}
-    {{ if $groupByYear }}
-      {{ range ($activeEvents.GroupByDate "2006") }}
-        {{ if $cardViewScreenWidth }}
-          <div class="relative w-screen max-w-[1600px] px-[30px] start-[calc(max(-50vw,-800px)+50%)]">
-            <h2 class="mt-12 mb-3 text-2xl font-bold text-neutral-700 first:mt-8 dark:text-neutral-300">
-              {{ .Key }}
-            </h2>
-            <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-              {{ range .Pages }}
-                {{ partial "article-link/card.html" . }}
-              {{ end }}
-            </section>
-          </div>
-        {{ else }}
-          <h2 class="mt-12 mb-3 text-2xl font-bold text-neutral-700 first:mt-8 dark:text-neutral-300">
-            {{ .Key }}
-          </h2>
-          <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {{ range .Pages }}
-              {{ partial "article-link/card.html" . }}
-            {{ end }}
-          </section>
-        {{ end }}
-      {{ end }}
-    {{ else }}
-      {{ if $cardViewScreenWidth }}
-        <div class="relative w-screen max-w-[1600px] px-[30px] start-[calc(max(-50vw,-800px)+50%)]">
-          <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-            {{ range ($activeEvents.GroupByDate "2006") }}
-              {{ range .Pages }}
-                {{ partial "article-link/card.html" . }}
-              {{ end }}
-            {{ end }}
-          </section>
+  <section class="event-cards-container" role="region" aria-label="Liste des événements">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mx-auto max-w-5xl">
+      {{ range $sortedEvents }}
+        <div class="event-card-wrapper w-full max-w-sm">
+          {{ partial "event-card.html" . }}
         </div>
-      {{ else }}
-        <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {{ range ($activeEvents.GroupByDate "2006") }}
-            {{ range .Pages }}
-              {{ partial "article-link/card.html" . }}
-            {{ end }}
-          {{ end }}
-        </section>
       {{ end }}
-    {{ end }}
-  {{ end }}
+    </div>
+  </section>
 {{ else }}
   <section class="mt-10 prose dark:prose-invert">
     <p class="py-8 border-t">
