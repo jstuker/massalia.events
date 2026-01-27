@@ -24,6 +24,7 @@ class ImageDownloader:
     Features:
     - Download images from URLs
     - Resize to max width/height while preserving aspect ratio
+    - Generate card thumbnails (383x215) cropped to 16:9 aspect ratio
     - Convert to WebP format for optimal file size
     - Organize images in date-based directories (YYYY/MM/)
     - Cache images to avoid re-downloading
@@ -32,6 +33,10 @@ class ImageDownloader:
 
     # Default placeholder path (relative to static folder)
     DEFAULT_PLACEHOLDER = "/images/placeholder-event.webp"
+
+    # Card thumbnail dimensions (16:9 aspect ratio)
+    CARD_THUMBNAIL_WIDTH = 383
+    CARD_THUMBNAIL_HEIGHT = 215
 
     def __init__(
         self,
@@ -44,6 +49,7 @@ class ImageDownloader:
         dry_run: bool = False,
         placeholder: str | None = DEFAULT_PLACEHOLDER,
         use_date_dirs: bool = True,
+        generate_thumbnails: bool = True,
     ):
         """
         Initialize the image downloader.
@@ -58,6 +64,7 @@ class ImageDownloader:
             dry_run: If True, only log actions without downloading
             placeholder: Path to placeholder image for missing images
             use_date_dirs: If True, organize images in YYYY/MM/ subdirectories
+            generate_thumbnails: If True, generate card thumbnails (383x215)
         """
         self.output_dir = Path(output_dir)
         self.max_width = max_width
@@ -68,6 +75,7 @@ class ImageDownloader:
         self.dry_run = dry_run
         self.placeholder = placeholder  # None means no placeholder
         self.use_date_dirs = use_date_dirs
+        self.generate_thumbnails = generate_thumbnails
 
         # Statistics tracking
         self.stats = {
@@ -148,6 +156,11 @@ class ImageDownloader:
 
             file_size_kb = len(output_bytes) / 1024
             logger.info(f"Saved image: {relative_path} ({file_size_kb:.1f}KB)")
+
+            # Generate thumbnail for card display
+            if self.generate_thumbnails:
+                self._generate_thumbnail(image_bytes, output_path)
+
             self.stats["downloaded"] += 1
             return relative_path
 
@@ -263,6 +276,66 @@ class ImageDownloader:
             f"Resizing image from {width}x{height} to {new_width}x{new_height}"
         )
         return img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+    def _generate_thumbnail(self, image_bytes: bytes, original_path: Path) -> None:
+        """
+        Generate a card thumbnail image (383x215) with center crop.
+
+        The thumbnail is saved alongside the original with a '-thumb' suffix.
+        Uses center crop to fill the exact dimensions without distortion.
+
+        Args:
+            image_bytes: Raw image data
+            original_path: Path to the original image file
+        """
+        try:
+            img = Image.open(BytesIO(image_bytes))
+            img = self._convert_mode(img)
+
+            # Target dimensions for card thumbnail
+            target_width = self.CARD_THUMBNAIL_WIDTH
+            target_height = self.CARD_THUMBNAIL_HEIGHT
+            target_ratio = target_width / target_height
+
+            # Get current dimensions
+            width, height = img.size
+            current_ratio = width / height
+
+            # Calculate crop box to achieve target aspect ratio (center crop)
+            if current_ratio > target_ratio:
+                # Image is wider than target - crop sides
+                new_width = int(height * target_ratio)
+                left = (width - new_width) // 2
+                crop_box = (left, 0, left + new_width, height)
+            else:
+                # Image is taller than target - crop top/bottom
+                new_height = int(width / target_ratio)
+                top = (height - new_height) // 2
+                crop_box = (0, top, width, top + new_height)
+
+            img = img.crop(crop_box)
+
+            # Resize to exact target dimensions
+            img = img.resize((target_width, target_height), Image.Resampling.LANCZOS)
+
+            # Generate thumbnail path
+            thumb_path = original_path.with_stem(original_path.stem + "-thumb")
+
+            # Save thumbnail
+            output = BytesIO()
+            save_format = (
+                "JPEG" if self.format in ("jpg", "jpeg") else self.format.upper()
+            )
+            img.save(output, format=save_format, quality=self.quality, optimize=True)
+
+            with open(thumb_path, "wb") as f:
+                f.write(output.getvalue())
+
+            thumb_size_kb = len(output.getvalue()) / 1024
+            logger.debug(f"Generated thumbnail: {thumb_path.name} ({thumb_size_kb:.1f}KB)")
+
+        except Exception as e:
+            logger.warning(f"Failed to generate thumbnail: {e}")
 
     def _generate_filename(
         self,

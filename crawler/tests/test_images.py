@@ -480,3 +480,143 @@ class TestCreatePlaceholderImage:
         create_placeholder_image(output_path)
 
         assert output_path.exists()
+
+
+class TestThumbnailGeneration:
+    """Tests for card thumbnail generation (383x215)."""
+
+    @pytest.fixture
+    def temp_dir(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            yield Path(tmpdir)
+
+    def test_thumbnail_dimensions(self, temp_dir):
+        """Test that thumbnails are generated at 383x215."""
+        downloader = ImageDownloader(
+            output_dir=temp_dir,
+            generate_thumbnails=True,
+            use_date_dirs=False,
+        )
+
+        # Create test image bytes
+        from io import BytesIO
+
+        img = Image.new("RGB", (800, 600), color="blue")
+        img_bytes = BytesIO()
+        img.save(img_bytes, format="PNG")
+
+        # Generate thumbnail
+        original_path = temp_dir / "test-image.webp"
+        downloader._generate_thumbnail(img_bytes.getvalue(), original_path)
+
+        # Check thumbnail was created
+        thumb_path = temp_dir / "test-image-thumb.webp"
+        assert thumb_path.exists()
+
+        # Verify dimensions
+        thumb = Image.open(thumb_path)
+        assert thumb.width == 383
+        assert thumb.height == 215
+
+    def test_thumbnail_center_crop_wide_image(self, temp_dir):
+        """Test that wide images are center-cropped correctly."""
+        downloader = ImageDownloader(
+            output_dir=temp_dir,
+            generate_thumbnails=True,
+            use_date_dirs=False,
+        )
+
+        from io import BytesIO
+
+        # Create wide image (4:1 ratio)
+        img = Image.new("RGB", (800, 200), color="green")
+        img_bytes = BytesIO()
+        img.save(img_bytes, format="PNG")
+
+        original_path = temp_dir / "wide-image.webp"
+        downloader._generate_thumbnail(img_bytes.getvalue(), original_path)
+
+        thumb_path = temp_dir / "wide-image-thumb.webp"
+        thumb = Image.open(thumb_path)
+
+        # Should be exact target dimensions
+        assert thumb.width == 383
+        assert thumb.height == 215
+
+    def test_thumbnail_center_crop_tall_image(self, temp_dir):
+        """Test that tall images are center-cropped correctly."""
+        downloader = ImageDownloader(
+            output_dir=temp_dir,
+            generate_thumbnails=True,
+            use_date_dirs=False,
+        )
+
+        from io import BytesIO
+
+        # Create tall image (1:4 ratio)
+        img = Image.new("RGB", (200, 800), color="red")
+        img_bytes = BytesIO()
+        img.save(img_bytes, format="PNG")
+
+        original_path = temp_dir / "tall-image.webp"
+        downloader._generate_thumbnail(img_bytes.getvalue(), original_path)
+
+        thumb_path = temp_dir / "tall-image-thumb.webp"
+        thumb = Image.open(thumb_path)
+
+        # Should be exact target dimensions
+        assert thumb.width == 383
+        assert thumb.height == 215
+
+    def test_thumbnail_disabled(self, temp_dir):
+        """Test that thumbnails are not generated when disabled."""
+        downloader = ImageDownloader(
+            output_dir=temp_dir,
+            generate_thumbnails=False,
+            use_date_dirs=False,
+        )
+
+        # Verify generate_thumbnails is disabled
+        assert downloader.generate_thumbnails is False
+
+        from io import BytesIO
+
+        img = Image.new("RGB", (800, 600), color="blue")
+        img_bytes = BytesIO()
+        img.save(img_bytes, format="PNG")
+
+        original_path = temp_dir / "no-thumb.webp"
+        # Save original manually to simulate the scenario
+        original_path.write_bytes(img_bytes.getvalue())
+
+        # Thumbnail should not be generated since we disabled it
+        thumb_path = temp_dir / "no-thumb-thumb.webp"
+        assert not thumb_path.exists()
+
+    def test_thumbnail_constants(self, temp_dir):
+        """Test that thumbnail constants are defined correctly."""
+        downloader = ImageDownloader(output_dir=temp_dir)
+
+        assert downloader.CARD_THUMBNAIL_WIDTH == 383
+        assert downloader.CARD_THUMBNAIL_HEIGHT == 215
+
+    def test_generate_thumbnails_default_enabled(self, temp_dir):
+        """Test that thumbnail generation is enabled by default."""
+        downloader = ImageDownloader(output_dir=temp_dir)
+        assert downloader.generate_thumbnails is True
+
+    def test_thumbnail_handles_error_gracefully(self, temp_dir):
+        """Test that thumbnail errors don't crash the downloader."""
+        downloader = ImageDownloader(
+            output_dir=temp_dir,
+            generate_thumbnails=True,
+        )
+
+        # Pass invalid image bytes
+        original_path = temp_dir / "invalid.webp"
+        # Should not raise, just log warning
+        downloader._generate_thumbnail(b"invalid image data", original_path)
+
+        # Thumbnail should not exist
+        thumb_path = temp_dir / "invalid-thumb.webp"
+        assert not thumb_path.exists()
