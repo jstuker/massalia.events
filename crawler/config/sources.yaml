@@ -35,7 +35,7 @@ sources:
       event_list: ".agenda-list"
       event_item: ".event-card"
       name: "h2, h3, .event-title, .title"
-      date: ".date, .event-date, time"
+      date: ".date-date"
       time: ".time, .event-time, .hour"
       location: ".location, .venue"
       description: ".description, .excerpt, p"
