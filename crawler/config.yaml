@@ -11,8 +11,18 @@ output_dir: "../content/events"
 image_dir: "../static/images/events"
 
 # Logging configuration
-log_level: "INFO"
-log_file: "crawler.log"
+# log_level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+# - DEBUG: Detailed info for debugging (URLs, selectors, data)
+# - INFO: Normal operations (sources crawled, events created)
+# - WARNING: Non-critical issues (missing fields, retries)
+# - ERROR: Failures that skip items (parse errors, download fails)
+# - CRITICAL: Fatal errors that stop execution
+logging:
+  log_level: "INFO"
+  log_file: "logs/crawler.log"
+  log_format: "text"  # "text" for human-readable, "json" for structured
+  max_file_size: 10485760  # 10MB in bytes
+  backup_count: 5
 
 # HTTP settings (global defaults, can be overridden per source)
 http:
