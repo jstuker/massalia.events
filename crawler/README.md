@@ -218,6 +218,56 @@ sources:
       "Concert": "musique"
 ```
 
+### Selection Criteria
+
+Events are filtered using selection criteria defined in `config/selection-criteria.yaml`:
+
+```yaml
+# Geographic filtering - events must be in Marseille area
+geography:
+  required_areas:
+    - "Marseille"
+    - "13001"
+    - "13002"
+    # ... more areas
+
+# Date range filtering
+dates:
+  min_days_ahead: 0      # Include events starting today
+  max_days_ahead: 30     # Maximum 30 days in future
+
+# Event type filtering
+types:
+  included:
+    - "danse"
+    - "musique"
+    - "theatre"
+    - "art"
+    - "communaute"
+  excluded:
+    - "formation"
+    - "workshop"
+
+# Location filtering
+locations:
+  excluded:
+    - "online"
+    - "zoom"
+
+# Keyword filtering
+keywords:
+  excluded:
+    - "complet"
+    - "annulé"
+    - "sold out"
+  positive:
+    - "gratuit"
+    - "free"
+```
+
+**Selection Criteria Options:**
+- `--skip-selection` - Disable all filtering (include all events)
+
 ## Adding New Parsers
 
 To add support for a new event source:
@@ -337,6 +387,66 @@ ruff format src/
 
 - Ensure you're running from the crawler directory
 - Or specify config path with `--config`
+
+---
+
+## Quick Reference Card
+
+```
+DAILY CRAWL COMMANDS
+====================
+
+# Setup
+cd crawler && source venv/bin/activate
+
+# Preview (always run first)
+python crawl.py run --dry-run
+
+# Execute crawl
+python crawl.py run
+
+# Check status
+python crawl.py status
+
+# Return to project root
+cd ..
+
+# Preview locally
+hugo server
+
+# Commit and deploy
+git add -A
+git commit -m "Add events from $(date +%Y-%m-%d) crawl"
+git push origin main
+```
+
+```
+USEFUL COMMANDS
+===============
+
+# List sources
+python crawl.py list-sources
+
+# Validate config
+python crawl.py validate
+
+# Run single source
+python crawl.py run --source lafriche
+
+# Debug mode
+python crawl.py run --log-level DEBUG
+
+# Clean expired events
+python crawl.py clean --dry-run
+python crawl.py clean
+```
+
+---
+
+## Related Documentation
+
+- [Publishing Workflow](../docs/WORKFLOW.md) - Complete publishing guide
+- [Troubleshooting](../docs/TROUBLESHOOTING.md) - Common issues and solutions
 
 ## License
 
