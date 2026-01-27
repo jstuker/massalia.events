@@ -3,10 +3,14 @@
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import yaml
 
 from .logger import get_logger
+
+# Paris timezone for Marseille events
+PARIS_TZ = ZoneInfo("Europe/Paris")
 
 logger = get_logger(__name__)
 
@@ -234,7 +238,7 @@ class SelectionCriteria:
 
     def _check_date_constraints(self, date: datetime) -> SelectionResult:
         """Check date is within allowed range."""
-        now = datetime.now()
+        now = datetime.now(PARIS_TZ)
         today = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
         # Check if past
