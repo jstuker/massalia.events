@@ -1,0 +1,23 @@
+{{/*
+  filter-active-events.html - Filter out expired events from a page collection
+
+  Usage:
+    {{ $activeEvents := partial "filter-active-events.html" (dict "pages" .Pages) }}
+    {{ range $activeEvents }}...{{ end }}
+
+  This partial filters out:
+    - Pages with expired: true in front matter
+    - Draft pages (unless buildDrafts is enabled)
+
+  Returns: A slice of active (non-expired) event pages
+*/}}
+
+{{- $pages := .pages -}}
+
+{{/* Filter out expired events */}}
+{{- $activeEvents := where $pages ".Params.expired" "!=" true -}}
+
+{{/* Also filter out drafts for safety */}}
+{{- $activeEvents = where $activeEvents ".Draft" false -}}
+
+{{- return $activeEvents -}}

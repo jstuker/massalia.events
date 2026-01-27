@@ -11,6 +11,7 @@ massalia.events is a static website that aggregates cultural events from multipl
 - Automatic categorization (danse, musique, theatre, art, communaute)
 - Location-based filtering (Marseille area)
 - Multi-day event support
+- Automatic event expiration (past events hidden from public view)
 - Optimized images in WebP format
 - French language support
 
@@ -217,6 +218,42 @@ make cleanup           # Remove stale artifacts
 | expire-events.sh | `--mark` | Add expired: true to past events |
 | expire-events.sh | `--delete` | Remove past events and images |
 | expire-events.sh | `--days N` | Events older than N days |
+
+## Event Expiration System
+
+Past events are automatically hidden from the public website while remaining in the content repository for historical reference.
+
+### How It Works
+
+1. **Expiration Flag**: Each event has an `expired: false` field in its front matter
+2. **Timezone**: Events expire at midnight Europe/Paris time after the event date
+3. **Display**: Expired events are filtered from all listings (home, categories, tags, search)
+4. **Direct Access**: Accessing an expired event URL shows a friendly "Cet événement est passé" message
+5. **Preservation**: Expired event files remain in `/content/events/` for Git history
+
+### Managing Expired Events
+
+```bash
+# List past events
+make expire-events
+
+# Mark past events as expired
+make mark-expired
+
+# Or use the script directly
+./scripts/maintenance/expire-events.sh --mark
+
+# Delete events older than 30 days
+./scripts/maintenance/expire-events.sh --delete --days 30
+```
+
+### Event Front Matter
+
+New events created by the crawler include:
+```yaml
+expired: false
+expiryDate: 2026-01-28T00:00:00+01:00  # Hugo's built-in expiry
+```
 
 ## Technology Stack
 

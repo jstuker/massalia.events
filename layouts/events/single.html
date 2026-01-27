@@ -1,6 +1,41 @@
 {{ define "main" }}
 {{/* Event detail page template */}}
 {{ $page := . }}
+
+{{/* Check if event is expired */}}
+{{ if $page.Params.expired }}
+  {{/* Display expired event message */}}
+  <article class="event-expired max-w-4xl mx-auto py-16 text-center">
+    {{/* Back navigation */}}
+    <nav class="mb-8">
+      <a href="/" class="inline-flex items-center gap-2 text-sm font-medium text-neutral-600 hover:text-primary-500 dark:text-neutral-400 dark:hover:text-primary-400 transition-colors">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Retour aux événements
+      </a>
+    </nav>
+
+    {{/* Expired message */}}
+    <div class="mx-auto w-20 h-20 mb-6 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
+      <svg class="h-10 w-10 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+    <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+      Cet événement est passé
+    </h1>
+    <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8 max-w-md mx-auto">
+      L'événement « {{ $page.Params.name | default $page.Title }} » a eu lieu le {{ $page.Date.Format "2 January 2006" }}.
+    </p>
+    <a href="/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Voir les prochains événements
+    </a>
+  </article>
+{{ else }}
 {{ $disableImageOptimization := site.Params.disableImageOptimization | default false }}
 
 {{/* French day names (0=Sunday through 6=Saturday) */}}
@@ -314,4 +349,5 @@
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
 }
 </script>
+{{ end }}{{/* End of non-expired event display */}}
 {{ end }}

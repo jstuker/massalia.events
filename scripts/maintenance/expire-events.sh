@@ -3,9 +3,13 @@
 # expire-events.sh - Mark or remove past events
 #
 # This script handles event expiration by:
-#   - Finding events with dates in the past
+#   - Finding events with dates in the past (using Europe/Paris timezone)
 #   - Optionally marking them as expired (adds expired: true to front matter)
 #   - Optionally deleting expired events and their images
+#
+# Expiration rule:
+#   Events expire at midnight Europe/Paris time AFTER the event date.
+#   For example, an event on 2026-01-27 expires at 00:00:00 on 2026-01-28 Paris time.
 #
 # Usage:
 #   ./scripts/maintenance/expire-events.sh                   # List expired events
@@ -34,6 +38,7 @@ PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
 # Configuration
 CONTENT_DIR="$PROJECT_ROOT/content/events"
 IMAGES_DIR="$PROJECT_ROOT/static/images/events"
+TIMEZONE="Europe/Paris"  # Events expire at midnight in this timezone
 
 # Options
 ACTION="list"  # list, mark, delete
@@ -104,17 +109,21 @@ if [[ ! -d "$CONTENT_DIR" ]]; then
     exit 0
 fi
 
-# Calculate cutoff date
+# Calculate cutoff date in Europe/Paris timezone
+# Events expire at midnight Paris time after the event date
 if [[ $DAYS_OLD -gt 0 ]]; then
-    CUTOFF_DATE=$(date -v-${DAYS_OLD}d +%Y-%m-%d 2>/dev/null || date -d "$DAYS_OLD days ago" +%Y-%m-%d)
+    # macOS uses -v, Linux uses -d
+    CUTOFF_DATE=$(TZ=$TIMEZONE date -v-${DAYS_OLD}d +%Y-%m-%d 2>/dev/null || TZ=$TIMEZONE date -d "$DAYS_OLD days ago" +%Y-%m-%d)
 else
-    CUTOFF_DATE=$(date +%Y-%m-%d)
+    # Use current date in Paris timezone
+    CUTOFF_DATE=$(TZ=$TIMEZONE date +%Y-%m-%d)
 fi
 
 echo -e "${CYAN}Event Expiration Check${NC}"
 echo ""
 echo "  Content directory: $CONTENT_DIR"
 echo "  Action: $ACTION"
+echo "  Timezone: $TIMEZONE"
 echo "  Cutoff date: $CUTOFF_DATE (events before this are expired)"
 if [[ "$DRY_RUN" == "true" ]]; then
     echo -e "  Mode: ${YELLOW}DRY RUN${NC}"
