@@ -65,13 +65,13 @@
     "12" "décembre"
 }}
 
-{{/* Category color mappings */}}
+{{/* Category color mappings - using inline styles for reliable rendering (same as event-card.html) */}}
 {{ $categoryColors := dict
-    "danse" "bg-pink-500 text-white"
-    "musique" "bg-purple-500 text-white"
-    "theatre" "bg-amber-500 text-white"
-    "art" "bg-teal-500 text-white"
-    "communaute" "bg-blue-500 text-white"
+    "danse" "background-color: #ec4899; color: white;"
+    "musique" "background-color: #a855f7; color: white;"
+    "theatre" "background-color: #f59e0b; color: white;"
+    "art" "background-color: #14b8a6; color: white;"
+    "communaute" "background-color: #3b82f6; color: white;"
 }}
 
 {{/* Get event image */}}
@@ -164,13 +164,13 @@
 
   {{/* Main content */}}
   <div class="px-4 sm:px-0">
-    {{/* Category badges */}}
+    {{/* Category badges - same style as event-card.html */}}
     {{ with $page.Params.categories }}
       <div class="mb-4 flex flex-wrap gap-2">
         {{ range . }}
           {{ $categorySlug := . }}
           {{ $categoryTitle := "" }}
-          {{ $categoryColor := "bg-neutral-500 text-white" }}
+          {{ $categoryColor := "background-color: #737373; color: white;" }}
           {{ with site.GetPage (printf "/categories/%s" $categorySlug) }}
             {{ $categoryTitle = .Title }}
           {{ end }}
@@ -180,7 +180,7 @@
           {{ with index $categoryColors $categorySlug }}
             {{ $categoryColor = . }}
           {{ end }}
-          <a href="{{ printf "/categories/%s/" $categorySlug }}" class="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold {{ $categoryColor }} hover:opacity-90 transition-opacity">
+          <a href="{{ printf "/categories/%s/" $categorySlug }}" class="inline-flex items-center hover:opacity-90 transition-opacity" style="padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; {{ $categoryColor | safeCSS }}">
             {{ $categoryTitle }}
           </a>
         {{ end }}
@@ -288,30 +288,25 @@
       </div>
     {{ end }}
 
-    {{/* Source link */}}
+    {{/* Source link - large blue button */}}
     {{ if ne $eventURL "" }}
       <div class="mb-8">
         <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 pb-2 border-b border-neutral-200 dark:border-neutral-700">
           Source
         </h2>
-        <a href="{{ $eventURL }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 transition-colors group">
-          <svg class="h-5 w-5 text-neutral-500 group-hover:text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <a href="{{ $eventURL }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
-          <span class="text-neutral-700 dark:text-neutral-300">
-            Voir sur le site original
-          </span>
-          <span class="text-sm text-neutral-500 dark:text-neutral-400">
-            {{ $eventURL | replaceRE "^https?://(www\\.)?" "" | replaceRE "/.*$" "" }}
-          </span>
+          <span>Voir sur le site original</span>
         </a>
       </div>
     {{ end }}
 
-    {{/* Back to events button */}}
+    {{/* Back to events link */}}
     <div class="mt-12 mb-8 text-center">
-      <a href="/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <a href="/" class="inline-flex items-center gap-2 text-sm font-medium text-neutral-600 hover:text-primary-500 dark:text-neutral-400 dark:hover:text-primary-400 transition-colors">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
         Retour aux événements
