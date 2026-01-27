@@ -2,7 +2,7 @@ disabled = false
 languageCode = "fr"
 languageName = "Français"
 weight = 1
-title = "massalia.events"
+title = "Massalia Events | Les prochains événements à Marseille"
 
 [params]
   displayName = "FR"
@@ -13,7 +13,7 @@ title = "massalia.events"
   dateFormat = ":date_long"
   # logo = "img/logo.png"
   # secondaryLogo = "img/secondary-logo.png"
-  # description = "Un agrégateur crée par vibcoding d'événements culturels, artistiques, musicaux et de concerts à Marseille.
+  description = "Un agrégateur crée par vibecoding d'événements culturels, artistiques, musicaux et de concerts à Marseille."
   # bio = "A little bit about you""
   # copyright = "Copy, _right?_ :thinking_face:"
 
