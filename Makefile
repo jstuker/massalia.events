@@ -4,7 +4,10 @@
 # Run 'make help' to see available targets.
 #
 
-.PHONY: help build serve clean check install crawl crawl-preview
+.PHONY: help build serve clean check install crawl crawl-preview \
+        update-theme check-theme validate-config check-links check-links-all \
+        validate-content cleanup cleanup-all expire-events mark-expired \
+        delete-expired maintenance
 
 # Default target
 .DEFAULT_GOAL := help
@@ -93,10 +96,6 @@ format:
 submodules:
 	@git submodule update --init --recursive
 
-## update-theme: Update Blowfish theme to latest version
-update-theme:
-	@git submodule update --remote --merge themes/blowfish
-
 ## deploy-preview: Build and open site locally
 deploy-preview: clean build
 	@echo "Opening site preview..."
@@ -105,3 +104,56 @@ deploy-preview: clean build
 ## all: Check dependencies, clean, and build
 all: check clean build
 	@echo "Build complete!"
+
+# =============================================================================
+# Maintenance Targets
+# =============================================================================
+
+## update-theme: Check and update Blowfish theme to latest version
+update-theme:
+	@./scripts/maintenance/update-theme.sh
+
+## check-theme: Show current theme version and check for updates
+check-theme:
+	@./scripts/maintenance/update-theme.sh --version
+
+## validate-config: Validate Hugo configuration files
+validate-config:
+	@./scripts/maintenance/validate-config.sh
+
+## check-links: Check for broken internal links (run 'make build' first)
+check-links:
+	@./scripts/maintenance/check-links.sh
+
+## check-links-all: Check internal and external links
+check-links-all:
+	@./scripts/maintenance/check-links.sh --external --images
+
+## validate-content: Validate event markdown files
+validate-content:
+	@./scripts/maintenance/validate-content.sh
+
+## cleanup: Remove stale build artifacts and temporary files
+cleanup:
+	@./scripts/maintenance/cleanup.sh
+
+## cleanup-all: Full cleanup including orphaned images
+cleanup-all:
+	@./scripts/maintenance/cleanup.sh --all
+
+## expire-events: List expired events (past dates)
+expire-events:
+	@./scripts/maintenance/expire-events.sh
+
+## mark-expired: Mark past events as expired
+mark-expired:
+	@./scripts/maintenance/expire-events.sh --mark
+
+## delete-expired: Delete expired events (use with caution)
+delete-expired:
+	@./scripts/maintenance/expire-events.sh --delete
+
+## maintenance: Run all maintenance checks
+maintenance: validate-config validate-content check-theme
+	@echo ""
+	@echo "Maintenance checks complete!"
