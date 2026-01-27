@@ -139,6 +139,42 @@
         "event_category": {
           "type": "string",
           "description": "CSS selector for event category"
+        },
+        "name": {
+          "type": "string",
+          "description": "CSS selector for event name/title (alias for event_title)"
+        },
+        "date": {
+          "type": "string",
+          "description": "CSS selector for event date (alias for event_date)"
+        },
+        "time": {
+          "type": "string",
+          "description": "CSS selector for event time (alias for event_time)"
+        },
+        "link": {
+          "type": "string",
+          "description": "CSS selector for event link (alias for event_link)"
+        },
+        "image": {
+          "type": "string",
+          "description": "CSS selector for event image (alias for event_image)"
+        },
+        "description": {
+          "type": "string",
+          "description": "CSS selector for event description (alias for event_description)"
+        },
+        "category": {
+          "type": "string",
+          "description": "CSS selector for event category (alias for event_category)"
+        },
+        "location": {
+          "type": "string",
+          "description": "CSS selector for event location/venue"
+        },
+        "tags": {
+          "type": "string",
+          "description": "CSS selector for event tags"
         }
       },
       "additionalProperties": false
