@@ -29,6 +29,28 @@ MAX_PAGES = 3
 MAX_EVENTS = 50
 
 
+def _run_playwright_sync(url, timeout):
+    """
+    Run Playwright in a synchronous context.
+
+    This is the actual Playwright work, meant to be called either
+    directly or from a thread (to avoid asyncio event loop conflicts).
+    """
+    from playwright.sync_api import sync_playwright
+
+    pw = sync_playwright().start()
+    try:
+        browser = pw.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(url, wait_until="networkidle", timeout=timeout)
+        page.wait_for_timeout(2000)
+        html = page.content()
+        browser.close()
+        return html
+    finally:
+        pw.stop()
+
+
 def _get_playwright_page(url, timeout=60000):
     """
     Fetch a page using Playwright headless browser.
@@ -36,15 +58,19 @@ def _get_playwright_page(url, timeout=60000):
     Shotgun.live uses Vercel bot protection that blocks standard HTTP
     requests. Playwright renders JavaScript and passes the challenge.
 
+    If an asyncio event loop is already running (which prevents the
+    Playwright sync API from working directly), the browser session
+    is run in a separate thread.
+
     Args:
         url: URL to navigate to
         timeout: Page load timeout in milliseconds
 
     Returns:
-        Tuple of (page HTML content, browser instance) or (None, None) on failure
+        Tuple of (page HTML content, None) or (None, None) on failure
     """
     try:
-        from playwright.sync_api import sync_playwright
+        from playwright.sync_api import sync_playwright  # noqa: F401
     except ImportError:
         logger.error(
             "Playwright is required for the Shotgun parser. "
@@ -53,16 +79,23 @@ def _get_playwright_page(url, timeout=60000):
         return None, None
 
     try:
-        pw = sync_playwright().start()
-        browser = pw.chromium.launch(headless=True)
-        page = browser.new_page()
-        page.goto(url, wait_until="networkidle", timeout=timeout)
-        # Wait for dynamic content to render
-        page.wait_for_timeout(2000)
-        html = page.content()
-        browser.close()
-        pw.stop()
-        return html, None
+        return _run_playwright_sync(url, timeout), None
+    except RuntimeError as e:
+        if "asyncio" in str(e).lower() or "event loop" in str(e).lower():
+            logger.debug("Asyncio loop detected, running Playwright in thread")
+            try:
+                from concurrent.futures import ThreadPoolExecutor
+
+                with ThreadPoolExecutor(max_workers=1) as executor:
+                    future = executor.submit(_run_playwright_sync, url, timeout)
+                    html = future.result(timeout=timeout / 1000 + 30)
+                return html, None
+            except Exception as thread_err:
+                logger.error(f"Playwright thread failed for {url}: {thread_err}")
+                return None, None
+        else:
+            logger.error(f"Playwright failed to load {url}: {e}")
+            return None, None
     except Exception as e:
         logger.error(f"Playwright failed to load {url}: {e}")
         return None, None
