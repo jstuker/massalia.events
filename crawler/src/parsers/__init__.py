@@ -3,10 +3,12 @@
 from .base import ConfigurableEventParser, ParsedEvent, SelectorConfig
 from .klemenis import KlemenisParser
 from .lafriche import LaFricheParser
+from .shotgun import ShotgunParser
 
 PARSERS = {
     "lafriche": LaFricheParser,
     "klemenis": KlemenisParser,
+    "shotgun": ShotgunParser,
     "generic": ConfigurableEventParser,
 }
 
@@ -47,6 +49,7 @@ __all__ = [
     "SelectorConfig",
     "LaFricheParser",
     "KlemenisParser",
+    "ShotgunParser",
     "get_parser",
     "list_parsers",
 ]

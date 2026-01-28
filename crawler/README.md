@@ -216,6 +216,20 @@ sources:
     category_map:
       "Spectacle": "theatre"
       "Concert": "musique"
+
+  - name: "Shotgun"
+    url: "https://shotgun.live/fr/cities/aix-marseille"
+    parser: "shotgun"
+    enabled: true
+    category_map:
+      "Techno": "musique"
+      "House": "musique"
+```
+
+**Note:** The Shotgun parser requires Playwright (headless browser) since shotgun.live uses Vercel bot protection. Install with:
+```bash
+pip install playwright
+playwright install chromium
 ```
 
 ### Selection Criteria

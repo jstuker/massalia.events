@@ -52,90 +52,46 @@ sources:
       "Projection": "art"
       "Performance": "theatre"
 
-  # Shotgun - Electronic music events
-  # Platform for electronic music events in Marseille
+  # Shotgun - Ticketing platform for music events
+  # Covers clubs, concerts, festivals in Aix-Marseille area
   - name: "Shotgun"
     id: "shotgun"
-    url: "https://shotgun.live/fr/cities/marseille"
+    url: "https://shotgun.live/fr/cities/aix-marseille"
     parser: "shotgun"
     enabled: true
     rate_limit:
       requests_per_second: 0.5
       delay_between_pages: 3.0
     categories_map:
-      "Clubbing": "musique"
-      "Festival": "musique"
+      "Techno": "musique"
+      "House": "musique"
+      "Hip Hop": "musique"
+      "Pop": "musique"
+      "Rock": "musique"
+      "Afro": "musique"
+      "Trance": "musique"
+      "Dance": "musique"
+      "Downtempo": "musique"
+      "Experimental": "musique"
+      "Industrial": "musique"
+      "Instrumental": "musique"
+      "Latino / Brazilian": "musique"
+      "Metal": "musique"
+      "Reggae / Dub": "musique"
+      "UK": "musique"
+      "Hard Music": "musique"
+      "Electro": "musique"
+      "Rap": "musique"
+      "Ambient": "musique"
+      "Melodic House & Techno": "musique"
+      "Shatta": "musique"
       "Concert": "musique"
       "DJ Set": "musique"
-
-  # La Criée - Théâtre National de Marseille
-  # Major theatre venue
-  - name: "La Criée - Théâtre National de Marseille"
-    id: "lacriee"
-    url: "https://theatre-lacriee.com/programmation"
-    parser: "lacriee"
-    enabled: true
-    rate_limit:
-      requests_per_second: 1
-      delay_between_pages: 2.0
-    categories_map:
-      "Théâtre": "theatre"
-      "Theatre": "theatre"
-      "Danse": "danse"
-      "Musique": "musique"
-      "Jeune public": "communaute"
-
-  # Sortir à Marseille
-  # Event aggregator for Marseille area
-  - name: "Sortir à Marseille"
-    id: "sortiramarseille"
-    url: "https://www.sortiramarseille.fr/agenda"
-    parser: "sortiramarseille"
-    enabled: true
-    rate_limit:
-      requests_per_second: 0.5
-      delay_between_pages: 3.0
-    categories_map:
-      "Concert": "musique"
       "Spectacle": "theatre"
+      "Humour": "theatre"
+      "Stand-up": "theatre"
       "Exposition": "art"
-      "Festival": "musique"
-      "Danse": "danse"
-      "Théâtre": "theatre"
-      "Cinéma": "art"
-
-  # Made in Marseille
-  # Local events and cultural news
-  - name: "Made in Marseille"
-    id: "madeinmarseille"
-    url: "https://madeinmarseille.net/evenements"
-    parser: "madeinmarseille"
-    enabled: true
-    rate_limit:
-      requests_per_second: 0.5
-      delay_between_pages: 3.0
-    categories_map:
-      "Concert": "musique"
-      "Exposition": "art"
-      "Spectacle": "theatre"
-      "Festival": "musique"
-      "Marché": "communaute"
-      "Atelier": "communaute"
-
-  # Château de Servières
-  # Contemporary art center
-  - name: "Château de Servières"
-    id: "chateau-servieres"
-    url: "https://www.chateaudeservieres.org/expositions"
-    parser: "chateauservieres"
-    enabled: false  # Parser not yet implemented
-    rate_limit:
-      requests_per_second: 1
-      delay_between_pages: 2.0
-    categories_map:
-      "Exposition": "art"
-      "Vernissage": "art"
-      "Rencontre": "communaute"
+      "Festival": "communaute"
 
 # Default settings applied to all sources unless overridden
 defaults:
