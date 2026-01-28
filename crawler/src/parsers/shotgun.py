@@ -170,7 +170,9 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
         if isinstance(address, dict):
             locality = address.get("addressLocality", "")
             if locality and locality.lower() not in location_name.lower():
-                location_name = f"{location_name}, {locality}" if location_name else locality
+                location_name = (
+                    f"{location_name}, {locality}" if location_name else locality
+                )
 
     # Extract organizer as additional location context
     organizer = json_ld.get("organizer", {})
@@ -326,7 +328,9 @@ class ShotgunParser(BaseCrawler):
                 break
 
             # Respect rate limiting between pages
-            time.sleep(self.config.get("rate_limit", {}).get("delay_between_pages", 3.0))
+            time.sleep(
+                self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
+            )
 
         logger.info(f"Total unique event URLs found: {len(all_event_urls)}")
 
@@ -340,7 +344,9 @@ class ShotgunParser(BaseCrawler):
                 logger.warning(f"Failed to parse event from {event_url}: {e}")
 
             # Rate limiting between detail page fetches
-            time.sleep(self.config.get("rate_limit", {}).get("delay_between_pages", 3.0))
+            time.sleep(
+                self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
+            )
 
         return events
 
@@ -385,9 +391,7 @@ class ShotgunParser(BaseCrawler):
             # Fall back to HTML parsing
             return self._parse_from_html(html, event_url)
 
-        return _parse_event_from_json_ld(
-            music_event, event_url, self.category_map
-        )
+        return _parse_event_from_json_ld(music_event, event_url, self.category_map)
 
     def _parse_from_html(self, html: str, event_url: str) -> Event | None:
         """
@@ -432,9 +436,18 @@ class ShotgunParser(BaseCrawler):
             )
             if date_match:
                 months = {
-                    "janvier": 1, "février": 2, "mars": 3, "avril": 4,
-                    "mai": 5, "juin": 6, "juillet": 7, "août": 8,
-                    "septembre": 9, "octobre": 10, "novembre": 11, "décembre": 12,
+                    "janvier": 1,
+                    "février": 2,
+                    "mars": 3,
+                    "avril": 4,
+                    "mai": 5,
+                    "juin": 6,
+                    "juillet": 7,
+                    "août": 8,
+                    "septembre": 9,
+                    "octobre": 10,
+                    "novembre": 11,
+                    "décembre": 12,
                 }
                 day = int(date_match.group(1))
                 month = months.get(date_match.group(2))

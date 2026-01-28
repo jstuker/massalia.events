@@ -1,7 +1,6 @@
 """Tests for the Shotgun (shotgun.live) parser."""
 
 import json
-from datetime import datetime
 from unittest.mock import MagicMock, patch
 from zoneinfo import ZoneInfo
 
@@ -63,58 +62,62 @@ def sample_listing_html():
 @pytest.fixture
 def sample_detail_html():
     """Sample Shotgun event detail page HTML with JSON-LD."""
-    json_ld_brand = json.dumps({
-        "@context": "https://schema.org",
-        "@type": "Brand",
-        "name": "Shotgun",
-    })
-    json_ld_event = json.dumps({
-        "@context": "https://schema.org",
-        "@type": "MusicEvent",
-        "name": "Electro Night",
-        "url": "https://shotgun.live/fr/events/electro-night",
-        "image": "https://res.cloudinary.com/shotgun/image/upload/electro.jpg",
-        "startDate": "2026-01-28T22:00:00.000Z",
-        "doorTime": "2026-01-28T22:00:00.000Z",
-        "endDate": "2026-01-29T05:00:00.000Z",
-        "eventStatus": "https://schema.org/EventScheduled",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-        "location": {
-            "@type": "Place",
-            "name": "Baby Club, 13006 Marseille, France",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "2 Rue André Poggioli",
-                "addressLocality": "Marseille",
-                "postalCode": "13006",
-                "addressCountry": "FR",
+    json_ld_brand = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@type": "Brand",
+            "name": "Shotgun",
+        }
+    )
+    json_ld_event = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@type": "MusicEvent",
+            "name": "Electro Night",
+            "url": "https://shotgun.live/fr/events/electro-night",
+            "image": "https://res.cloudinary.com/shotgun/image/upload/electro.jpg",
+            "startDate": "2026-01-28T22:00:00.000Z",
+            "doorTime": "2026-01-28T22:00:00.000Z",
+            "endDate": "2026-01-29T05:00:00.000Z",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "location": {
+                "@type": "Place",
+                "name": "Baby Club, 13006 Marseille, France",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "2 Rue André Poggioli",
+                    "addressLocality": "Marseille",
+                    "postalCode": "13006",
+                    "addressCountry": "FR",
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 43.2919,
+                    "longitude": 5.3838,
+                },
             },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 43.2919,
-                "longitude": 5.3838,
+            "description": "Une soirée électro au cœur de Marseille avec les meilleurs DJs locaux.",
+            "organizer": {
+                "@type": "LocalBusiness",
+                "name": "Baby Club",
+                "url": "https://shotgun.live/fr/venues/baby-club",
             },
-        },
-        "description": "Une soirée électro au cœur de Marseille avec les meilleurs DJs locaux.",
-        "organizer": {
-            "@type": "LocalBusiness",
-            "name": "Baby Club",
-            "url": "https://shotgun.live/fr/venues/baby-club",
-        },
-        "performer": [
-            {"@type": "MusicGroup", "name": "DJ Alpha"},
-            {"@type": "MusicGroup", "name": "DJ Beta"},
-        ],
-        "offers": [
-            {
-                "@type": "Offer",
-                "availability": "https://schema.org/InStock",
-                "name": "Early Bird",
-                "price": 10.0,
-                "priceCurrency": "EUR",
-            }
-        ],
-    })
+            "performer": [
+                {"@type": "MusicGroup", "name": "DJ Alpha"},
+                {"@type": "MusicGroup", "name": "DJ Beta"},
+            ],
+            "offers": [
+                {
+                    "@type": "Offer",
+                    "availability": "https://schema.org/InStock",
+                    "name": "Early Bird",
+                    "price": 10.0,
+                    "priceCurrency": "EUR",
+                }
+            ],
+        }
+    )
     return f"""
     <html>
     <head>
@@ -296,7 +299,10 @@ class TestParseEventFromJsonLd:
             "https://shotgun.live/fr/events/bass-miel-3",
             category_map,
         )
-        assert event.image == "https://res.cloudinary.com/shotgun/image/upload/bass-miel.jpg"
+        assert (
+            event.image
+            == "https://res.cloudinary.com/shotgun/image/upload/bass-miel.jpg"
+        )
 
     def test_parses_location(self, sample_json_ld_music_event, category_map):
         event = _parse_event_from_json_ld(
@@ -341,7 +347,9 @@ class TestParseEventFromJsonLd:
             "startDate": "2026-01-28T22:00:00.000Z",
             "description": "A" * 200,
         }
-        event = _parse_event_from_json_ld(json_ld, "https://example.com/events/test", category_map)
+        event = _parse_event_from_json_ld(
+            json_ld, "https://example.com/events/test", category_map
+        )
         assert len(event.description) <= 160
 
     def test_handles_empty_performers(self, category_map):
@@ -351,7 +359,9 @@ class TestParseEventFromJsonLd:
             "startDate": "2026-01-28T22:00:00.000Z",
             "performer": [],
         }
-        event = _parse_event_from_json_ld(json_ld, "https://example.com/events/test", category_map)
+        event = _parse_event_from_json_ld(
+            json_ld, "https://example.com/events/test", category_map
+        )
         assert event.tags == []
 
     def test_handles_missing_location(self, category_map):
@@ -360,7 +370,9 @@ class TestParseEventFromJsonLd:
             "name": "Test",
             "startDate": "2026-01-28T22:00:00.000Z",
         }
-        event = _parse_event_from_json_ld(json_ld, "https://example.com/events/test", category_map)
+        event = _parse_event_from_json_ld(
+            json_ld, "https://example.com/events/test", category_map
+        )
         assert event.locations == []
 
     def test_handles_utc_z_date_format(self, category_map):
@@ -369,7 +381,9 @@ class TestParseEventFromJsonLd:
             "name": "Test",
             "startDate": "2026-01-28T22:00:00.000Z",
         }
-        event = _parse_event_from_json_ld(json_ld, "https://example.com/events/test", category_map)
+        event = _parse_event_from_json_ld(
+            json_ld, "https://example.com/events/test", category_map
+        )
         assert event is not None
         assert event.start_datetime.tzinfo is not None
 
@@ -379,7 +393,9 @@ class TestParseEventFromJsonLd:
             "name": "Test",
             "startDate": "2026-01-28T23:00:00+01:00",
         }
-        event = _parse_event_from_json_ld(json_ld, "https://example.com/events/test", category_map)
+        event = _parse_event_from_json_ld(
+            json_ld, "https://example.com/events/test", category_map
+        )
         assert event is not None
         assert event.start_datetime.hour == 23
 
@@ -506,9 +522,9 @@ class TestShotgunParserIntegration:
         empty_page = "<html><body></body></html>"
         mock_playwright.side_effect = [
             (sample_listing_html, None),  # Listing page 1
-            (empty_page, None),           # Listing page 2 (empty, stops pagination)
-            (sample_detail_html, None),   # Event detail 1
-            (sample_detail_html, None),   # Event detail 2
+            (empty_page, None),  # Listing page 2 (empty, stops pagination)
+            (sample_detail_html, None),  # Event detail 1
+            (sample_detail_html, None),  # Event detail 2
         ]
 
         html_parser = MagicMock()
@@ -536,7 +552,7 @@ class TestShotgunParserIntegration:
         empty_page = "<html><body></body></html>"
         mock_playwright.side_effect = [
             (sample_listing_html, None),  # Listing page 1
-            (empty_page, None),           # Listing page 2 (empty, stops pagination)
+            (empty_page, None),  # Listing page 2 (empty, stops pagination)
             (None, None),  # First detail fails
             (None, None),  # Second detail fails
         ]
@@ -565,9 +581,9 @@ class TestShotgunParserIntegration:
         empty_page = "<html><body></body></html>"
         mock_playwright.side_effect = [
             (sample_listing_html, None),  # Listing page 1
-            (empty_page, None),           # Listing page 2 (empty, stops pagination)
-            (detail_html, None),          # First event detail
-            (detail_html, None),          # Second event detail
+            (empty_page, None),  # Listing page 2 (empty, stops pagination)
+            (detail_html, None),  # First event detail
+            (detail_html, None),  # Second event detail
         ]
 
         html_parser = MagicMock()
@@ -624,7 +640,9 @@ class TestHtmlFallbackParsing:
         <body><h1>Mon Événement</h1></body>
         </html>
         """
-        event = parser._parse_from_html(html, "https://shotgun.live/fr/events/mon-evenement")
+        event = parser._parse_from_html(
+            html, "https://shotgun.live/fr/events/mon-evenement"
+        )
         assert event is not None
         assert event.name == "Mon Événement"
         assert event.start_datetime.month == 3
@@ -658,9 +676,18 @@ class TestHtmlFallbackParsing:
 
     def test_fallback_parses_all_french_months(self, parser):
         months = {
-            "janvier": 1, "février": 2, "mars": 3, "avril": 4,
-            "mai": 5, "juin": 6, "juillet": 7, "août": 8,
-            "septembre": 9, "octobre": 10, "novembre": 11, "décembre": 12,
+            "janvier": 1,
+            "février": 2,
+            "mars": 3,
+            "avril": 4,
+            "mai": 5,
+            "juin": 6,
+            "juillet": 7,
+            "août": 8,
+            "septembre": 9,
+            "octobre": 10,
+            "novembre": 11,
+            "décembre": 12,
         }
         for month_name, month_num in months.items():
             html = f"""
@@ -671,6 +698,10 @@ class TestHtmlFallbackParsing:
             <body><h1>Event {month_name}</h1></body>
             </html>
             """
-            event = parser._parse_from_html(html, f"https://example.com/events/{month_name}")
+            event = parser._parse_from_html(
+                html, f"https://example.com/events/{month_name}"
+            )
             assert event is not None, f"Failed to parse {month_name}"
-            assert event.start_datetime.month == month_num, f"Wrong month for {month_name}"
+            assert event.start_datetime.month == month_num, (
+                f"Wrong month for {month_name}"
+            )
