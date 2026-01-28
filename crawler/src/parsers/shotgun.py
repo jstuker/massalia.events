@@ -279,16 +279,32 @@ class ShotgunParser(BaseCrawler):
 
     source_name = "Shotgun"
 
+    def fetch_page(self, url: str) -> str:
+        """
+        Fetch page using Playwright to bypass Vercel bot protection.
+
+        Overrides BaseCrawler.fetch_page() which uses httpx. Shotgun.live
+        returns 429 to standard HTTP clients due to Vercel's bot detection.
+
+        Args:
+            url: URL to fetch
+
+        Returns:
+            HTML content as string, or empty string on failure
+        """
+        logger.info(f"Fetching with Playwright: {url}")
+        html, _ = _get_playwright_page(url)
+        return html or ""
+
     def parse_events(self, parser: HTMLParser) -> list[Event]:
         """
         Parse events from Shotgun listing page.
 
-        Since the initial page load via BaseCrawler.crawl() uses httpx
-        (which is blocked by Vercel), this method re-fetches the page
-        using Playwright to get the actual rendered content.
+        Uses the first page HTML already fetched by crawl() via fetch_page(),
+        then fetches additional pages with Playwright for pagination.
 
         Args:
-            parser: HTMLParser (unused - page is re-fetched with Playwright)
+            parser: HTMLParser with first listing page content
 
         Returns:
             List of Event objects
@@ -296,19 +312,32 @@ class ShotgunParser(BaseCrawler):
         events = []
         all_event_urls = set()
 
-        # Crawl listing pages to collect event URLs
-        for page_num in range(MAX_PAGES):
-            page_url = self.base_url
-            if page_num > 0:
-                page_url = f"{self.base_url}?page={page_num}"
+        # Page 1 was already fetched by BaseCrawler.crawl() -> fetch_page()
+        first_page_html = str(parser.soup)
+        first_page_urls = _extract_event_urls_from_html(first_page_html)
 
+        if not first_page_urls:
+            logger.info("No events found on first listing page")
+            return events
+
+        all_event_urls.update(first_page_urls)
+        logger.info(f"Found {len(first_page_urls)} event URLs on page 1")
+
+        # Fetch additional listing pages
+        for page_num in range(1, MAX_PAGES):
+            if len(all_event_urls) >= MAX_EVENTS:
+                break
+
+            # Respect rate limiting between pages
+            time.sleep(
+                self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
+            )
+
+            page_url = f"{self.base_url}?page={page_num}"
             logger.info(f"Loading Shotgun listing page: {page_url}")
             html, _ = _get_playwright_page(page_url)
 
             if not html:
-                if page_num == 0:
-                    logger.error("Failed to load Shotgun listing page")
-                    return events
                 break
 
             page_urls = _extract_event_urls_from_html(html)
@@ -323,14 +352,6 @@ class ShotgunParser(BaseCrawler):
 
             all_event_urls.update(new_urls)
             logger.info(f"Found {len(new_urls)} new event URLs on page {page_num + 1}")
-
-            if len(all_event_urls) >= MAX_EVENTS:
-                break
-
-            # Respect rate limiting between pages
-            time.sleep(
-                self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
-            )
 
         logger.info(f"Total unique event URLs found: {len(all_event_urls)}")
 

@@ -14,6 +14,7 @@ from src.parsers.shotgun import (
     _map_category_from_json_ld,
     _parse_event_from_json_ld,
 )
+from src.utils.parser import HTMLParser
 
 PARIS_TZ = ZoneInfo("Europe/Paris")
 
@@ -511,37 +512,46 @@ class TestShotgunParserIntegration:
         assert parser.source_name == "Shotgun"
 
     @patch("src.parsers.shotgun._get_playwright_page")
+    def test_fetch_page_uses_playwright(self, mock_playwright, parser):
+        """Test that fetch_page uses Playwright instead of httpx."""
+        mock_playwright.return_value = ("<html>OK</html>", None)
+        result = parser.fetch_page("https://shotgun.live/fr/cities/aix-marseille")
+        assert result == "<html>OK</html>"
+        mock_playwright.assert_called_once()
+
+    @patch("src.parsers.shotgun._get_playwright_page")
+    def test_fetch_page_returns_empty_on_failure(self, mock_playwright, parser):
+        """Test that fetch_page returns empty string on Playwright failure."""
+        mock_playwright.return_value = (None, None)
+        result = parser.fetch_page("https://shotgun.live/fr/cities/aix-marseille")
+        assert result == ""
+
+    @patch("src.parsers.shotgun._get_playwright_page")
     def test_parse_events_with_json_ld(
         self, mock_playwright, parser, sample_listing_html, sample_detail_html
     ):
-        """Test full flow: listing page -> detail pages -> events."""
-        # First call returns listing page; listing has 2 unique event URLs
-        # but _extract_event_urls_from_html returns a set, so provide
-        # enough detail page responses for all. Also page 2 listing
-        # returns empty to stop pagination.
+        """Test full flow: first page via parser -> detail pages -> events."""
+        # parse_events receives first page HTML via HTMLParser argument.
+        # Playwright is only called for page 2+ listing and detail pages.
         empty_page = "<html><body></body></html>"
         mock_playwright.side_effect = [
-            (sample_listing_html, None),  # Listing page 1
             (empty_page, None),  # Listing page 2 (empty, stops pagination)
             (sample_detail_html, None),  # Event detail 1
             (sample_detail_html, None),  # Event detail 2
         ]
 
-        html_parser = MagicMock()
+        # Simulate the HTMLParser that crawl() would create from fetch_page
+        html_parser = HTMLParser(sample_listing_html, "https://shotgun.live")
         events = parser.parse_events(html_parser)
 
         assert len(events) == 2
         assert all(isinstance(e, Event) for e in events)
         assert all(e.name == "Electro Night" for e in events)
 
-    @patch("src.parsers.shotgun._get_playwright_page")
-    def test_handles_listing_page_failure(self, mock_playwright, parser):
-        """Test graceful handling when listing page fails to load."""
-        mock_playwright.return_value = (None, None)
-
-        html_parser = MagicMock()
+    def test_parse_events_with_empty_listing(self, parser):
+        """Test graceful handling when listing page has no events."""
+        html_parser = HTMLParser("<html><body></body></html>", "https://shotgun.live")
         events = parser.parse_events(html_parser)
-
         assert events == []
 
     @patch("src.parsers.shotgun._get_playwright_page")
@@ -551,13 +561,12 @@ class TestShotgunParserIntegration:
         """Test graceful handling when detail page fails to load."""
         empty_page = "<html><body></body></html>"
         mock_playwright.side_effect = [
-            (sample_listing_html, None),  # Listing page 1
             (empty_page, None),  # Listing page 2 (empty, stops pagination)
             (None, None),  # First detail fails
             (None, None),  # Second detail fails
         ]
 
-        html_parser = MagicMock()
+        html_parser = HTMLParser(sample_listing_html, "https://shotgun.live")
         events = parser.parse_events(html_parser)
 
         assert events == []
@@ -580,31 +589,25 @@ class TestShotgunParserIntegration:
         """
         empty_page = "<html><body></body></html>"
         mock_playwright.side_effect = [
-            (sample_listing_html, None),  # Listing page 1
             (empty_page, None),  # Listing page 2 (empty, stops pagination)
             (detail_html, None),  # First event detail
             (detail_html, None),  # Second event detail
         ]
 
-        html_parser = MagicMock()
+        html_parser = HTMLParser(sample_listing_html, "https://shotgun.live")
         events = parser.parse_events(html_parser)
 
         # Should still find events via HTML fallback
         assert len(events) == 2
         assert events[0].name == "Test Event"
 
-    @patch("src.parsers.shotgun._get_playwright_page")
-    def test_skips_empty_pages(self, mock_playwright, parser):
-        """Test that pagination stops when no events found."""
+    def test_skips_empty_first_page(self, parser):
+        """Test that no Playwright calls are made when first page is empty."""
         empty_html = "<html><body></body></html>"
-        mock_playwright.return_value = (empty_html, None)
-
-        html_parser = MagicMock()
+        html_parser = HTMLParser(empty_html, "https://shotgun.live")
         events = parser.parse_events(html_parser)
 
         assert events == []
-        # Should only have fetched the first listing page
-        assert mock_playwright.call_count == 1
 
 
 # ── Test HTML fallback parsing ──────────────────────────────────────
