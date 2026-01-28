@@ -7,10 +7,12 @@ from zoneinfo import ZoneInfo
 import pytest
 
 from src.models.event import Event
+from src.models.venue import Venue
 from src.parsers.shotgun import (
     ShotgunParser,
     _extract_event_urls_from_html,
     _extract_json_ld,
+    _extract_venue_from_json_ld,
     _map_category_from_json_ld,
     _parse_event_from_json_ld,
 )
@@ -264,7 +266,7 @@ class TestParseEventFromJsonLd:
     """Tests for converting JSON-LD to Event objects."""
 
     def test_parses_basic_event(self, sample_json_ld_music_event, category_map):
-        event = _parse_event_from_json_ld(
+        event, venue = _parse_event_from_json_ld(
             sample_json_ld_music_event,
             "https://shotgun.live/fr/events/bass-miel-3",
             category_map,
@@ -275,7 +277,7 @@ class TestParseEventFromJsonLd:
         assert event.source_id == "shotgun:bass-miel-3"
 
     def test_parses_start_datetime(self, sample_json_ld_music_event, category_map):
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             sample_json_ld_music_event,
             "https://shotgun.live/fr/events/bass-miel-3",
             category_map,
@@ -287,7 +289,7 @@ class TestParseEventFromJsonLd:
         assert event.start_datetime.hour == 21  # UTC+1
 
     def test_parses_description(self, sample_json_ld_music_event, category_map):
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             sample_json_ld_music_event,
             "https://shotgun.live/fr/events/bass-miel-3",
             category_map,
@@ -295,7 +297,7 @@ class TestParseEventFromJsonLd:
         assert "Bass Miel" in event.description
 
     def test_parses_image(self, sample_json_ld_music_event, category_map):
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             sample_json_ld_music_event,
             "https://shotgun.live/fr/events/bass-miel-3",
             category_map,
@@ -306,7 +308,7 @@ class TestParseEventFromJsonLd:
         )
 
     def test_parses_location(self, sample_json_ld_music_event, category_map):
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             sample_json_ld_music_event,
             "https://shotgun.live/fr/events/bass-miel-3",
             category_map,
@@ -315,7 +317,7 @@ class TestParseEventFromJsonLd:
         assert len(event.locations) > 0
 
     def test_parses_performers_as_tags(self, sample_json_ld_music_event, category_map):
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             sample_json_ld_music_event,
             "https://shotgun.live/fr/events/bass-miel-3",
             category_map,
@@ -324,7 +326,7 @@ class TestParseEventFromJsonLd:
         assert "immek" in event.tags
 
     def test_music_event_category(self, sample_json_ld_music_event, category_map):
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             sample_json_ld_music_event,
             "https://shotgun.live/fr/events/bass-miel-3",
             category_map,
@@ -333,13 +335,19 @@ class TestParseEventFromJsonLd:
 
     def test_returns_none_for_missing_name(self, category_map):
         json_ld = {"@type": "MusicEvent", "startDate": "2026-01-28T22:00:00.000Z"}
-        event = _parse_event_from_json_ld(json_ld, "https://example.com", category_map)
+        event, venue = _parse_event_from_json_ld(
+            json_ld, "https://example.com", category_map
+        )
         assert event is None
+        assert venue is None
 
     def test_returns_none_for_missing_date(self, category_map):
         json_ld = {"@type": "MusicEvent", "name": "Test Event"}
-        event = _parse_event_from_json_ld(json_ld, "https://example.com", category_map)
+        event, venue = _parse_event_from_json_ld(
+            json_ld, "https://example.com", category_map
+        )
         assert event is None
+        assert venue is None
 
     def test_truncates_long_description(self, category_map):
         json_ld = {
@@ -348,7 +356,7 @@ class TestParseEventFromJsonLd:
             "startDate": "2026-01-28T22:00:00.000Z",
             "description": "A" * 200,
         }
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             json_ld, "https://example.com/events/test", category_map
         )
         assert len(event.description) <= 160
@@ -360,7 +368,7 @@ class TestParseEventFromJsonLd:
             "startDate": "2026-01-28T22:00:00.000Z",
             "performer": [],
         }
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             json_ld, "https://example.com/events/test", category_map
         )
         assert event.tags == []
@@ -371,7 +379,7 @@ class TestParseEventFromJsonLd:
             "name": "Test",
             "startDate": "2026-01-28T22:00:00.000Z",
         }
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             json_ld, "https://example.com/events/test", category_map
         )
         assert event.locations == []
@@ -382,7 +390,7 @@ class TestParseEventFromJsonLd:
             "name": "Test",
             "startDate": "2026-01-28T22:00:00.000Z",
         }
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             json_ld, "https://example.com/events/test", category_map
         )
         assert event is not None
@@ -394,7 +402,7 @@ class TestParseEventFromJsonLd:
             "name": "Test",
             "startDate": "2026-01-28T23:00:00+01:00",
         }
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             json_ld, "https://example.com/events/test", category_map
         )
         assert event is not None
@@ -406,7 +414,7 @@ class TestParseEventFromJsonLd:
             "name": "Test",
             "startDate": "2026-01-28T22:00:00.000Z",
         }
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             json_ld,
             "https://shotgun.live/fr/events/my-cool-event",
             category_map,
@@ -431,10 +439,116 @@ class TestParseEventFromJsonLd:
                 "name": "Baby Club",
             },
         }
-        event = _parse_event_from_json_ld(
+        event, _ = _parse_event_from_json_ld(
             json_ld, "https://example.com/events/test", category_map
         )
         assert len(event.locations) > 0
+
+    def test_returns_venue_with_event(self, sample_json_ld_music_event, category_map):
+        event, venue = _parse_event_from_json_ld(
+            sample_json_ld_music_event,
+            "https://shotgun.live/fr/events/bass-miel-3",
+            category_map,
+        )
+        assert event is not None
+        assert venue is not None
+        assert venue.name == "Le Club"
+        assert venue.slug == "le-club"
+
+
+# ── Test _extract_venue_from_json_ld ──────────────────────────────────
+
+
+class TestExtractVenueFromJsonLd:
+    """Tests for extracting venue metadata from JSON-LD."""
+
+    def test_extracts_full_venue(self, sample_json_ld_music_event):
+        venue = _extract_venue_from_json_ld(sample_json_ld_music_event)
+        assert venue is not None
+        assert venue.name == "Le Club"
+        assert venue.slug == "le-club"
+        assert venue.street_address == "10 Rue des Trois Mages"
+        assert venue.postal_code == "13006"
+        assert venue.city == "Marseille"
+        assert venue.source_url == "https://shotgun.live/fr/venues/le-club"
+
+    def test_extracts_venue_with_geo(self):
+        json_ld = {
+            "@type": "MusicEvent",
+            "location": {
+                "@type": "Place",
+                "name": "Baby Club, 13006 Marseille, France",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "2 Rue André Poggioli",
+                    "addressLocality": "Marseille",
+                    "postalCode": "13006",
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 43.2919,
+                    "longitude": 5.3838,
+                },
+            },
+            "organizer": {
+                "@type": "LocalBusiness",
+                "name": "Baby Club",
+                "url": "https://shotgun.live/fr/venues/baby-club",
+            },
+        }
+        venue = _extract_venue_from_json_ld(json_ld)
+        assert venue is not None
+        assert venue.name == "Baby Club"
+        assert venue.slug == "baby-club"
+        assert venue.latitude == 43.2919
+        assert venue.longitude == 5.3838
+        assert venue.street_address == "2 Rue André Poggioli"
+        assert venue.postal_code == "13006"
+
+    def test_uses_location_name_when_no_organizer(self):
+        json_ld = {
+            "@type": "MusicEvent",
+            "location": {
+                "@type": "Place",
+                "name": "Le Makeda",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "18 Place aux Huiles",
+                    "addressLocality": "Marseille",
+                    "postalCode": "13001",
+                },
+            },
+        }
+        venue = _extract_venue_from_json_ld(json_ld)
+        assert venue is not None
+        assert venue.name == "Le Makeda"
+        assert venue.slug == "le-makeda"
+
+    def test_strips_address_from_location_name(self):
+        json_ld = {
+            "@type": "MusicEvent",
+            "location": {
+                "@type": "Place",
+                "name": "Baby Club, 13006 Marseille, France",
+            },
+        }
+        venue = _extract_venue_from_json_ld(json_ld)
+        assert venue is not None
+        assert venue.name == "Baby Club"
+
+    def test_returns_none_for_no_location_data(self):
+        json_ld = {"@type": "MusicEvent"}
+        venue = _extract_venue_from_json_ld(json_ld)
+        assert venue is None
+
+    def test_returns_none_for_empty_names(self):
+        json_ld = {
+            "@type": "MusicEvent",
+            "location": {"@type": "Place"},
+            "organizer": {"@type": "LocalBusiness"},
+        }
+        venue = _extract_venue_from_json_ld(json_ld)
+        assert venue is None
 
 
 # ── Test _map_category_from_json_ld ──────────────────────────────────

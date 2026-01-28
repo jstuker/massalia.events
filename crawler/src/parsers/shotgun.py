@@ -15,7 +15,8 @@ from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
-from ..models.event import Event
+from ..models.event import Event, slugify
+from ..models.venue import Venue
 from ..utils.parser import HTMLParser
 
 logger = get_logger(__name__)
@@ -156,6 +157,78 @@ def _extract_json_ld(html):
     return results
 
 
+def _extract_venue_from_json_ld(json_ld):
+    """
+    Extract venue metadata from a schema.org event JSON-LD object.
+
+    Combines location (Place) and organizer (LocalBusiness) data to
+    build a complete Venue object with address, coordinates, and website.
+
+    Args:
+        json_ld: Parsed JSON-LD dict with event data
+
+    Returns:
+        Venue object or None if no venue data available
+    """
+    location_data = json_ld.get("location", {})
+    organizer = json_ld.get("organizer", {})
+
+    if not isinstance(location_data, dict) and not isinstance(organizer, dict):
+        return None
+
+    # Extract organizer info
+    venue_name = ""
+    source_url = ""
+    if isinstance(organizer, dict):
+        venue_name = organizer.get("name", "")
+        source_url = organizer.get("url", "")
+
+    # Extract location address details
+    street_address = ""
+    postal_code = ""
+    city = "Marseille"
+    latitude = None
+    longitude = None
+
+    if isinstance(location_data, dict):
+        address = location_data.get("address", {})
+        if isinstance(address, dict):
+            street_address = address.get("streetAddress", "")
+            postal_code = address.get("postalCode", "")
+            city = address.get("addressLocality", "Marseille")
+
+        geo = location_data.get("geo", {})
+        if isinstance(geo, dict):
+            lat = geo.get("latitude")
+            lon = geo.get("longitude")
+            if lat is not None:
+                latitude = float(lat)
+            if lon is not None:
+                longitude = float(lon)
+
+        # Use location name as venue name if organizer didn't provide one
+        if not venue_name:
+            location_name = location_data.get("name", "")
+            # Strip address suffixes like "Baby Club, 13006 Marseille, France"
+            if location_name and "," in location_name:
+                venue_name = location_name.split(",")[0].strip()
+            else:
+                venue_name = location_name
+
+    if not venue_name:
+        return None
+
+    return Venue(
+        name=venue_name,
+        street_address=street_address,
+        postal_code=postal_code,
+        city=city,
+        latitude=latitude,
+        longitude=longitude,
+        source_url=source_url,
+    )
+
+
 def _parse_event_from_json_ld(json_ld, event_url, category_map):
     """
     Parse event data from a schema.org MusicEvent JSON-LD object.
@@ -166,16 +239,16 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
         category_map: Mapping of genre names to taxonomy categories
 
     Returns:
-        Event object or None if data is insufficient
+        Tuple of (Event, Venue) or (None, None) if data is insufficient
     """
     name = json_ld.get("name", "")
     if not name:
-        return None
+        return None, None
 
     # Parse start date
     start_date_str = json_ld.get("startDate")
     if not start_date_str:
-        return None
+        return None, None
 
     try:
         start_dt = datetime.fromisoformat(start_date_str.replace("Z", "+00:00"))
@@ -183,7 +256,7 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
         start_dt = start_dt.astimezone(PARIS_TZ)
     except (ValueError, AttributeError):
         logger.warning(f"Failed to parse date for {name}: {start_date_str}")
-        return None
+        return None, None
 
     # Extract description
     description = json_ld.get("description", "")
@@ -225,6 +298,9 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
     else:
         display_location = location_name
 
+    # Extract venue metadata
+    venue = _extract_venue_from_json_ld(json_ld)
+
     # Extract performers/tags
     tags = []
     performers = json_ld.get("performer", [])
@@ -246,7 +322,7 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
 
     locations = [display_location] if display_location else []
 
-    return Event(
+    event = Event(
         name=name,
         event_url=event_url,
         start_datetime=start_dt,
@@ -257,6 +333,8 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
         tags=tags,
         source_id=source_id,
     )
+
+    return event, venue
 
 
 def _map_category_from_json_ld(json_ld, category_map):
@@ -308,9 +386,15 @@ class ShotgunParser(BaseCrawler):
     3. Visit each event detail page
     4. Extract structured JSON-LD data (schema.org MusicEvent)
     5. Convert to Event objects
+    6. Collect venue metadata for location page generation
     """
 
     source_name = "Shotgun"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Accumulated venue data keyed by slug
+        self.venues: dict[str, Venue] = {}
 
     def fetch_page(self, url: str) -> str:
         """
@@ -402,14 +486,43 @@ class ShotgunParser(BaseCrawler):
                 self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
             )
 
+        # Export collected venue data
+        if self.venues:
+            self._export_venues()
+
         return events
+
+    def _export_venues(self):
+        """
+        Export collected venue metadata to a JSON file.
+
+        Writes accumulated venue data to crawler/data/venues-shotgun.json
+        for use in generating location pages.
+        """
+        import os
+        from pathlib import Path
+
+        data_dir = Path(__file__).parent.parent.parent / "data"
+        data_dir.mkdir(exist_ok=True)
+        output_path = data_dir / "venues-shotgun.json"
+
+        venues_data = {
+            slug: venue.to_dict() for slug, venue in sorted(self.venues.items())
+        }
+
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(venues_data, f, indent=2, ensure_ascii=False)
+
+        logger.info(
+            f"Exported {len(self.venues)} venues to {output_path}"
+        )
 
     def _parse_detail_page(self, event_url: str) -> Event | None:
         """
         Fetch and parse a Shotgun event detail page.
 
         Extracts the JSON-LD structured data which provides all
-        event fields in a clean format.
+        event fields in a clean format. Also collects venue metadata.
 
         Args:
             event_url: URL of the event detail page
@@ -445,7 +558,16 @@ class ShotgunParser(BaseCrawler):
             # Fall back to HTML parsing
             return self._parse_from_html(html, event_url)
 
-        return _parse_event_from_json_ld(music_event, event_url, self.category_map)
+        event, venue = _parse_event_from_json_ld(
+            music_event, event_url, self.category_map
+        )
+
+        # Collect venue metadata
+        if venue and venue.slug and venue.slug not in self.venues:
+            self.venues[venue.slug] = venue
+            logger.debug(f"Collected venue: {venue.name} ({venue.slug})")
+
+        return event
 
     def _parse_from_html(self, html: str, event_url: str) -> Event | None:
         """

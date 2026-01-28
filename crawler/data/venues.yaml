@@ -1,0 +1,314 @@
+# Venue data for generating Hugo location pages.
+# Each entry creates a content/locations/[slug]/_index.fr.md page.
+#
+# Sources: Shotgun JSON-LD data + web research.
+# Run: python scripts/generate-venue-pages.py
+
+- slug: baby-club
+  title: "Baby Club"
+  description: "Club de musique et bar dans le quartier de Notre-Dame du Mont, au coeur du 6e arrondissement de Marseille."
+  address: "2 Rue Andre Poggioli"
+  arrondissement: "13006 Marseille"
+  website: "https://shotgun.live/fr/venues/baby-club"
+  type: "Club"
+  aliases:
+    - "/locations/baby-club-marseille/"
+  body: "Le Baby Club est un club de musique situe dans le quartier de Notre-Dame du Mont a Marseille. Ce lieu convivial programme des soirees electroniques et des DJ sets dans une ambiance intimiste."
+
+- slug: bohemia
+  title: "Bohemia"
+  description: "Collectif musical marseillais organisant des soirees dans divers lieux de la ville."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/bohemia"
+  type: "Collectif"
+  aliases:
+    - "/locations/bohemia-marseille/"
+  body: "Bohemia est un collectif musical marseillais qui organise des soirees dans differents lieux de la ville, proposant une programmation eclectique entre musique electronique et live."
+
+- slug: boum-marseille
+  title: "Boum"
+  description: "Bar et espace evenementiel dans le centre de Marseille, avec programmation musicale variee."
+  address: ""
+  arrondissement: "13001 Marseille"
+  website: "https://shotgun.live/fr/venues/boum-marseille"
+  type: "Bar"
+  aliases:
+    - "/locations/boum/"
+  body: "Boum est un bar et espace evenementiel situe dans le centre de Marseille. Le lieu accueille des soirees musicales, des DJ sets et des evenements culturels dans une ambiance festive."
+
+- slug: bounce-club-marseille
+  title: "Bounce Club"
+  description: "Club de musique a Marseille, programme des soirees dansantes et DJ sets."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/bounce-club-marseille"
+  type: "Club"
+  aliases:
+    - "/locations/bounce-club/"
+  body: "Le Bounce Club est un club de musique a Marseille proposant des soirees dansantes avec une programmation axee sur la musique urbaine et electronique."
+
+- slug: cabaret-aleatoire
+  title: "Cabaret Aleatoire"
+  description: "Salle de concerts et club de musiques actuelles a La Friche la Belle de Mai."
+  address: "41 Rue Jobin"
+  arrondissement: "13003 Marseille"
+  website: "https://www.cabaret-aleatoire.com/"
+  type: "Salle de spectacle"
+  aliases:
+    - "/locations/cabaret-aléatoire/"
+    - "/locations/cabaret-aleatoire-marseille/"
+  body: "Le Cabaret Aleatoire est une salle de concerts et un club de musiques actuelles situe au sein de La Friche la Belle de Mai. Depuis 2007, ce lieu emblematique de la scene musicale marseillaise programme des concerts, des soirees electroniques et des festivals tout au long de l'annee."
+
+- slug: danceteria
+  title: "Danceteria"
+  description: "Club et salle de danse a Marseille, dedie a la musique electronique et aux soirees clubbing."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/danceteria"
+  type: "Club"
+  aliases:
+    - "/locations/danceteria-marseille/"
+  body: "Danceteria est un club a Marseille dedie a la musique electronique et aux soirees dansantes, avec une programmation variee allant de la house a la techno."
+
+- slug: esquina-tropical
+  title: "Esquina Tropical"
+  description: "Lieu dedie aux musiques et danses latines et tropicales a Marseille."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/esquina-tropical"
+  type: "Salle de danse"
+  aliases:
+    - "/locations/esquina-tropical-marseille/"
+  body: "Esquina Tropical est un lieu dedie aux musiques et danses latines et tropicales a Marseille. On y retrouve des soirees salsa, bachata et autres rythmes latino-americains."
+
+- slug: francois-rouzier
+  title: "Francois Rouzier"
+  description: "Espace evenementiel a Marseille accueillant des concerts et soirees musicales."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/francois-rouzier"
+  type: "Salle de spectacle"
+  aliases:
+    - "/locations/françois-rouzier/"
+  body: "L'espace Francois Rouzier est un lieu evenementiel a Marseille qui accueille des concerts et des soirees musicales dans un cadre polyvalent."
+
+- slug: ipn-club-aix
+  title: "IPN Club"
+  description: "Club de musique electronique a Aix-en-Provence, avec soirees techno et house."
+  address: ""
+  arrondissement: "Aix-en-Provence"
+  website: "https://shotgun.live/fr/venues/ipn-club-aix"
+  type: "Club"
+  aliases:
+    - "/locations/ipn-club/"
+    - "/locations/ipn-aix/"
+  body: "L'IPN Club est un club de musique electronique situe a Aix-en-Provence. Le lieu programme des soirees techno, house et bass music dans une ambiance underground."
+
+- slug: la-traverse-de-balkis
+  title: "La Traverse de Balkis"
+  description: "Espace culturel et festif a Marseille, accueillant concerts et evenements."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/la-traverse-de-balkis"
+  type: "Salle de spectacle"
+  aliases:
+    - "/locations/traverse-de-balkis/"
+    - "/locations/balkis/"
+  body: "La Traverse de Balkis est un espace culturel et festif a Marseille. Ce lieu accueille des concerts, des soirees electroniques et des evenements artistiques dans un cadre atypique."
+
+- slug: la-wo-marseille
+  title: "La Wo"
+  description: "Collectif et lieu de soirees a Marseille, avec programmation musicale alternative."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/la-wo-marseille"
+  type: "Collectif"
+  aliases:
+    - "/locations/la-wo/"
+  body: "La Wo est un collectif et lieu de soirees a Marseille proposant une programmation musicale alternative et des evenements dans differents espaces de la ville."
+
+- slug: le-bazar
+  title: "Le Bazar"
+  description: "Bar et espace de concerts dans le centre de Marseille."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/le-bazar"
+  type: "Bar"
+  aliases:
+    - "/locations/bazar/"
+    - "/locations/le-bazar-marseille/"
+  body: "Le Bazar est un bar et espace de concerts situe dans le centre de Marseille. Le lieu propose une programmation eclectique avec des concerts live et des DJ sets."
+
+- slug: le-bouge-marseille
+  title: "Le Bouge"
+  description: "Bar et salle de concerts a Marseille, dedie aux musiques actuelles."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/le-bouge-marseille"
+  type: "Bar"
+  aliases:
+    - "/locations/le-bouge/"
+    - "/locations/le-bougé/"
+  body: "Le Bouge est un bar et salle de concerts a Marseille dedie aux musiques actuelles. Le lieu accueille des concerts, des DJ sets et des soirees thematiques."
+
+- slug: le-chapiteau-marseille
+  title: "Le Chapiteau"
+  description: "Club et espace de fete au coeur de la Belle de Mai, dedie a la musique electronique."
+  address: "38 Traverse de Carthage"
+  arrondissement: "13003 Marseille"
+  website: "https://shotgun.live/fr/venues/le-chapiteau-marseille"
+  type: "Club"
+  aliases:
+    - "/locations/le-chapiteau/"
+    - "/locations/chapiteau-marseille/"
+  body: "Le Chapiteau est un club et espace de fete situe dans le quartier de la Belle de Mai a Marseille. Avec 2 700 m2 d'espace, ce lieu programme des soirees de musique electronique et accueille des collectifs locaux ainsi que des artistes nationaux et internationaux."
+
+- slug: le-makeda
+  title: "Le Makeda"
+  description: "Bar musical et salle de concerts pres du Vieux-Port, scene emblematique des musiques actuelles a Marseille."
+  address: "18 Place aux Huiles"
+  arrondissement: "13001 Marseille"
+  website: "https://www.facebook.com/lemakeda/"
+  type: "Bar musical"
+  aliases:
+    - "/locations/makeda/"
+    - "/locations/le-makeda-marseille/"
+  body: "Le Makeda est un bar musical et salle de concerts situe sur la Place aux Huiles, pres du Vieux-Port de Marseille. Depuis de nombreuses annees, ce lieu intimiste est une scene incontournable des musiques actuelles a Marseille, accueillant des concerts de jazz, reggae, musiques du monde et electronique."
+
+- slug: le-nucleaire-marseille
+  title: "Le Nucleaire"
+  description: "Club underground a Marseille, programme des soirees techno et musique electronique."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/le-nucleaire-marseille"
+  type: "Club"
+  aliases:
+    - "/locations/le-nucleaire/"
+    - "/locations/le-nucléaire/"
+  body: "Le Nucleaire est un club underground a Marseille dedie aux soirees techno et de musique electronique. Le lieu attire les amateurs de sons experimentaux et de musique de club."
+
+- slug: level-up-project
+  title: "Level Up Project"
+  description: "Collectif et espace evenementiel a Marseille, avec soirees musicales et artistiques."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/level-up-project"
+  type: "Collectif"
+  aliases:
+    - "/locations/level-up/"
+  body: "Level Up Project est un collectif et espace evenementiel a Marseille proposant des soirees musicales et des evenements artistiques avec une programmation tournee vers les nouvelles tendances."
+
+- slug: mama-shelter-marseille
+  title: "Mama Shelter Marseille"
+  description: "Hotel-restaurant avec rooftop et programmation musicale dans le 2e arrondissement de Marseille."
+  address: "64 Rue de la Loubiere"
+  arrondissement: "13006 Marseille"
+  website: "https://www.mamashelter.com/marseille"
+  type: "Hotel-bar"
+  aliases:
+    - "/locations/mama-shelter/"
+  body: "Le Mama Shelter Marseille est un hotel-restaurant situe dans le 6e arrondissement de Marseille. Son rooftop et son bar accueillent regulierement des soirees musicales et des DJ sets dans une ambiance urbaine et decontractee."
+
+- slug: manray-club
+  title: "Manray Club"
+  description: "Club de musique a Marseille, avec programmation axee sur la musique electronique."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/manray-club"
+  type: "Club"
+  aliases:
+    - "/locations/manray/"
+    - "/locations/manray-marseille/"
+  body: "Le Manray Club est un club de musique a Marseille proposant des soirees dansantes avec une programmation axee sur la musique electronique et les DJ sets."
+
+- slug: mira
+  title: "Mira"
+  description: "Collectif musical de la scene electronique d'Aix-Marseille, organisant des soirees et festivals."
+  address: ""
+  arrondissement: "Aix-en-Provence"
+  website: "https://shotgun.live/fr/venues/mira-mira"
+  type: "Collectif"
+  aliases:
+    - "/locations/mira-mira/"
+    - "/locations/mira-marseille/"
+  body: "Mira est un collectif musical de la scene electronique d'Aix-Marseille. Le collectif organise des soirees et des festivals melant musique electronique et ambiance festive."
+
+- slug: rockypop-marseille
+  title: "RockyPop Marseille"
+  description: "Hotel avec bar et espace evenementiel, accueillant des soirees musicales a Marseille."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://www.rockypop.com/marseille/"
+  type: "Hotel-bar"
+  aliases:
+    - "/locations/rockypop/"
+  body: "Le RockyPop Marseille est un hotel avec bar et espace evenementiel qui accueille des soirees musicales et des concerts live dans une ambiance decontractee."
+
+- slug: shafro
+  title: "Shafro"
+  description: "Collectif musical a Marseille, soirees orientees musiques afro et electroniques."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/shafro"
+  type: "Collectif"
+  aliases:
+    - "/locations/shafro-marseille/"
+  body: "Shafro est un collectif musical a Marseille specialise dans les soirees orientees musiques afro et electroniques, creant des rendez-vous festifs dans differents lieux de la ville."
+
+- slug: sunny-comedy-club
+  title: "Sunny Comedy Club"
+  description: "Club de comedie a Marseille, proposant des spectacles d'humour et de stand-up."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/sunny-comedy-club"
+  type: "Salle de spectacle"
+  aliases:
+    - "/locations/sunny-comedy/"
+  body: "Le Sunny Comedy Club est un club de comedie a Marseille proposant des spectacles d'humour, de stand-up et d'improvisation dans une ambiance conviviale."
+
+- slug: the-pablo-club
+  title: "The Pablo Club"
+  description: "Club de musique a Marseille, avec soirees dansantes et DJ sets."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/the-pablo-club"
+  type: "Club"
+  aliases:
+    - "/locations/pablo-club/"
+    - "/locations/pablo-club-marseille/"
+  body: "The Pablo Club est un club de musique a Marseille qui programme des soirees dansantes avec des DJ sets dans des genres allant de la house a la musique urbaine."
+
+- slug: unite-22
+  title: "Unite 22"
+  description: "Espace evenementiel et club a Marseille, soirees electroniques et concerts."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/unite-22"
+  type: "Club"
+  aliases:
+    - "/locations/unité-22/"
+    - "/locations/unite-22-marseille/"
+  body: "Unite 22 est un espace evenementiel et club a Marseille accueillant des soirees electroniques, des concerts et des evenements culturels."
+
+- slug: vice-versa-marseille
+  title: "Vice Versa"
+  description: "Club et bar musical a Marseille, programme des soirees musicales variees."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/vice-versa-marseille"
+  type: "Club"
+  aliases:
+    - "/locations/vice-versa/"
+  body: "Vice Versa est un club et bar musical a Marseille proposant des soirees musicales variees, des DJ sets et des evenements thematiques dans une ambiance chaleureuse."
+
+- slug: vl
+  title: "VL"
+  description: "Lieu de soirees et espace evenementiel a Marseille."
+  address: ""
+  arrondissement: "Marseille"
+  website: "https://shotgun.live/fr/venues/vl"
+  type: "Salle de spectacle"
+  aliases:
+    - "/locations/vl-marseille/"
+  body: "VL est un lieu de soirees et espace evenementiel a Marseille accueillant des concerts et des soirees musicales."

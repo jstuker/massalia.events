@@ -282,6 +282,58 @@ keywords:
 **Selection Criteria Options:**
 - `--skip-selection` - Disable all filtering (include all events)
 
+## Venue Location Pages
+
+When the Shotgun crawler discovers events at venues, it extracts venue metadata (address, coordinates, website) from JSON-LD and exports it to `crawler/data/venues-shotgun.json` after each crawl. However, **Hugo location pages are not created automatically** — they require a manual step.
+
+### After a crawl: check for new venues
+
+Compare venue slugs in events against existing location pages:
+
+```bash
+# List venue slugs referenced by Shotgun events but missing a location page
+diff \
+  <(grep -rh 'sourceId: shotgun:' ../content/events/ -l \
+    | xargs grep -h '^- ' \
+    | grep -A1 'locations:' \
+    | grep '^- ' | sed 's/^- //' | sort -u) \
+  <(ls ../content/locations/ | sort) \
+  | grep '<'
+```
+
+If new venues appear, follow these steps:
+
+### Creating location pages for new venues
+
+1. **Check exported venue data** for addresses and coordinates:
+   ```bash
+   cat crawler/data/venues-shotgun.json | python -m json.tool
+   ```
+
+2. **Add new entries to `crawler/data/venues.yaml`** with:
+   - `slug` — must match the slug in event `locations:` fields
+   - `title` — venue display name
+   - `description` — 1-2 sentence French description (factual: venue type + location + what they host)
+   - `address`, `arrondissement`, `website`, `type`, `aliases`
+   - `body` — longer French description for the page content
+
+3. **Generate pages:**
+   ```bash
+   # Preview
+   python scripts/generate-venue-pages.py --dry-run
+
+   # Create pages (skips existing)
+   python scripts/generate-venue-pages.py
+   ```
+
+4. **Add slug mappings** to `BaseCrawler.map_location()` in `crawler/src/crawler.py` so future crawls resolve the venue name to the correct slug.
+
+5. **Verify** with `hugo server` that new location pages render and events link correctly.
+
+### TODO: Automate new venue detection
+
+The current workflow requires manually checking for new venues after each crawl. A post-crawl check that warns about missing location pages would close this gap. See [Issue #79 Task 6 retrospective] for context.
+
 ## Adding New Parsers
 
 To add support for a new event source:
