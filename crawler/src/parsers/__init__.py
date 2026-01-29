@@ -1,5 +1,6 @@
 """Site-specific event parsers."""
 
+from .agendaculturel import AgendaCulturelParser
 from .base import ConfigurableEventParser, ParsedEvent, SelectorConfig
 from .klemenis import KlemenisParser
 from .lafriche import LaFricheParser
@@ -9,6 +10,7 @@ PARSERS = {
     "lafriche": LaFricheParser,
     "klemenis": KlemenisParser,
     "shotgun": ShotgunParser,
+    "agendaculturel": AgendaCulturelParser,
     "generic": ConfigurableEventParser,
 }
 
@@ -44,6 +46,7 @@ def list_parsers() -> list[str]:
 
 
 __all__ = [
+    "AgendaCulturelParser",
     "ConfigurableEventParser",
     "ParsedEvent",
     "SelectorConfig",

@@ -169,6 +169,80 @@ class ImageDownloader:
             self.stats["failed"] += 1
             return self.placeholder if self.placeholder else None
 
+    def save_from_bytes(
+        self,
+        image_bytes: bytes,
+        image_url: str = "",
+        event_slug: str = "",
+        event_date: datetime | str | None = None,
+    ) -> str | None:
+        """
+        Save and optimize an image from raw bytes, skipping HTTP download.
+
+        Uses the same processing pipeline as download() (resize, WebP
+        conversion, thumbnail generation) but accepts pre-fetched bytes.
+
+        Args:
+            image_bytes: Raw image data
+            image_url: Original URL (used for filename generation)
+            event_slug: Optional slug to use in filename
+            event_date: Event date for organizing into subdirectories
+
+        Returns:
+            Relative path to saved image (for Hugo front matter),
+            or None if processing failed
+        """
+        if not image_bytes:
+            self.stats["placeholders"] += 1
+            return self.placeholder if self.placeholder else None
+
+        # Determine output path
+        subdir = self._get_date_subdir(event_date) if self.use_date_dirs else ""
+        filename = self._generate_filename(image_url or "image", event_slug)
+        relative_path = (
+            f"/images/events/{subdir}{filename}"
+            if subdir
+            else f"/images/events/{filename}"
+        )
+        output_path = (
+            self.output_dir / subdir / filename
+            if subdir
+            else self.output_dir / filename
+        )
+
+        # Check cache
+        if output_path.exists() and not self.dry_run:
+            logger.debug(f"Image already exists (cached): {relative_path}")
+            self.stats["cached"] += 1
+            return relative_path
+
+        if self.dry_run:
+            logger.info(f"[DRY RUN] Would save: {relative_path}")
+            return relative_path
+
+        try:
+            output_bytes = self._process_image(image_bytes)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+
+            with open(output_path, "wb") as f:
+                f.write(output_bytes)
+
+            file_size_kb = len(output_bytes) / 1024
+            logger.info(
+                f"Saved image from bytes: {relative_path} ({file_size_kb:.1f}KB)"
+            )
+
+            if self.generate_thumbnails:
+                self._generate_thumbnail(image_bytes, output_path)
+
+            self.stats["downloaded"] += 1
+            return relative_path
+
+        except Exception as e:
+            logger.error(f"Failed to process image from bytes: {e}")
+            self.stats["failed"] += 1
+            return self.placeholder if self.placeholder else None
+
     def _get_date_subdir(self, event_date: datetime | str | None) -> str:
         """
         Get date-based subdirectory path.
@@ -332,7 +406,9 @@ class ImageDownloader:
                 f.write(output.getvalue())
 
             thumb_size_kb = len(output.getvalue()) / 1024
-            logger.debug(f"Generated thumbnail: {thumb_path.name} ({thumb_size_kb:.1f}KB)")
+            logger.debug(
+                f"Generated thumbnail: {thumb_path.name} ({thumb_size_kb:.1f}KB)"
+            )
 
         except Exception as e:
             logger.warning(f"Failed to generate thumbnail: {e}")
