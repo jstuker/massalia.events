@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Rebuild daily at 23:00 UTC (midnight CET / Paris time in winter, 1 AM CEST in summer)
+    - cron: '0 23 * * *'
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,7 +25,7 @@ jobs:
       GO_VERSION: 1.25.5
       HUGO_VERSION: 0.154.4
       NODE_VERSION: 24.12.0
-      TZ: Europe/Oslo
+      TZ: Europe/Paris
     steps:
       - name: Checkout
         uses: actions/checkout@v6

@@ -98,10 +98,79 @@
   'use strict';
 
   const HASH_PREFIX = 'day-';
+  const FRENCH_DAYS = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+  const FRENCH_DAYS_FULL = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
+  /**
+   * Get today's date string (YYYY-MM-DD) in Europe/Paris timezone
+   */
+  function getParisTodayStr() {
+    const parts = new Intl.DateTimeFormat('en', {
+      timeZone: 'Europe/Paris',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).formatToParts(new Date());
+    const year = parts.find(p => p.type === 'year').value;
+    const month = parts.find(p => p.type === 'month').value;
+    const day = parts.find(p => p.type === 'day').value;
+    return `${year}-${month}-${day}`;
+  }
+
+  /**
+   * Get French day abbreviation from a YYYY-MM-DD date string
+   */
+  function getDayAbbrev(dateStr) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    return FRENCH_DAYS[new Date(y, m - 1, d).getDay()];
+  }
+
+  /**
+   * Get French full day name from a YYYY-MM-DD date string
+   */
+  function getDayFull(dateStr) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    return FRENCH_DAYS_FULL[new Date(y, m - 1, d).getDay()];
+  }
+
+  /**
+   * Correct "Aujourd'hui" label based on actual Paris time.
+   * Hugo bakes the label at build time, which may be stale.
+   */
+  function correctTodayLabels() {
+    const tabs = document.querySelectorAll('.day-tab');
+    if (!tabs.length) return;
+
+    const todayStr = getParisTodayStr();
+
+    // Check if build-time "today" (first tab) is still correct
+    if (tabs[0] && tabs[0].getAttribute('data-date') === todayStr) return;
+
+    tabs.forEach(tab => {
+      const tabDate = tab.getAttribute('data-date');
+      const labelSpan = tab.querySelector('span:first-child');
+      const ariaLabel = tab.getAttribute('aria-label') || '';
+
+      if (tabDate === todayStr) {
+        // This tab is the real today
+        if (labelSpan) labelSpan.textContent = "Aujourd'hui";
+        tab.setAttribute('aria-label', ariaLabel.replace(/^[^,]+/, "Aujourd'hui"));
+      } else if (labelSpan && labelSpan.textContent.trim() === "Aujourd'hui") {
+        // This tab was incorrectly labeled as today - restore day name
+        const dayAbbrev = getDayAbbrev(tabDate);
+        const dayFull = getDayFull(tabDate);
+        labelSpan.textContent = dayAbbrev;
+        tab.setAttribute('aria-label', ariaLabel.replace("Aujourd'hui", dayFull));
+      }
+    });
+  }
 
   function initDaySelector() {
     const tabs = document.querySelectorAll('.day-tab');
     if (!tabs.length) return;
+
+    // Correct "Aujourd'hui" labels before selecting default tab
+    correctTodayLabels();
 
     // Handle click events
     tabs.forEach(tab => {
@@ -134,13 +203,20 @@
       });
     });
 
-    // Check for hash on load
+    // Check for hash on load, or default to real today
     const hash = window.location.hash.slice(1);
     if (hash.startsWith(HASH_PREFIX)) {
       const dateFromHash = hash.slice(HASH_PREFIX.length);
       const matchingTab = document.querySelector(`.day-tab[data-date="${dateFromHash}"]`);
       if (matchingTab) {
         selectDay(matchingTab, false);
+      }
+    } else {
+      // Select real today's tab (may differ from build-time today)
+      const todayStr = getParisTodayStr();
+      const todayTab = document.querySelector(`.day-tab[data-date="${todayStr}"]`);
+      if (todayTab && !todayTab.hasAttribute('data-active')) {
+        selectDay(todayTab, false);
       }
     }
   }

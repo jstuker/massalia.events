@@ -135,11 +135,16 @@
    * Initialize event filtering on page load
    */
   function initFilter() {
-    // Get today's date in local timezone
-    const today = new Date();
-    const todayStr = today.getFullYear() + '-' +
-      String(today.getMonth() + 1).padStart(2, '0') + '-' +
-      String(today.getDate()).padStart(2, '0');
+    // Get today's date in Europe/Paris timezone
+    const parts = new Intl.DateTimeFormat('en', {
+      timeZone: 'Europe/Paris',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).formatToParts(new Date());
+    const todayStr = parts.find(p => p.type === 'year').value + '-' +
+      parts.find(p => p.type === 'month').value + '-' +
+      parts.find(p => p.type === 'day').value;
 
     // Check for hash-based date first
     const hash = window.location.hash.slice(1);
