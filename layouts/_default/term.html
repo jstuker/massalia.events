@@ -29,6 +29,35 @@
   </div>
 </header>
 
+{{/* Location metadata (only for location taxonomy pages) */}}
+{{ if eq .Data.Plural "locations" }}
+  <section class="mt-4 mb-8">
+    {{ with .Params.description }}
+      <p class="text-lg text-neutral-600 dark:text-neutral-400">{{ . }}</p>
+    {{ end }}
+    <dl class="mt-4 space-y-2 text-base text-neutral-700 dark:text-neutral-300">
+      {{ with .Params.address }}
+        <div class="flex items-start gap-2">
+          <dt class="sr-only">Adresse</dt>
+          <dd class="flex items-start gap-2">
+            <span class="inline-block w-5 h-5 mt-0.5 shrink-0" aria-hidden="true">{{ partial "icon.html" "location-dot" }}</span>
+            {{ . }}
+          </dd>
+        </div>
+      {{ end }}
+      {{ with .Params.website }}
+        <div class="flex items-start gap-2">
+          <dt class="sr-only">Site web</dt>
+          <dd class="flex items-start gap-2">
+            <span class="inline-block w-5 h-5 mt-0.5 shrink-0" aria-hidden="true">{{ partial "icon.html" "link" }}</span>
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:underline dark:text-primary-400">{{ . }}</a>
+          </dd>
+        </div>
+      {{ end }}
+    </dl>
+  </section>
+{{ end }}
+
 {{/* Description (markdown content) */}}
 {{ $tocMargin := cond $showToc "mt-12" "mt-0" }}
 {{ $topClass := cond (hasPrefix site.Params.header.layout "fixed") "lg:top-[140px]" "lg:top-10" }}
