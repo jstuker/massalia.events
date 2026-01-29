@@ -227,7 +227,10 @@ def _run_playwright_non_headless(url, timeout=60000):
     try:
         browser = pw.chromium.launch(
             headless=False,
-            args=["--disable-blink-features=AutomationControlled"],
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--window-position=-9999,-9999",
+            ],
         )
         context = browser.new_context(
             viewport={"width": 1920, "height": 1080},
