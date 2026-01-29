@@ -1,10 +1,18 @@
-# massalia.events
+# About Massalia Events
 
-A cultural events aggregator for Marseille, featuring events in arts, music, dance, and theatre.
+I created this site because of two reasons:
+1. I moved to Marseille and didn't find anything alike and
+1. I wanted to learn about vibecoding.
+
+The later interest weighs more, so don't expect clean code or good style: close to everything here is autored by Claude Caude.
+
+## Disclaimer
+
+I don't intend to invest a lot of time in this project. I may go offline anytime, so don't rely on it. But if you feel like contributing, let's go!
 
 ## Overview
 
-massalia.events is a static website that aggregates cultural events from multiple sources in Marseille. The site is built with Hugo and automatically updated through a local crawler that fetches events from configured sources.
+Massalia Events is a static website that aggregates cultural events from multiple sources in Marseille. The site is built with Hugo and automatically updated through a local crawler that fetches events from configured sources.
 
 **Key Features:**
 - Aggregates events from multiple cultural venues and platforms
