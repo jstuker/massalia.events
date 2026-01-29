@@ -8,6 +8,7 @@ import pytest
 
 from src.models.event import Event
 from src.parsers.agendaculturel import (
+    CATEGORY_LISTING_URLS,
     AgendaCulturelParser,
     _extract_events_from_listing,
     _extract_json_ld,
@@ -830,6 +831,62 @@ class TestAgendaCulturelParserIntegration:
         )
         events = parser.parse_events(html_parser)
         assert events == []
+
+    def test_category_listing_urls_defined(self):
+        assert len(CATEGORY_LISTING_URLS) == 5
+        assert all(
+            url.startswith("https://13.agendaculturel.fr/")
+            for url in CATEGORY_LISTING_URLS
+        )
+
+    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
+    def test_crawl_iterates_category_pages(
+        self, mock_pw, parser, sample_listing_html, sample_detail_html
+    ):
+        """Test that crawl() fetches all category listing pages."""
+        mock_pw.return_value = sample_detail_html
+        # Mock fetch_page to return listing HTML for category pages
+        # and detail HTML for event pages
+        category_urls = set(CATEGORY_LISTING_URLS)
+
+        def mock_fetch(url):
+            if url in category_urls:
+                return sample_listing_html
+            return sample_detail_html
+
+        with patch.object(parser, "fetch_page", side_effect=mock_fetch):
+            with patch.object(parser, "process_event", side_effect=lambda e: e):
+                events = parser.crawl()
+
+        assert len(events) > 0
+
+    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
+    def test_crawl_deduplicates_across_pages(self, mock_pw, parser, sample_detail_html):
+        """Test that events appearing in multiple categories are deduplicated."""
+        # Same listing HTML returned for all category pages — same events
+        listing_html = """
+        <html><body>
+            <div class="y-card" itemscope="" itemtype="https://schema.org/MusicEvent">
+                <a itemprop="url" href="/concert/marseille/test.html">
+                    <span itemprop="name">Shared Event</span>
+                </a>
+                <time datetime="2026-02-01T00:00:00+01:00">1 févr.</time>
+            </div>
+        </body></html>
+        """
+        category_urls = set(CATEGORY_LISTING_URLS)
+
+        def mock_fetch(url):
+            if url in category_urls:
+                return listing_html
+            return sample_detail_html
+
+        with patch.object(parser, "fetch_page", side_effect=mock_fetch):
+            with patch.object(parser, "process_event", side_effect=lambda e: e):
+                events = parser.crawl()
+
+        # Should only have 1 event despite being on all 5 category pages
+        assert len(events) == 1
 
 
 # ── Test HTML fallback parsing ────────────────────────────────────────

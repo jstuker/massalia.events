@@ -26,6 +26,15 @@ PARIS_TZ = ZoneInfo("Europe/Paris")
 # Maximum number of events to process per crawl
 MAX_EVENTS = 60
 
+# Category listing pages to crawl (skip the root page)
+CATEGORY_LISTING_URLS = [
+    "https://13.agendaculturel.fr/concert/",
+    "https://13.agendaculturel.fr/theatre/",
+    "https://13.agendaculturel.fr/danse/",
+    "https://13.agendaculturel.fr/arts-du-spectacle/",
+    "https://13.agendaculturel.fr/exposition/",
+]
+
 # Event URL path prefixes that indicate actual event pages
 EVENT_PATH_PREFIXES = (
     "/concert/",
@@ -535,14 +544,107 @@ class AgendaCulturelParser(BaseCrawler):
     protection, requiring a non-headless Playwright browser.
 
     Strategy:
-    1. Load the main page with Playwright (non-headless)
+    1. Load each category listing page with Playwright (non-headless)
     2. Extract event data from schema.org microdata on listing cards
-    3. Visit each event detail page for complete JSON-LD data
-    4. Filter for Marseille-area events
-    5. Convert to Event objects
+    3. Deduplicate events across category pages
+    4. Visit each event detail page for complete JSON-LD data
+    5. Filter for Marseille-area events
+    6. Convert to Event objects
     """
 
     source_name = "Agenda Culturel"
+
+    def crawl(self) -> list[Event]:
+        """
+        Crawl multiple category listing pages on Agenda Culturel.
+
+        Overrides BaseCrawler.crawl() to iterate over CATEGORY_LISTING_URLS
+        instead of fetching a single root page.
+
+        Returns:
+            List of processed Event objects
+        """
+        logger.info(f"Starting crawl for {self.source_name}")
+        self.selection_stats = {"accepted": 0, "rejected": 0}
+
+        # Collect events from all category listing pages
+        all_listing_events = []
+        seen_urls = set()
+
+        for listing_url in CATEGORY_LISTING_URLS:
+            html = self.fetch_page(listing_url)
+            if not html:
+                logger.warning(f"Failed to fetch listing page: {listing_url}")
+                continue
+
+            listing_events = _extract_events_from_listing(html)
+            logger.info(f"Found {len(listing_events)} events on {listing_url}")
+
+            for event_data in listing_events:
+                event_url = event_data.get("url", "")
+                if event_url and event_url not in seen_urls:
+                    seen_urls.add(event_url)
+                    all_listing_events.append(event_data)
+
+            # Rate limit between listing page fetches
+            time.sleep(
+                self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
+            )
+
+        if not all_listing_events:
+            logger.warning("No events found on any Agenda Culturel listing page")
+            return []
+
+        logger.info(
+            f"Found {len(all_listing_events)} unique events "
+            f"across {len(CATEGORY_LISTING_URLS)} category pages"
+        )
+
+        # Filter for Marseille area events
+        marseille_events = [
+            e
+            for e in all_listing_events
+            if _is_marseille_area(e.get("url", ""), e.get("location", ""))
+        ]
+        logger.info(f"Filtered to {len(marseille_events)} Marseille-area events")
+
+        # Visit detail pages and create Event objects
+        events = []
+        for event_data in marseille_events[:MAX_EVENTS]:
+            event_url = event_data.get("url", "")
+            if not event_url:
+                continue
+
+            try:
+                event = self._parse_detail_page(event_url)
+                if event:
+                    events.append(event)
+                else:
+                    event = _parse_event_from_microdata(event_data, self.category_map)
+                    if event:
+                        events.append(event)
+                        logger.debug(f"Used microdata fallback for: {event.name}")
+            except Exception as e:
+                logger.warning(f"Failed to parse event from {event_url}: {e}")
+
+            # Rate limiting between detail page fetches
+            time.sleep(
+                self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
+            )
+
+        logger.info(f"Parsed {len(events)} events from {self.source_name}")
+
+        # Process each event (selection, dedup, markdown generation)
+        processed_events = []
+        for event in events:
+            try:
+                processed = self.process_event(event)
+                if processed:
+                    processed_events.append(processed)
+            except Exception as e:
+                logger.error(f"Error processing event '{event.name}': {e}")
+
+        return processed_events
 
     def fetch_page(self, url: str) -> str:
         """
