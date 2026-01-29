@@ -139,6 +139,34 @@ def sample_listing_html():
                 </div>
             </div>
         </div>
+        <div class="card cat-profil theatre-profil hover-scale x-card"
+             itemscope="" itemtype="https://schema.org/TheaterEvent">
+            <div class="row g-0">
+                <div class="col-8 col-sm-9 col-md-12">
+                    <div class="card-body px-md-4 text-md-center">
+                        <p class="mb-md-0 position-relative">
+                            <span class="badge card-main-badge">
+                                <time datetime="2026-02-10T00:00:00+01:00">
+                                    10 févr. 2026
+                                </time>
+                            </span>
+                        </p>
+                        <div class="h5 card-title">
+                            <a class="stretched-link"
+                               href="/theatre/marseille/pierre-emmanuel-barre-come-back.html"
+                               itemprop="url">
+                                <span itemprop="name">Pierre Emmanuel Barré Come Back</span>
+                                à Marseille
+                            </a>
+                        </div>
+                        <div class="text-truncate" itemprop="location"
+                             itemscope="" itemtype="https://schema.org/Place">
+                            <span itemprop="name">Le Dôme</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
     </html>
     """
@@ -249,7 +277,7 @@ class TestExtractEventsFromListing:
 
     def test_extracts_all_events(self, sample_listing_html):
         events = _extract_events_from_listing(sample_listing_html)
-        assert len(events) == 3
+        assert len(events) == 4
 
     def test_extracts_event_names(self, sample_listing_html):
         events = _extract_events_from_listing(sample_listing_html)
@@ -290,6 +318,36 @@ class TestExtractEventsFromListing:
         assert randjess["schema_type"] == "MusicEvent"
         chti = next(e for e in events if "chti" in e["name"])
         assert chti["schema_type"] == "TheaterEvent"
+
+    def test_extracts_x_card_events(self, sample_listing_html):
+        events = _extract_events_from_listing(sample_listing_html)
+        names = [e["name"] for e in events]
+        assert "Pierre Emmanuel Barré Come Back" in names
+
+    def test_x_card_has_correct_schema_type(self, sample_listing_html):
+        events = _extract_events_from_listing(sample_listing_html)
+        peb = next(e for e in events if "Barré" in e["name"])
+        assert peb["schema_type"] == "TheaterEvent"
+
+    def test_x_card_has_correct_url(self, sample_listing_html):
+        events = _extract_events_from_listing(sample_listing_html)
+        peb = next(e for e in events if "Barré" in e["name"])
+        assert "pierre-emmanuel-barre-come-back.html" in peb["url"]
+
+    def test_only_x_card_html(self):
+        html = """
+        <html><body>
+            <div class="x-card" itemscope="" itemtype="https://schema.org/MusicEvent">
+                <a itemprop="url" href="/concert/marseille/test.html">
+                    <span itemprop="name">X-Card Only Event</span>
+                </a>
+                <time datetime="2026-03-01T00:00:00+01:00">1 mars</time>
+            </div>
+        </body></html>
+        """
+        events = _extract_events_from_listing(html)
+        assert len(events) == 1
+        assert events[0]["name"] == "X-Card Only Event"
 
     def test_handles_empty_html(self):
         events = _extract_events_from_listing("<html><body></body></html>")
@@ -436,13 +494,13 @@ class TestParseEventFromJsonLd:
         )
         assert len(event.description) <= 160
 
-    def test_parses_image(self, sample_json_ld, category_map):
+    def test_image_is_none_due_to_cloudflare(self, sample_json_ld, category_map):
         event = _parse_event_from_json_ld(
             sample_json_ld,
             "https://13.agendaculturel.fr/concert/marseille/randjess.html",
             category_map,
         )
-        assert "randjess.jpg" in event.image
+        assert event.image is None
 
     def test_parses_location(self, sample_json_ld, category_map):
         event = _parse_event_from_json_ld(
@@ -839,7 +897,7 @@ class TestHtmlFallbackParsing:
         event = parser._parse_from_html(html, "https://example.com/test.html")
         assert event is None
 
-    def test_extracts_og_image(self, parser):
+    def test_image_is_none_due_to_cloudflare(self, parser):
         html = """
         <html>
         <head>
@@ -853,4 +911,4 @@ class TestHtmlFallbackParsing:
         """
         event = parser._parse_from_html(html, "https://example.com/test.html")
         assert event is not None
-        assert event.image == "https://example.com/img.jpg"
+        assert event.image is None

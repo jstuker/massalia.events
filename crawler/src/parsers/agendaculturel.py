@@ -194,8 +194,9 @@ def _extract_events_from_listing(html, base_url="https://13.agendaculturel.fr"):
     """
     Extract event data from listing page using schema.org microdata.
 
-    The listing page contains event cards with class 'y-card' that have
-    schema.org itemscope/itemtype attributes and structured fields.
+    The listing page contains event cards with class 'y-card' (vertical/featured)
+    and 'x-card' (horizontal/compact) that have schema.org itemscope/itemtype
+    attributes and structured fields.
 
     Args:
         html: HTML content of the listing page
@@ -207,8 +208,8 @@ def _extract_events_from_listing(html, base_url="https://13.agendaculturel.fr"):
     parser = HTMLParser(html, base_url)
     events = []
 
-    # Find all event cards with schema.org microdata
-    cards = parser.select("div.y-card[itemscope]")
+    # Find all event cards with schema.org microdata (y-card and x-card)
+    cards = parser.select("div.y-card[itemscope], div.x-card[itemscope]")
     if not cards:
         # Fallback: find any itemscope with event types
         cards = parser.select("[itemscope][itemtype*='schema.org']")
@@ -342,8 +343,8 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
     if description and len(description) > 160:
         description = description[:157].rsplit(" ", 1)[0] + "..."
 
-    # Extract image
-    image_url = json_ld.get("image", "")
+    # Images from agendaculturel.fr are Cloudflare-protected and return 403
+    # even in a browser, so we skip image extraction for this source.
 
     # Extract location
     location_data = json_ld.get("location", {})
@@ -371,7 +372,7 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
         event_url=event_url,
         start_datetime=start_dt,
         description=description,
-        image=image_url if image_url else None,
+        image=None,
         categories=[category],
         locations=locations,
         tags=[],
@@ -412,7 +413,6 @@ def _parse_event_from_microdata(event_data, category_map):
     if description and len(description) > 160:
         description = description[:157].rsplit(" ", 1)[0] + "..."
 
-    image_url = event_data.get("image", "")
     location_name = event_data.get("location", "")
     schema_type = event_data.get("schema_type", "")
 
@@ -431,7 +431,7 @@ def _parse_event_from_microdata(event_data, category_map):
         event_url=url,
         start_datetime=start_dt,
         description=description,
-        image=image_url if image_url else None,
+        image=None,
         categories=[category],
         locations=locations,
         tags=[],
@@ -733,11 +733,8 @@ class AgendaCulturelParser(BaseCrawler):
         if description and len(description) > 160:
             description = description[:157].rsplit(" ", 1)[0] + "..."
 
-        # Extract image from og:image
-        image_url = None
-        og_img = detail_parser.select_one('meta[property="og:image"]')
-        if og_img:
-            image_url = og_img.get("content", "")
+        # Images from agendaculturel.fr are Cloudflare-protected (403),
+        # so we skip image extraction.
 
         # Extract location
         location_name = ""
@@ -762,7 +759,7 @@ class AgendaCulturelParser(BaseCrawler):
             event_url=event_url,
             start_datetime=event_datetime,
             description=description,
-            image=image_url,
+            image=None,
             categories=[category],
             locations=locations,
             tags=[],
