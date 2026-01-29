@@ -52,6 +52,36 @@ sources:
       "Projection": "art"
       "Performance": "theatre"
 
+  # Agenda Culturel - Cultural events aggregator for Bouches-du-Rhône
+  # Covers concerts, theatre, dance, exhibitions, festivals in Marseille area
+  - name: "Agenda Culturel"
+    id: "agendaculturel"
+    url: "https://13.agendaculturel.fr/"
+    parser: "agendaculturel"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "MusicEvent": "musique"
+      "TheaterEvent": "theatre"
+      "DanceEvent": "danse"
+      "VisualArtsEvent": "art"
+      "ExhibitionEvent": "art"
+      "Festival": "communaute"
+      "ChildrensEvent": "theatre"
+      "ComedyEvent": "theatre"
+      "concert": "musique"
+      "theatre": "theatre"
+      "danse": "danse"
+      "exposition": "art"
+      "festival": "communaute"
+      "humour": "theatre"
+      "cirque": "theatre"
+      "opera": "musique"
+      "jeune-public": "theatre"
+      "arts-du-spectacle": "theatre"
+
   # Shotgun - Ticketing platform for music events
   # Covers clubs, concerts, festivals in Aix-Marseille area
   - name: "Shotgun"
