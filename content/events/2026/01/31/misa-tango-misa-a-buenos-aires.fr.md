@@ -10,7 +10,7 @@ description: Misa Tango mêle élan sacré et rythmes du tango dans la Misa a Bu
 categories:
 - musique
 locations:
-- basilique-notre-dame-de-la-garde
+- notre-dame-de-la-garde
 dates:
 - samedi-31-janvier
 tags: []

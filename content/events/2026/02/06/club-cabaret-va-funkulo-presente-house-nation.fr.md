@@ -10,7 +10,7 @@ description: House Nation célèbre la culture house entre Chicago et Detroit av
 categories:
 - musique
 locations:
-- le-cabaret-aleatoire
+- cabaret-aleatoire
 dates:
 - vendredi-06-fevrier
 tags: []

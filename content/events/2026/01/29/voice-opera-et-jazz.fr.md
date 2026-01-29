@@ -10,7 +10,7 @@ description: Voice Opera et Jazz réunit les voix d’Enrico Lanza et Nicole Men
 categories:
 - musique
 locations:
-- cinema-eden-theatre
+- cinema-eden
 dates:
 - jeudi-29-janvier
 tags: []

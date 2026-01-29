@@ -1,14 +1,10 @@
 ---
 title: "Bounce Club"
 description: "Club de musique a Marseille, programme des soirees dansantes et DJ sets."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/bounce-club-marseille"
+address: "35 Cr Honoré d'Estienne d'Orves, 13001 Marseille"
+arrondissement: "13001 Marseille"
+website: "https://www.facebook.com/bounce.mars/"
 type: "Club"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/bounce-club/"
 ---

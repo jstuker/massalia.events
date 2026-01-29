@@ -1,0 +1,85 @@
+{{ define "main" }}
+{{/*
+  Location term page - shows venue details and upcoming events
+*/}}
+
+{{ .Scratch.Set "scope" "list" }}
+
+{{/* Hero */}}
+{{ if site.Params.term.showHero | default false }}
+  {{ $heroStyle := print "hero/" site.Params.term.heroStyle ".html" }}
+  {{ if templates.Exists ( printf "partials/%s" $heroStyle ) }}
+    {{ partial $heroStyle . }}
+  {{ else }}
+    {{ partial "hero/basic.html" . }}
+  {{ end }}
+{{ end }}
+
+{{/* Header */}}
+<header>
+  {{ if .Params.showBreadcrumbs | default (site.Params.term.showBreadcrumbs | default false) }}
+    {{ partial "breadcrumbs.html" . }}
+  {{ end }}
+  <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+</header>
+
+{{/* Location metadata */}}
+<section class="mt-4 mb-8">
+  {{ with .Params.description }}
+    <p class="text-lg text-neutral-600 dark:text-neutral-400">{{ . }}</p>
+  {{ end }}
+  <dl class="mt-4 space-y-2 text-base text-neutral-700 dark:text-neutral-300">
+    {{ with .Params.address }}
+      <div class="flex items-start gap-2">
+        <dt class="sr-only">Adresse</dt>
+        <dd class="flex items-start gap-2">
+          <span class="inline-block w-5 h-5 mt-0.5 shrink-0" aria-hidden="true">{{ partial "icon.html" "location-dot" }}</span>
+          {{ . }}
+        </dd>
+      </div>
+    {{ end }}
+    {{ with .Params.website }}
+      <div class="flex items-start gap-2">
+        <dt class="sr-only">Site web</dt>
+        <dd class="flex items-start gap-2">
+          <span class="inline-block w-5 h-5 mt-0.5 shrink-0" aria-hidden="true">{{ partial "icon.html" "link" }}</span>
+          <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:underline dark:text-primary-400">{{ . }}</a>
+        </dd>
+      </div>
+    {{ end }}
+  </dl>
+</section>
+
+{{/* Description (markdown content from body) */}}
+{{ with .Content }}
+  <section class="prose max-w-prose dark:prose-invert mb-10">
+    {{ . }}
+  </section>
+{{ end }}
+
+{{/* Filter expired events */}}
+{{ $allPages := .Pages }}
+{{ $activeEvents := partial "filter-active-events.html" (dict "pages" $allPages) }}
+
+{{/* Event Cards Grid */}}
+{{ if gt (len $activeEvents) 0 }}
+  {{ $sortedEvents := sort $activeEvents ".Date" "asc" }}
+
+  <section class="event-cards-container" role="region" aria-label="Liste des événements">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mx-auto max-w-5xl">
+      {{ range $sortedEvents }}
+        <div class="event-card-wrapper w-full max-w-sm">
+          {{ partial "event-card.html" . }}
+        </div>
+      {{ end }}
+    </div>
+  </section>
+{{ else }}
+  <section class="mt-10 prose dark:prose-invert">
+    <p class="py-8 border-t">
+      <em>{{ i18n "list.no_articles" | default "Aucun événement à venir" | emojify }}</em>
+    </p>
+  </section>
+{{ end }}
+{{ partial "pagination.html" . }}
+{{ end }}

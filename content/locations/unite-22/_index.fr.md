@@ -1,14 +1,10 @@
 ---
 title: "Unite 22"
 description: "Espace evenementiel et club a Marseille, soirees electroniques et concerts."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/unite-22"
+address: "22 Rue Jobin, 13003 Marseille"
+arrondissement: "13003 Marseille"
+website: "https://www.instagram.com/unite.22_marseille/"
 type: "Club"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/unité-22/"
   - "/locations/unite-22-marseille/"

@@ -10,7 +10,7 @@ description: Solo chorégraphique, Saphir Belkheir, Sycomore fait surgir une mé
 categories:
 - danse
 locations:
-- klap-maison-pour-la-danse
+- klap
 dates:
 - vendredi-30-janvier
 tags: []

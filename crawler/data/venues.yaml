@@ -7,9 +7,9 @@
 - slug: baby-club
   title: "Baby Club"
   description: "Club de musique et bar dans le quartier de Notre-Dame du Mont, au coeur du 6e arrondissement de Marseille."
-  address: "2 Rue Andre Poggioli"
+  address: "2 Rue Andre Poggioli, 13006 Marseille"
   arrondissement: "13006 Marseille"
-  website: "https://shotgun.live/fr/venues/baby-club"
+  website: "https://tarpin-bien.com/lieu/le-baby-club/"
   type: "Club"
   aliases:
     - "/locations/baby-club-marseille/"
@@ -18,8 +18,8 @@
 - slug: bohemia
   title: "Bohemia"
   description: "Collectif musical marseillais organisant des soirees dans divers lieux de la ville."
-  address: ""
-  arrondissement: "Marseille"
+  address: "74 Boulevard de la Corderie, 13007 Marseille"
+  arrondissement: "13007 Marseille"
   website: "https://shotgun.live/fr/venues/bohemia"
   type: "Collectif"
   aliases:
@@ -29,9 +29,9 @@
 - slug: boum-marseille
   title: "Boum"
   description: "Bar et espace evenementiel dans le centre de Marseille, avec programmation musicale variee."
-  address: ""
-  arrondissement: "13001 Marseille"
-  website: "https://shotgun.live/fr/venues/boum-marseille"
+  address: "21 Rue André Poggioli, 13006 Marseille"
+  arrondissement: "13006 Marseille"
+  website: "https://www.privateaser.com/lieu/52625-boum"
   type: "Bar"
   aliases:
     - "/locations/boum/"
@@ -40,9 +40,9 @@
 - slug: bounce-club-marseille
   title: "Bounce Club"
   description: "Club de musique a Marseille, programme des soirees dansantes et DJ sets."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/bounce-club-marseille"
+  address: "35 Cr Honoré d'Estienne d'Orves, 13001 Marseille"
+  arrondissement: "13001 Marseille"
+  website: "https://www.facebook.com/bounce.mars/"
   type: "Club"
   aliases:
     - "/locations/bounce-club/"
@@ -51,21 +51,22 @@
 - slug: cabaret-aleatoire
   title: "Cabaret Aleatoire"
   description: "Salle de concerts et club de musiques actuelles a La Friche la Belle de Mai."
-  address: "41 Rue Jobin"
+  address: "41 Rue Jobin, 13003 Marseille"
   arrondissement: "13003 Marseille"
   website: "https://www.cabaret-aleatoire.com/"
   type: "Salle de spectacle"
   aliases:
     - "/locations/cabaret-aléatoire/"
     - "/locations/cabaret-aleatoire-marseille/"
+    - "/locations/le-cabaret-aleatoire/"
   body: "Le Cabaret Aleatoire est une salle de concerts et un club de musiques actuelles situe au sein de La Friche la Belle de Mai. Depuis 2007, ce lieu emblematique de la scene musicale marseillaise programme des concerts, des soirees electroniques et des festivals tout au long de l'annee."
 
 - slug: danceteria
   title: "Danceteria"
   description: "Club et salle de danse a Marseille, dedie a la musique electronique et aux soirees clubbing."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/danceteria"
+  address: "18 Rue Saint-Saëns, 13001 Marseille"
+  arrondissement: "13001 Marseille"
+  website: "https://www.facebook.com/danceteria.marseille/"
   type: "Club"
   aliases:
     - "/locations/danceteria-marseille/"
@@ -76,7 +77,7 @@
   description: "Lieu dedie aux musiques et danses latines et tropicales a Marseille."
   address: ""
   arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/esquina-tropical"
+  website: "https://esquinatropical.fr/"
   type: "Salle de danse"
   aliases:
     - "/locations/esquina-tropical-marseille/"
@@ -88,7 +89,7 @@
   address: ""
   arrondissement: "Marseille"
   website: "https://shotgun.live/fr/venues/francois-rouzier"
-  type: "Salle de spectacle"
+  type: "Collectif"
   aliases:
     - "/locations/françois-rouzier/"
   body: "L'espace Francois Rouzier est un lieu evenementiel a Marseille qui accueille des concerts et des soirees musicales dans un cadre polyvalent."
@@ -96,9 +97,9 @@
 - slug: ipn-club-aix
   title: "IPN Club"
   description: "Club de musique electronique a Aix-en-Provence, avec soirees techno et house."
-  address: ""
-  arrondissement: "Aix-en-Provence"
-  website: "https://shotgun.live/fr/venues/ipn-club-aix"
+  address: "23 Cr Sextius, 13100 Aix-en-Provence"
+  arrondissement: "13100 Aix-en-Provence"
+  website: "https://ipn-club-aix.fr/"
   type: "Club"
   aliases:
     - "/locations/ipn-club/"
@@ -108,9 +109,9 @@
 - slug: la-traverse-de-balkis
   title: "La Traverse de Balkis"
   description: "Espace culturel et festif a Marseille, accueillant concerts et evenements."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/la-traverse-de-balkis"
+  address: "1 Rue des Trois Rois, 13006 Marseille"
+  arrondissement: "13006 Marseille"
+  website: "https://latraversedebalkis.com/"
   type: "Salle de spectacle"
   aliases:
     - "/locations/traverse-de-balkis/"
@@ -131,9 +132,9 @@
 - slug: le-bazar
   title: "Le Bazar"
   description: "Bar et espace de concerts dans le centre de Marseille."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/le-bazar"
+  address: "90, boulevard Rabatau, 13008 Marseille"
+  arrondissement: "13008 Marseille"
+  website: "https://www.bazarmarseille.com/"
   type: "Bar"
   aliases:
     - "/locations/bazar/"
@@ -143,9 +144,9 @@
 - slug: le-bouge-marseille
   title: "Le Bouge"
   description: "Bar et salle de concerts a Marseille, dedie aux musiques actuelles."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/le-bouge-marseille"
+  address: "21 Cr Honoré d'Estienne d'Orves, 13001 Marseille"
+  arrondissement: "13001 Marseille"
+  website: "https://www.facebook.com/lebougemarseille/"
   type: "Bar"
   aliases:
     - "/locations/le-bouge/"
@@ -155,9 +156,9 @@
 - slug: le-chapiteau-marseille
   title: "Le Chapiteau"
   description: "Club et espace de fete au coeur de la Belle de Mai, dedie a la musique electronique."
-  address: "38 Traverse de Carthage"
+  address: "38 Traverse de Carthage, 13003 Marseille"
   arrondissement: "13003 Marseille"
-  website: "https://shotgun.live/fr/venues/le-chapiteau-marseille"
+  website: "https://www.lechapiteau-marseille.fr/"
   type: "Club"
   aliases:
     - "/locations/le-chapiteau/"
@@ -167,9 +168,9 @@
 - slug: le-makeda
   title: "Le Makeda"
   description: "Bar musical et salle de concerts pres du Vieux-Port, scene emblematique des musiques actuelles a Marseille."
-  address: "18 Place aux Huiles"
+  address: "18 Place aux Huiles, 13001 Marseille"
   arrondissement: "13001 Marseille"
-  website: "https://www.facebook.com/lemakeda/"
+  website: "https://www.lemakeda.com/"
   type: "Bar musical"
   aliases:
     - "/locations/makeda/"
@@ -179,8 +180,8 @@
 - slug: le-nucleaire-marseille
   title: "Le Nucleaire"
   description: "Club underground a Marseille, programme des soirees techno et musique electronique."
-  address: ""
-  arrondissement: "Marseille"
+  address: "15 Rue André Poggioli, 13006 Marseille"
+  arrondissement: "13006 Marseille"
   website: "https://shotgun.live/fr/venues/le-nucleaire-marseille"
   type: "Club"
   aliases:
@@ -193,7 +194,7 @@
   description: "Collectif et espace evenementiel a Marseille, avec soirees musicales et artistiques."
   address: ""
   arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/level-up-project"
+  website: "https://www.facebook.com/associationlvlup/"
   type: "Collectif"
   aliases:
     - "/locations/level-up/"
@@ -202,7 +203,7 @@
 - slug: mama-shelter-marseille
   title: "Mama Shelter Marseille"
   description: "Hotel-restaurant avec rooftop et programmation musicale dans le 2e arrondissement de Marseille."
-  address: "64 Rue de la Loubiere"
+  address: "64 Rue de la Loubiere, 13006 Marseille"
   arrondissement: "13006 Marseille"
   website: "https://www.mamashelter.com/marseille"
   type: "Hotel-bar"
@@ -213,32 +214,20 @@
 - slug: manray-club
   title: "Manray Club"
   description: "Club de musique a Marseille, avec programmation axee sur la musique electronique."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/manray-club"
+  address: "38 Rue Saint-Saëns, 13001 Marseille"
+  arrondissement: "13001 Marseille"
+  website: "https://www.instagram.com/manraymarseille/"
   type: "Club"
   aliases:
     - "/locations/manray/"
     - "/locations/manray-marseille/"
   body: "Le Manray Club est un club de musique a Marseille proposant des soirees dansantes avec une programmation axee sur la musique electronique et les DJ sets."
 
-- slug: mira
-  title: "Mira"
-  description: "Collectif musical de la scene electronique d'Aix-Marseille, organisant des soirees et festivals."
-  address: ""
-  arrondissement: "Aix-en-Provence"
-  website: "https://shotgun.live/fr/venues/mira-mira"
-  type: "Collectif"
-  aliases:
-    - "/locations/mira-mira/"
-    - "/locations/mira-marseille/"
-  body: "Mira est un collectif musical de la scene electronique d'Aix-Marseille. Le collectif organise des soirees et des festivals melant musique electronique et ambiance festive."
-
 - slug: rockypop-marseille
   title: "RockyPop Marseille"
   description: "Hotel avec bar et espace evenementiel, accueillant des soirees musicales a Marseille."
-  address: ""
-  arrondissement: "Marseille"
+  address: "60 Rue du Rouet, 13006 Marseille"
+  arrondissement: "13006 Marseille"
   website: "https://www.rockypop.com/marseille/"
   type: "Hotel-bar"
   aliases:
@@ -250,7 +239,7 @@
   description: "Collectif musical a Marseille, soirees orientees musiques afro et electroniques."
   address: ""
   arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/shafro"
+  website: "https://www.instagram.com/shafroevents/"
   type: "Collectif"
   aliases:
     - "/locations/shafro-marseille/"
@@ -261,8 +250,8 @@
   description: "Club de comedie a Marseille, proposant des spectacles d'humour et de stand-up."
   address: ""
   arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/sunny-comedy-club"
-  type: "Salle de spectacle"
+  website: "https://linktr.ee/lesunny"
+  type: "Collectif"
   aliases:
     - "/locations/sunny-comedy/"
   body: "Le Sunny Comedy Club est un club de comedie a Marseille proposant des spectacles d'humour, de stand-up et d'improvisation dans une ambiance conviviale."
@@ -270,9 +259,9 @@
 - slug: the-pablo-club
   title: "The Pablo Club"
   description: "Club de musique a Marseille, avec soirees dansantes et DJ sets."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/the-pablo-club"
+  address: "23 Rue Saint-Saëns, 13001 Marseille"
+  arrondissement: "13001 Marseille"
+  website: "https://www.thepabloclub.com/"
   type: "Club"
   aliases:
     - "/locations/pablo-club/"
@@ -282,9 +271,9 @@
 - slug: unite-22
   title: "Unite 22"
   description: "Espace evenementiel et club a Marseille, soirees electroniques et concerts."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/unite-22"
+  address: "22 Rue Jobin, 13003 Marseille"
+  arrondissement: "13003 Marseille"
+  website: "https://www.instagram.com/unite.22_marseille/"
   type: "Club"
   aliases:
     - "/locations/unité-22/"
@@ -294,21 +283,375 @@
 - slug: vice-versa-marseille
   title: "Vice Versa"
   description: "Club et bar musical a Marseille, programme des soirees musicales variees."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/vice-versa-marseille"
+  address: "40 Rue des Trois Rois, 13006 Marseille"
+  arrondissement: "13006 Marseille"
+  website: "https://www.instagram.com/vice.versa.marseille/"
   type: "Club"
   aliases:
     - "/locations/vice-versa/"
   body: "Vice Versa est un club et bar musical a Marseille proposant des soirees musicales variees, des DJ sets et des evenements thematiques dans une ambiance chaleureuse."
 
-- slug: vl
-  title: "VL"
-  description: "Lieu de soirees et espace evenementiel a Marseille."
-  address: ""
-  arrondissement: "Marseille"
-  website: "https://shotgun.live/fr/venues/vl"
+
+# ============================================================
+# Venues from existing location pages (not yet in this file)
+# ============================================================
+
+- slug: klap
+  title: "KLAP Maison pour la danse"
+  description: "Centre choregraphique national dedie a la danse contemporaine a Marseille."
+  address: "5 avenue Rostand, 13003 Marseille"
+  arrondissement: "13003 Marseille"
+  website: "https://www.kelemenis.fr/"
   type: "Salle de spectacle"
   aliases:
-    - "/locations/vl-marseille/"
-  body: "VL est un lieu de soirees et espace evenementiel a Marseille accueillant des concerts et des soirees musicales."
+    - "/locations/klap-maison-pour-la-danse/"
+  body: "KLAP Maison pour la danse est un centre choregraphique national situe dans le 3e arrondissement de Marseille. Dirige par le choregraphe Michel Kelemenis, ce lieu est dedie a la creation, la production et la diffusion de la danse contemporaine. Le batiment comprend plusieurs studios de danse, un theatre de 250 places et des espaces de residence pour les artistes."
+
+- slug: la-friche
+  title: "La Friche la Belle de Mai"
+  description: "Espace culturel pluridisciplinaire a Marseille, ancienne manufacture de tabac reconvertie."
+  address: "41 rue Jobin, 13003 Marseille"
+  arrondissement: "13003 Marseille"
+  website: "https://www.lafriche.org/"
+  type: "Complexe culturel"
+  aliases:
+    - "/locations/friche/"
+    - "/locations/friche-belle-de-mai/"
+  body: "La Friche la Belle de Mai est un espace culturel pluridisciplinaire de 45 000 m2 situe dans une ancienne manufacture de tabac du 3e arrondissement de Marseille. Ce lieu emblematique accueille des expositions, concerts, spectacles de danse et de theatre, projections cinematographiques et evenements communautaires. Il abrite egalement des ateliers d'artistes, des studios de creation et plusieurs restaurants."
+
+- slug: la-criee
+  title: "La Criee - Theatre National de Marseille"
+  description: "Theatre National de Marseille, scene majeure du spectacle vivant sur le Vieux-Port."
+  address: "30 quai de Rive Neuve, 13007 Marseille"
+  arrondissement: "13007 Marseille"
+  website: "https://www.theatre-lacriee.com/"
+  type: "Theatre"
+  aliases:
+    - "/locations/theatre-la-criee/"
+    - "/locations/criee/"
+  body: "La Criee est le Theatre National de Marseille, situe sur le Vieux-Port dans l'ancienne criee aux poissons. Ce lieu emblematique de la vie culturelle marseillaise propose une programmation riche en theatre, danse et musique. Le theatre dispose de deux salles : la Grande Salle (800 places) et le Petit Theatre (280 places)."
+
+- slug: chateau-de-servieres
+  title: "Galerie Chateau de Servieres"
+  description: "Espace d'art contemporain a Marseille, expositions et evenements artistiques."
+  address: "19 boulevard Boisson, 13004 Marseille"
+  arrondissement: "13004 Marseille"
+  website: "https://www.chateaudeservieres.org/"
+  type: "Galerie d'art"
+  aliases:
+    - "/locations/galerie-chateau-de-servieres/"
+    - "/locations/servieres/"
+  body: "La Galerie Chateau de Servieres est un espace d'art contemporain situe dans le 4e arrondissement de Marseille. Installee dans un ancien chateau du XIXe siecle, elle presente des expositions d'artistes emergents et confirmes. Le lieu propose egalement des ateliers, des residences d'artistes et des evenements culturels tout au long de l'annee."
+
+- slug: notre-dame-de-la-garde
+  title: "Notre Dame de la Garde"
+  description: "Basilique emblematique de Marseille, lieu d'evenements communautaires et culturels."
+  address: "Rue Fort du Sanctuaire, 13006 Marseille"
+  arrondissement: "13006 Marseille"
+  website: "https://www.notredamedelagarde.com/"
+  type: "Monument historique"
+  aliases:
+    - "/locations/bonne-mere/"
+    - "/locations/ndg/"
+    - "/locations/basilique-notre-dame-de-la-garde/"
+  body: "Notre-Dame de la Garde, surnommee la Bonne Mere par les Marseillais, est une basilique situee au sommet d'une colline de 154 metres d'altitude dans le 6e arrondissement de Marseille. Ce monument emblematique offre une vue panoramique sur la ville et la mer. Au-dela de sa fonction religieuse, le site accueille des evenements communautaires et culturels tout au long de l'annee."
+
+# ============================================================
+# Venues from agendaculturel.fr crawler
+# ============================================================
+
+- slug: comedie-d-aix
+  title: "La Comedie d'Aix"
+  description: "Theatre municipal d'Aix-en-Provence, salle de spectacle de 269 places."
+  address: "8 avenue de la Violette, 13100 Aix-en-Provence"
+  arrondissement: "13100 Aix-en-Provence"
+  website: "https://www.16-19.fr/salles/comedie-daix/"
+  type: "Theatre"
+  aliases: []
+  body: "La Comedie d'Aix est un theatre municipal situe a Aix-en-Provence. Inauguree en 2020, cette salle de 269 places accueille une programmation variee de theatre, danse, musique et humour."
+
+- slug: le-cepac-silo-marseille
+  title: "Le Cepac Silo"
+  description: "Salle de spectacle de 2 050 places dans un ancien silo a grains sur le port de Marseille."
+  address: "35 quai du Lazaret, 13002 Marseille"
+  arrondissement: "13002 Marseille"
+  website: "https://www.cepacsilo-marseille.fr/"
+  type: "Salle de spectacle"
+  aliases:
+    - "/locations/cepac-silo/"
+    - "/locations/silo/"
+  body: "Le Cepac Silo est une salle de spectacle de 2 050 places situee dans un ancien silo a grains reconverti sur le port de Marseille. Inauguree en 2011, cette salle accueille des concerts, spectacles, comiques et evenements dans un cadre architectural unique."
+
+- slug: l-art-du
+  title: "L'Art Du Theatre"
+  description: "Theatre et cafe-theatre de 90 places dans le 6e arrondissement de Marseille."
+  address: "83 rue Marengo, 13006 Marseille"
+  arrondissement: "13006 Marseille"
+  website: "https://lartdutheatre.fr/"
+  type: "Theatre"
+  aliases:
+    - "/locations/art-du/"
+  body: "L'Art Du Theatre est un theatre et cafe-theatre de 90 places situe dans le 6e arrondissement de Marseille. Installe dans un ancien garage reconverti, ce lieu intimiste propose du theatre, de l'humour et des spectacles vivants."
+
+- slug: le-dome
+  title: "Le Dome de Marseille"
+  description: "Grande salle de spectacle et de concerts pouvant accueillir jusqu'a 8 500 spectateurs."
+  address: "48 avenue de Saint-Just, 13004 Marseille"
+  arrondissement: "13004 Marseille"
+  website: "https://dome.marseille.fr/"
+  type: "Salle de spectacle"
+  aliases:
+    - "/locations/dome/"
+    - "/locations/dome-marseille/"
+  body: "Le Dome de Marseille est une grande salle de spectacle inauguree en 1994, situee dans le 4e arrondissement. Avec une capacite de 8 500 places, le Dome accueille des concerts de grande envergure, des spectacles et des evenements sportifs."
+
+- slug: la-comedie-de-marseille-le-quai-du-rire
+  title: "La Comedie de Marseille - Le Quai du Rire"
+  description: "Cafe-theatre historique sur le Vieux-Port de Marseille, fonde en 1994."
+  address: "16 quai de Rive Neuve, 13007 Marseille"
+  arrondissement: "13007 Marseille"
+  website: ""
+  type: "Cafe-Theatre"
+  aliases:
+    - "/locations/quai-du-rire/"
+    - "/locations/comedie-de-marseille/"
+  body: "La Comedie de Marseille, anciennement Le Quai du Rire, est un cafe-theatre situe sur le quai de Rive Neuve face au Vieux-Port. Fonde en 1994 par Eliane Zayan, ce lieu de 100 places programme de l'humour, du one-man-show et du theatre comique."
+
+- slug: arena-du-pays-d-aix
+  title: "Arena du Pays d'Aix"
+  description: "Arena polyvalente de 6 000 places a Aix-en-Provence, concerts et evenements."
+  address: "1955 rue Claude Nicolas Ledoux, 13290 Aix-en-Provence"
+  arrondissement: "13290 Aix-en-Provence"
+  website: "https://www.arenaaix.com/"
+  type: "Arena"
+  aliases:
+    - "/locations/arena-aix/"
+  body: "L'Arena du Pays d'Aix est une salle polyvalente de 6 000 places inauguree en 2017, situee dans le quartier de Luynes a Aix-en-Provence. Elle accueille des concerts, spectacles, evenements sportifs et salons."
+
+- slug: grand-theatre-de-provence
+  title: "Grand Theatre de Provence"
+  description: "Theatre et opera de 1 382 places a Aix-en-Provence, scene majeure du Festival d'Aix."
+  address: "380 avenue Max Juvenal, 13100 Aix-en-Provence"
+  arrondissement: "13100 Aix-en-Provence"
+  website: "https://www.lestheatres.net/fr/33-grand-theatre-de-provence"
+  type: "Theatre"
+  aliases:
+    - "/locations/gtp/"
+    - "/locations/grand-theatre-aix/"
+  body: "Le Grand Theatre de Provence est une salle de spectacle de 1 382 places situee a Aix-en-Provence. Concu par l'architecte Vittorio Gregotti et inaugure en 2007, il est la scene principale du Festival d'Aix-en-Provence et accueille opera, concerts symphoniques, theatre et danse."
+
+- slug: cafe-theatre-le-flibustier
+  title: "Cafe-Theatre Le Flibustier"
+  description: "Cafe-theatre d'environ 60 places a Aix-en-Provence, humour et spectacles vivants."
+  address: "7 rue des Bretons, 13100 Aix-en-Provence"
+  arrondissement: "13100 Aix-en-Provence"
+  website: "https://www.leflibustier.net/"
+  type: "Cafe-Theatre"
+  aliases:
+    - "/locations/flibustier/"
+  body: "Le Cafe-Theatre Le Flibustier est une salle d'environ 60 places situee en plein centre d'Aix-en-Provence. Ce lieu convivial programme de l'humour, du stand-up, du theatre et des spectacles de cafe-theatre."
+
+- slug: 6mic
+  title: "6MIC"
+  description: "Salle de musiques actuelles du Pays d'Aix, deux salles concues par Rudy Ricciotti."
+  address: "160 rue Pascal Duverger, 13090 Aix-en-Provence"
+  arrondissement: "13090 Aix-en-Provence"
+  website: "https://www.6mic-aix.fr/"
+  type: "Salle de concert"
+  aliases:
+    - "/locations/6mic-aix/"
+  body: "6MIC est la salle de musiques actuelles du Pays d'Aix, inauguree en 2020. Concue par l'architecte Rudy Ricciotti, elle dispose de deux salles (1 800 places debout et un club de 800 places) et accueille concerts, festivals et soirees musicales."
+
+- slug: theatre-le-phare
+  title: "Theatre Le Phare"
+  description: "Theatre dans le 6e arrondissement de Marseille, cree en 2021."
+  address: "17 boulevard Louis Salvator, 13006 Marseille"
+  arrondissement: "13006 Marseille"
+  website: "https://theatre-le-phare.fr/"
+  type: "Theatre"
+  aliases:
+    - "/locations/le-phare/"
+  body: "Le Theatre Le Phare est un theatre situe dans le 6e arrondissement de Marseille. Cree en 2021 et gere par la Compagnie Prends Ton Envol, ce lieu propose du theatre, de la danse et des spectacles vivants."
+
+- slug: theatre-de-l-olivier-scenes-et-cines
+  title: "Theatre de l'Olivier - Scenes et Cines"
+  description: "Theatre de 750 places a Istres, partie du reseau Scenes et Cines."
+  address: "Place Jules Guesde, 13800 Istres"
+  arrondissement: "13800 Istres"
+  website: "https://www.scenesetcines.fr/les-theatres/theatre-de-lolivier/"
+  type: "Theatre"
+  aliases:
+    - "/locations/theatre-olivier/"
+    - "/locations/olivier-istres/"
+  body: "Le Theatre de l'Olivier est un theatre de 750 places situe a Istres, faisant partie du reseau Scenes et Cines. Il accueille une programmation variee de theatre, danse, musique et spectacles jeune public."
+
+- slug: theatre-ainsi-de-suite
+  title: "Theatre Ainsi de Suite"
+  description: "Petit theatre dans une chapelle a Aix-en-Provence, plus de 33 saisons d'activite."
+  address: "9 avenue Jules Isaac, 13100 Aix-en-Provence"
+  arrondissement: "13100 Aix-en-Provence"
+  website: "https://www.ainsidesuite.com/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre Ainsi de Suite est installe dans la chapelle du Lycee Saint-Eloi a Aix-en-Provence. Ce petit theatre intimiste propose depuis plus de 33 saisons du theatre, de la danse et des spectacles vivants dans un cadre atypique."
+
+- slug: scene-mediterrannee
+  title: "Scene Mediterranee"
+  description: "Theatre de 700 places dans le 3e arrondissement de Marseille, anciennement Theatre Toursky."
+  address: "16 promenade Leo Ferre, 13003 Marseille"
+  arrondissement: "13003 Marseille"
+  website: ""
+  type: "Theatre"
+  aliases:
+    - "/locations/theatre-toursky/"
+    - "/locations/toursky/"
+  body: "Scene Mediterranee est un theatre de 700 places situe dans le 3e arrondissement de Marseille. Anciennement connu sous le nom de Theatre Toursky, fonde en 1971, le lieu a ete repris par l'association Scene Mediterranee en 2025. Il programme du theatre, de la musique et des spectacles."
+
+- slug: le-comedie-club-vieux-port-espace-kev-adams
+  title: "Comedie Club Vieux Port - Espace Kev Adams"
+  description: "Comedy club de 70 places sur le Vieux-Port de Marseille, inaugure par Kev Adams."
+  address: "16 quai de Rive Neuve, 13007 Marseille"
+  arrondissement: "13007 Marseille"
+  website: "https://comedieclubvieuxport.com/"
+  type: "Cafe-Theatre"
+  aliases:
+    - "/locations/comedie-club-vieux-port/"
+    - "/locations/espace-kev-adams/"
+  body: "Le Comedie Club Vieux Port - Espace Kev Adams est un comedy club de 70 places situe sur le quai de Rive Neuve face au Vieux-Port de Marseille. Inaugure par l'humoriste Kev Adams, ce lieu programme du stand-up, de l'humour et des one-man-shows."
+
+- slug: l-usine-scenes-et-cines
+  title: "L'Usine - Scenes et Cines"
+  description: "Salle de musiques actuelles a Istres, partie du reseau Scenes et Cines."
+  address: "Ancienne route de Fos, RN 569, 13800 Istres"
+  arrondissement: "13800 Istres"
+  website: "https://www.scenesetcines.fr/l-usine/"
+  type: "Salle de concert"
+  aliases:
+    - "/locations/usine-istres/"
+  body: "L'Usine est une salle de musiques actuelles situee a Istres, faisant partie du reseau Scenes et Cines. Le lieu dispose d'un club de 300 places et d'une salle medium de 1 400 places, ainsi que de cinq studios de repetition."
+
+- slug: l-artea
+  title: "L'Artea"
+  description: "Salle de spectacle et cinema a Carnoux-en-Provence."
+  address: "Avenue Cardinal Lavigerie, 13470 Carnoux-en-Provence"
+  arrondissement: "13470 Carnoux-en-Provence"
+  website: "https://lartea.com/"
+  type: "Salle de spectacle"
+  aliases: []
+  body: "L'Artea est une salle de spectacle et cinema situee a Carnoux-en-Provence. Le lieu dispose d'une salle de 308 places assises ou 600 debout, ainsi qu'un theatre de plein air de 300 places. Il accueille concerts, theatre, cinema et evenements culturels."
+
+- slug: halle-de-martigues
+  title: "La Halle de Martigues"
+  description: "Grande salle polyvalente a Martigues, jusqu'a 9 000 spectateurs."
+  address: "Avenue de la Paix, 13500 Martigues"
+  arrondissement: "13500 Martigues"
+  website: "https://www.lahalledemartigues.fr/"
+  type: "Salle polyvalente"
+  aliases: []
+  body: "La Halle de Martigues est une grande salle polyvalente inauguree en 1993, avec 4 620 m2 de surface modulable pouvant accueillir jusqu'a 9 000 spectateurs debout. Elle programme des concerts, spectacles, salons et evenements sportifs."
+
+- slug: garage-comedy-club
+  title: "Garage Comedy Club"
+  description: "Club de comedie dans le quartier Cours Julien a Marseille, collectif de 50 artistes."
+  address: "15 rue des 3 Freres Barthelemy, 13006 Marseille"
+  arrondissement: "13006 Marseille"
+  website: "https://garage-comedy.com/"
+  type: "Cafe-Theatre"
+  aliases: []
+  body: "Le Garage Comedy Club est un club de comedie situe dans le quartier du Cours Julien a Marseille. Anime par un collectif de plus de 50 artistes stand-up, le lieu propose des soirees d'humour et de stand-up dans une ambiance conviviale."
+
+- slug: divadlo-theatre
+  title: "Divadlo Theatre"
+  description: "Theatre de 50 places dans le 5e arrondissement de Marseille, plus de 300 representations par an."
+  address: "69 rue Sainte-Cecile, 13005 Marseille"
+  arrondissement: "13005 Marseille"
+  website: "https://www.divadlo-theatre.fr/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Divadlo Theatre est un theatre de 50 places situe dans le 5e arrondissement de Marseille. Avec plus de 300 representations par an et plus de 20 ans d'activite, ce lieu programme du theatre pour adultes et jeune public."
+
+- slug: cinema-eden
+  title: "Cinema Eden"
+  description: "Plus ancien cinema du monde encore en activite, situe a La Ciotat."
+  address: "25 boulevard Clemenceau, 13600 La Ciotat"
+  arrondissement: "13600 La Ciotat"
+  website: "https://edencinemalaciotat.com/"
+  type: "Cinema"
+  aliases:
+    - "/locations/cinema-eden-theatre"
+    - "/locations/eden-theatre/"
+    - "/locations/eden-la-ciotat/"
+  body: "Le Cinema Eden-Theatre est le plus ancien cinema du monde encore en activite (Guinness World Records). Inaugure comme theatre le 15 juin 1889 a La Ciotat, il est gere par l'association Les Lumieres de l'Eden. Cette salle Art et Essai de 142 places programme des films et des evenements cinematographiques."
+
+- slug: cafe-theatre-du-tetard
+  title: "Cafe Theatre du Tetard"
+  description: "Cafe-theatre de 70 places dans le 5e arrondissement de Marseille."
+  address: "33 rue Ferrari, 13005 Marseille"
+  arrondissement: "13005 Marseille"
+  website: "http://www.letetard.com/"
+  type: "Cafe-Theatre"
+  aliases:
+    - "/locations/tetard/"
+    - "/locations/le-tetard/"
+  body: "Le Cafe-Theatre du Tetard est un cafe-theatre de 70 places situe dans le 5e arrondissement de Marseille. Ce theatre-restaurant programme de l'humour, des concerts et des spectacles dans une ambiance chaleureuse."
+
+# ============================================================
+# Address-based venues (identified from agendaculturel.fr)
+# ============================================================
+
+- slug: le-vigs
+  title: "Le Vig's"
+  description: "Comedy club cree par Gad Elmaleh sur le Vieux-Port de Marseille."
+  address: "15 quai de Rive Neuve, 13007 Marseille"
+  arrondissement: "13007 Marseille"
+  website: "https://www.levigs.com/"
+  type: "Cafe-Theatre"
+  aliases:
+    - "/locations/15-quai-de-rive-neuve/"
+    - "/locations/vigs/"
+  body: "Le Vig's est un comedy club de 100 places cree par l'humoriste Gad Elmaleh, situe sur le quai de Rive Neuve face au Vieux-Port de Marseille. Inaugure en fevrier 2025, le lieu programme du stand-up, de l'humour et des soirees comedie."
+
+- slug: place-saint-jean-de-malte
+  title: "Eglise Saint-Jean-de-Malte"
+  description: "Premiere eglise gothique de Provence, lieu de concerts a Aix-en-Provence."
+  address: "Place Saint-Jean-de-Malte, 13100 Aix-en-Provence"
+  arrondissement: "13100 Aix-en-Provence"
+  website: ""
+  type: "Eglise"
+  aliases: []
+  body: "L'Eglise Saint-Jean-de-Malte est la premiere eglise gothique de Provence, construite entre 1272 et 1277 a Aix-en-Provence. Son clocher de 67 metres est le point le plus eleve de la ville. Au-dela de sa fonction religieuse, l'eglise accueille regulierement des concerts, notamment pendant le Festival d'Aix-en-Provence."
+
+- slug: rue-gaston-de-saporta
+  title: "Cathedrale Saint-Sauveur d'Aix-en-Provence"
+  description: "Cathedrale historique d'Aix-en-Provence, lieu de concerts et d'evenements."
+  address: "34 place des Martyrs de la Resistance, 13100 Aix-en-Provence"
+  arrondissement: "13100 Aix-en-Provence"
+  website: "https://paroisses-aixarles.fr/aix-saintsauveur/"
+  type: "Cathedrale"
+  aliases:
+    - "/locations/cathedrale-saint-sauveur/"
+  body: "La Cathedrale Saint-Sauveur d'Aix-en-Provence est un monument historique classe depuis 1840, siege de l'archeveque d'Aix et d'Arles. Ce lieu exceptionnel accueille des concerts de musique classique et sacree, notamment dans le cadre du Festival d'Aix-en-Provence."
+
+- slug: chaudronnerie
+  title: "La Chaudronnerie"
+  description: "Salle de spectacle de La Ciotat dans un ancien batiment des chantiers navals."
+  address: "19 promenade Jeff Musso, 13600 La Ciotat"
+  arrondissement: "13600 La Ciotat"
+  website: "https://www.lachaudronnerie-laciotat.com/"
+  type: "Salle de spectacle"
+  aliases:
+    - "/locations/19-promenade-jeff-musso/"
+    - "/locations/chaudronnerie-la-ciotat/"
+  body: "La Chaudronnerie est une salle de spectacle situee a La Ciotat, dans un ancien batiment des chantiers navals de 1860 reconverti. Inauguree en 2017, elle dispose de la Salle Michel Simon (473 places) et d'une seconde salle de 100 places. Elle programme du theatre, de la musique, de la danse et des spectacles jeune public."
+
+- slug: MuCEM
+  title: "MuCEM - Musee des Civilisations"
+  description: "Musee national sur l'esplanade du J4 a Marseille, auditorium et evenements en plein air."
+  address: "7 promenade Robert Laffont, 13002 Marseille"
+  arrondissement: "13002 Marseille"
+  website: "https://www.mucem.org/"
+  type: "Musee"
+  aliases:
+    - "/locations/promenade-robert-laffont"
+    - "/locations/esplanade-j4/"
+  body: "Le MuCEM (Musee des Civilisations de l'Europe et de la Mediterranee) est un musee national situe sur l'esplanade du J4 a Marseille. Outre ses expositions, le MuCEM dispose d'un auditorium de 335 places et d'une esplanade en plein air qui accueille concerts, festivals et evenements culturels."

@@ -1,14 +1,10 @@
 ---
 title: "La Traverse de Balkis"
 description: "Espace culturel et festif a Marseille, accueillant concerts et evenements."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/la-traverse-de-balkis"
+address: "1 Rue des Trois Rois, 13006 Marseille"
+arrondissement: "13006 Marseille"
+website: "https://latraversedebalkis.com/"
 type: "Salle de spectacle"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/traverse-de-balkis/"
   - "/locations/balkis/"

@@ -10,7 +10,7 @@ description: Dry31 réunit DJ sets électro et live hard pop avec Maud Geffray, 
 categories:
 - musique
 locations:
-- le-cabaret-aleatoire
+- cabaret-aleatoire
 dates:
 - samedi-31-janvier
 tags: []

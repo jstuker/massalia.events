@@ -1,14 +1,10 @@
 ---
 title: "Boum"
 description: "Bar et espace evenementiel dans le centre de Marseille, avec programmation musicale variee."
-
-# Informations du lieu
-address: ""
-arrondissement: "13001 Marseille"
-website: "https://shotgun.live/fr/venues/boum-marseille"
+address: "21 Rue André Poggioli, 13006 Marseille"
+arrondissement: "13006 Marseille"
+website: "https://www.privateaser.com/lieu/52625-boum"
 type: "Bar"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/boum/"
 ---

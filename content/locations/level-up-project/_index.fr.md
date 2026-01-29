@@ -1,14 +1,10 @@
 ---
 title: "Level Up Project"
 description: "Collectif et espace evenementiel a Marseille, avec soirees musicales et artistiques."
-
-# Informations du lieu
 address: ""
 arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/level-up-project"
+website: "https://www.facebook.com/associationlvlup/"
 type: "Collectif"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/level-up/"
 ---

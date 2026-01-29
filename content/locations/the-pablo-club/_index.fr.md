@@ -1,14 +1,10 @@
 ---
 title: "The Pablo Club"
 description: "Club de musique a Marseille, avec soirees dansantes et DJ sets."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/the-pablo-club"
+address: "23 Rue Saint-Saëns, 13001 Marseille"
+arrondissement: "13001 Marseille"
+website: "https://www.thepabloclub.com/"
 type: "Club"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/pablo-club/"
   - "/locations/pablo-club-marseille/"

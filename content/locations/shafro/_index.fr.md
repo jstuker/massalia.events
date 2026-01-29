@@ -1,14 +1,10 @@
 ---
 title: "Shafro"
 description: "Collectif musical a Marseille, soirees orientees musiques afro et electroniques."
-
-# Informations du lieu
 address: ""
 arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/shafro"
+website: "https://www.instagram.com/shafroevents/"
 type: "Collectif"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/shafro-marseille/"
 ---

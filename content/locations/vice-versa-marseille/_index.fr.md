@@ -1,14 +1,10 @@
 ---
 title: "Vice Versa"
 description: "Club et bar musical a Marseille, programme des soirees musicales variees."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/vice-versa-marseille"
+address: "40 Rue des Trois Rois, 13006 Marseille"
+arrondissement: "13006 Marseille"
+website: "https://www.instagram.com/vice.versa.marseille/"
 type: "Club"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/vice-versa/"
 ---

@@ -1,14 +1,10 @@
 ---
 title: "Le Chapiteau"
 description: "Club et espace de fete au coeur de la Belle de Mai, dedie a la musique electronique."
-
-# Informations du lieu
-address: "38 Traverse de Carthage"
+address: "38 Traverse de Carthage, 13003 Marseille"
 arrondissement: "13003 Marseille"
-website: "https://shotgun.live/fr/venues/le-chapiteau-marseille"
+website: "https://www.lechapiteau-marseille.fr/"
 type: "Club"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/le-chapiteau/"
   - "/locations/chapiteau-marseille/"

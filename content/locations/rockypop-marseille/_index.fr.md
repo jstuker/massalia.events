@@ -1,14 +1,10 @@
 ---
 title: "RockyPop Marseille"
 description: "Hotel avec bar et espace evenementiel, accueillant des soirees musicales a Marseille."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
+address: "60 Rue du Rouet, 13006 Marseille"
+arrondissement: "13006 Marseille"
 website: "https://www.rockypop.com/marseille/"
 type: "Hotel-bar"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/rockypop/"
 ---

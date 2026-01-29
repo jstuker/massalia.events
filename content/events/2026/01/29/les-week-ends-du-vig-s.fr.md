@@ -10,7 +10,7 @@ description: Les week-ends du Vig's mêlent humour percutant et ambiance convivi
 categories:
 - theatre
 locations:
-- 15-quai-de-rive-neuve
+- le-vigs
 dates:
 - jeudi-29-janvier
 tags: []

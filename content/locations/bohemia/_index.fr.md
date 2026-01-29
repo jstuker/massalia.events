@@ -1,14 +1,10 @@
 ---
 title: "Bohemia"
 description: "Collectif musical marseillais organisant des soirees dans divers lieux de la ville."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
+address: "74 Boulevard de la Corderie, 13007 Marseille"
+arrondissement: "13007 Marseille"
 website: "https://shotgun.live/fr/venues/bohemia"
 type: "Collectif"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/bohemia-marseille/"
 ---

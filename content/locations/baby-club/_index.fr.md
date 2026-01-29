@@ -1,14 +1,10 @@
 ---
 title: "Baby Club"
 description: "Club de musique et bar dans le quartier de Notre-Dame du Mont, au coeur du 6e arrondissement de Marseille."
-
-# Informations du lieu
-address: "2 Rue Andre Poggioli"
+address: "2 Rue Andre Poggioli, 13006 Marseille"
 arrondissement: "13006 Marseille"
-website: "https://shotgun.live/fr/venues/baby-club"
+website: "https://tarpin-bien.com/lieu/le-baby-club/"
 type: "Club"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/baby-club-marseille/"
 ---

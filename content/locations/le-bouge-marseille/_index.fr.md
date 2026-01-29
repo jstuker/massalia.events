@@ -1,14 +1,10 @@
 ---
 title: "Le Bouge"
 description: "Bar et salle de concerts a Marseille, dedie aux musiques actuelles."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/le-bouge-marseille"
+address: "21 Cr Honoré d'Estienne d'Orves, 13001 Marseille"
+arrondissement: "13001 Marseille"
+website: "https://www.facebook.com/lebougemarseille/"
 type: "Bar"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/le-bouge/"
   - "/locations/le-bougé/"

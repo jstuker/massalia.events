@@ -1,14 +1,10 @@
 ---
 title: "Le Nucleaire"
 description: "Club underground a Marseille, programme des soirees techno et musique electronique."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
+address: "15 Rue André Poggioli, 13006 Marseille"
+arrondissement: "13006 Marseille"
 website: "https://shotgun.live/fr/venues/le-nucleaire-marseille"
 type: "Club"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/le-nucleaire/"
   - "/locations/le-nucléaire/"

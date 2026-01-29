@@ -10,7 +10,7 @@ description: Nuit de techno brute et immersive, Club Cabaret Agoya invite Kaufma
 categories:
 - musique
 locations:
-- le-cabaret-aleatoire
+- cabaret-aleatoire
 dates:
 - vendredi-30-janvier
 tags: []

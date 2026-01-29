@@ -10,7 +10,7 @@ description: Les musiques de Jean-Jacques Goldman résonnent en version classiqu
 categories:
 - musique
 locations:
-- promenade-robert-laffont
+- MuCEM
 dates:
 - vendredi-30-janvier
 tags: []

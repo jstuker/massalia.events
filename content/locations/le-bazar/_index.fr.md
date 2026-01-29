@@ -1,14 +1,10 @@
 ---
 title: "Le Bazar"
 description: "Bar et espace de concerts dans le centre de Marseille."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/le-bazar"
+address: "90, boulevard Rabatau, 13008 Marseille"
+arrondissement: "13008 Marseille"
+website: "https://www.bazarmarseille.com/"
 type: "Bar"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/bazar/"
   - "/locations/le-bazar-marseille/"

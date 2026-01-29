@@ -1,14 +1,10 @@
 ---
 title: "Danceteria"
 description: "Club et salle de danse a Marseille, dedie a la musique electronique et aux soirees clubbing."
-
-# Informations du lieu
-address: ""
-arrondissement: "Marseille"
-website: "https://shotgun.live/fr/venues/danceteria"
+address: "18 Rue Saint-Saëns, 13001 Marseille"
+arrondissement: "13001 Marseille"
+website: "https://www.facebook.com/danceteria.marseille/"
 type: "Club"
-
-# Aliases pour le crawler (variations du nom)
 aliases:
   - "/locations/danceteria-marseille/"
 ---

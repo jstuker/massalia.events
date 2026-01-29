@@ -10,7 +10,7 @@ description: Mozart, Beethoven et Brahms composent un programme lumineux et cont
 categories:
 - musique
 locations:
-- 19-promenade-jeff-musso
+- chaudronnerie
 dates:
 - jeudi-29-janvier
 tags: []
