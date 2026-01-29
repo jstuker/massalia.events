@@ -370,7 +370,10 @@ class TestParseEventFromJsonLd:
         )
         assert event is not None
         assert event.name == "Randjess"
-        assert event.event_url == "https://13.agendaculturel.fr/concert/marseille/randjess.html"
+        assert (
+            event.event_url
+            == "https://13.agendaculturel.fr/concert/marseille/randjess.html"
+        )
 
     def test_parses_start_datetime(self, sample_json_ld, category_map):
         event = _parse_event_from_json_ld(
@@ -480,16 +483,12 @@ class TestParseEventFromJsonLd:
 
     def test_returns_none_for_missing_name(self, category_map):
         json_ld = {"@type": "MusicEvent", "startDate": "2026-01-28T00:00:00+01:00"}
-        event = _parse_event_from_json_ld(
-            json_ld, "https://example.com", category_map
-        )
+        event = _parse_event_from_json_ld(json_ld, "https://example.com", category_map)
         assert event is None
 
     def test_returns_none_for_missing_date(self, category_map):
         json_ld = {"@type": "MusicEvent", "name": "Test Event"}
-        event = _parse_event_from_json_ld(
-            json_ld, "https://example.com", category_map
-        )
+        event = _parse_event_from_json_ld(json_ld, "https://example.com", category_map)
         assert event is None
 
     def test_handles_missing_location(self, category_map):
@@ -668,9 +667,7 @@ class TestIsMarseilleArea:
 
     def test_festival_without_city(self):
         # URLs like /festival/slug.html have no city, include them
-        assert _is_marseille_area(
-            "https://13.agendaculturel.fr/festival/test.html"
-        )
+        assert _is_marseille_area("https://13.agendaculturel.fr/festival/test.html")
 
     def test_city_from_location_data(self):
         assert _is_marseille_area(
@@ -749,9 +746,7 @@ class TestAgendaCulturelParserIntegration:
         """Test full flow: listing page -> detail pages -> events."""
         mock_pw.return_value = sample_detail_html
 
-        html_parser = HTMLParser(
-            sample_listing_html, "https://13.agendaculturel.fr"
-        )
+        html_parser = HTMLParser(sample_listing_html, "https://13.agendaculturel.fr")
         events = parser.parse_events(html_parser)
 
         # Should have events from Marseille + Aix (3 events, all in area)
@@ -765,9 +760,7 @@ class TestAgendaCulturelParserIntegration:
         """Test fallback to microdata when detail pages fail."""
         mock_pw.return_value = None
 
-        html_parser = HTMLParser(
-            sample_listing_html, "https://13.agendaculturel.fr"
-        )
+        html_parser = HTMLParser(sample_listing_html, "https://13.agendaculturel.fr")
         events = parser.parse_events(html_parser)
 
         # Should still get events from microdata fallback

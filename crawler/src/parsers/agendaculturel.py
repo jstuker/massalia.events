@@ -160,9 +160,7 @@ def _run_playwright_in_thread(url, timeout=60000):
                 from concurrent.futures import ThreadPoolExecutor
 
                 with ThreadPoolExecutor(max_workers=1) as executor:
-                    future = executor.submit(
-                        _run_playwright_non_headless, url, timeout
-                    )
+                    future = executor.submit(_run_playwright_non_headless, url, timeout)
                     return future.result(timeout=timeout / 1000 + 30)
             except Exception as thread_err:
                 logger.error(f"Playwright thread failed for {url}: {thread_err}")
@@ -328,12 +326,8 @@ def _parse_event_from_json_ld(json_ld, event_url, category_map):
     # Extract location
     location_data = json_ld.get("location", {})
     location_name = ""
-    city = ""
     if isinstance(location_data, dict):
         location_name = location_data.get("name", "")
-        address = location_data.get("address", {})
-        if isinstance(address, dict):
-            city = address.get("addressLocality", "")
 
     # Determine category from schema @type and URL path
     event_type = json_ld.get("@type", "")
@@ -583,9 +577,7 @@ class AgendaCulturelParser(BaseCrawler):
             for e in listing_events
             if _is_marseille_area(e.get("url", ""), e.get("location", ""))
         ]
-        logger.info(
-            f"Filtered to {len(marseille_events)} Marseille-area events"
-        )
+        logger.info(f"Filtered to {len(marseille_events)} Marseille-area events")
 
         # Process each event detail page
         for event_data in marseille_events[:MAX_EVENTS]:
@@ -599,24 +591,16 @@ class AgendaCulturelParser(BaseCrawler):
                     events.append(event)
                 else:
                     # Fallback: use listing page data
-                    event = _parse_event_from_microdata(
-                        event_data, self.category_map
-                    )
+                    event = _parse_event_from_microdata(event_data, self.category_map)
                     if event:
                         events.append(event)
-                        logger.debug(
-                            f"Used microdata fallback for: {event.name}"
-                        )
+                        logger.debug(f"Used microdata fallback for: {event.name}")
             except Exception as e:
-                logger.warning(
-                    f"Failed to parse event from {event_url}: {e}"
-                )
+                logger.warning(f"Failed to parse event from {event_url}: {e}")
 
             # Rate limiting between detail page fetches
             time.sleep(
-                self.config.get("rate_limit", {}).get(
-                    "delay_between_pages", 3.0
-                )
+                self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
             )
 
         return events
@@ -693,7 +677,9 @@ class AgendaCulturelParser(BaseCrawler):
 
         # Remove city suffix like " à Marseille le 29 janvier 2026"
         # H1 format: "Concert Randjess à Marseille le 29 janvier 2026"
-        name_match = re.match(r"(?:Concert|Spectacle|Festival|Exposition)?\s*(.+?)(?:\s+à\s+.+)?$", name)
+        name_match = re.match(
+            r"(?:Concert|Spectacle|Festival|Exposition)?\s*(.+?)(?:\s+à\s+.+)?$", name
+        )
         if name_match:
             name = name_match.group(1).strip()
 
