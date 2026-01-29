@@ -781,20 +781,20 @@ class TestAgendaCulturelParserIntegration:
 
     @patch("src.parsers.agendaculturel._run_playwright_in_thread")
     def test_fetch_page_uses_playwright(self, mock_pw, parser):
-        mock_pw.return_value = "<html>OK</html>"
+        mock_pw.return_value = ("<html>OK</html>", None, None)
         result = parser.fetch_page("https://13.agendaculturel.fr/")
         assert result == "<html>OK</html>"
         mock_pw.assert_called_once()
 
     @patch("src.parsers.agendaculturel._run_playwright_in_thread")
     def test_fetch_page_returns_empty_on_failure(self, mock_pw, parser):
-        mock_pw.return_value = None
+        mock_pw.return_value = (None, None, None)
         result = parser.fetch_page("https://13.agendaculturel.fr/")
         assert result == ""
 
     @patch("src.parsers.agendaculturel._run_playwright_in_thread")
     def test_fetch_page_detects_cloudflare_challenge(self, mock_pw, parser):
-        mock_pw.return_value = "<html>Verify you are human</html>"
+        mock_pw.return_value = ("<html>Verify you are human</html>", None, None)
         result = parser.fetch_page("https://13.agendaculturel.fr/")
         assert result == ""
 
@@ -803,7 +803,7 @@ class TestAgendaCulturelParserIntegration:
         self, mock_pw, parser, sample_listing_html, sample_detail_html
     ):
         """Test full flow: listing page -> detail pages -> events."""
-        mock_pw.return_value = sample_detail_html
+        mock_pw.return_value = (sample_detail_html, None, None)
 
         html_parser = HTMLParser(sample_listing_html, "https://13.agendaculturel.fr")
         events = parser.parse_events(html_parser)
@@ -817,7 +817,7 @@ class TestAgendaCulturelParserIntegration:
         self, mock_pw, parser, sample_listing_html
     ):
         """Test fallback to microdata when detail pages fail."""
-        mock_pw.return_value = None
+        mock_pw.return_value = (None, None, None)
 
         html_parser = HTMLParser(sample_listing_html, "https://13.agendaculturel.fr")
         events = parser.parse_events(html_parser)
@@ -832,6 +832,37 @@ class TestAgendaCulturelParserIntegration:
         events = parser.parse_events(html_parser)
         assert events == []
 
+    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
+    def test_parse_detail_page_saves_image(self, mock_pw, parser, sample_detail_html):
+        """Test that image bytes from Playwright are saved via image_downloader."""
+        fake_image_bytes = b"\x89PNG\r\n\x1a\nfake_image_data"
+        fake_image_url = "https://13.agendaculturel.fr/media/storage/test.jpg"
+        mock_pw.return_value = (sample_detail_html, fake_image_bytes, fake_image_url)
+        parser.image_downloader.save_from_bytes.return_value = (
+            "/images/events/2026/01/randjess-abc123.webp"
+        )
+
+        event = parser._parse_detail_page(
+            "https://13.agendaculturel.fr/concert/marseille/randjess.html"
+        )
+
+        assert event is not None
+        assert event.image == "/images/events/2026/01/randjess-abc123.webp"
+        parser.image_downloader.save_from_bytes.assert_called_once()
+
+    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
+    def test_parse_detail_page_no_image(self, mock_pw, parser, sample_detail_html):
+        """Test detail page parsing when no image is available."""
+        mock_pw.return_value = (sample_detail_html, None, None)
+
+        event = parser._parse_detail_page(
+            "https://13.agendaculturel.fr/concert/marseille/randjess.html"
+        )
+
+        assert event is not None
+        assert event.image is None
+        parser.image_downloader.save_from_bytes.assert_not_called()
+
     def test_category_listing_urls_defined(self):
         assert len(CATEGORY_LISTING_URLS) == 5
         assert all(
@@ -844,19 +875,17 @@ class TestAgendaCulturelParserIntegration:
         self, mock_pw, parser, sample_listing_html, sample_detail_html
     ):
         """Test that crawl() fetches all category listing pages."""
-        mock_pw.return_value = sample_detail_html
-        # Mock fetch_page to return listing HTML for category pages
-        # and detail HTML for event pages
         category_urls = set(CATEGORY_LISTING_URLS)
 
-        def mock_fetch(url):
+        def mock_playwright(url, timeout=60000):
             if url in category_urls:
-                return sample_listing_html
-            return sample_detail_html
+                return (sample_listing_html, None, None)
+            return (sample_detail_html, None, None)
 
-        with patch.object(parser, "fetch_page", side_effect=mock_fetch):
-            with patch.object(parser, "process_event", side_effect=lambda e: e):
-                events = parser.crawl()
+        mock_pw.side_effect = mock_playwright
+
+        with patch.object(parser, "process_event", side_effect=lambda e: e):
+            events = parser.crawl()
 
         assert len(events) > 0
 
@@ -876,14 +905,15 @@ class TestAgendaCulturelParserIntegration:
         """
         category_urls = set(CATEGORY_LISTING_URLS)
 
-        def mock_fetch(url):
+        def mock_playwright(url, timeout=60000):
             if url in category_urls:
-                return listing_html
-            return sample_detail_html
+                return (listing_html, None, None)
+            return (sample_detail_html, None, None)
 
-        with patch.object(parser, "fetch_page", side_effect=mock_fetch):
-            with patch.object(parser, "process_event", side_effect=lambda e: e):
-                events = parser.crawl()
+        mock_pw.side_effect = mock_playwright
+
+        with patch.object(parser, "process_event", side_effect=lambda e: e):
+            events = parser.crawl()
 
         # Should only have 1 event despite being on all 5 category pages
         assert len(events) == 1

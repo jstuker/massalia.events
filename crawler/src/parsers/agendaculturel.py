@@ -7,6 +7,7 @@ Playwright browser to load pages. Event listing pages contain schema.org
 microdata, and detail pages provide JSON-LD structured data.
 """
 
+import base64
 import json
 import re
 import time
@@ -104,6 +105,96 @@ def _dismiss_cookie_banner(page):
         pass
 
 
+def _extract_page_image(page):
+    """
+    Extract the main event image from a loaded Playwright page.
+
+    Uses the browser's JavaScript fetch API to download the og:image,
+    which works because the browser has the proper cookies and session
+    to bypass Cloudflare. Falls back to canvas capture of the largest
+    rendered <img> element if fetch fails.
+
+    Args:
+        page: Playwright page with a loaded detail page
+
+    Returns:
+        Tuple of (image_bytes, image_url), or (None, None) on failure
+    """
+    try:
+        # Get og:image URL from meta tag
+        image_url = page.evaluate(
+            """() => {
+            const meta = document.querySelector('meta[property="og:image"]');
+            return meta ? meta.content : null;
+        }"""
+        )
+
+        if not image_url:
+            return None, None
+
+        # Try downloading via browser's fetch (has cookies/session)
+        image_b64 = page.evaluate(
+            """async (url) => {
+            try {
+                const resp = await fetch(url);
+                if (!resp.ok) return null;
+                const buf = await resp.arrayBuffer();
+                const bytes = new Uint8Array(buf);
+                let binary = '';
+                const chunkSize = 8192;
+                for (let i = 0; i < bytes.length; i += chunkSize) {
+                    const chunk = bytes.subarray(i, Math.min(i + chunkSize, bytes.length));
+                    binary += String.fromCharCode.apply(null, chunk);
+                }
+                return btoa(binary);
+            } catch {
+                return null;
+            }
+        }""",
+            image_url,
+        )
+
+        if image_b64:
+            return base64.b64decode(image_b64), image_url
+
+        # Fallback: capture from rendered <img> via canvas
+        image_b64 = page.evaluate(
+            """() => {
+            const imgs = document.querySelectorAll('img');
+            let bestImg = null;
+            let bestArea = 0;
+            for (const img of imgs) {
+                if (img.complete && img.naturalWidth > 100) {
+                    const area = img.naturalWidth * img.naturalHeight;
+                    if (area > bestArea) {
+                        bestArea = area;
+                        bestImg = img;
+                    }
+                }
+            }
+            if (!bestImg) return null;
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = bestImg.naturalWidth;
+                canvas.height = bestImg.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(bestImg, 0, 0);
+                return canvas.toDataURL('image/png').split(',')[1];
+            } catch {
+                return null;
+            }
+        }"""
+        )
+
+        if image_b64:
+            return base64.b64decode(image_b64), image_url
+
+    except Exception as e:
+        logger.debug(f"Failed to extract image from page: {e}")
+
+    return None, None
+
+
 def _run_playwright_non_headless(url, timeout=60000):
     """
     Run Playwright in non-headless mode to bypass Cloudflare Turnstile.
@@ -111,12 +202,17 @@ def _run_playwright_non_headless(url, timeout=60000):
     Cloudflare Turnstile blocks headless browsers. Using headed mode with
     anti-detection flags allows passing the challenge automatically.
 
+    Also extracts the main event image from the page while the browser
+    is still open, since image URLs return 403 when fetched separately.
+
     Args:
         url: URL to navigate to
         timeout: Page load timeout in milliseconds
 
     Returns:
-        HTML content as string, or None on failure
+        Tuple of (html, image_bytes, image_url) where html is the page
+        content and image_bytes/image_url are the extracted image data.
+        Returns (None, None, None) on failure.
     """
     try:
         from playwright.sync_api import sync_playwright
@@ -125,7 +221,7 @@ def _run_playwright_non_headless(url, timeout=60000):
             "Playwright is required for the Agenda Culturel parser. "
             "Install it with: pip install playwright && playwright install chromium"
         )
-        return None
+        return None, None, None
 
     pw = sync_playwright().start()
     try:
@@ -162,11 +258,14 @@ def _run_playwright_non_headless(url, timeout=60000):
         # Dismiss cookie consent banner (FundingChoices / Google Consent)
         _dismiss_cookie_banner(page)
 
+        # Extract event image while browser has proper cookies/session
+        image_bytes, image_url = _extract_page_image(page)
+
         browser.close()
-        return html
+        return html, image_bytes, image_url
     except Exception as e:
         logger.error(f"Playwright failed to load {url}: {e}")
-        return None
+        return None, None, None
     finally:
         pw.stop()
 
@@ -180,7 +279,8 @@ def _run_playwright_in_thread(url, timeout=60000):
         timeout: Page load timeout in milliseconds
 
     Returns:
-        HTML content as string, or None on failure
+        Tuple of (html, image_bytes, image_url), or (None, None, None)
+        on failure.
     """
     try:
         return _run_playwright_non_headless(url, timeout)
@@ -195,7 +295,7 @@ def _run_playwright_in_thread(url, timeout=60000):
                     return future.result(timeout=timeout / 1000 + 30)
             except Exception as thread_err:
                 logger.error(f"Playwright thread failed for {url}: {thread_err}")
-                return None
+                return None, None, None
         raise
 
 
@@ -657,7 +757,7 @@ class AgendaCulturelParser(BaseCrawler):
             HTML content as string, or empty string on failure
         """
         logger.info(f"Fetching with Playwright (non-headless): {url}")
-        html = _run_playwright_in_thread(url)
+        html, _, _ = _run_playwright_in_thread(url)
         if not html:
             return ""
 
@@ -734,8 +834,9 @@ class AgendaCulturelParser(BaseCrawler):
         Fetch and parse an event detail page.
 
         Extracts JSON-LD structured data from the detail page for
-        complete event information. Falls back to HTML parsing if
-        JSON-LD is not available.
+        complete event information. Also extracts the event image
+        directly from the Playwright session (since image URLs return
+        403 when fetched separately via HTTP).
 
         Args:
             event_url: URL of the event detail page
@@ -745,9 +846,15 @@ class AgendaCulturelParser(BaseCrawler):
         """
         logger.debug(f"Loading event detail page: {event_url}")
 
-        html = self.fetch_page(event_url)
+        # Fetch HTML and image in the same Playwright session
+        html, image_bytes, image_url = _run_playwright_in_thread(event_url)
         if not html:
             logger.warning(f"Failed to load detail page: {event_url}")
+            return None
+
+        # Verify we got actual content, not a challenge page
+        if "Verify you are human" in html or "Just a moment" in html:
+            logger.error(f"Cloudflare challenge not bypassed for: {event_url}")
             return None
 
         # Try JSON-LD first (most reliable)
@@ -770,13 +877,27 @@ class AgendaCulturelParser(BaseCrawler):
                 break
 
         if event_json_ld:
-            return _parse_event_from_json_ld(
+            event = _parse_event_from_json_ld(
                 event_json_ld, event_url, self.category_map
             )
+        else:
+            # Fallback: parse from HTML
+            logger.debug(f"No JSON-LD found, trying HTML parsing for: {event_url}")
+            event = self._parse_from_html(html, event_url)
 
-        # Fallback: parse from HTML
-        logger.debug(f"No JSON-LD found, trying HTML parsing for: {event_url}")
-        return self._parse_from_html(html, event_url)
+        # Save image extracted from Playwright session
+        if event and image_bytes:
+            local_path = self.image_downloader.save_from_bytes(
+                image_bytes,
+                image_url=image_url or "",
+                event_slug=event.slug,
+                event_date=event.start_datetime,
+            )
+            if local_path:
+                event.image = local_path
+                logger.debug(f"Saved image for {event.name}: {local_path}")
+
+        return event
 
     def _parse_from_html(self, html: str, event_url: str) -> Event | None:
         """
