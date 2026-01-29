@@ -76,6 +76,25 @@ PATH_CATEGORY_MAP = {
 }
 
 
+def _dismiss_cookie_banner(page):
+    """
+    Dismiss the cookie consent banner if present.
+
+    The site uses FundingChoices (Google Consent) which shows a consent
+    dialog with an "Autoriser" (Allow) button. Clicking it prevents the
+    banner from blocking interaction on subsequent page loads.
+    """
+    try:
+        consent_btn = page.locator("button.fc-cta-consent.fc-primary-button")
+        if consent_btn.is_visible(timeout=2000):
+            consent_btn.click()
+            logger.debug("Cookie consent banner dismissed")
+            page.wait_for_timeout(1000)
+    except Exception:
+        # Banner not present or already dismissed — not an error
+        pass
+
+
 def _run_playwright_non_headless(url, timeout=60000):
     """
     Run Playwright in non-headless mode to bypass Cloudflare Turnstile.
@@ -130,6 +149,9 @@ def _run_playwright_non_headless(url, timeout=60000):
             logger.warning("Cloudflare challenge not passed, waiting longer...")
             page.wait_for_timeout(10000)
             html = page.content()
+
+        # Dismiss cookie consent banner (FundingChoices / Google Consent)
+        _dismiss_cookie_banner(page)
 
         browser.close()
         return html
