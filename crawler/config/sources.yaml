@@ -123,6 +123,29 @@ sources:
       "Exposition": "art"
       "Festival": "communaute"
 
+  # Journal Zébuline - Cultural journalism magazine for Marseille/Provence
+  # Publishes articles about cultural events with embedded event details
+  # Uses WordPress REST API for structured article access
+  - name: "Journal Zébuline"
+    id: "journalzebuline"
+    url: "https://journalzebuline.fr/"
+    parser: "journalzebuline"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Scenes": "theatre"
+      "Musiques": "musique"
+      "Arts visuels": "art"
+      "Cinema": "art"
+      "Cirque": "theatre"
+      "Litterature": "communaute"
+      "Danse": "danse"
+      "Theatre": "theatre"
+      "Festival": "communaute"
+      "Exposition": "art"
+
 # Default settings applied to all sources unless overridden
 defaults:
   enabled: true
