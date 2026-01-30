@@ -407,15 +407,18 @@
 
 - slug: la-comedie-de-marseille-le-quai-du-rire
   title: "La Comedie de Marseille - Le Quai du Rire"
-  description: "Cafe-theatre historique sur le Vieux-Port de Marseille, fonde en 1994."
+  description: "Cafe-theatre historique sur le Vieux-Port de Marseille, fonde en 1994. Aussi connu sous le nom de Comedie Club Vieux Port."
   address: "16 quai de Rive Neuve, 13007 Marseille"
   arrondissement: "13007 Marseille"
-  website: ""
+  website: "https://comedieclubvieuxport.com/"
   type: "Cafe-Theatre"
   aliases:
     - "/locations/quai-du-rire/"
     - "/locations/comedie-de-marseille/"
-  body: "La Comedie de Marseille, anciennement Le Quai du Rire, est un cafe-theatre situe sur le quai de Rive Neuve face au Vieux-Port. Fonde en 1994 par Eliane Zayan, ce lieu de 100 places programme de l'humour, du one-man-show et du theatre comique."
+    - "/locations/le-comedie-club-vieux-port-espace-kev-adams/"
+    - "/locations/comedie-club-vieux-port/"
+    - "/locations/espace-kev-adams/"
+  body: "La Comedie de Marseille, anciennement Le Quai du Rire, est un cafe-theatre situe sur le quai de Rive Neuve face au Vieux-Port. Fonde en 1994 par Eliane Zayan, ce lieu programme de l'humour, du one-man-show et du theatre comique. Le lieu abrite egalement le Comedie Club Vieux Port - Espace Kev Adams."
 
 - slug: arena-du-pays-d-aix
   title: "Arena du Pays d'Aix"
@@ -495,7 +498,7 @@
   aliases: []
   body: "Le Theatre Ainsi de Suite est installe dans la chapelle du Lycee Saint-Eloi a Aix-en-Provence. Ce petit theatre intimiste propose depuis plus de 33 saisons du theatre, de la danse et des spectacles vivants dans un cadre atypique."
 
-- slug: scene-mediterrannee
+- slug: scene-mediterranee
   title: "Scene Mediterranee"
   description: "Theatre de 700 places dans le 3e arrondissement de Marseille, anciennement Theatre Toursky."
   address: "16 promenade Leo Ferre, 13003 Marseille"
@@ -507,17 +510,6 @@
     - "/locations/toursky/"
   body: "Scene Mediterranee est un theatre de 700 places situe dans le 3e arrondissement de Marseille. Anciennement connu sous le nom de Theatre Toursky, fonde en 1971, le lieu a ete repris par l'association Scene Mediterranee en 2025. Il programme du theatre, de la musique et des spectacles."
 
-- slug: le-comedie-club-vieux-port-espace-kev-adams
-  title: "Comedie Club Vieux Port - Espace Kev Adams"
-  description: "Comedy club de 70 places sur le Vieux-Port de Marseille, inaugure par Kev Adams."
-  address: "16 quai de Rive Neuve, 13007 Marseille"
-  arrondissement: "13007 Marseille"
-  website: "https://comedieclubvieuxport.com/"
-  type: "Cafe-Theatre"
-  aliases:
-    - "/locations/comedie-club-vieux-port/"
-    - "/locations/espace-kev-adams/"
-  body: "Le Comedie Club Vieux Port - Espace Kev Adams est un comedy club de 70 places situe sur le quai de Rive Neuve face au Vieux-Port de Marseille. Inaugure par l'humoriste Kev Adams, ce lieu programme du stand-up, de l'humour et des one-man-shows."
 
 - slug: l-usine-scenes-et-cines
   title: "L'Usine - Scenes et Cines"
@@ -644,7 +636,7 @@
     - "/locations/chaudronnerie-la-ciotat/"
   body: "La Chaudronnerie est une salle de spectacle situee a La Ciotat, dans un ancien batiment des chantiers navals de 1860 reconverti. Inauguree en 2017, elle dispose de la Salle Michel Simon (473 places) et d'une seconde salle de 100 places. Elle programme du theatre, de la musique, de la danse et des spectacles jeune public."
 
-- slug: MuCEM
+- slug: mucem
   title: "MuCEM - Musee des Civilisations"
   description: "Musee national sur l'esplanade du J4 a Marseille, auditorium et evenements en plein air."
   address: "7 promenade Robert Laffont, 13002 Marseille"

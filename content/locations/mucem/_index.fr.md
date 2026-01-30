@@ -6,6 +6,7 @@ arrondissement: "13002 Marseille"
 website: "https://www.mucem.org/"
 type: "Musee"
 aliases:
+  - "/locations/MuCEM/"
   - "/locations/promenade-robert-laffont"
   - "/locations/esplanade-j4/"
 ---

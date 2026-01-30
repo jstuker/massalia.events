@@ -6,6 +6,9 @@ arrondissement: "13007 Marseille"
 website: ""
 type: "Cafe-Theatre"
 aliases:
+  - "/locations/le-comedie-club-vieux-port-espace-kev-adams/"
+  - "/locations/comedie-club-vieux-port/"
+  - "/locations/espace-kev-adams/"
   - "/locations/quai-du-rire/"
   - "/locations/comedie-de-marseille/"
 ---
