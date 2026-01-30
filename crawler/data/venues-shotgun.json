@@ -1,0 +1,12 @@
+{
+  "baby-club": {
+    "name": "Baby Club",
+    "slug": "baby-club",
+    "street_address": "2 Rue André Poggioli",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2919,
+    "longitude": 5.3838,
+    "source_url": "https://shotgun.live/fr/venues/baby-club"
+  }
+}
