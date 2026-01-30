@@ -10,7 +10,7 @@ description: Les musiques de Jean-Jacques Goldman résonnent en version classiqu
 categories:
 - musique
 locations:
-- MuCEM
+- mucem
 dates:
 - vendredi-30-janvier
 tags: []

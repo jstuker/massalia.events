@@ -10,7 +10,7 @@ description: Jeunes talents et humoristes confirmés enchaînent les sketchs pen
 categories:
 - theatre
 locations:
-- le-comedie-club-vieux-port-espace-kev-adams
+- la-comedie-de-marseille-le-quai-du-rire
 dates:
 - jeudi-29-janvier
 tags: []

@@ -6,6 +6,7 @@ arrondissement: "13003 Marseille"
 website: ""
 type: "Theatre"
 aliases:
+  - "/locations/scene-mediterrannee/"
   - "/locations/theatre-toursky/"
   - "/locations/toursky/"
 ---

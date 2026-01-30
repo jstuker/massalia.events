@@ -10,7 +10,7 @@ description: Pierre Emmanuel Barré, Come-Back livre un seul en scène mordant o
 categories:
 - theatre
 locations:
-- scene-mediterrannee
+- scene-mediterranee
 dates:
 - jeudi-29-janvier
 tags: []
