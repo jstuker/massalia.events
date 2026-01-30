@@ -14,6 +14,7 @@ from src.parsers.journalzebuline import (
     WP_API_BASE,
     WP_CATEGORY_IDS,
     WP_CATEGORY_MAP,
+    WP_PER_PAGE,
     JournalZebulineParser,
     _clean_html,
     _extract_city,
@@ -25,6 +26,7 @@ from src.parsers.journalzebuline import (
     _map_wp_tags_to_category,
     _parse_french_date,
 )
+from src.utils.http import FetchResult
 
 PARIS_TZ = ZoneInfo("Europe/Paris")
 
@@ -727,10 +729,28 @@ class TestJournalZebulineParserIntegration:
 class TestCrawlFlow:
     """Tests for the full crawl() flow with mocked HTTP."""
 
+    def _make_fetch_result(self, articles, total=None, total_pages=None):
+        """Helper to create a FetchResult mimicking the WordPress API."""
+        if total is None:
+            total = len(articles)
+        if total_pages is None:
+            total_pages = 1
+        return FetchResult(
+            url="https://journalzebuline.fr/wp-json/wp/v2/posts",
+            status_code=200,
+            html=json.dumps(articles),
+            headers={
+                "X-WP-Total": str(total),
+                "X-WP-TotalPages": str(total_pages),
+            },
+        )
+
     @pytest.fixture
     def parser_with_mock_http(self, mock_config, sample_api_article):
         http_client = MagicMock()
-        http_client.get_text.return_value = json.dumps([sample_api_article])
+        http_client.fetch.return_value = self._make_fetch_result(
+            [sample_api_article], total=1, total_pages=1
+        )
         image_downloader = MagicMock()
         markdown_generator = MagicMock()
         markdown_generator.find_by_source_id.return_value = None
@@ -748,14 +768,15 @@ class TestCrawlFlow:
 
     def test_crawl_calls_api(self, parser_with_mock_http):
         parser_with_mock_http.crawl()
-        parser_with_mock_http.http_client.get_text.assert_called_once()
-        call_url = parser_with_mock_http.http_client.get_text.call_args[0][0]
+        parser_with_mock_http.http_client.fetch.assert_called_once()
+        call_url = parser_with_mock_http.http_client.fetch.call_args[0][0]
         assert WP_API_BASE in call_url
         assert "_embed" in call_url
+        assert "page=1" in call_url
 
     def test_crawl_empty_api_response(self, mock_config):
         http_client = MagicMock()
-        http_client.get_text.return_value = "[]"
+        http_client.fetch.return_value = self._make_fetch_result([])
         parser = JournalZebulineParser(
             config=mock_config,
             http_client=http_client,
@@ -767,7 +788,26 @@ class TestCrawlFlow:
 
     def test_crawl_api_error(self, mock_config):
         http_client = MagicMock()
-        http_client.get_text.side_effect = Exception("API error")
+        http_client.fetch.side_effect = Exception("API error")
+        parser = JournalZebulineParser(
+            config=mock_config,
+            http_client=http_client,
+            image_downloader=MagicMock(),
+            markdown_generator=MagicMock(),
+        )
+        events = parser.crawl()
+        assert events == []
+
+    def test_crawl_api_http_error(self, mock_config):
+        """Non-success HTTP status stops pagination."""
+        http_client = MagicMock()
+        http_client.fetch.return_value = FetchResult(
+            url="https://journalzebuline.fr/wp-json/wp/v2/posts",
+            status_code=500,
+            html=None,
+            headers={},
+            error="Internal Server Error",
+        )
         parser = JournalZebulineParser(
             config=mock_config,
             http_client=http_client,
@@ -779,7 +819,12 @@ class TestCrawlFlow:
 
     def test_crawl_invalid_json(self, mock_config):
         http_client = MagicMock()
-        http_client.get_text.return_value = "not json"
+        http_client.fetch.return_value = FetchResult(
+            url="https://journalzebuline.fr/wp-json/wp/v2/posts",
+            status_code=200,
+            html="not json",
+            headers={"X-WP-Total": "1", "X-WP-TotalPages": "1"},
+        )
         parser = JournalZebulineParser(
             config=mock_config,
             http_client=http_client,
@@ -794,12 +839,157 @@ class TestCrawlFlow:
         # process_event should have been called, which calls markdown_generator
         assert parser_with_mock_http.markdown_generator.generate.called
 
+    def test_crawl_paginates_multiple_pages(
+        self, mock_config, sample_api_article
+    ):
+        """Crawler fetches all pages when total_pages > 1."""
+        # Create a second article with different ID
+        article_2 = dict(sample_api_article)
+        article_2 = json.loads(json.dumps(sample_api_article))
+        article_2["id"] = 999999
+        article_2["slug"] = "second-article"
+
+        http_client = MagicMock()
+        # Page 1 returns first article, page 2 returns second
+        http_client.fetch.side_effect = [
+            self._make_fetch_result(
+                [sample_api_article], total=2, total_pages=2
+            ),
+            self._make_fetch_result([article_2], total=2, total_pages=2),
+        ]
+        markdown_generator = MagicMock()
+        markdown_generator.find_by_source_id.return_value = None
+
+        parser = JournalZebulineParser(
+            config=mock_config,
+            http_client=http_client,
+            image_downloader=MagicMock(),
+            markdown_generator=markdown_generator,
+        )
+        events = parser.crawl()
+
+        # Should have called fetch twice (page 1 and page 2)
+        assert http_client.fetch.call_count == 2
+
+        # Verify page parameters in URLs
+        call_urls = [call[0][0] for call in http_client.fetch.call_args_list]
+        assert "page=1" in call_urls[0]
+        assert "page=2" in call_urls[1]
+
+    def test_crawl_stops_at_last_page(self, mock_config, sample_api_article):
+        """Crawler stops when it reaches total_pages."""
+        http_client = MagicMock()
+        http_client.fetch.return_value = self._make_fetch_result(
+            [sample_api_article], total=1, total_pages=1
+        )
+        markdown_generator = MagicMock()
+        markdown_generator.find_by_source_id.return_value = None
+
+        parser = JournalZebulineParser(
+            config=mock_config,
+            http_client=http_client,
+            image_downloader=MagicMock(),
+            markdown_generator=markdown_generator,
+        )
+        parser.crawl()
+
+        # Only one fetch call since total_pages=1
+        assert http_client.fetch.call_count == 1
+
+    def test_crawl_stops_on_400(self, mock_config, sample_api_article):
+        """WordPress returns 400 when page exceeds total; crawler stops."""
+        http_client = MagicMock()
+        http_client.fetch.side_effect = [
+            self._make_fetch_result(
+                [sample_api_article], total=1, total_pages=2
+            ),
+            FetchResult(
+                url="https://journalzebuline.fr/wp-json/wp/v2/posts",
+                status_code=400,
+                html=None,
+                headers={},
+            ),
+        ]
+        markdown_generator = MagicMock()
+        markdown_generator.find_by_source_id.return_value = None
+
+        parser = JournalZebulineParser(
+            config=mock_config,
+            http_client=http_client,
+            image_downloader=MagicMock(),
+            markdown_generator=markdown_generator,
+        )
+        events = parser.crawl()
+
+        assert http_client.fetch.call_count == 2
+        # Should still have events from the first page
+        assert len(events) > 0
+
+    def test_crawl_deduplicates_articles(self, mock_config, sample_api_article):
+        """Duplicate article IDs across pages are deduplicated."""
+        http_client = MagicMock()
+        # Both pages return the same article
+        http_client.fetch.side_effect = [
+            self._make_fetch_result(
+                [sample_api_article], total=2, total_pages=2
+            ),
+            self._make_fetch_result(
+                [sample_api_article], total=2, total_pages=2
+            ),
+        ]
+        markdown_generator = MagicMock()
+        markdown_generator.find_by_source_id.return_value = None
+
+        parser = JournalZebulineParser(
+            config=mock_config,
+            http_client=http_client,
+            image_downloader=MagicMock(),
+            markdown_generator=markdown_generator,
+        )
+        events = parser.crawl()
+
+        # Only one event despite same article on both pages
+        assert len(events) == 1
+
+    def test_crawl_passes_source_id_to_fetch(self, parser_with_mock_http):
+        """Fetch calls include source_id for rate limiting."""
+        parser_with_mock_http.crawl()
+        call_kwargs = parser_with_mock_http.http_client.fetch.call_args
+        assert call_kwargs[1]["source_id"] == "journalzebuline"
+
 
 # ── Test WP constants ────────────────────────────────────────────
 
 
+class TestGetHeaderInt:
+    """Tests for _get_header_int static method."""
+
+    def test_exact_case(self):
+        headers = {"X-WP-TotalPages": "42"}
+        assert JournalZebulineParser._get_header_int(headers, "X-WP-TotalPages", 1) == 42
+
+    def test_lowercase_fallback(self):
+        headers = {"x-wp-totalpages": "15"}
+        assert JournalZebulineParser._get_header_int(headers, "X-WP-TotalPages", 1) == 15
+
+    def test_missing_header(self):
+        headers = {}
+        assert JournalZebulineParser._get_header_int(headers, "X-WP-TotalPages", 1) == 1
+
+    def test_non_integer_value(self):
+        headers = {"X-WP-TotalPages": "abc"}
+        assert JournalZebulineParser._get_header_int(headers, "X-WP-TotalPages", 1) == 1
+
+    def test_default_value(self):
+        headers = {}
+        assert JournalZebulineParser._get_header_int(headers, "X-WP-Total", 0) == 0
+
+
 class TestConstants:
     """Tests for parser constants."""
+
+    def test_wp_per_page(self):
+        assert WP_PER_PAGE == 100
 
     def test_wp_category_ids_defined(self):
         assert len(WP_CATEGORY_IDS) > 0

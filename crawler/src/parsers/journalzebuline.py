@@ -20,6 +20,7 @@ Strategy:
 6. Filter for Marseille-area events.
 """
 
+import json
 import re
 import time
 from datetime import datetime
@@ -34,8 +35,8 @@ logger = get_logger(__name__)
 
 PARIS_TZ = ZoneInfo("Europe/Paris")
 
-# Maximum number of articles to process per crawl
-MAX_ARTICLES = 100
+# WordPress REST API pagination - 100 is the WP maximum per page
+WP_PER_PAGE = 100
 
 # WordPress category IDs for event-related content
 # Scènes (2876), Musiques (2877), Arts visuels (2884), Cinéma (2878), Cirque (5659)
@@ -529,53 +530,114 @@ class JournalZebulineParser(BaseCrawler):
 
     def _fetch_articles(self) -> list[dict]:
         """
-        Fetch recent articles from WordPress REST API.
+        Fetch articles from WordPress REST API with full pagination.
 
-        Queries multiple category endpoints and deduplicates by article ID.
+        Queries all relevant categories and paginates through every page
+        using the X-WP-TotalPages response header. Deduplicates by article ID.
 
         Returns:
             List of article dicts from the WordPress API
         """
         all_articles = {}
         categories_param = ",".join(str(c) for c in WP_CATEGORY_IDS)
-
-        # Fetch articles from all categories in a single request
-        url = (
-            f"{WP_API_BASE}/posts?"
-            f"categories={categories_param}"
-            f"&per_page={MAX_ARTICLES}"
-            f"&_embed"
-            f"&orderby=date&order=desc"
-        )
-
-        try:
-            response_text = self.http_client.get_text(url)
-        except Exception as e:
-            logger.error(f"Failed to fetch articles from API: {e}")
-            return []
-
-        try:
-            import json
-
-            articles = json.loads(response_text)
-        except (ValueError, TypeError) as e:
-            logger.error(f"Failed to parse API response: {e}")
-            return []
-
-        if not isinstance(articles, list):
-            logger.error(f"Unexpected API response type: {type(articles)}")
-            return []
-
-        for article in articles:
-            article_id = article.get("id")
-            if article_id and article_id not in all_articles:
-                all_articles[article_id] = article
-
-        # Rate limit
         delay = self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
-        time.sleep(delay)
 
+        page = 1
+        total_pages = None
+
+        while True:
+            url = (
+                f"{WP_API_BASE}/posts?"
+                f"categories={categories_param}"
+                f"&per_page={WP_PER_PAGE}"
+                f"&page={page}"
+                f"&_embed"
+                f"&orderby=date&order=desc"
+            )
+
+            try:
+                result = self.http_client.fetch(url, source_id=self.source_id)
+            except Exception as e:
+                logger.error(f"Failed to fetch page {page} from API: {e}")
+                break
+
+            if not result.success:
+                # WordPress returns 400 when page exceeds total_pages
+                if result.status_code == 400:
+                    logger.debug(f"Reached end of pagination at page {page}")
+                    break
+                logger.error(
+                    f"API error on page {page}: HTTP {result.status_code}"
+                )
+                break
+
+            # Read total pages from headers on first request
+            if total_pages is None:
+                total_pages = self._get_header_int(
+                    result.headers, "X-WP-TotalPages", 1
+                )
+                total_articles = self._get_header_int(
+                    result.headers, "X-WP-Total", 0
+                )
+                logger.info(
+                    f"Journal Zébuline API: {total_articles} articles "
+                    f"across {total_pages} pages"
+                )
+
+            # Parse articles from JSON response
+            try:
+                articles = json.loads(result.html)
+            except (ValueError, TypeError) as e:
+                logger.error(f"Failed to parse API response page {page}: {e}")
+                break
+
+            if not isinstance(articles, list) or not articles:
+                logger.debug(f"Empty response on page {page}, stopping")
+                break
+
+            new_count = 0
+            for article in articles:
+                article_id = article.get("id")
+                if article_id and article_id not in all_articles:
+                    all_articles[article_id] = article
+                    new_count += 1
+
+            logger.info(
+                f"Page {page}/{total_pages}: {new_count} new articles "
+                f"({len(all_articles)} total)"
+            )
+
+            # Stop if we've reached the last page
+            if page >= total_pages:
+                break
+
+            page += 1
+            time.sleep(delay)
+
+        logger.info(f"Fetched {len(all_articles)} unique articles total")
         return list(all_articles.values())
+
+    @staticmethod
+    def _get_header_int(headers: dict, name: str, default: int) -> int:
+        """
+        Get an integer value from response headers, case-insensitively.
+
+        Args:
+            headers: Response headers dict
+            name: Header name to look up
+            default: Default value if header is missing or not an integer
+
+        Returns:
+            Integer header value or default
+        """
+        # Try exact case first, then lowercase
+        value = headers.get(name) or headers.get(name.lower())
+        if value is not None:
+            try:
+                return int(value)
+            except (ValueError, TypeError):
+                pass
+        return default
 
     def _parse_article(self, article: dict) -> list[Event]:
         """
