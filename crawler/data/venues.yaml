@@ -636,6 +636,136 @@
     - "/locations/chaudronnerie-la-ciotat/"
   body: "La Chaudronnerie est une salle de spectacle situee a La Ciotat, dans un ancien batiment des chantiers navals de 1860 reconverti. Inauguree en 2017, elle dispose de la Salle Michel Simon (473 places) et d'une seconde salle de 100 places. Elle programme du theatre, de la musique, de la danse et des spectacles jeune public."
 
+# ============================================================
+# Venues from journalzebuline.fr crawler
+# ============================================================
+
+- slug: alice-et-les-droles-d-oiseaux
+  title: "Museum d'Histoire Naturelle de Marseille"
+  description: "Museum d'histoire naturelle dans l'aile droite du Palais Longchamp, fonde en 1819."
+  address: "Palais Longchamp, Boulevard Philippon, 13004 Marseille"
+  arrondissement: "13004 Marseille"
+  website: "https://musees.marseille.fr/museum-dhistoire-naturelle-de-marseille-mhnm-0"
+  type: "Musee"
+  aliases: []
+  body: "Le Museum d'Histoire Naturelle de Marseille est installe dans l'aile droite du Palais Longchamp depuis 1869. Fonde en 1819 et labellise Musee de France depuis 2002, il presente l'exposition permanente Terre d'Evolution inauguree en 2020. L'entree aux collections permanentes est gratuite."
+
+- slug: centre-de-la-vieille-charite-marseille
+  title: "Centre de la Vieille Charite"
+  description: "Centre culturel du XVIIe siecle dans le quartier du Panier, classé monument historique."
+  address: "2 rue de la Charite, 13002 Marseille"
+  arrondissement: "13002 Marseille"
+  website: "https://vieille-charite-marseille.com/"
+  type: "Centre culturel"
+  aliases:
+    - "/locations/vieille-charite/"
+  body: "Le Centre de la Vieille Charite est un joyau architectural classique du XVIIe siecle, classe monument historique depuis 1951, situe au coeur du quartier du Panier. Il abrite le Musee d'Archeologie Mediterraneenne, le Musee d'Arts Africains, Oceaniens et Amerindiens, une salle de projection et le Centre International de Poesie Marseille."
+
+- slug: cite-de-la-musique
+  title: "Cite de la Musique de Marseille"
+  description: "Centre de formation musicale et salle de concerts pres de la Porte d'Aix."
+  address: "4 rue Bernard du Bois, 13001 Marseille"
+  arrondissement: "13001 Marseille"
+  website: "https://www.citemusique-marseille.com/"
+  type: "Salle de concert"
+  aliases: []
+  body: "La Cite de la Musique de Marseille, fondee en 1979, est un centre de formation musicale professionnelle installe pres de la Porte d'Aix depuis 1992. Elle accueille environ 2 200 eleves par an et propose des concerts ainsi qu'une mediatheque."
+
+- slug: conservatoire-pierre-barbizet
+  title: "Conservatoire Pierre Barbizet"
+  description: "Conservatoire a rayonnement regional de musique, danse et theatre, fonde en 1821."
+  address: "Palais Carli, 2 Place Auguste et Francois Carli, 13001 Marseille"
+  arrondissement: "13001 Marseille"
+  website: "https://www.conservatoiredemarseille.fr/"
+  type: "Conservatoire"
+  aliases: []
+  body: "Le Conservatoire Pierre Barbizet est un conservatoire a rayonnement regional fonde en 1821, installe dans le Palais Carli. Il forme plus de 1 500 eleves dans 60 disciplines de musique, theatre et danse. Depuis 2020, il fait partie de l'INSEAMM."
+
+- slug: entre2-biac
+  title: "Entre2 BIAC"
+  description: "Festival de cirque contemporain organise par Archaos dans la metropole Aix-Marseille."
+  address: "22 boulevard de la Mediterranee, 13015 Marseille"
+  arrondissement: "13015 Marseille"
+  website: "https://biennale-cirque.com/"
+  type: "Festival"
+  aliases: []
+  body: "Entre2 BIAC est un festival de cirque contemporain cree en 2016 par Archaos, Pole National Cirque. Il se tient les annees paires dans la metropole Aix-Marseille, entre deux editions de la BIAC (Biennale Internationale des Arts du Cirque)."
+
+- slug: imfp
+  title: "IMFP - Institut Musical de Formation Professionnelle"
+  description: "Institut de formation musicale professionnelle avec salle de concerts a Salon-de-Provence."
+  address: "95 avenue Raoul Francou, 13300 Salon-de-Provence"
+  arrondissement: "13300 Salon-de-Provence"
+  website: "https://imfp.fr/"
+  type: "Salle de concert"
+  aliases: []
+  body: "L'IMFP est un centre de formation musicale professionnelle fonde en 1979 a Salon-de-Provence. L'institut accueille environ 250 stagiaires par an et dispose de sa propre salle de concert. Il est certifie Qualiopi et reconnu par le Ministere de la Culture."
+
+- slug: les-elancees
+  title: "Festival Les Elancees"
+  description: "Festival de cirque et danse contemporaine dans l'Ouest des Bouches-du-Rhone, organise par Scenes et Cines."
+  address: "5-9 place des Carmes, 13800 Istres"
+  arrondissement: "13800 Istres"
+  website: "https://www.scenesetcines.fr/"
+  type: "Festival"
+  aliases: []
+  body: "Les Elancees est un festival dedie aux arts du cirque et a la danse contemporaine, cree en 1999 et organise par Scenes et Cines dans six communes de l'Ouest des Bouches-du-Rhone : Istres, Fos-sur-Mer, Miramas, Port-Saint-Louis-du-Rhone, Grans et Cornillon-Confoux."
+
+- slug: les-salins
+  title: "Theatre des Salins - Scene Nationale de Martigues"
+  description: "Scene nationale de Martigues, theatre de style italien avec programmation pluridisciplinaire."
+  address: "19 quai Paul Doumer, 13500 Martigues"
+  arrondissement: "13500 Martigues"
+  website: "https://les-salins.net/"
+  type: "Theatre"
+  aliases:
+    - "/locations/salins/"
+    - "/locations/theatre-des-salins/"
+  body: "Le Theatre des Salins est la Scene Nationale de Martigues, cree en 1995. Son architecture evoque le theatre a l'italienne du XVIIe siecle. Chaque saison, il presente plus de 45 spectacles de theatre, musique, danse, cirque et humour."
+
+- slug: musee-d-art-contemporain-mac
+  title: "[mac] Musee d'Art Contemporain de Marseille"
+  description: "Musee d'art contemporain sur l'avenue de Haifa, inaugure en 1994."
+  address: "69 avenue de Haifa, 13008 Marseille"
+  arrondissement: "13008 Marseille"
+  website: "https://musees.marseille.fr/musee-dart-contemporain-mac"
+  type: "Musee"
+  aliases:
+    - "/locations/mac/"
+    - "/locations/mac-marseille/"
+  body: "Le [mac] Musee d'Art Contemporain de Marseille a ete inaugure le 28 mai 1994. Apres quatre ans de renovation, le musee a rouvert le 6 avril 2023 avec une nouvelle terrasse panoramique. L'entree aux expositions permanentes est gratuite."
+
+- slug: musee-des-arts-decoratifs-de-la-faience-et-de-la-mode
+  title: "Chateau Borely - Musee des Arts Decoratifs"
+  description: "Musee des arts decoratifs, de la faience et de la mode dans une bastide provencale du XVIIIe siecle."
+  address: "134 avenue Clot-Bey, 13008 Marseille"
+  arrondissement: "13008 Marseille"
+  website: "https://musees.marseille.fr/chateau-borely-musee-des-arts-decoratifs-de-la-faience-et-de-la-mode"
+  type: "Musee"
+  aliases:
+    - "/locations/chateau-borely/"
+  body: "Le Chateau Borely, bastide provencale construite vers 1760-1770, abrite depuis juin 2013 le Musee des Arts Decoratifs, de la Faience et de la Mode. Le musee presente une selection de 2 500 oeuvres : mobilier, ceramiques, verreries, tapisseries, objets d'art, design et collections de mode du XVIIIe siecle a nos jours."
+
+- slug: theatre-de-l-oeuvre
+  title: "Theatre de l'Oeuvre"
+  description: "Theatre de 170 places pres de la Canebiere, fonde en 1937."
+  address: "1 rue Mission de France, 13001 Marseille"
+  arrondissement: "13001 Marseille"
+  website: "https://www.theatre-oeuvre.com/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre de l'Oeuvre, cree en 1937, est installe depuis 1965 a quelques pas de la Canebiere dans le quartier de Belsunce. Sa salle a l'italienne de 170 places propose une programmation de theatre, musiques actuelles, danse et spectacles jeune public."
+
+- slug: theatre-des-calanques
+  title: "Theatre des Calanques"
+  description: "Theatre de 420 places en bois au pied du massif de Marseilleveyre, entre Pointe Rouge et Grotte Rolland."
+  address: "35 traverse de Carthage, 13008 Marseille"
+  arrondissement: "13008 Marseille"
+  website: "https://www.theatredescalanques.com/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre des Calanques est situe en lisiere du Parc National des Calanques, entre Pointe Rouge et Grotte Rolland. Le theatre en bois de 420 places a ete construit en 2017. Le lieu fonctionne sur le principe du paiement a votre bonne volonte, avec un minimum de 1 euro."
+
 - slug: mucem
   title: "MuCEM - Musee des Civilisations"
   description: "Musee national sur l'esplanade du J4 a Marseille, auditorium et evenements en plein air."
