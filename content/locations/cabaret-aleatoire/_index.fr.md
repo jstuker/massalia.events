@@ -2,7 +2,6 @@
 title: "Cabaret Aleatoire"
 description: "Salle de concerts et club de musiques actuelles a La Friche la Belle de Mai."
 address: "41 Rue Jobin, 13003 Marseille"
-arrondissement: "13003 Marseille"
 website: "https://www.cabaret-aleatoire.com/"
 type: "Salle de spectacle"
 aliases:

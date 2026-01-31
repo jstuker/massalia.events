@@ -2,7 +2,6 @@
 title: "L'Art Du Theatre"
 description: "Theatre et cafe-theatre de 90 places dans le 6e arrondissement de Marseille."
 address: "83 rue Marengo, 13006 Marseille"
-arrondissement: "13006 Marseille"
 website: "https://lartdutheatre.fr/"
 type: "Theatre"
 aliases:

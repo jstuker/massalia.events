@@ -2,7 +2,6 @@
 title: "Le Bazar"
 description: "Bar et espace de concerts dans le centre de Marseille."
 address: "90, boulevard Rabatau, 13008 Marseille"
-arrondissement: "13008 Marseille"
 website: "https://www.bazarmarseille.com/"
 type: "Bar"
 aliases:

@@ -2,7 +2,6 @@
 title: "Le Vig's"
 description: "Comedy club cree par Gad Elmaleh sur le Vieux-Port de Marseille."
 address: "15 quai de Rive Neuve, 13007 Marseille"
-arrondissement: "13007 Marseille"
 website: "https://www.levigs.com/"
 type: "Cafe-Theatre"
 aliases:

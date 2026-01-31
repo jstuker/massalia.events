@@ -8,7 +8,6 @@
   title: "Baby Club"
   description: "Club de musique et bar dans le quartier de Notre-Dame du Mont, au coeur du 6e arrondissement de Marseille."
   address: "2 Rue Andre Poggioli, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://tarpin-bien.com/lieu/le-baby-club/"
   type: "Club"
   aliases:
@@ -19,7 +18,6 @@
   title: "Bohemia"
   description: "Collectif musical marseillais organisant des soirees dans divers lieux de la ville."
   address: "74 Boulevard de la Corderie, 13007 Marseille"
-  arrondissement: "13007 Marseille"
   website: "https://shotgun.live/fr/venues/bohemia"
   type: "Collectif"
   aliases:
@@ -30,7 +28,6 @@
   title: "Boum"
   description: "Bar et espace evenementiel dans le centre de Marseille, avec programmation musicale variee."
   address: "21 Rue André Poggioli, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://www.privateaser.com/lieu/52625-boum"
   type: "Bar"
   aliases:
@@ -41,7 +38,6 @@
   title: "Bounce Club"
   description: "Club de musique a Marseille, programme des soirees dansantes et DJ sets."
   address: "35 Cr Honoré d'Estienne d'Orves, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.facebook.com/bounce.mars/"
   type: "Club"
   aliases:
@@ -52,7 +48,6 @@
   title: "Cabaret Aleatoire"
   description: "Salle de concerts et club de musiques actuelles a La Friche la Belle de Mai."
   address: "41 Rue Jobin, 13003 Marseille"
-  arrondissement: "13003 Marseille"
   website: "https://www.cabaret-aleatoire.com/"
   type: "Salle de spectacle"
   aliases:
@@ -65,7 +60,6 @@
   title: "Danceteria"
   description: "Club et salle de danse a Marseille, dedie a la musique electronique et aux soirees clubbing."
   address: "18 Rue Saint-Saëns, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.facebook.com/danceteria.marseille/"
   type: "Club"
   aliases:
@@ -76,7 +70,6 @@
   title: "Esquina Tropical"
   description: "Lieu dedie aux musiques et danses latines et tropicales a Marseille."
   address: ""
-  arrondissement: "Marseille"
   website: "https://esquinatropical.fr/"
   type: "Salle de danse"
   aliases:
@@ -87,7 +80,6 @@
   title: "Francois Rouzier"
   description: "Espace evenementiel a Marseille accueillant des concerts et soirees musicales."
   address: ""
-  arrondissement: "Marseille"
   website: "https://shotgun.live/fr/venues/francois-rouzier"
   type: "Collectif"
   aliases:
@@ -98,7 +90,6 @@
   title: "IPN Club"
   description: "Club de musique electronique a Aix-en-Provence, avec soirees techno et house."
   address: "23 Cr Sextius, 13100 Aix-en-Provence"
-  arrondissement: "13100 Aix-en-Provence"
   website: "https://ipn-club-aix.fr/"
   type: "Club"
   aliases:
@@ -110,7 +101,6 @@
   title: "La Traverse de Balkis"
   description: "Espace culturel et festif a Marseille, accueillant concerts et evenements."
   address: "1 Rue des Trois Rois, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://latraversedebalkis.com/"
   type: "Salle de spectacle"
   aliases:
@@ -122,7 +112,6 @@
   title: "La Wo"
   description: "Collectif et lieu de soirees a Marseille, avec programmation musicale alternative."
   address: ""
-  arrondissement: "Marseille"
   website: "https://shotgun.live/fr/venues/la-wo-marseille"
   type: "Collectif"
   aliases:
@@ -133,7 +122,6 @@
   title: "Le Bazar"
   description: "Bar et espace de concerts dans le centre de Marseille."
   address: "90, boulevard Rabatau, 13008 Marseille"
-  arrondissement: "13008 Marseille"
   website: "https://www.bazarmarseille.com/"
   type: "Bar"
   aliases:
@@ -145,7 +133,6 @@
   title: "Le Bouge"
   description: "Bar et salle de concerts a Marseille, dedie aux musiques actuelles."
   address: "21 Cr Honoré d'Estienne d'Orves, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.facebook.com/lebougemarseille/"
   type: "Bar"
   aliases:
@@ -157,7 +144,6 @@
   title: "Le Chapiteau"
   description: "Club et espace de fete au coeur de la Belle de Mai, dedie a la musique electronique."
   address: "38 Traverse de Carthage, 13003 Marseille"
-  arrondissement: "13003 Marseille"
   website: "https://www.lechapiteau-marseille.fr/"
   type: "Club"
   aliases:
@@ -169,7 +155,6 @@
   title: "Le Makeda"
   description: "Bar musical et salle de concerts pres du Vieux-Port, scene emblematique des musiques actuelles a Marseille."
   address: "18 Place aux Huiles, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.lemakeda.com/"
   type: "Bar musical"
   aliases:
@@ -181,7 +166,6 @@
   title: "Le Nucleaire"
   description: "Club underground a Marseille, programme des soirees techno et musique electronique."
   address: "15 Rue André Poggioli, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://shotgun.live/fr/venues/le-nucleaire-marseille"
   type: "Club"
   aliases:
@@ -193,7 +177,6 @@
   title: "Level Up Project"
   description: "Collectif et espace evenementiel a Marseille, avec soirees musicales et artistiques."
   address: ""
-  arrondissement: "Marseille"
   website: "https://www.facebook.com/associationlvlup/"
   type: "Collectif"
   aliases:
@@ -204,7 +187,6 @@
   title: "Mama Shelter Marseille"
   description: "Hotel-restaurant avec rooftop et programmation musicale dans le 2e arrondissement de Marseille."
   address: "64 Rue de la Loubiere, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://www.mamashelter.com/marseille"
   type: "Hotel-bar"
   aliases:
@@ -215,7 +197,6 @@
   title: "Manray Club"
   description: "Club de musique a Marseille, avec programmation axee sur la musique electronique."
   address: "38 Rue Saint-Saëns, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.instagram.com/manraymarseille/"
   type: "Club"
   aliases:
@@ -227,7 +208,6 @@
   title: "RockyPop Marseille"
   description: "Hotel avec bar et espace evenementiel, accueillant des soirees musicales a Marseille."
   address: "60 Rue du Rouet, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://www.rockypop.com/marseille/"
   type: "Hotel-bar"
   aliases:
@@ -238,7 +218,6 @@
   title: "Shafro"
   description: "Collectif musical a Marseille, soirees orientees musiques afro et electroniques."
   address: ""
-  arrondissement: "Marseille"
   website: "https://www.instagram.com/shafroevents/"
   type: "Collectif"
   aliases:
@@ -249,7 +228,6 @@
   title: "Sunny Comedy Club"
   description: "Club de comedie a Marseille, proposant des spectacles d'humour et de stand-up."
   address: ""
-  arrondissement: "Marseille"
   website: "https://linktr.ee/lesunny"
   type: "Collectif"
   aliases:
@@ -260,7 +238,6 @@
   title: "The Pablo Club"
   description: "Club de musique a Marseille, avec soirees dansantes et DJ sets."
   address: "23 Rue Saint-Saëns, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.thepabloclub.com/"
   type: "Club"
   aliases:
@@ -272,7 +249,6 @@
   title: "Unite 22"
   description: "Espace evenementiel et club a Marseille, soirees electroniques et concerts."
   address: "22 Rue Jobin, 13003 Marseille"
-  arrondissement: "13003 Marseille"
   website: "https://www.instagram.com/unite.22_marseille/"
   type: "Club"
   aliases:
@@ -284,7 +260,6 @@
   title: "Vice Versa"
   description: "Club et bar musical a Marseille, programme des soirees musicales variees."
   address: "40 Rue des Trois Rois, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://www.instagram.com/vice.versa.marseille/"
   type: "Club"
   aliases:
@@ -300,7 +275,6 @@
   title: "KLAP Maison pour la danse"
   description: "Centre choregraphique national dedie a la danse contemporaine a Marseille."
   address: "5 avenue Rostand, 13003 Marseille"
-  arrondissement: "13003 Marseille"
   website: "https://www.kelemenis.fr/"
   type: "Salle de spectacle"
   aliases:
@@ -311,7 +285,6 @@
   title: "La Friche la Belle de Mai"
   description: "Espace culturel pluridisciplinaire a Marseille, ancienne manufacture de tabac reconvertie."
   address: "41 rue Jobin, 13003 Marseille"
-  arrondissement: "13003 Marseille"
   website: "https://www.lafriche.org/"
   type: "Complexe culturel"
   aliases:
@@ -323,7 +296,6 @@
   title: "La Criee - Theatre National de Marseille"
   description: "Theatre National de Marseille, scene majeure du spectacle vivant sur le Vieux-Port."
   address: "30 quai de Rive Neuve, 13007 Marseille"
-  arrondissement: "13007 Marseille"
   website: "https://www.theatre-lacriee.com/"
   type: "Theatre"
   aliases:
@@ -335,7 +307,6 @@
   title: "Galerie Chateau de Servieres"
   description: "Espace d'art contemporain a Marseille, expositions et evenements artistiques."
   address: "19 boulevard Boisson, 13004 Marseille"
-  arrondissement: "13004 Marseille"
   website: "https://www.chateaudeservieres.org/"
   type: "Galerie d'art"
   aliases:
@@ -347,7 +318,6 @@
   title: "Notre Dame de la Garde"
   description: "Basilique emblematique de Marseille, lieu d'evenements communautaires et culturels."
   address: "Rue Fort du Sanctuaire, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://www.notredamedelagarde.com/"
   type: "Monument historique"
   aliases:
@@ -364,7 +334,6 @@
   title: "La Comedie d'Aix"
   description: "Theatre municipal d'Aix-en-Provence, salle de spectacle de 269 places."
   address: "8 avenue de la Violette, 13100 Aix-en-Provence"
-  arrondissement: "13100 Aix-en-Provence"
   website: "https://www.16-19.fr/salles/comedie-daix/"
   type: "Theatre"
   aliases: []
@@ -374,7 +343,6 @@
   title: "Le Cepac Silo"
   description: "Salle de spectacle de 2 050 places dans un ancien silo a grains sur le port de Marseille."
   address: "35 quai du Lazaret, 13002 Marseille"
-  arrondissement: "13002 Marseille"
   website: "https://www.cepacsilo-marseille.fr/"
   type: "Salle de spectacle"
   aliases:
@@ -386,7 +354,6 @@
   title: "L'Art Du Theatre"
   description: "Theatre et cafe-theatre de 90 places dans le 6e arrondissement de Marseille."
   address: "83 rue Marengo, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://lartdutheatre.fr/"
   type: "Theatre"
   aliases:
@@ -397,7 +364,6 @@
   title: "Le Dome de Marseille"
   description: "Grande salle de spectacle et de concerts pouvant accueillir jusqu'a 8 500 spectateurs."
   address: "48 avenue de Saint-Just, 13004 Marseille"
-  arrondissement: "13004 Marseille"
   website: "https://dome.marseille.fr/"
   type: "Salle de spectacle"
   aliases:
@@ -409,7 +375,6 @@
   title: "La Comedie de Marseille - Le Quai du Rire"
   description: "Cafe-theatre historique sur le Vieux-Port de Marseille, fonde en 1994. Aussi connu sous le nom de Comedie Club Vieux Port."
   address: "16 quai de Rive Neuve, 13007 Marseille"
-  arrondissement: "13007 Marseille"
   website: "https://comedieclubvieuxport.com/"
   type: "Cafe-Theatre"
   aliases:
@@ -424,7 +389,6 @@
   title: "Arena du Pays d'Aix"
   description: "Arena polyvalente de 6 000 places a Aix-en-Provence, concerts et evenements."
   address: "1955 rue Claude Nicolas Ledoux, 13290 Aix-en-Provence"
-  arrondissement: "13290 Aix-en-Provence"
   website: "https://www.arenaaix.com/"
   type: "Arena"
   aliases:
@@ -435,7 +399,6 @@
   title: "Grand Theatre de Provence"
   description: "Theatre et opera de 1 382 places a Aix-en-Provence, scene majeure du Festival d'Aix."
   address: "380 avenue Max Juvenal, 13100 Aix-en-Provence"
-  arrondissement: "13100 Aix-en-Provence"
   website: "https://www.lestheatres.net/fr/33-grand-theatre-de-provence"
   type: "Theatre"
   aliases:
@@ -447,7 +410,6 @@
   title: "Cafe-Theatre Le Flibustier"
   description: "Cafe-theatre d'environ 60 places a Aix-en-Provence, humour et spectacles vivants."
   address: "7 rue des Bretons, 13100 Aix-en-Provence"
-  arrondissement: "13100 Aix-en-Provence"
   website: "https://www.leflibustier.net/"
   type: "Cafe-Theatre"
   aliases:
@@ -458,7 +420,6 @@
   title: "6MIC"
   description: "Salle de musiques actuelles du Pays d'Aix, deux salles concues par Rudy Ricciotti."
   address: "160 rue Pascal Duverger, 13090 Aix-en-Provence"
-  arrondissement: "13090 Aix-en-Provence"
   website: "https://www.6mic-aix.fr/"
   type: "Salle de concert"
   aliases:
@@ -469,7 +430,6 @@
   title: "Theatre Le Phare"
   description: "Theatre dans le 6e arrondissement de Marseille, cree en 2021."
   address: "17 boulevard Louis Salvator, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://theatre-le-phare.fr/"
   type: "Theatre"
   aliases:
@@ -480,7 +440,6 @@
   title: "Theatre de l'Olivier - Scenes et Cines"
   description: "Theatre de 750 places a Istres, partie du reseau Scenes et Cines."
   address: "Place Jules Guesde, 13800 Istres"
-  arrondissement: "13800 Istres"
   website: "https://www.scenesetcines.fr/les-theatres/theatre-de-lolivier/"
   type: "Theatre"
   aliases:
@@ -492,7 +451,6 @@
   title: "Theatre Ainsi de Suite"
   description: "Petit theatre dans une chapelle a Aix-en-Provence, plus de 33 saisons d'activite."
   address: "9 avenue Jules Isaac, 13100 Aix-en-Provence"
-  arrondissement: "13100 Aix-en-Provence"
   website: "https://www.ainsidesuite.com/"
   type: "Theatre"
   aliases: []
@@ -502,7 +460,6 @@
   title: "Scene Mediterranee"
   description: "Theatre de 700 places dans le 3e arrondissement de Marseille, anciennement Theatre Toursky."
   address: "16 promenade Leo Ferre, 13003 Marseille"
-  arrondissement: "13003 Marseille"
   website: ""
   type: "Theatre"
   aliases:
@@ -515,7 +472,6 @@
   title: "L'Usine - Scenes et Cines"
   description: "Salle de musiques actuelles a Istres, partie du reseau Scenes et Cines."
   address: "Ancienne route de Fos, RN 569, 13800 Istres"
-  arrondissement: "13800 Istres"
   website: "https://www.scenesetcines.fr/l-usine/"
   type: "Salle de concert"
   aliases:
@@ -526,7 +482,6 @@
   title: "L'Artea"
   description: "Salle de spectacle et cinema a Carnoux-en-Provence."
   address: "Avenue Cardinal Lavigerie, 13470 Carnoux-en-Provence"
-  arrondissement: "13470 Carnoux-en-Provence"
   website: "https://lartea.com/"
   type: "Salle de spectacle"
   aliases: []
@@ -536,7 +491,6 @@
   title: "La Halle de Martigues"
   description: "Grande salle polyvalente a Martigues, jusqu'a 9 000 spectateurs."
   address: "Avenue de la Paix, 13500 Martigues"
-  arrondissement: "13500 Martigues"
   website: "https://www.lahalledemartigues.fr/"
   type: "Salle polyvalente"
   aliases: []
@@ -546,7 +500,6 @@
   title: "Garage Comedy Club"
   description: "Club de comedie dans le quartier Cours Julien a Marseille, collectif de 50 artistes."
   address: "15 rue des 3 Freres Barthelemy, 13006 Marseille"
-  arrondissement: "13006 Marseille"
   website: "https://garage-comedy.com/"
   type: "Cafe-Theatre"
   aliases: []
@@ -556,7 +509,6 @@
   title: "Divadlo Theatre"
   description: "Theatre de 50 places dans le 5e arrondissement de Marseille, plus de 300 representations par an."
   address: "69 rue Sainte-Cecile, 13005 Marseille"
-  arrondissement: "13005 Marseille"
   website: "https://www.divadlo-theatre.fr/"
   type: "Theatre"
   aliases: []
@@ -566,7 +518,6 @@
   title: "Cinema Eden"
   description: "Plus ancien cinema du monde encore en activite, situe a La Ciotat."
   address: "25 boulevard Clemenceau, 13600 La Ciotat"
-  arrondissement: "13600 La Ciotat"
   website: "https://edencinemalaciotat.com/"
   type: "Cinema"
   aliases:
@@ -579,7 +530,6 @@
   title: "Cafe Theatre du Tetard"
   description: "Cafe-theatre de 70 places dans le 5e arrondissement de Marseille."
   address: "33 rue Ferrari, 13005 Marseille"
-  arrondissement: "13005 Marseille"
   website: "http://www.letetard.com/"
   type: "Cafe-Theatre"
   aliases:
@@ -595,7 +545,6 @@
   title: "Le Vig's"
   description: "Comedy club cree par Gad Elmaleh sur le Vieux-Port de Marseille."
   address: "15 quai de Rive Neuve, 13007 Marseille"
-  arrondissement: "13007 Marseille"
   website: "https://www.levigs.com/"
   type: "Cafe-Theatre"
   aliases:
@@ -607,7 +556,6 @@
   title: "Eglise Saint-Jean-de-Malte"
   description: "Premiere eglise gothique de Provence, lieu de concerts a Aix-en-Provence."
   address: "Place Saint-Jean-de-Malte, 13100 Aix-en-Provence"
-  arrondissement: "13100 Aix-en-Provence"
   website: ""
   type: "Eglise"
   aliases: []
@@ -617,7 +565,6 @@
   title: "Cathedrale Saint-Sauveur d'Aix-en-Provence"
   description: "Cathedrale historique d'Aix-en-Provence, lieu de concerts et d'evenements."
   address: "34 place des Martyrs de la Resistance, 13100 Aix-en-Provence"
-  arrondissement: "13100 Aix-en-Provence"
   website: "https://paroisses-aixarles.fr/aix-saintsauveur/"
   type: "Cathedrale"
   aliases:
@@ -628,7 +575,6 @@
   title: "La Chaudronnerie"
   description: "Salle de spectacle de La Ciotat dans un ancien batiment des chantiers navals."
   address: "19 promenade Jeff Musso, 13600 La Ciotat"
-  arrondissement: "13600 La Ciotat"
   website: "https://www.lachaudronnerie-laciotat.com/"
   type: "Salle de spectacle"
   aliases:
@@ -644,7 +590,6 @@
   title: "Museum d'Histoire Naturelle de Marseille"
   description: "Museum d'histoire naturelle dans l'aile droite du Palais Longchamp, fonde en 1819."
   address: "Palais Longchamp, Boulevard Philippon, 13004 Marseille"
-  arrondissement: "13004 Marseille"
   website: "https://musees.marseille.fr/museum-dhistoire-naturelle-de-marseille-mhnm-0"
   type: "Musee"
   aliases: []
@@ -654,7 +599,6 @@
   title: "Centre de la Vieille Charite"
   description: "Centre culturel du XVIIe siecle dans le quartier du Panier, classé monument historique."
   address: "2 rue de la Charite, 13002 Marseille"
-  arrondissement: "13002 Marseille"
   website: "https://vieille-charite-marseille.com/"
   type: "Centre culturel"
   aliases:
@@ -665,7 +609,6 @@
   title: "Cite de la Musique de Marseille"
   description: "Centre de formation musicale et salle de concerts pres de la Porte d'Aix."
   address: "4 rue Bernard du Bois, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.citemusique-marseille.com/"
   type: "Salle de concert"
   aliases: []
@@ -675,7 +618,6 @@
   title: "Conservatoire Pierre Barbizet"
   description: "Conservatoire a rayonnement regional de musique, danse et theatre, fonde en 1821."
   address: "Palais Carli, 2 Place Auguste et Francois Carli, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.conservatoiredemarseille.fr/"
   type: "Conservatoire"
   aliases: []
@@ -685,7 +627,6 @@
   title: "Entre2 BIAC"
   description: "Festival de cirque contemporain organise par Archaos dans la metropole Aix-Marseille."
   address: "22 boulevard de la Mediterranee, 13015 Marseille"
-  arrondissement: "13015 Marseille"
   website: "https://biennale-cirque.com/"
   type: "Festival"
   aliases: []
@@ -695,7 +636,6 @@
   title: "IMFP - Institut Musical de Formation Professionnelle"
   description: "Institut de formation musicale professionnelle avec salle de concerts a Salon-de-Provence."
   address: "95 avenue Raoul Francou, 13300 Salon-de-Provence"
-  arrondissement: "13300 Salon-de-Provence"
   website: "https://imfp.fr/"
   type: "Salle de concert"
   aliases: []
@@ -705,7 +645,6 @@
   title: "Festival Les Elancees"
   description: "Festival de cirque et danse contemporaine dans l'Ouest des Bouches-du-Rhone, organise par Scenes et Cines."
   address: "5-9 place des Carmes, 13800 Istres"
-  arrondissement: "13800 Istres"
   website: "https://www.scenesetcines.fr/"
   type: "Festival"
   aliases: []
@@ -715,7 +654,6 @@
   title: "Theatre des Salins - Scene Nationale de Martigues"
   description: "Scene nationale de Martigues, theatre de style italien avec programmation pluridisciplinaire."
   address: "19 quai Paul Doumer, 13500 Martigues"
-  arrondissement: "13500 Martigues"
   website: "https://les-salins.net/"
   type: "Theatre"
   aliases:
@@ -727,7 +665,6 @@
   title: "[mac] Musee d'Art Contemporain de Marseille"
   description: "Musee d'art contemporain sur l'avenue de Haifa, inaugure en 1994."
   address: "69 avenue de Haifa, 13008 Marseille"
-  arrondissement: "13008 Marseille"
   website: "https://musees.marseille.fr/musee-dart-contemporain-mac"
   type: "Musee"
   aliases:
@@ -739,7 +676,6 @@
   title: "Chateau Borely - Musee des Arts Decoratifs"
   description: "Musee des arts decoratifs, de la faience et de la mode dans une bastide provencale du XVIIIe siecle."
   address: "134 avenue Clot-Bey, 13008 Marseille"
-  arrondissement: "13008 Marseille"
   website: "https://musees.marseille.fr/chateau-borely-musee-des-arts-decoratifs-de-la-faience-et-de-la-mode"
   type: "Musee"
   aliases:
@@ -750,7 +686,6 @@
   title: "Theatre de l'Oeuvre"
   description: "Theatre de 170 places pres de la Canebiere, fonde en 1937."
   address: "1 rue Mission de France, 13001 Marseille"
-  arrondissement: "13001 Marseille"
   website: "https://www.theatre-oeuvre.com/"
   type: "Theatre"
   aliases: []
@@ -760,7 +695,6 @@
   title: "Theatre des Calanques"
   description: "Theatre de 420 places en bois au pied du massif de Marseilleveyre, entre Pointe Rouge et Grotte Rolland."
   address: "35 traverse de Carthage, 13008 Marseille"
-  arrondissement: "13008 Marseille"
   website: "https://www.theatredescalanques.com/"
   type: "Theatre"
   aliases: []
@@ -770,7 +704,6 @@
   title: "MuCEM - Musee des Civilisations"
   description: "Musee national sur l'esplanade du J4 a Marseille, auditorium et evenements en plein air."
   address: "7 promenade Robert Laffont, 13002 Marseille"
-  arrondissement: "13002 Marseille"
   website: "https://www.mucem.org/"
   type: "Musee"
   aliases:

@@ -2,7 +2,6 @@
 title: "La Halle de Martigues"
 description: "Grande salle polyvalente a Martigues, jusqu'a 9 000 spectateurs."
 address: "Avenue de la Paix, 13500 Martigues"
-arrondissement: "13500 Martigues"
 website: "https://www.lahalledemartigues.fr/"
 type: "Salle polyvalente"
 aliases: []

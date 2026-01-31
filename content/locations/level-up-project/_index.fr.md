@@ -2,7 +2,6 @@
 title: "Level Up Project"
 description: "Collectif et espace evenementiel a Marseille, avec soirees musicales et artistiques."
 address: ""
-arrondissement: "Marseille"
 website: "https://www.facebook.com/associationlvlup/"
 type: "Collectif"
 aliases:

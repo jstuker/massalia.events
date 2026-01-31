@@ -2,7 +2,6 @@
 title: "Esquina Tropical"
 description: "Lieu dedie aux musiques et danses latines et tropicales a Marseille."
 address: ""
-arrondissement: "Marseille"
 website: "https://esquinatropical.fr/"
 type: "Salle de danse"
 aliases:

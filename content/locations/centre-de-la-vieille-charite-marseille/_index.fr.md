@@ -4,7 +4,6 @@ description: "Centre culturel du XVIIe siecle dans le quartier du Panier, class√
 
 # Informations du lieu
 address: "2 rue de la Charite, 13002 Marseille"
-arrondissement: "13002 Marseille"
 website: "https://vieille-charite-marseille.com/"
 type: "Centre culturel"
 

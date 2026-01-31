@@ -2,7 +2,6 @@
 title: "Le Cepac Silo"
 description: "Salle de spectacle de 2 050 places dans un ancien silo a grains sur le port de Marseille."
 address: "35 quai du Lazaret, 13002 Marseille"
-arrondissement: "13002 Marseille"
 website: "https://www.cepacsilo-marseille.fr/"
 type: "Salle de spectacle"
 aliases:

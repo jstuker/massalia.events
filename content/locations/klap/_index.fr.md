@@ -2,7 +2,6 @@
 title: "KLAP Maison pour la danse"
 description: "Centre choregraphique national dedie a la danse contemporaine a Marseille."
 address: "5 avenue Rostand, 13003 Marseille"
-arrondissement: "13003 Marseille"
 website: "https://www.kelemenis.fr/"
 type: "Salle de spectacle"
 aliases:

@@ -2,7 +2,6 @@
 title: "Arena du Pays d'Aix"
 description: "Arena polyvalente de 6 000 places a Aix-en-Provence, concerts et evenements."
 address: "1955 rue Claude Nicolas Ledoux, 13290 Aix-en-Provence"
-arrondissement: "13290 Aix-en-Provence"
 website: "https://www.arenaaix.com/"
 type: "Arena"
 aliases:

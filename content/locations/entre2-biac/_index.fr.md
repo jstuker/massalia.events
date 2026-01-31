@@ -4,7 +4,6 @@ description: "Festival de cirque contemporain organise par Archaos dans la metro
 
 # Informations du lieu
 address: "22 boulevard de la Mediterranee, 13015 Marseille"
-arrondissement: "13015 Marseille"
 website: "https://biennale-cirque.com/"
 type: "Festival"
 

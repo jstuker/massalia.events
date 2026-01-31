@@ -4,7 +4,6 @@ description: "Centre de formation musicale et salle de concerts pres de la Porte
 
 # Informations du lieu
 address: "4 rue Bernard du Bois, 13001 Marseille"
-arrondissement: "13001 Marseille"
 website: "https://www.citemusique-marseille.com/"
 type: "Salle de concert"
 

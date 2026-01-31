@@ -2,7 +2,6 @@
 title: "La Comedie de Marseille - Le Quai du Rire"
 description: "Cafe-theatre historique sur le Vieux-Port de Marseille, fonde en 1994."
 address: "16 quai de Rive Neuve, 13007 Marseille"
-arrondissement: "13007 Marseille"
 website: ""
 type: "Cafe-Theatre"
 aliases:

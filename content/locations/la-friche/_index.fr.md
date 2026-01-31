@@ -2,7 +2,6 @@
 title: "La Friche la Belle de Mai"
 description: "Espace culturel pluridisciplinaire a Marseille, ancienne manufacture de tabac reconvertie."
 address: "41 rue Jobin, 13003 Marseille"
-arrondissement: "13003 Marseille"
 website: "https://www.lafriche.org/"
 type: "Complexe culturel"
 aliases:

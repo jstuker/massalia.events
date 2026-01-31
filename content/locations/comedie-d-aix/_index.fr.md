@@ -2,7 +2,6 @@
 title: "La Comedie d'Aix"
 description: "Theatre municipal d'Aix-en-Provence, salle de spectacle de 269 places."
 address: "8 avenue de la Violette, 13100 Aix-en-Provence"
-arrondissement: "13100 Aix-en-Provence"
 website: "https://www.16-19.fr/salles/comedie-daix/"
 type: "Theatre"
 aliases: []

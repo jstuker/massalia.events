@@ -2,7 +2,6 @@
 title: "Galerie Chateau de Servieres"
 description: "Espace d'art contemporain a Marseille, expositions et evenements artistiques."
 address: "19 boulevard Boisson, 13004 Marseille"
-arrondissement: "13004 Marseille"
 website: "https://www.chateaudeservieres.org/"
 type: "Galerie d'art"
 aliases:

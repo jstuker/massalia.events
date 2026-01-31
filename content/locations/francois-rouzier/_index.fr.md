@@ -2,7 +2,6 @@
 title: "Francois Rouzier"
 description: "Espace evenementiel a Marseille accueillant des concerts et soirees musicales."
 address: ""
-arrondissement: "Marseille"
 website: "https://shotgun.live/fr/venues/francois-rouzier"
 type: "Collectif"
 aliases:

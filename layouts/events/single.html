@@ -202,9 +202,6 @@
         {{ with site.GetPage (printf "/locations/%s" $locationSlug) }}
           {{ $locationTitle = .Title }}
           {{ $locationAddress = .Params.address }}
-          {{ with .Params.arrondissement }}
-            {{ $locationAddress = printf "%s, %s" $locationAddress . }}
-          {{ end }}
         {{ end }}
         {{ if eq $locationTitle "" }}
           {{ $locationTitle = $locationSlug | humanize | title }}
@@ -333,9 +330,9 @@
     "name": {{ .Title | jsonify }}{{ with .Params.address }},
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": {{ . | jsonify }}{{ with $.Params.arrondissement }},
-      "addressLocality": "Marseille",
-      "postalCode": {{ (index (split . " ") 0) | jsonify }}{{ end }}
+      "streetAddress": {{ . | jsonify }}{{ $addr := . }}{{ $postalCodes := findRE `\d{5}` . }}{{ with $postalCodes }},
+      "addressLocality": {{ replaceRE `.*\d{5}\s*` "" $addr | jsonify }},
+      "postalCode": {{ index . 0 | jsonify }}{{ end }}
     }{{ end }}
   },
     {{ end }}

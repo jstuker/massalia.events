@@ -2,7 +2,6 @@
 title: "Theatre de l'Olivier - Scenes et Cines"
 description: "Theatre de 750 places a Istres, partie du reseau Scenes et Cines."
 address: "Place Jules Guesde, 13800 Istres"
-arrondissement: "13800 Istres"
 website: "https://www.scenesetcines.fr/les-theatres/theatre-de-lolivier/"
 type: "Theatre"
 aliases:

@@ -2,7 +2,6 @@
 title: "Cafe-Theatre Le Flibustier"
 description: "Cafe-theatre d'environ 60 places a Aix-en-Provence, humour et spectacles vivants."
 address: "7 rue des Bretons, 13100 Aix-en-Provence"
-arrondissement: "13100 Aix-en-Provence"
 website: "https://www.leflibustier.net/"
 type: "Cafe-Theatre"
 aliases:

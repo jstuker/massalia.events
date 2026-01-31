@@ -2,7 +2,6 @@
 title: "Le Makeda"
 description: "Bar musical et salle de concerts pres du Vieux-Port, scene emblematique des musiques actuelles a Marseille."
 address: "18 Place aux Huiles, 13001 Marseille"
-arrondissement: "13001 Marseille"
 website: "https://www.lemakeda.com/"
 type: "Bar musical"
 aliases:

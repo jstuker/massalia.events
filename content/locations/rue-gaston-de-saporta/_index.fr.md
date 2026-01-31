@@ -2,7 +2,6 @@
 title: "Cathedrale Saint-Sauveur d'Aix-en-Provence"
 description: "Cathedrale historique d'Aix-en-Provence, lieu de concerts et d'evenements."
 address: "34 place des Martyrs de la Resistance, 13100 Aix-en-Provence"
-arrondissement: "13100 Aix-en-Provence"
 website: "https://paroisses-aixarles.fr/aix-saintsauveur/"
 type: "Cathedrale"
 aliases:

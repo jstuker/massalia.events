@@ -2,7 +2,6 @@
 title: "La Criee - Theatre National de Marseille"
 description: "Theatre National de Marseille, scene majeure du spectacle vivant sur le Vieux-Port."
 address: "30 quai de Rive Neuve, 13007 Marseille"
-arrondissement: "13007 Marseille"
 website: "https://www.theatre-lacriee.com/"
 type: "Theatre"
 aliases:

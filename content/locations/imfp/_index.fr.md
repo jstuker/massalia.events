@@ -4,7 +4,6 @@ description: "Institut de formation musicale professionnelle avec salle de conce
 
 # Informations du lieu
 address: "95 avenue Raoul Francou, 13300 Salon-de-Provence"
-arrondissement: "13300 Salon-de-Provence"
 website: "https://imfp.fr/"
 type: "Salle de concert"
 

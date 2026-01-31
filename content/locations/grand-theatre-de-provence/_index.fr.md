@@ -2,7 +2,6 @@
 title: "Grand Theatre de Provence"
 description: "Theatre et opera de 1 382 places a Aix-en-Provence, scene majeure du Festival d'Aix."
 address: "380 avenue Max Juvenal, 13100 Aix-en-Provence"
-arrondissement: "13100 Aix-en-Provence"
 website: "https://www.lestheatres.net/fr/33-grand-theatre-de-provence"
 type: "Theatre"
 aliases:

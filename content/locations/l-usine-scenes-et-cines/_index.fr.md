@@ -2,7 +2,6 @@
 title: "L'Usine - Scenes et Cines"
 description: "Salle de musiques actuelles a Istres, partie du reseau Scenes et Cines."
 address: "Ancienne route de Fos, RN 569, 13800 Istres"
-arrondissement: "13800 Istres"
 website: "https://www.scenesetcines.fr/l-usine/"
 type: "Salle de concert"
 aliases:

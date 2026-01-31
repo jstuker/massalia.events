@@ -4,7 +4,6 @@ description: "Theatre de 420 places en bois au pied du massif de Marseilleveyre,
 
 # Informations du lieu
 address: "35 traverse de Carthage, 13008 Marseille"
-arrondissement: "13008 Marseille"
 website: "https://www.theatredescalanques.com/"
 type: "Theatre"
 

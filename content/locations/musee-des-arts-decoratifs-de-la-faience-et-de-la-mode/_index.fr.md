@@ -4,7 +4,6 @@ description: "Musee des arts decoratifs, de la faience et de la mode dans une ba
 
 # Informations du lieu
 address: "134 avenue Clot-Bey, 13008 Marseille"
-arrondissement: "13008 Marseille"
 website: "https://musees.marseille.fr/chateau-borely-musee-des-arts-decoratifs-de-la-faience-et-de-la-mode"
 type: "Musee"
 

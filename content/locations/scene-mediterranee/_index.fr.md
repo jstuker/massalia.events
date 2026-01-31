@@ -2,7 +2,6 @@
 title: "Scene Mediterranee"
 description: "Theatre de 700 places dans le 3e arrondissement de Marseille, anciennement Theatre Toursky."
 address: "16 promenade Leo Ferre, 13003 Marseille"
-arrondissement: "13003 Marseille"
 website: ""
 type: "Theatre"
 aliases:

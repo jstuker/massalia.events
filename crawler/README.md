@@ -314,7 +314,7 @@ If new venues appear, follow these steps:
    - `slug` — must match the slug in event `locations:` fields
    - `title` — venue display name
    - `description` — 1-2 sentence French description (factual: venue type + location + what they host)
-   - `address`, `arrondissement`, `website`, `type`, `aliases`
+   - `address`, `website`, `type`, `aliases`
    - `body` — longer French description for the page content
 
 3. **Generate pages:**

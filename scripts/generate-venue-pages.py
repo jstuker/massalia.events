@@ -83,7 +83,6 @@ def append_new_venues(
             "title": slug_to_title(slug),
             "description": "",
             "address": "",
-            "arrondissement": "",
             "website": "",
             "type": "Lieu",
             "aliases": [],
@@ -102,7 +101,6 @@ def append_new_venues(
                 f.write(f'  title: "{venue["title"]}"\n')
                 f.write(f'  description: ""\n')
                 f.write(f'  address: ""\n')
-                f.write(f'  arrondissement: ""\n')
                 f.write(f'  website: ""\n')
                 f.write(f'  type: "Lieu"\n')
                 f.write(f"  aliases: []\n")
@@ -132,7 +130,6 @@ def generate_page_content(venue: dict) -> str:
     title = venue["title"]
     description = venue["description"]
     address = venue.get("address", "")
-    arrondissement = venue.get("arrondissement", "")
     website = venue.get("website", "")
     venue_type = venue.get("type", "Salle de spectacle")
     aliases = venue.get("aliases", [])
@@ -146,7 +143,6 @@ def generate_page_content(venue: dict) -> str:
         "",
         "# Informations du lieu",
         f'address: "{address}"',
-        f'arrondissement: "{arrondissement}"',
         f'website: "{website}"',
         f'type: "{venue_type}"',
         "",

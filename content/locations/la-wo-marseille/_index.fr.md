@@ -2,7 +2,6 @@
 title: "La Wo"
 description: "Collectif et lieu de soirees a Marseille, avec programmation musicale alternative."
 address: ""
-arrondissement: "Marseille"
 website: "https://shotgun.live/fr/venues/la-wo-marseille"
 type: "Collectif"
 aliases:

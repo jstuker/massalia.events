@@ -2,7 +2,6 @@
 title: "Le Chapiteau"
 description: "Club et espace de fete au coeur de la Belle de Mai, dedie a la musique electronique."
 address: "38 Traverse de Carthage, 13003 Marseille"
-arrondissement: "13003 Marseille"
 website: "https://www.lechapiteau-marseille.fr/"
 type: "Club"
 aliases:

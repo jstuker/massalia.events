@@ -2,7 +2,6 @@
 title: "Notre Dame de la Garde"
 description: "Basilique emblematique de Marseille, lieu d'evenements communautaires et culturels."
 address: "Rue Fort du Sanctuaire, 13006 Marseille"
-arrondissement: "13006 Marseille"
 website: "https://www.notredamedelagarde.com/"
 type: "Monument historique"
 aliases:

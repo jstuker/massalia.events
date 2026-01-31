@@ -2,7 +2,6 @@
 title: "Mama Shelter Marseille"
 description: "Hotel-restaurant avec rooftop et programmation musicale dans le 2e arrondissement de Marseille."
 address: "64 Rue de la Loubiere, 13006 Marseille"
-arrondissement: "13006 Marseille"
 website: "https://www.mamashelter.com/marseille"
 type: "Hotel-bar"
 aliases:

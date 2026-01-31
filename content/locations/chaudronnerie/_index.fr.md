@@ -2,7 +2,6 @@
 title: "La Chaudronnerie"
 description: "Salle de spectacle de La Ciotat dans un ancien batiment des chantiers navals."
 address: "19 promenade Jeff Musso, 13600 La Ciotat"
-arrondissement: "13600 La Ciotat"
 website: "https://www.lachaudronnerie-laciotat.com/"
 type: "Salle de spectacle"
 aliases:

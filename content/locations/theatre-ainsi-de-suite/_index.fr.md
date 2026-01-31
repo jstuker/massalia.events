@@ -2,7 +2,6 @@
 title: "Theatre Ainsi de Suite"
 description: "Petit theatre dans une chapelle a Aix-en-Provence, plus de 33 saisons d'activite."
 address: "9 avenue Jules Isaac, 13100 Aix-en-Provence"
-arrondissement: "13100 Aix-en-Provence"
 website: "https://www.ainsidesuite.com/"
 type: "Theatre"
 aliases: []

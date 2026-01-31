@@ -2,7 +2,6 @@
 title: "Garage Comedy Club"
 description: "Club de comedie dans le quartier Cours Julien a Marseille, collectif de 50 artistes."
 address: "15 rue des 3 Freres Barthelemy, 13006 Marseille"
-arrondissement: "13006 Marseille"
 website: "https://garage-comedy.com/"
 type: "Cafe-Theatre"
 aliases: []

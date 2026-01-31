@@ -4,7 +4,6 @@ description: "Scene nationale de Martigues, theatre de style italien avec progra
 
 # Informations du lieu
 address: "19 quai Paul Doumer, 13500 Martigues"
-arrondissement: "13500 Martigues"
 website: "https://les-salins.net/"
 type: "Theatre"
 

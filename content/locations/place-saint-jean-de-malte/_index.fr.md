@@ -2,7 +2,6 @@
 title: "Eglise Saint-Jean-de-Malte"
 description: "Premiere eglise gothique de Provence, lieu de concerts a Aix-en-Provence."
 address: "Place Saint-Jean-de-Malte, 13100 Aix-en-Provence"
-arrondissement: "13100 Aix-en-Provence"
 website: ""
 type: "Eglise"
 aliases: []

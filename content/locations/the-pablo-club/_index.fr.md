@@ -2,7 +2,6 @@
 title: "The Pablo Club"
 description: "Club de musique a Marseille, avec soirees dansantes et DJ sets."
 address: "23 Rue Saint-Saëns, 13001 Marseille"
-arrondissement: "13001 Marseille"
 website: "https://www.thepabloclub.com/"
 type: "Club"
 aliases:

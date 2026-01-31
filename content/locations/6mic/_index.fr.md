@@ -2,7 +2,6 @@
 title: "6MIC"
 description: "Salle de musiques actuelles du Pays d'Aix, deux salles concues par Rudy Ricciotti."
 address: "160 rue Pascal Duverger, 13090 Aix-en-Provence"
-arrondissement: "13090 Aix-en-Provence"
 website: "https://www.6mic-aix.fr/"
 type: "Salle de concert"
 aliases:

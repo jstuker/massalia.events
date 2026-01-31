@@ -2,7 +2,6 @@
 title: "L'Artea"
 description: "Salle de spectacle et cinema a Carnoux-en-Provence."
 address: "Avenue Cardinal Lavigerie, 13470 Carnoux-en-Provence"
-arrondissement: "13470 Carnoux-en-Provence"
 website: "https://lartea.com/"
 type: "Salle de spectacle"
 aliases: []

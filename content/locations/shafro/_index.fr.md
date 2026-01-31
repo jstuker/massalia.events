@@ -2,7 +2,6 @@
 title: "Shafro"
 description: "Collectif musical a Marseille, soirees orientees musiques afro et electroniques."
 address: ""
-arrondissement: "Marseille"
 website: "https://www.instagram.com/shafroevents/"
 type: "Collectif"
 aliases:

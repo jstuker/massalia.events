@@ -4,7 +4,6 @@ description: "Musee d'art contemporain sur l'avenue de Haifa, inaugure en 1994."
 
 # Informations du lieu
 address: "69 avenue de Haifa, 13008 Marseille"
-arrondissement: "13008 Marseille"
 website: "https://musees.marseille.fr/musee-dart-contemporain-mac"
 type: "Musee"
 

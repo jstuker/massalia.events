@@ -2,7 +2,6 @@
 title: "MuCEM - Musee des Civilisations"
 description: "Musee national sur l'esplanade du J4 a Marseille, auditorium et evenements en plein air."
 address: "7 promenade Robert Laffont, 13002 Marseille"
-arrondissement: "13002 Marseille"
 website: "https://www.mucem.org/"
 type: "Musee"
 aliases:

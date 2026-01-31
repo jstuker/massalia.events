@@ -2,7 +2,6 @@
 title: "Manray Club"
 description: "Club de musique a Marseille, avec programmation axee sur la musique electronique."
 address: "38 Rue Saint-Saëns, 13001 Marseille"
-arrondissement: "13001 Marseille"
 website: "https://www.instagram.com/manraymarseille/"
 type: "Club"
 aliases:

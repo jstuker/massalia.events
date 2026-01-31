@@ -2,7 +2,6 @@
 title: "Unite 22"
 description: "Espace evenementiel et club a Marseille, soirees electroniques et concerts."
 address: "22 Rue Jobin, 13003 Marseille"
-arrondissement: "13003 Marseille"
 website: "https://www.instagram.com/unite.22_marseille/"
 type: "Club"
 aliases:

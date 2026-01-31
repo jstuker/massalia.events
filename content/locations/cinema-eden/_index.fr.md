@@ -2,7 +2,6 @@
 title: "Cinema Eden"
 description: "Plus ancien cinema du monde encore en activite, situe a La Ciotat."
 address: "25 boulevard Clemenceau, 13600 La Ciotat"
-arrondissement: "13600 La Ciotat"
 website: "https://edencinemalaciotat.com/"
 type: "Cinema"
 aliases:

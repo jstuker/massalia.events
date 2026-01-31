@@ -4,7 +4,6 @@ description: "Theatre de 170 places pres de la Canebiere, fonde en 1937."
 
 # Informations du lieu
 address: "1 rue Mission de France, 13001 Marseille"
-arrondissement: "13001 Marseille"
 website: "https://www.theatre-oeuvre.com/"
 type: "Theatre"
 

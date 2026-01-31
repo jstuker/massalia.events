@@ -2,7 +2,6 @@
 title: "IPN Club"
 description: "Club de musique electronique a Aix-en-Provence, avec soirees techno et house."
 address: "23 Cr Sextius, 13100 Aix-en-Provence"
-arrondissement: "13100 Aix-en-Provence"
 website: "https://ipn-club-aix.fr/"
 type: "Club"
 aliases:

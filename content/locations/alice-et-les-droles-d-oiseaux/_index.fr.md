@@ -4,7 +4,6 @@ description: "Museum d'histoire naturelle dans l'aile droite du Palais Longchamp
 
 # Informations du lieu
 address: "Palais Longchamp, Boulevard Philippon, 13004 Marseille"
-arrondissement: "13004 Marseille"
 website: "https://musees.marseille.fr/museum-dhistoire-naturelle-de-marseille-mhnm-0"
 type: "Musee"
 

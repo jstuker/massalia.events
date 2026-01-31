@@ -4,7 +4,6 @@ description: "Conservatoire a rayonnement regional de musique, danse et theatre,
 
 # Informations du lieu
 address: "Palais Carli, 2 Place Auguste et Francois Carli, 13001 Marseille"
-arrondissement: "13001 Marseille"
 website: "https://www.conservatoiredemarseille.fr/"
 type: "Conservatoire"
 
