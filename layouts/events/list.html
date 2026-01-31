@@ -21,7 +21,7 @@
 {{ if gt (len $activeEvents) 0 }}
   <section class="mt-6 w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
     {{ range sort $activeEvents ".Date" "asc" }}
-      {{ partial "article-link/card.html" . }}
+      {{ partial "event-card.html" (dict "page" . "showSourceBadge" true) }}
     {{ end }}
   </section>
 {{/* else: no active events */}}
