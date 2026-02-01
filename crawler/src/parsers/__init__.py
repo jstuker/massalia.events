@@ -7,11 +7,13 @@ from .journalzebuline import JournalZebulineParser
 from .klemenis import KlemenisParser
 from .lacriee import LaCrieeParser
 from .lafriche import LaFricheParser
+from .loeuvre import LoeuvreParser
 from .shotgun import ShotgunParser
 
 PARSERS = {
     "lafriche": LaFricheParser,
     "klemenis": KlemenisParser,
+    "loeuvre": LoeuvreParser,
     "shotgun": ShotgunParser,
     "agendaculturel": AgendaCulturelParser,
     "journalzebuline": JournalZebulineParser,
@@ -61,6 +63,7 @@ __all__ = [
     "SelectorConfig",
     "LaFricheParser",
     "KlemenisParser",
+    "LoeuvreParser",
     "ShotgunParser",
     "get_parser",
     "list_parsers",
