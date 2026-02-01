@@ -1,0 +1,23 @@
+---
+title: Chavirerdebord
+date: '2026-02-11T19:00:00+01:00'
+draft: false
+expiryDate: '2026-02-12T00:00:00+01:00'
+name: Chavirerdebord
+eventURL: https://theatre-lacriee.com/programmation/evenements/chavirer-de-bord
+startTime: '19:00'
+description: « Je voudrais raconter le deuil, enfin le mien, je voudrais raconter la reprise de souffle, je voudrais vous parler de justice et vous raconter mon enquête,...
+categories:
+- theatre
+locations:
+- la-criee
+dates:
+- mercredi-11-fevrier
+tags: []
+image: /images/events/chavirerdebord-31546d54.webp
+sourceId: lacriee:chavirer-de-bord:20260211-1900
+lastCrawled: '2026-02-01T16:46:19+01:00'
+expired: false
+---
+
+« Je voudrais raconter le deuil, enfin le mien, je voudrais raconter la reprise de souffle, je voudrais vous parler de justice et vous raconter mon enquête,...

@@ -1,0 +1,23 @@
+---
+title: L’affaireL.ex.π.Re
+date: '2026-03-19T14:15:00+01:00'
+draft: false
+expiryDate: '2026-03-20T00:00:00+01:00'
+name: L’affaireL.ex.π.Re
+eventURL: https://theatre-lacriee.com/programmation/evenements/laffaire-lexpre
+startTime: '14:15'
+description: « Il y a des courriers que l’on attend plus, des colis pour le moins surprenants, des messages énigmatiques, et l’enveloppe en kraft que Max vient de...
+categories:
+- theatre
+locations:
+- la-criee
+dates:
+- jeudi-19-mars
+tags: []
+image: /images/events/l-affairel-ex-re-fe69e0e5.webp
+sourceId: lacriee:laffaire-lexpre:20260319-1415
+lastCrawled: '2026-02-01T16:46:28+01:00'
+expired: false
+---
+
+« Il y a des courriers que l’on attend plus, des colis pour le moins surprenants, des messages énigmatiques, et l’enveloppe en kraft que Max vient de...
