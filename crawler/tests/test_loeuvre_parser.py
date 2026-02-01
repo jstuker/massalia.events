@@ -83,7 +83,7 @@ def sample_listing_html():
 
 @pytest.fixture
 def sample_detail_html():
-    """Sample event detail page HTML."""
+    """Sample event detail page HTML matching real site structure."""
     return """
     <html lang="fr">
     <head>
@@ -93,14 +93,20 @@ def sample_detail_html():
               content="https://www.theatre-oeuvre.com/wp-content/uploads/2026/01/grems-visuel-web-800x480.jpg">
     </head>
     <body>
-        <h1>GREMS</h1>
+        <nav>
+            <ul>
+                <li><a href="/billetterie/">Billetterie</a></li>
+                <li><a href="#">Agenda</a></li>
+            </ul>
+        </nav>
+        <h1>Théâtre de l'Œuvre</h1>
+        <h2>GREMS</h2>
         <p>samedi 04 avril</p>
         <p>20:30</p>
-        <ul>
-            <li>Musique</li>
-            <li>Rap</li>
-            <li>Jazz</li>
-        </ul>
+        <dl>
+            <dt>Genre :</dt>
+            <dd>Rap - Jazz</dd>
+        </dl>
         <p>Théâtre de l'Œuvre</p>
         <p>1, rue Mission de France, 13001 MARSEILLE</p>
         <p>1h30</p>
@@ -125,11 +131,12 @@ def detail_html_no_time():
     </head>
     <body>
         <h1>Le Spectacle</h1>
+        <h2>Théâtre de l'Œuvre</h2>
         <p>vendredi 14 mars</p>
-        <ul>
-            <li>Théatre</li>
-        </ul>
-        <p>Théâtre de l'Œuvre</p>
+        <dl>
+            <dt>Genre :</dt>
+            <dd>Théâtre</dd>
+        </dl>
         <p>Un spectacle unique qui vous transportera dans un univers magique
            et poétique pendant une soirée inoubliable.</p>
     </body>
@@ -149,11 +156,13 @@ def detail_html_with_year():
     </head>
     <body>
         <h1>Concert Exceptionnel</h1>
+        <h2>Théâtre de l'Œuvre</h2>
         <p>15 juin 2026</p>
         <p>21:00</p>
-        <ul>
-            <li>Musique</li>
-        </ul>
+        <dl>
+            <dt>Genre :</dt>
+            <dd>Musique</dd>
+        </dl>
         <p>Un concert exceptionnel à ne pas manquer dans cette salle magnifique.</p>
     </body>
     </html>
@@ -393,6 +402,11 @@ class TestParseDetailPage:
         )
         assert len(event.tags) > 0
         assert len(event.tags) <= 5
+        # Tags should come from Genre dt/dd, not navigation items
+        assert "rap" in event.tags
+        assert "jazz" in event.tags
+        assert "billetterie" not in event.tags
+        assert "agenda" not in event.tags
 
 
 # ── Test French date parsing ───────────────────────────────────────
@@ -539,38 +553,60 @@ class TestExtractLocation:
 class TestCategoryMapping:
     """Tests for category extraction and mapping."""
 
-    def test_maps_musique(self, parser):
+    def test_maps_musique_from_genre(self, parser):
         html = """
         <html><body>
             <h1>Test</h1>
-            <ul><li>Musique</li></ul>
+            <dl><dt>Genre :</dt><dd>Musique</dd></dl>
         </body></html>
         """
         detail_parser = HTMLParser(html, "https://www.theatre-oeuvre.com")
         category = parser._extract_category(detail_parser)
         assert category == "musique"
 
-    def test_maps_theatre(self, parser):
+    def test_maps_theatre_from_genre(self, parser):
         html = """
         <html><body>
             <h1>Test</h1>
-            <ul><li>Théatre</li></ul>
+            <dl><dt>Genre :</dt><dd>Théatre</dd></dl>
         </body></html>
         """
         detail_parser = HTMLParser(html, "https://www.theatre-oeuvre.com")
         category = parser._extract_category(detail_parser)
         assert category == "theatre"
 
-    def test_maps_danse(self, parser):
+    def test_maps_danse_from_genre(self, parser):
         html = """
         <html><body>
             <h1>Test</h1>
-            <ul><li>Danse</li></ul>
+            <dl><dt>Genre :</dt><dd>Danse</dd></dl>
         </body></html>
         """
         detail_parser = HTMLParser(html, "https://www.theatre-oeuvre.com")
         category = parser._extract_category(detail_parser)
         assert category == "danse"
+
+    def test_maps_from_breadcrumb(self, parser):
+        html = """
+        <html><body>
+            <h1>Test</h1>
+            <a href="/cat/">Catégorie : Musique</a>
+        </body></html>
+        """
+        detail_parser = HTMLParser(html, "https://www.theatre-oeuvre.com")
+        category = parser._extract_category(detail_parser)
+        assert category == "musique"
+
+    def test_maps_multi_genre(self, parser):
+        html = """
+        <html><body>
+            <h1>Test</h1>
+            <dl><dt>Genre :</dt><dd>Rap - Jazz</dd></dl>
+        </body></html>
+        """
+        detail_parser = HTMLParser(html, "https://www.theatre-oeuvre.com")
+        category = parser._extract_category(detail_parser)
+        assert category == "musique"
 
     def test_defaults_to_communaute(self, parser):
         html = """

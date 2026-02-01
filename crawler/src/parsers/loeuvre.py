@@ -184,20 +184,39 @@ class LoeuvreParser(BaseCrawler):
             source_id=source_id,
         )
 
+    # Venue name variants used to distinguish venue heading from event title
+    _VENUE_NAMES = {
+        "théâtre de l'œuvre",
+        "theatre de l'oeuvre",
+        "théâtre de l'oeuvre",
+        "théâtre de l'œuvre – marseille",
+        "theatre de l'oeuvre – marseille",
+    }
+
     def _extract_name(self, parser: HTMLParser) -> str:
-        """Extract event name from detail page."""
+        """
+        Extract event name from detail page.
+
+        The site inconsistently uses h1/h2 for the event title vs venue name.
+        We check both and return whichever is NOT the venue name.
+        """
         h1 = parser.select_one("h1")
-        if h1:
-            return h1.get_text().strip()
+        h2 = parser.select_one("h2")
 
-        for selector in ["h2", ".event-title", ".title"]:
-            elem = parser.select_one(selector)
-            if elem:
-                text = elem.get_text().strip()
-                if text:
-                    return text
+        h1_text = h1.get_text().strip() if h1 else ""
+        h2_text = h2.get_text().strip() if h2 else ""
 
-        return ""
+        h1_is_venue = h1_text.lower() in self._VENUE_NAMES
+        h2_is_venue = h2_text.lower() in self._VENUE_NAMES
+
+        # Return whichever heading is NOT the venue name
+        if h1_text and not h1_is_venue:
+            return h1_text
+        if h2_text and not h2_is_venue:
+            return h2_text
+
+        # Fallback: return h1 even if it looks like venue name
+        return h1_text or h2_text
 
     def _extract_datetime(self, parser: HTMLParser) -> datetime | None:
         """
@@ -370,40 +389,91 @@ class LoeuvreParser(BaseCrawler):
         return None
 
     def _extract_category(self, parser: HTMLParser) -> str:
-        """Extract and map category from detail page."""
-        # Look for category in list items (the site uses <li> for categories)
-        for li in parser.select("li"):
-            text = li.get_text().strip()
-            if text and len(text) < 30:
-                mapped = self.map_category(text)
-                if mapped != "communaute":
-                    return mapped
+        """
+        Extract and map category from detail page.
 
-        # Look in breadcrumbs or other category indicators
+        The site uses two patterns:
+        - <dt>Genre :</dt><dd>Pop française</dd> (definition list)
+        - Breadcrumb with "Catégorie : Musique"
+        """
+        # Try Genre definition list: <dt>Genre :</dt><dd>value</dd>
+        for dt in parser.select("dt"):
+            if "genre" in dt.get_text().lower():
+                dd = dt.find_next_sibling("dd")
+                if dd:
+                    # Genre may contain multiple values like "Rap - Jazz"
+                    genre_text = dd.get_text().strip()
+                    for part in re.split(r"\s*[-–/,]\s*", genre_text):
+                        part = part.strip()
+                        if part:
+                            mapped = self.map_category(part)
+                            if mapped != "communaute":
+                                return mapped
+
+        # Try breadcrumb links containing "Catégorie :"
         for link in parser.select("a"):
             text = link.get_text().strip()
-            if text and len(text) < 30:
-                mapped = self.map_category(text)
-                if mapped != "communaute":
-                    return mapped
+            if "catégorie" in text.lower() or "categorie" in text.lower():
+                # Extract category name after the colon
+                cat_match = re.search(r"[Cc]at[ée]gorie\s*:\s*(.+)", text)
+                if cat_match:
+                    mapped = self.map_category(cat_match.group(1).strip())
+                    if mapped != "communaute":
+                        return mapped
+
+        # Try JSON-LD breadcrumb data
+        for script in parser.select('script[type="application/ld+json"]'):
+            try:
+                import json
+
+                data = json.loads(script.string or "")
+                breadcrumb = data if data.get("@type") == "BreadcrumbList" else None
+                if not breadcrumb and isinstance(data, dict):
+                    breadcrumb = data.get("breadcrumb")
+                if breadcrumb:
+                    for item in breadcrumb.get("itemListElement", []):
+                        name = item.get("name", "")
+                        cat_match = re.search(
+                            r"[Cc]at[ée]gorie\s*:\s*(.+)", name
+                        )
+                        if cat_match:
+                            mapped = self.map_category(cat_match.group(1).strip())
+                            if mapped != "communaute":
+                                return mapped
+            except (json.JSONDecodeError, AttributeError):
+                continue
 
         # Default for this venue (mixed programming)
         return "communaute"
 
     def _extract_tags(self, parser: HTMLParser) -> list[str]:
-        """Extract tags from detail page."""
+        """
+        Extract tags from detail page.
+
+        Uses the Genre definition list values (e.g. "Rap - Jazz" -> ["rap", "jazz"])
+        and breadcrumb category as tags. Avoids navigation <li> items.
+        """
         tags = []
 
-        # Collect category-like items as tags
-        for li in parser.select("li"):
-            text = li.get_text().strip().lower()
-            if (
-                text
-                and len(text) < 50
-                and text not in tags
-                and text not in ["accueil", "agenda", "contact", "programmation"]
-            ):
-                tags.append(text)
+        # Extract from Genre definition list
+        for dt in parser.select("dt"):
+            if "genre" in dt.get_text().lower():
+                dd = dt.find_next_sibling("dd")
+                if dd:
+                    genre_text = dd.get_text().strip()
+                    for part in re.split(r"\s*[-–/,]\s*", genre_text):
+                        part = part.strip().lower()
+                        if part and part not in tags:
+                            tags.append(part)
+
+        # Extract category from breadcrumbs
+        for link in parser.select("a"):
+            text = link.get_text().strip()
+            cat_match = re.search(r"[Cc]at[ée]gorie\s*:\s*(.+)", text)
+            if cat_match:
+                cat = cat_match.group(1).strip().lower()
+                if cat and cat not in tags:
+                    tags.append(cat)
 
         return tags[:5]
 
