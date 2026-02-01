@@ -1,12 +1,12 @@
 ---
-title: "La Criee - Theatre National de Marseille"
-description: "Theatre National de Marseille, scene majeure du spectacle vivant sur le Vieux-Port."
+title: "La Criee"
+description: "Theatre National de Marseille, salle de spectacle sur le Vieux-Port proposant theatre, danse, musique et cinema."
 address: "30 quai de Rive Neuve, 13007 Marseille"
-website: "https://www.theatre-lacriee.com/"
+website: "https://theatre-lacriee.com/"
 type: "Theatre"
 aliases:
   - "/locations/theatre-la-criee/"
-  - "/locations/criee/"
+  - "/locations/la-criee-theatre/"
 ---
 
-La Criee est le Theatre National de Marseille, situe sur le Vieux-Port dans l'ancienne criee aux poissons. Ce lieu emblematique de la vie culturelle marseillaise propose une programmation riche en theatre, danse et musique. Le theatre dispose de deux salles : la Grande Salle (800 places) et le Petit Theatre (280 places).
+La Criee est le Theatre National de Marseille, situe sur le Vieux-Port. Installe dans l'ancien marche aux poissons depuis 1981, ce theatre propose une programmation variee de theatre, danse, musique et cinema, avec deux salles principales : la Salle Demeter et la Salle Ouranos.
