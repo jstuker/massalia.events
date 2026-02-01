@@ -109,10 +109,10 @@ def _extract_page_image(page):
     """
     Extract the main event image from a loaded Playwright page.
 
-    Uses the browser's JavaScript fetch API to download the og:image,
-    which works because the browser has the proper cookies and session
-    to bypass Cloudflare. Falls back to canvas capture of the largest
-    rendered <img> element if fetch fails.
+    Tries three strategies in order:
+    1. JS fetch() of the og:image URL (works when same-origin)
+    2. Canvas capture of the largest rendered <img> (works when no CORS)
+    3. Playwright element screenshot (always works, captures rendered pixels)
 
     Args:
         page: Playwright page with a loaded detail page
@@ -130,9 +130,10 @@ def _extract_page_image(page):
         )
 
         if not image_url:
+            logger.debug("No og:image meta tag found on page")
             return None, None
 
-        # Try downloading via browser's fetch (has cookies/session)
+        # Strategy 1: download via browser's fetch (has cookies/session)
         image_b64 = page.evaluate(
             """async (url) => {
             try {
@@ -155,9 +156,12 @@ def _extract_page_image(page):
         )
 
         if image_b64:
+            logger.debug(f"Extracted image via JS fetch: {image_url}")
             return base64.b64decode(image_b64), image_url
 
-        # Fallback: capture from rendered <img> via canvas
+        logger.debug("JS fetch failed for og:image, trying canvas capture")
+
+        # Strategy 2: capture from rendered <img> via canvas
         image_b64 = page.evaluate(
             """() => {
             const imgs = document.querySelectorAll('img');
@@ -187,12 +191,76 @@ def _extract_page_image(page):
         )
 
         if image_b64:
+            logger.debug(f"Extracted image via canvas capture: {image_url}")
             return base64.b64decode(image_b64), image_url
 
+        logger.debug("Canvas capture failed (likely CORS), trying element screenshot")
+
+        # Strategy 3: Playwright element screenshot (bypasses CORS entirely)
+        # Find the largest visible image and take a screenshot of it
+        best_img = _screenshot_best_image(page)
+        if best_img:
+            logger.debug(f"Extracted image via element screenshot: {image_url}")
+            return best_img, image_url
+
+        logger.debug("All image extraction strategies failed")
+
     except Exception as e:
-        logger.debug(f"Failed to extract image from page: {e}")
+        logger.warning(f"Failed to extract image from page: {e}")
 
     return None, None
+
+
+def _screenshot_best_image(page):
+    """
+    Take a Playwright screenshot of the largest visible image element.
+
+    This bypasses CORS restrictions since it captures rendered pixels
+    at the browser level, not via JavaScript canvas.
+
+    Args:
+        page: Playwright page with loaded content
+
+    Returns:
+        PNG bytes of the image, or None on failure
+    """
+    try:
+        # Find the best image candidate using JS, return its index
+        best_index = page.evaluate(
+            """() => {
+            const imgs = [...document.querySelectorAll('img')];
+            let bestIdx = -1;
+            let bestArea = 0;
+            for (let i = 0; i < imgs.length; i++) {
+                const img = imgs[i];
+                const rect = img.getBoundingClientRect();
+                if (img.complete && rect.width > 100 && rect.height > 100) {
+                    const area = rect.width * rect.height;
+                    if (area > bestArea) {
+                        bestArea = area;
+                        bestIdx = i;
+                    }
+                }
+            }
+            return bestIdx;
+        }"""
+        )
+
+        if best_index < 0:
+            return None
+
+        img_locator = page.locator("img").nth(best_index)
+        if not img_locator.is_visible():
+            return None
+
+        screenshot_bytes = img_locator.screenshot(type="png")
+        if screenshot_bytes and len(screenshot_bytes) > 500:
+            return screenshot_bytes
+
+    except Exception as e:
+        logger.debug(f"Element screenshot failed: {e}")
+
+    return None
 
 
 def _run_playwright_non_headless(url, timeout=60000):
