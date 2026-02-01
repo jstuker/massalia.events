@@ -1,0 +1,26 @@
+---
+title: Flox + X Stick
+date: '2026-04-23T20:00:00+02:00'
+draft: false
+expiryDate: '2026-04-24T00:00:00+02:00'
+name: Flox + X Stick
+eventURL: https://www.lemakeda.com/evenements/flox-x-stick/
+startTime: '20:00'
+description: 🎶 FLOX + X STICK 🎶 📅 Jeudi 23 Avril 2026 &#8211; 20h 📍Le Makeda, 103 rue Ferrari, 13005 Marseille 🎤 FLOX Depuis plus de 20 ans, FLOX façonne un son unique, f...
+categories:
+- musique
+locations:
+- le-makeda
+dates:
+- jeudi-23-avril
+tags:
+- dub
+- electro
+- nu reggae
+image: /images/events/flox-x-stick-48d27e8f.webp
+sourceId: lemakeda:39322
+lastCrawled: '2026-02-01T16:40:39+01:00'
+expired: false
+---
+
+🎶 FLOX + X STICK 🎶 📅 Jeudi 23 Avril 2026 &#8211; 20h 📍Le Makeda, 103 rue Ferrari, 13005 Marseille 🎤 FLOX Depuis plus de 20 ans, FLOX façonne un son unique, f...
