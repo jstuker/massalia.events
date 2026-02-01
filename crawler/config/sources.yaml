@@ -171,6 +171,30 @@ sources:
       "Spectacle": "theatre"
       "Théâtre": "theatre"
 
+  # La Criée - Théâtre National de Marseille
+  # Major theatre venue on the Vieux-Port
+  - name: "La Criée"
+    id: "lacriee"
+    url: "https://theatre-lacriee.com/programmation/spectacles"
+    parser: "lacriee"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Théâtre": "theatre"
+      "Théâtre jeune public": "theatre"
+      "Jeune public": "theatre"
+      "Musique": "musique"
+      "Danse": "danse"
+      "Cinéma": "art"
+      "Cinéma - Musique": "musique"
+      "Conte": "theatre"
+      "Lecture": "communaute"
+      "Lecture théâtralisée": "theatre"
+      "Rencontres": "communaute"
+      "Théâtre et philosophie": "communaute"
+
 # Default settings applied to all sources unless overridden
 defaults:
   enabled: true
