@@ -121,6 +121,17 @@ def _parse_event_dates_from_html(html: str) -> list[datetime]:
         re.IGNORECASE,
     )
 
+    # Remove booking modals for related events so their dates aren't picked up.
+    # Each event detail page includes modal-booking-event popups for the main
+    # event AND for "Vous aimerez aussi" (related) events.  The main event's
+    # own dates are shown separately in .bl-he__list-sessions in the article.
+    for modal in soup.select(".modal-booking-event"):
+        modal.decompose()
+
+    # Also remove card-event / bl-evc__list sections (related events carousel)
+    for elem in soup.select(".bl-evc__list, .card-event"):
+        elem.decompose()
+
     # Search in li elements (primary location for dates)
     for li in soup.find_all("li"):
         text = li.get_text().strip()

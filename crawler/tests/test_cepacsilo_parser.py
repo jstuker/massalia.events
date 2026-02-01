@@ -366,6 +366,58 @@ class TestParseEventDatesFromHtml:
         assert dates[0].hour == 20
         assert dates[0].minute == 0
 
+    def test_excludes_dates_from_booking_modals(self):
+        """Dates in modal-booking-event popups (main + related) must be ignored.
+
+        The real site has the event's own dates in .bl-he__list-sessions in
+        the article, and separate booking modals for the main event AND each
+        related event.  Only .bl-he__list-sessions dates should be kept.
+        """
+        html = """
+        <html><body>
+            <ul class="bl-he__list-sessions">
+                <li><time>dimanche 04 octobre 2026 · 17h00</time></li>
+            </ul>
+            <div class="modal modal-booking-event" data-title="BREL !">
+                <ul class="list-date">
+                    <li><span>dimanche 04 octobre 2026 · 17h00</span></li>
+                </ul>
+            </div>
+            <div class="modal modal-booking-event" data-title="Jean dans la salle">
+                <ul class="list-date">
+                    <li><span>dimanche 01 février 2026 · 18h00</span></li>
+                </ul>
+            </div>
+            <div class="modal modal-booking-event" data-title="GUS">
+                <ul class="list-date">
+                    <li><span>dimanche 07 juin 2026 · 19h00</span></li>
+                </ul>
+            </div>
+        </body></html>
+        """
+        dates = _parse_event_dates_from_html(html)
+        assert len(dates) == 1
+        assert dates[0].month == 10
+        assert dates[0].day == 4
+        assert dates[0].hour == 17
+
+    def test_excludes_dates_from_card_event_elements(self):
+        """Dates inside card-event elements (related events carousel) must be ignored."""
+        html = """
+        <html><body>
+            <ul>
+                <li>samedi 15 mars 2026 · 20h30</li>
+            </ul>
+            <div class="card-event">
+                <li>dimanche 01 février 2026 · 18h00</li>
+            </div>
+        </body></html>
+        """
+        dates = _parse_event_dates_from_html(html)
+        assert len(dates) == 1
+        assert dates[0].month == 3
+        assert dates[0].day == 15
+
 
 # ── Test _parse_event_from_json_ld ────────────────────────────────
 
