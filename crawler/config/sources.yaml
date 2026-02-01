@@ -146,6 +146,31 @@ sources:
       "Festival": "communaute"
       "Exposition": "art"
 
+  # Le Cepac Silo - Major concert and performance venue in Marseille
+  # 2,050-seat venue in a converted grain silo on the port
+  - name: "Le Cepac Silo"
+    id: "cepacsilo"
+    url: "https://www.cepacsilo-marseille.fr/evenements/"
+    parser: "cepacsilo"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Ballet": "danse"
+      "Comédie musicale": "theatre"
+      "Concert": "musique"
+      "Concert - Rap/Urbain": "musique"
+      "Danse": "danse"
+      "Événement": "communaute"
+      "Festival": "communaute"
+      "Humour": "theatre"
+      "Jeune Public": "theatre"
+      "Magie": "theatre"
+      "One man show": "theatre"
+      "Spectacle": "theatre"
+      "Théâtre": "theatre"
+
 # Default settings applied to all sources unless overridden
 defaults:
   enabled: true

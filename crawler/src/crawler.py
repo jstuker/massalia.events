@@ -310,6 +310,8 @@ class BaseCrawler(ABC):
             "opéra de marseille": "opera-de-marseille",
             "opera de marseille": "opera-de-marseille",
             "le silo": "le-cepac-silo-marseille",
+            "cepac silo": "le-cepac-silo-marseille",
+            "le cepac silo": "le-cepac-silo-marseille",
             "espace julien": "espace-julien",
             "le moulin": "le-moulin",
             "mac marseille": "mac-marseille",
