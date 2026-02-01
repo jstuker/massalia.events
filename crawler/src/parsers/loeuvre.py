@@ -1,0 +1,439 @@
+"""Parser for Théâtre de l'Œuvre events."""
+
+import re
+from datetime import datetime
+from urllib.parse import urljoin
+from zoneinfo import ZoneInfo
+
+from ..crawler import BaseCrawler
+from ..logger import get_logger
+from ..models.event import Event
+from ..utils.parser import HTMLParser
+
+logger = get_logger(__name__)
+
+# Paris timezone for event dates
+PARIS_TZ = ZoneInfo("Europe/Paris")
+
+# French month names mapping
+FRENCH_MONTHS = {
+    "janvier": 1,
+    "février": 2,
+    "fevrier": 2,
+    "mars": 3,
+    "avril": 4,
+    "mai": 5,
+    "juin": 6,
+    "juillet": 7,
+    "août": 8,
+    "aout": 8,
+    "septembre": 9,
+    "octobre": 10,
+    "novembre": 11,
+    "décembre": 12,
+    "decembre": 12,
+}
+
+
+class LoeuvreParser(BaseCrawler):
+    """
+    Event parser for Théâtre de l'Œuvre (https://www.theatre-oeuvre.com).
+
+    Théâtre de l'Œuvre is a 170-seat venue near La Canebière in Marseille's
+    Belsunce district, hosting theatre, music, dance, and young audience shows.
+
+    This parser extracts event links from the programmation page and visits
+    each event's detail page to extract complete information.
+    """
+
+    source_name = "Théâtre de l'Œuvre"
+
+    def parse_events(self, parser: HTMLParser) -> list[Event]:
+        """
+        Parse events from Théâtre de l'Œuvre by visiting detail pages.
+
+        1. Extracts all event URLs from the programmation page
+        2. Visits each event's detail page
+        3. Extracts complete event information from the detail page
+
+        Args:
+            parser: HTMLParser with programmation page content
+
+        Returns:
+            List of Event objects
+        """
+        events = []
+
+        event_urls = self._find_event_urls(parser)
+
+        if not event_urls:
+            logger.warning(
+                "No event URLs found on Théâtre de l'Œuvre programmation page"
+            )
+            return events
+
+        logger.info(
+            f"Found {len(event_urls)} event URLs on Théâtre de l'Œuvre programmation"
+        )
+
+        for event_url in event_urls:
+            try:
+                event = self._parse_detail_page(event_url)
+                if event:
+                    events.append(event)
+            except Exception as e:
+                logger.warning(f"Failed to parse event from {event_url}: {e}")
+
+        return events
+
+    def _find_event_urls(self, parser: HTMLParser) -> list[str]:
+        """
+        Find all event detail page URLs from the programmation page.
+
+        Args:
+            parser: HTMLParser with programmation page content
+
+        Returns:
+            List of unique event URLs
+        """
+        urls = set()
+
+        for link in parser.select("a[href*='/evenements/']"):
+            href = link.get("href", "")
+            if not href:
+                continue
+
+            # Make absolute URL
+            if href.startswith("/"):
+                href = urljoin("https://www.theatre-oeuvre.com", href)
+
+            # Only include event detail pages, not the listing itself
+            if "/evenements/" in href and href.rstrip("/") != (
+                "https://www.theatre-oeuvre.com/evenements"
+            ):
+                # Skip if this link contains a "Complet" or "Annulé" badge
+                if self._is_cancelled_or_sold_out(link):
+                    name = link.select_one("h3")
+                    name_text = name.get_text().strip() if name else href
+                    logger.debug(f"Skipping sold out/cancelled event: {name_text}")
+                    continue
+
+                urls.add(href)
+
+        return list(urls)
+
+    def _is_cancelled_or_sold_out(self, link_element) -> bool:
+        """
+        Check if an event card indicates the event is sold out or cancelled.
+
+        Args:
+            link_element: BeautifulSoup element for the event card link
+
+        Returns:
+            True if event should be skipped
+        """
+        text = link_element.get_text().lower()
+        return "complet" in text or "annulé" in text
+
+    def _parse_detail_page(self, event_url: str) -> Event | None:
+        """
+        Fetch and parse an event detail page.
+
+        Args:
+            event_url: URL of the event detail page
+
+        Returns:
+            Event object or None if parsing failed
+        """
+        html = self.fetch_page(event_url)
+        if not html:
+            logger.warning(f"Failed to fetch detail page: {event_url}")
+            return None
+
+        detail_parser = HTMLParser(html, event_url)
+
+        # Extract event name from h1
+        name = self._extract_name(detail_parser)
+        if not name:
+            logger.debug(f"Could not find event name on: {event_url}")
+            return None
+
+        # Extract date and time
+        event_datetime = self._extract_datetime(detail_parser)
+        if not event_datetime:
+            logger.debug(f"Could not parse date for: {name} on {event_url}")
+            return None
+
+        # Extract other fields
+        description = self._extract_description(detail_parser)
+        image_url = self._extract_image(detail_parser)
+        category = self._extract_category(detail_parser)
+        tags = self._extract_tags(detail_parser)
+        location = self._extract_location(detail_parser)
+        source_id = self._generate_source_id(event_url)
+
+        return Event(
+            name=name,
+            event_url=event_url,
+            start_datetime=event_datetime,
+            description=description,
+            image=image_url,
+            categories=[category],
+            locations=[location],
+            tags=tags,
+            source_id=source_id,
+        )
+
+    def _extract_name(self, parser: HTMLParser) -> str:
+        """Extract event name from detail page."""
+        h1 = parser.select_one("h1")
+        if h1:
+            return h1.get_text().strip()
+
+        for selector in ["h2", ".event-title", ".title"]:
+            elem = parser.select_one(selector)
+            if elem:
+                text = elem.get_text().strip()
+                if text:
+                    return text
+
+        return ""
+
+    def _extract_datetime(self, parser: HTMLParser) -> datetime | None:
+        """
+        Extract event date and time from detail page.
+
+        Théâtre de l'Œuvre displays dates like:
+        - "samedi 31 janvier" with separate "19:00"
+        - "vendredi 27 mars" with "20:30"
+
+        The year is inferred from context (current or next year).
+        """
+        date_result = None
+        time_result = None
+
+        # Search all text elements for date and time patterns
+        for elem in parser.select("p, div, span, h2, h3, h4, time"):
+            text = elem.get_text().strip()
+            if not text or len(text) > 200:
+                continue
+
+            # Try to find date pattern: "samedi 31 janvier" or "31 janvier"
+            if not date_result:
+                date_result = self._parse_french_date(text)
+
+            # Try to find time pattern: "19:00" or "20:30" or "19h30"
+            if not time_result:
+                time_result = self._parse_time(text)
+
+        if not date_result:
+            return None
+
+        hour, minute = time_result if time_result else (20, 0)
+
+        try:
+            return date_result.replace(hour=hour, minute=minute, tzinfo=PARIS_TZ)
+        except ValueError:
+            return None
+
+    def _parse_french_date(self, text: str) -> datetime | None:
+        """
+        Parse a French date string without year.
+
+        Handles:
+        - "samedi 31 janvier"
+        - "vendredi 27 mars"
+        - "31 janvier 2026"
+
+        When no year is given, infers the correct year based on whether
+        the date has already passed.
+        """
+        if not text:
+            return None
+
+        text_lower = text.lower()
+
+        # Pattern with year: "31 janvier 2026"
+        with_year = re.search(
+            r"(\d{1,2})\s+(\w+)\s+(\d{4})", text_lower
+        )
+        if with_year:
+            day = int(with_year.group(1))
+            month_name = with_year.group(2)
+            year = int(with_year.group(3))
+            month = FRENCH_MONTHS.get(month_name)
+            if month:
+                try:
+                    return datetime(year, month, day)
+                except ValueError:
+                    pass
+
+        # Pattern without year: "samedi 31 janvier" or "31 janvier"
+        without_year = re.search(
+            r"(\d{1,2})\s+(\w+)\b", text_lower
+        )
+        if without_year:
+            day = int(without_year.group(1))
+            month_name = without_year.group(2)
+            month = FRENCH_MONTHS.get(month_name)
+            if month:
+                year = self._infer_year(month, day)
+                try:
+                    return datetime(year, month, day)
+                except ValueError:
+                    pass
+
+        return None
+
+    def _parse_time(self, text: str) -> tuple[int, int] | None:
+        """
+        Extract time from text.
+
+        Handles:
+        - "19:00"
+        - "20:30"
+        - "19h30"
+        - "19h"
+        """
+        if not text:
+            return None
+
+        # Match HH:MM format
+        match = re.search(r"\b(\d{1,2}):(\d{2})\b", text)
+        if match:
+            hour = int(match.group(1))
+            minute = int(match.group(2))
+            if 0 <= hour <= 23 and 0 <= minute <= 59:
+                return (hour, minute)
+
+        # Match HhMM format
+        match = re.search(r"\b(\d{1,2})[hH](\d{2})?\b", text)
+        if match:
+            hour = int(match.group(1))
+            minute = int(match.group(2)) if match.group(2) else 0
+            if 0 <= hour <= 23 and 0 <= minute <= 59:
+                return (hour, minute)
+
+        return None
+
+    def _infer_year(self, month: int, day: int) -> int:
+        """
+        Infer the year for a date without year.
+
+        If the date has already passed this year, assume next year.
+        """
+        now = datetime.now(PARIS_TZ)
+        try:
+            candidate = datetime(now.year, month, day, tzinfo=PARIS_TZ)
+        except ValueError:
+            return now.year
+
+        # If date is more than 30 days in the past, assume next year
+        if (now - candidate).days > 30:
+            return now.year + 1
+        return now.year
+
+    def _extract_description(self, parser: HTMLParser) -> str:
+        """Extract event description from detail page."""
+        # Try og:description meta tag first
+        og_desc = parser.select_one('meta[property="og:description"]')
+        if og_desc:
+            content = og_desc.get("content", "")
+            if content and len(str(content)) > 20:
+                return HTMLParser.truncate(str(content).strip(), 160)
+
+        # Try substantial paragraphs
+        for p in parser.select("p"):
+            text = p.get_text().strip()
+            if len(text) > 50:
+                return HTMLParser.truncate(text, 160)
+
+        return ""
+
+    def _extract_image(self, parser: HTMLParser) -> str | None:
+        """Extract main image from detail page."""
+        # Try og:image meta tag first
+        og_image = parser.select_one('meta[property="og:image"]')
+        if og_image:
+            content = og_image.get("content", "")
+            if content:
+                return str(content)
+
+        # Try main content images
+        for selector in ["article img", ".entry-content img", "img"]:
+            img = parser.select_one(selector)
+            if img:
+                src = img.get("src", "") or img.get("data-src", "")
+                if src and not str(src).startswith("data:"):
+                    return str(urljoin("https://www.theatre-oeuvre.com", str(src)))
+
+        return None
+
+    def _extract_category(self, parser: HTMLParser) -> str:
+        """Extract and map category from detail page."""
+        # Look for category in list items (the site uses <li> for categories)
+        for li in parser.select("li"):
+            text = li.get_text().strip()
+            if text and len(text) < 30:
+                mapped = self.map_category(text)
+                if mapped != "communaute":
+                    return mapped
+
+        # Look in breadcrumbs or other category indicators
+        for link in parser.select("a"):
+            text = link.get_text().strip()
+            if text and len(text) < 30:
+                mapped = self.map_category(text)
+                if mapped != "communaute":
+                    return mapped
+
+        # Default for this venue (mixed programming)
+        return "communaute"
+
+    def _extract_tags(self, parser: HTMLParser) -> list[str]:
+        """Extract tags from detail page."""
+        tags = []
+
+        # Collect category-like items as tags
+        for li in parser.select("li"):
+            text = li.get_text().strip().lower()
+            if (
+                text
+                and len(text) < 50
+                and text not in tags
+                and text not in ["accueil", "agenda", "contact", "programmation"]
+            ):
+                tags.append(text)
+
+        return tags[:5]
+
+    def _extract_location(self, parser: HTMLParser) -> str:
+        """
+        Extract location from detail page.
+
+        Most events at Théâtre de l'Œuvre are at the theatre itself,
+        but some may be at "La Mesón" (their associated bar/restaurant).
+        """
+        # Search for location text
+        full_text = parser.soup.get_text().lower()
+
+        if "la mesón" in full_text or "la meson" in full_text:
+            # Check if the event is specifically at La Mesón
+            # (some events use this as a secondary venue)
+            if "théâtre de l'œuvre" not in full_text.split("la mes")[0][-100:]:
+                return "theatre-de-l-oeuvre"
+
+        return "theatre-de-l-oeuvre"
+
+    def _generate_source_id(self, url: str) -> str:
+        """Generate unique source ID from URL."""
+        from urllib.parse import urlparse
+
+        parsed = urlparse(url)
+        path = parsed.path.strip("/")
+
+        # Use last path segment as ID
+        segments = path.split("/")
+        event_id = segments[-1] if segments else path
+
+        return f"loeuvre:{event_id}"

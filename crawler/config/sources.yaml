@@ -146,6 +146,36 @@ sources:
       "Festival": "communaute"
       "Exposition": "art"
 
+  # Théâtre de l'Œuvre
+  # Theatre and music venue near La Canebière in Marseille
+  - name: "Théâtre de l'Œuvre"
+    id: "loeuvre"
+    url: "https://www.theatre-oeuvre.com/agenda/programmation/"
+    parser: "loeuvre"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Musique": "musique"
+      "Théatre": "theatre"
+      "Théâtre": "theatre"
+      "Theatre": "theatre"
+      "Danse": "danse"
+      "Cabaret": "theatre"
+      "Humour": "theatre"
+      "Chant": "musique"
+      "Cinéma": "art"
+      "Atelier": "communaute"
+      "Blindtest": "communaute"
+      "Jeune Public": "theatre"
+      "Poésie": "communaute"
+      "Rap": "musique"
+      "Jazz": "musique"
+      "Pop": "musique"
+      "Folk": "musique"
+      "Rock": "musique"
+
 # Default settings applied to all sources unless overridden
 defaults:
   enabled: true

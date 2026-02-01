@@ -224,6 +224,14 @@ sources:
     category_map:
       "Techno": "musique"
       "House": "musique"
+
+  - name: "Théâtre de l'Œuvre"
+    url: "https://www.theatre-oeuvre.com/agenda/programmation/"
+    parser: "loeuvre"
+    enabled: true
+    category_map:
+      "Musique": "musique"
+      "Théatre": "theatre"
 ```
 
 **Note:** The Shotgun parser requires Playwright (headless browser) since shotgun.live uses Vercel bot protection. Install with:
