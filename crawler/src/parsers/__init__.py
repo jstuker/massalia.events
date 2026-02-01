@@ -7,6 +7,7 @@ from .journalzebuline import JournalZebulineParser
 from .klemenis import KlemenisParser
 from .lacriee import LaCrieeParser
 from .lafriche import LaFricheParser
+from .lemakeda import LeMakedaParser
 from .loeuvre import LoeuvreParser
 from .shotgun import ShotgunParser
 
@@ -19,6 +20,7 @@ PARSERS = {
     "journalzebuline": JournalZebulineParser,
     "cepacsilo": CepacSiloParser,
     "lacriee": LaCrieeParser,
+    "lemakeda": LeMakedaParser,
     "generic": ConfigurableEventParser,
 }
 
@@ -59,6 +61,7 @@ __all__ = [
     "ConfigurableEventParser",
     "JournalZebulineParser",
     "LaCrieeParser",
+    "LeMakedaParser",
     "ParsedEvent",
     "SelectorConfig",
     "LaFricheParser",

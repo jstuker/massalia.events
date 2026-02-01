@@ -225,6 +225,33 @@ sources:
       "Folk": "musique"
       "Rock": "musique"
 
+  # Le Makeda - Concert and performance venue in Marseille
+  # Salle de concerts & spectacles / DJ set / expositions
+  - name: "Le Makeda"
+    id: "lemakeda"
+    url: "https://www.lemakeda.com/evenements/"
+    parser: "lemakeda"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Concert": "musique"
+      "DJ Set": "musique"
+      "DJ set multisensoriel": "musique"
+      "Live": "musique"
+      "Showcase": "musique"
+      "Open mic": "musique"
+      "Danse": "danse"
+      "Performances danse": "danse"
+      "Festival": "communaute"
+      "Festival The Echo": "communaute"
+      "Open Air": "musique"
+      "Karaoké": "communaute"
+      "Drag": "theatre"
+      "Ateliers": "communaute"
+      "Evenement immersif & multisensoriel": "communaute"
+
 # Default settings applied to all sources unless overridden
 defaults:
   enabled: true
