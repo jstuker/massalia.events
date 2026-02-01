@@ -495,6 +495,53 @@ class TestParseEventFromJsonLd:
         )
         assert event.image is None
 
+    def test_handles_image_as_list(self, category_map):
+        json_ld = {
+            "@type": "Event",
+            "name": "Test",
+            "startDate": "2026-02-06T20:30:00.000000Z",
+            "image": [
+                "https://www.cepacsilo-marseille.fr/wp-content/uploads/img1.jpg",
+                "https://www.cepacsilo-marseille.fr/wp-content/uploads/img2.jpg",
+            ],
+        }
+        event = _parse_event_from_json_ld(
+            json_ld,
+            "https://www.cepacsilo-marseille.fr/evenement/test/",
+            category_map,
+        )
+        assert event.image == "https://www.cepacsilo-marseille.fr/wp-content/uploads/img1.jpg"
+
+    def test_handles_image_as_dict(self, category_map):
+        json_ld = {
+            "@type": "Event",
+            "name": "Test",
+            "startDate": "2026-02-06T20:30:00.000000Z",
+            "image": {
+                "url": "https://www.cepacsilo-marseille.fr/wp-content/uploads/img.jpg",
+            },
+        }
+        event = _parse_event_from_json_ld(
+            json_ld,
+            "https://www.cepacsilo-marseille.fr/evenement/test/",
+            category_map,
+        )
+        assert event.image == "https://www.cepacsilo-marseille.fr/wp-content/uploads/img.jpg"
+
+    def test_handles_image_as_empty_list(self, category_map):
+        json_ld = {
+            "@type": "Event",
+            "name": "Test",
+            "startDate": "2026-02-06T20:30:00.000000Z",
+            "image": [],
+        }
+        event = _parse_event_from_json_ld(
+            json_ld,
+            "https://www.cepacsilo-marseille.fr/evenement/test/",
+            category_map,
+        )
+        assert event.image is None
+
     def test_handles_multiple_performers(self, category_map):
         json_ld = {
             "@type": "Event",

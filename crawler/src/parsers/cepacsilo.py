@@ -200,8 +200,14 @@ def _parse_event_from_json_ld(
     if len(description) > 160:
         description = description[:157] + "..."
 
-    # Extract image
-    image = json_ld.get("image", "")
+    # Extract image (can be a string URL, a list of URLs, or a dict with "url")
+    raw_image = json_ld.get("image", "")
+    if isinstance(raw_image, list):
+        image = raw_image[0] if raw_image else ""
+    elif isinstance(raw_image, dict):
+        image = raw_image.get("url", "")
+    else:
+        image = raw_image
 
     # Extract category from event type tag on the page
     category = "communaute"  # Default
