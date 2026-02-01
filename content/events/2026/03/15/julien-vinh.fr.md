@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/julien-vinh-ffe537d3.webp
 sourceId: cepacsilo:julien-vinh:20260315-2000
-lastCrawled: '2026-02-01T16:53:33+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/sellig-478ba0f1.webp
 sourceId: cepacsilo:sellig:20260409-2030
-lastCrawled: '2026-02-01T16:54:05+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

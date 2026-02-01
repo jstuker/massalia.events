@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/franjo-3255b65f.webp
 sourceId: cepacsilo:franjo:20260207-2030
-lastCrawled: '2026-02-01T16:53:25+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

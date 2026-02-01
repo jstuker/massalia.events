@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/deluxe-a35adc7c.webp
 sourceId: cepacsilo:deluxe:20260411-2000
-lastCrawled: '2026-02-01T16:53:19+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

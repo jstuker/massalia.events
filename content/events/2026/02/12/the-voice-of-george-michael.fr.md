@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/the-voice-of-george-michael-5fe9bb70.webp
 sourceId: cepacsilo:the-voice-of-george-michael:20260212-2030
-lastCrawled: '2026-02-01T16:54:13+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

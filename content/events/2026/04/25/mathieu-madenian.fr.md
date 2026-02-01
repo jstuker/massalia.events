@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/mathieu-madenian-b011b136.webp
 sourceId: cepacsilo:mathieu-madenian:20260425-2030
-lastCrawled: '2026-02-01T16:53:53+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/verino-11aa2d41.webp
 sourceId: cepacsilo:verino:20260319-2000
-lastCrawled: '2026-02-01T16:54:20+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

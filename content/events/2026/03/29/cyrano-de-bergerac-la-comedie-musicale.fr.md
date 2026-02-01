@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/cyrano-de-bergerac-la-comedie-musicale-7e9da985.webp
 sourceId: cepacsilo:cyrano-de-bergerac:20260329-1700
-lastCrawled: '2026-02-01T16:53:16+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/mysteres-du-ballet-029fe7e7.webp
 sourceId: cepacsilo:mysteres-du-ballet:20260308-1800
-lastCrawled: '2026-02-01T16:53:55+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

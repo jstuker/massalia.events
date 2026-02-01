@@ -16,7 +16,7 @@ dates:
 tags: []
 image: /images/events/la-mano-1-9-97cc5b43.webp
 sourceId: cepacsilo:la-mano-1-9:20260326-2030
-lastCrawled: '2026-02-01T16:53:36+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---
 

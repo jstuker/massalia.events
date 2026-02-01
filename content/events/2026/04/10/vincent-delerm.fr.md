@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/vincent-delerm-9d719f99.webp
 sourceId: cepacsilo:vincent-delerme:20260410-2030
-lastCrawled: '2026-02-01T16:54:21+01:00'
+lastCrawled: '2026-02-01T17:39:01+01:00'
 expired: false
 ---

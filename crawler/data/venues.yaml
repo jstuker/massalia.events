@@ -465,6 +465,7 @@
   aliases:
     - "/locations/theatre-toursky/"
     - "/locations/toursky/"
+    - "/locations/scene-mediterrannee/"
   body: "Scene Mediterranee est un theatre de 700 places situe dans le 3e arrondissement de Marseille. Anciennement connu sous le nom de Theatre Toursky, fonde en 1971, le lieu a ete repris par l'association Scene Mediterranee en 2025. Il programme du theatre, de la musique et des spectacles."
 
 
@@ -580,6 +581,7 @@
   aliases:
     - "/locations/19-promenade-jeff-musso/"
     - "/locations/chaudronnerie-la-ciotat/"
+    - "/locations/halle-de-la-chaudronnerie/"
   body: "La Chaudronnerie est une salle de spectacle situee a La Ciotat, dans un ancien batiment des chantiers navals de 1860 reconverti. Inauguree en 2017, elle dispose de la Salle Michel Simon (473 places) et d'une seconde salle de 100 places. Elle programme du theatre, de la musique, de la danse et des spectacles jeune public."
 
 # ============================================================
@@ -659,6 +661,7 @@
   aliases:
     - "/locations/salins/"
     - "/locations/theatre-des-salins/"
+    - "/locations/le-theatre-des-salins/"
   body: "Le Theatre des Salins est la Scene Nationale de Martigues, cree en 1995. Son architecture evoque le theatre a l'italienne du XVIIe siecle. Chaque saison, il presente plus de 45 spectacles de theatre, musique, danse, cirque et humour."
 
 - slug: musee-d-art-contemporain-mac
@@ -710,3 +713,168 @@
     - "/locations/promenade-robert-laffont"
     - "/locations/esplanade-j4/"
   body: "Le MuCEM (Musee des Civilisations de l'Europe et de la Mediterranee) est un musee national situe sur l'esplanade du J4 a Marseille. Outre ses expositions, le MuCEM dispose d'un auditorium de 335 places et d'une esplanade en plein air qui accueille concerts, festivals et evenements culturels."
+
+# ============================================================
+# Auto-discovered venues (stub entries — fill in details)
+# ============================================================
+
+- slug: saint-sauveur-daubagne
+  title: "Eglise Saint-Sauveur d'Aubagne"
+  description: "Eglise historique a Aubagne, lieu de concerts et d'evenements musicaux."
+  address: "1 Cour de Clastres, 13400 Aubagne"
+  website: ""
+  type: "Eglise"
+  aliases:
+    - "/locations/1-cour-de-clastres/"
+  body: "L'Eglise Saint-Sauveur est une eglise historique situee au coeur d'Aubagne. Elle accueille regulierement des concerts de musique classique, des recitals d'orgue et des evenements musicaux, notamment dans le cadre du festival de la Route des Orgues de l'Huveaune."
+
+- slug: temple-grignan
+  title: "Temple Grignan"
+  description: "Temple protestant de 1825 dans le 6e arrondissement de Marseille, lieu de concerts de musique classique."
+  address: "15 rue Grignan, 13006 Marseille"
+  website: "https://templegrignan.fr/"
+  type: "Temple"
+  aliases:
+    - "/locations/15-rue-grignan/"
+  body: "Le Temple Grignan est un temple protestant inaugure le 9 octobre 1825, situe dans le 6e arrondissement de Marseille. Le lieu accueille regulierement des concerts de musique classique et baroque, en partenariat avec la Societe de Musique et Arts de Chopin-Marseille (SMAC)."
+
+- slug: theatre-du-lacydon
+  title: "Theatre du Lacydon"
+  description: "Theatre associatif dans la Chapelle des Penitents Blancs, quartier du Panier a Marseille."
+  address: "3 Montee Saint-Esprit, 13002 Marseille"
+  website: ""
+  type: "Theatre"
+  aliases:
+    - "/locations/3-montee-saint-esprit/"
+  body: "Le Theatre du Lacydon est un theatre associatif situe dans la Chapelle des Penitents Blancs, dans le quartier historique du Panier a Marseille. Anime par l'association La Phalange du Lacydon, le lieu programme des spectacles de theatre, dont la celebre pastorale provencale."
+
+- slug: espace-julien
+  title: "Espace Julien"
+  description: "Salle de musiques actuelles de 1 000 places sur le Cours Julien a Marseille, ouverte en 1984."
+  address: "39 Cours Julien, 13006 Marseille"
+  website: "https://espace-julien.com/"
+  type: "Salle de concert"
+  aliases: []
+  body: "L'Espace Julien est une salle de musiques actuelles situee sur le Cours Julien dans le 6e arrondissement de Marseille. Ouverte en 1984, la salle dispose d'une jauge de 1 000 places debout ou 600 assises, ainsi qu'un cafe de 150 places. Geree depuis 2023 par l'association La Responsabilite des Reves, elle programme environ 250 spectacles par an."
+
+- slug: le-zef-theatre-du-merlan
+  title: "Le Zef - Scene nationale de Marseille"
+  description: "Scene nationale de Marseille dans le 14e arrondissement, anciennement Theatre du Merlan."
+  address: "Avenue Raimu, 13014 Marseille"
+  website: "https://www.lezef.org/"
+  type: "Theatre"
+  aliases:
+    - "/locations/le-merlan/"
+    - "/locations/theatre-du-merlan/"
+  body: "Le Zef est la scene nationale de Marseille, anciennement Theatre du Merlan. Composee de deux lieux — le theatre du Merlan avenue Raimu dans le 14e arrondissement et la Gare Franche au Plan d'Aou dans le 15e — la scene nationale programme du theatre, de la danse, du cirque et des arts visuels."
+
+- slug: palais-des-sports-marseille
+  title: "Palais des Sports de Marseille"
+  description: "Salle omnisport et de spectacles de 7 200 places dans le 9e arrondissement de Marseille."
+  address: "81 rue Raymond Teisseire, 13009 Marseille"
+  website: "https://palais-des-sports.marseille.fr/"
+  type: "Arena"
+  aliases: []
+  body: "Le Palais des Sports de Marseille est une salle omnisport et de spectacles situee dans le quartier de Sainte-Marguerite, inauguree en 1988. Avec une capacite de 4 200 a 7 200 places selon la configuration, le lieu accueille des concerts, des comedies musicales, des spectacles de cirque et des evenements sportifs."
+
+- slug: palais-du-pharo
+  title: "Palais du Pharo"
+  description: "Palais du Second Empire surplombant le Vieux-Port, centre de congres et lieu d'evenements a Marseille."
+  address: "58 boulevard Charles Livon, 13007 Marseille"
+  website: "https://palaisdupharo.marseille.fr/"
+  type: "Palais"
+  aliases: []
+  body: "Le Palais du Pharo est un palais construit sous Napoleon III a partir de 1858, surplombant le Vieux-Port de Marseille. Avec 7 000 m2 d'espaces de congres, un auditorium de 900 places et un jardin de 5 hectares, le lieu accueille des congres, concerts et evenements culturels."
+
+- slug: place-edmond-audran
+  title: "Eglise Sainte-Marie-Madeleine des Chartreux"
+  description: "Eglise du quartier des Chartreux dans le 4e arrondissement de Marseille, lieu de concerts."
+  address: "Place Edmond Audran, 13004 Marseille"
+  website: "http://www.paroissedeschartreux.com/"
+  type: "Eglise"
+  aliases:
+    - "/locations/eglise-des-chartreux/"
+  body: "L'Eglise Sainte-Marie-Madeleine des Chartreux, ancienne chapelle du monastere des Chartreux, est situee sur la place Edmond Audran dans le 4e arrondissement de Marseille. Le lieu accueille ponctuellement des concerts de musique chorale, gospel et classique."
+
+- slug: theatre-d-arles
+  title: "Theatre d'Arles"
+  description: "Theatre municipal de 300 places a Arles, theatre a l'italienne du XIXe siecle renove en 2001."
+  address: "34 boulevard Georges Clemenceau, 13200 Arles"
+  website: "https://www.theatre-arles.com/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre d'Arles est le theatre municipal de la ville, construit au milieu du XIXe siecle dans un style a l'italienne. Renove en 2001, il dispose d'une salle de 300 places et accueille une programmation variee de theatre, musique, danse et spectacles."
+
+- slug: theatre-des-trois-ponts-castelnaudary
+  title: "Theatre Scenes des Trois Ponts"
+  description: "Theatre municipal de 270 places a Castelnaudary, programmation pluridisciplinaire depuis 2002."
+  address: "Rue du General Dejean, 11400 Castelnaudary"
+  website: "https://ville-castelnaudary.fr/fr/culture-et-sorties/theatre-scenes-des-trois-ponts/presentation"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre Scenes des Trois Ponts est le theatre municipal de Castelnaudary, inaugure en 2002. Il dispose d'une salle principale de 270 places et d'une petite scene de 80 places. Le lieu propose une programmation pluridisciplinaire d'une vingtaine de spectacles tout public et jeune public par saison."
+
+- slug: theatre-du-bois-de-l-aune-aix-en-provence
+  title: "Theatre du Bois de l'Aune"
+  description: "Theatre municipal du quartier du Jas de Bouffan a Aix-en-Provence, programmation gratuite et transdisciplinaire."
+  address: "1bis place Victor Schoelcher, 13090 Aix-en-Provence"
+  website: "https://www.boisdelaune.fr/"
+  type: "Theatre"
+  aliases:
+    - "/locations/bois-de-l-aune/"
+  body: "Le Theatre du Bois de l'Aune est un theatre municipal situe dans le quartier du Jas de Bouffan a Aix-en-Provence. Cree en 2011, ce lieu de compagnonnage artistique propose une programmation transdisciplinaire gratuite : theatre, danse, cirque, expositions et spectacles jeune public."
+
+- slug: theatre-du-chene-noir-avignon
+  title: "Theatre du Chene Noir"
+  description: "Theatre historique d'Avignon fonde en 1967, scene conventionnee pres du Palais des Papes."
+  address: "8 bis rue Sainte-Catherine, 84000 Avignon"
+  website: "https://www.chenenoir.fr/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre du Chene Noir est un theatre historique fonde en 1967 par Gerard Gelas, situe a quelques pas du Palais des Papes a Avignon. Scene conventionnee, le lieu dispose de trois espaces : la salle Leo Ferre (288 places), la salle John Coltrane (120 places) et la cour Antonin Artaud (80 places)."
+
+- slug: theatre-du-jeu-de-paume
+  title: "Theatre du Jeu de Paume"
+  description: "Theatre a l'italienne de 493 places a Aix-en-Provence, scene conventionnee d'interet national."
+  address: "21 rue de l'Opera, 13100 Aix-en-Provence"
+  website: "https://www.lestheatres.net/fr/34-theatre-du-jeu-de-paume"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre du Jeu de Paume est un theatre a l'italienne de 493 places situe a Aix-en-Provence. Construit en 1756 et inaugure en 1787, il est inscrit aux Monuments historiques depuis 1981. Scene conventionnee d'interet national, il programme theatre, musique, danse, cirque et humour, et accueille le Festival International d'Art Lyrique."
+
+- slug: theatre-ducourneau-agen
+  title: "Theatre Ducourneau"
+  description: "Theatre municipal a l'italienne d'environ 623 places a Agen, construit en 1908."
+  address: "Place du Docteur Esquirol, 47000 Agen"
+  website: "https://www.agen.fr/mes-loisirs/culture/theatre-municipal-ducourneau"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre Ducourneau est le theatre municipal d'Agen, construit de 1907 a 1908 grace a un legs d'Alphonse-Pierre Ducourneau. Ce theatre a l'italienne d'environ 623 places, concu par l'architecte Guillaume Tronchet, propose une saison d'une cinquantaine de spectacles pluridisciplinaires."
+
+- slug: theatre-le-mille-feuille
+  title: "Le Mille-Feuille"
+  description: "Compagnie de theatre proposant des spectacles et ateliers a Marseille et Aix-en-Provence."
+  address: "14 rue Louis Astouin, 13002 Marseille"
+  website: "https://le-mille-feuille.fr/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Mille-Feuille est une compagnie de theatre basee a Marseille, proposant des spectacles et des ateliers de theatre, creation, interpretation et stand-up a Marseille et Aix-en-Provence."
+
+- slug: theatre-municipal-de-domfront
+  title: "Theatre Municipal de Domfront-en-Poiraie"
+  description: "Theatre-cinema municipal de 163 places a Domfront-en-Poiraie en Normandie, inaugure en 2020."
+  address: "5 place de Burgwedel, 61700 Domfront-en-Poiraie"
+  website: "https://www.ville-domfront.fr/theatre/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre Municipal de Domfront-en-Poiraie est un theatre-cinema inaugure en 2020, situe en Normandie. La salle de 163 places avec gradins retractables accueille du theatre, du cinema et des spectacles. Le lieu est labellise Tourisme et Handicap pour les quatre familles de handicap."
+
+- slug: theatre-olympe-de-gouges-montauban
+  title: "Theatre Olympe de Gouges"
+  description: "Theatre a l'italienne d'environ 500 places au coeur de Montauban, construit vers 1740."
+  address: "4 place Lefranc de Pompignan, 82000 Montauban"
+  website: "https://spectacles.montauban.com/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre Olympe de Gouges est un theatre a l'italienne situe au coeur du centre historique de Montauban. Construit vers 1740 sur l'emplacement d'un ancien jeu de paume et agrandi en 1849, il propose une programmation variee de theatre, musique, danse, cirque et humour."
+

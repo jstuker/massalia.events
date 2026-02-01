@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/kim-wilde-ed076094.webp
 sourceId: cepacsilo:kim-wilde:20260416-2030
-lastCrawled: '2026-02-01T16:53:35+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

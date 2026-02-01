@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/the-depeche-mode-experience-8b8468be.webp
 sourceId: cepacsilo:the-depeche-mode-experience:20260318-2000
-lastCrawled: '2026-02-01T16:54:10+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

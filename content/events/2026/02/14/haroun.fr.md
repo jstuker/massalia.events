@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/haroun-348ef50c.webp
 sourceId: cepacsilo:haroun:20260214-1800
-lastCrawled: '2026-02-01T16:53:27+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

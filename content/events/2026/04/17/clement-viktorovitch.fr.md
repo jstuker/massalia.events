@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/clement-viktorovitch-28a57937.webp
 sourceId: cepacsilo:clement-viktorovitch:20260417-2000
-lastCrawled: '2026-02-01T16:53:16+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

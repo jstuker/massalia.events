@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/the-avener-0e9e7759.webp
 sourceId: cepacsilo:the-avener:20260305-2000
-lastCrawled: '2026-02-01T16:54:09+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

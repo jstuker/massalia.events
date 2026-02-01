@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/pietragalla-barbara-b1015258.webp
 sourceId: cepacsilo:pietragalla-barbara:20260327-2030
-lastCrawled: '2026-02-01T16:54:00+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

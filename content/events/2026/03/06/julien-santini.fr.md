@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/julien-santini-385d48c4.webp
 sourceId: cepacsilo:julien-santini:20260306-2030
-lastCrawled: '2026-02-01T16:53:32+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

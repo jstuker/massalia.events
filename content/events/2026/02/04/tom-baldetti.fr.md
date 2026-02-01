@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/tom-baldetti-51d167e2.webp
 sourceId: cepacsilo:tom-baldetti:20260204-2030
-lastCrawled: '2026-02-01T16:54:17+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

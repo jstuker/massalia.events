@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/meryem-benoua-c296c19c.webp
 sourceId: cepacsilo:meryem-benoua:20260314-2030
-lastCrawled: '2026-02-01T16:53:54+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/suzane-71a495ad.webp
 sourceId: cepacsilo:suzane:20260311-2000
-lastCrawled: '2026-02-01T16:54:07+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/panayotis-pascot-ab15ecf0.webp
 sourceId: cepacsilo:panayotis-pascot:20260424-2030
-lastCrawled: '2026-02-01T16:53:58+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

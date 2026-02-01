@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/d-jal-c4274abf.webp
 sourceId: cepacsilo:djal-2:20260206-2030
-lastCrawled: '2026-02-01T16:53:20+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

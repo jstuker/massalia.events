@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/jean-dans-la-salle-39c6e207.webp
 sourceId: cepacsilo:jean-dans-la-salle:20260201-1800
-lastCrawled: '2026-02-01T16:53:31+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

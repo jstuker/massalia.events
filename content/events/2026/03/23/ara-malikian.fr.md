@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/ara-malikian-7e2e98ed.webp
 sourceId: cepacsilo:ara-milikian:20260323-2000
-lastCrawled: '2026-02-01T16:53:06+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

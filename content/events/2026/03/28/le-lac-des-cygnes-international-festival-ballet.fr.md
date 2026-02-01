@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/le-lac-des-cygnes-international-festival-ballet-95962d23.webp
 sourceId: cepacsilo:le-lac-des-cygnes:20260328-2030
-lastCrawled: '2026-02-01T16:53:40+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---

@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/sebastien-tellier-58c7c44b.webp
 sourceId: cepacsilo:sebastien-tellier:20260312-2000
-lastCrawled: '2026-02-01T16:54:04+01:00'
+lastCrawled: '2026-02-01T17:39:00+01:00'
 expired: false
 ---

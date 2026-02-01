@@ -16,6 +16,6 @@ dates:
 tags: []
 image: /images/events/legende-balavoine-14690b44.webp
 sourceId: cepacsilo:legende-balavoine:20260304-2000
-lastCrawled: '2026-02-01T16:53:42+01:00'
+lastCrawled: '2026-02-01T17:38:59+01:00'
 expired: false
 ---
