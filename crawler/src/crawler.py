@@ -302,6 +302,11 @@ class BaseCrawler(ABC):
             "vice versa": "vice-versa-marseille",
             "vice versa marseille": "vice-versa-marseille",
             "vl": "vl",
+            # Videodrome 2
+            "videodrome 2": "videodrome-2",
+            "videodrome2": "videodrome-2",
+            "vidéodrome 2": "videodrome-2",
+            "vidéodrome": "videodrome-2",
             # Journal Zébuline venues
             "le zef": "le-zef",
             "mucem": "mucem",
