@@ -1,0 +1,13 @@
+{{ define "main" }}
+  <h1 class="mb-3 text-4xl font-extrabold">{{ i18n "error.404_title" | emojify }}</h1>
+  <p class="mt-8 mb-12 text-neutral-400 dark:text-neutral-500">
+    {{ i18n "error.404_error" | emojify }}
+  </p>
+  <div style="display:flex;align-items:center;justify-content:center;min-height:40vh;text-align:center">
+    <a href="{{ "/" | relURL }}"
+       style="font-size:3rem;line-height:1;font-weight:800;text-decoration:underline;text-underline-offset:0.15em"
+       class="text-primary-600 decoration-primary-600/50 transition hover:text-primary-500 hover:decoration-primary-500 dark:text-primary-400 dark:decoration-primary-400/50 dark:hover:text-primary-300 dark:hover:decoration-primary-300">
+      Retrouvez les événements sur la page d'accueil.
+    </a>
+  </div>
+{{ end }}
