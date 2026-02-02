@@ -10,7 +10,7 @@ description: Porté par une voix puissante et une harpe envoûtante, le concert 
 categories:
 - musique
 locations:
-- cinema-eden-theatre
+- cinema-eden
 dates:
 - dimanche-01-fevrier
 tags: []

@@ -10,7 +10,7 @@ description: Un programme baroque et classique célèbre Jean‑Sébastien Bach 
 categories:
 - musique
 locations:
-- 15-rue-grignan
+- temple-grignan
 dates:
 - dimanche-01-fevrier
 tags: []

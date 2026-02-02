@@ -10,7 +10,7 @@ description: The Good Bouill'Gospelers proposent un concert a cappella qui c√©l√
 categories:
 - musique
 locations:
-- 1-cour-de-clastres
+- saint-sauveur-daubagne
 dates:
 - dimanche-01-fevrier
 tags: []

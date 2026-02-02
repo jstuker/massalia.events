@@ -10,7 +10,7 @@ description: Le spectacle Recirquel Company marie cirque contemporain, danse et 
 categories:
 - danse
 locations:
-- halle-de-la-chaudronnerie
+- chaudronnerie
 dates:
 - jeudi-19-mars
 tags: []

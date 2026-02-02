@@ -10,7 +10,7 @@ description: Jack in the Box avec The Advent et Aril Brikha propose une nuit tec
 categories:
 - musique
 locations:
-- le-cabaret-aleatoire
+- cabaret-aleatoire
 dates:
 - samedi-07-fevrier
 tags: []
