@@ -74,8 +74,10 @@
     "communaute" "background-color: #3b82f6; color: white;"
 }}
 
-{{/* Get event image */}}
+{{/* Get event image with dimensions for CLS prevention */}}
 {{ $imageURL := "" }}
+{{ $imgWidth := 0 }}
+{{ $imgHeight := 0 }}
 {{ with $page.Params.image }}
   {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
     {{ $imageURL = . }}
@@ -83,9 +85,14 @@
     {{ $img := resources.Get . }}
     {{ with $img }}
       {{ if not $disableImageOptimization }}
-        {{ $imageURL = (.Resize "1200x").RelPermalink }}
+        {{ $resized := .Resize "1200x" }}
+        {{ $imageURL = $resized.RelPermalink }}
+        {{ $imgWidth = $resized.Width }}
+        {{ $imgHeight = $resized.Height }}
       {{ else }}
         {{ $imageURL = .RelPermalink }}
+        {{ $imgWidth = .Width }}
+        {{ $imgHeight = .Height }}
       {{ end }}
     {{ end }}
   {{ end }}
@@ -99,9 +106,14 @@
       {{ $img := $images.GetMatch . }}
       {{ with $img }}
         {{ if not $disableImageOptimization }}
-          {{ $imageURL = ($img.Resize "1200x").RelPermalink }}
+          {{ $resized := $img.Resize "1200x" }}
+          {{ $imageURL = $resized.RelPermalink }}
+          {{ $imgWidth = $resized.Width }}
+          {{ $imgHeight = $resized.Height }}
         {{ else }}
           {{ $imageURL = $img.RelPermalink }}
+          {{ $imgWidth = $img.Width }}
+          {{ $imgHeight = $img.Height }}
         {{ end }}
       {{ end }}
     {{ end }}
@@ -149,6 +161,10 @@
         <img
           src="{{ $imageURL }}"
           alt="{{ $eventName }}"
+          {{ with $imgWidth }}width="{{ . }}"{{ end }}
+          {{ with $imgHeight }}height="{{ . }}"{{ end }}
+          fetchpriority="high"
+          decoding="async"
           class="h-full w-full object-cover"
         />
       </div>
