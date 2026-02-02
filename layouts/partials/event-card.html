@@ -48,6 +48,7 @@
 {{ $imageURL := "" }}
 {{ $imgWidth := 0 }}
 {{ $imgHeight := 0 }}
+{{ $srcset := "" }}
 {{ with $page.Params.image }}
   {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
     {{ $imageURL = . }}
@@ -68,6 +69,9 @@
           {{ $imageURL = $resized.RelPermalink }}
           {{ $imgWidth = $resized.Width }}
           {{ $imgHeight = $resized.Height }}
+          {{/* Generate responsive srcset for card images */}}
+          {{ $img200 := .Resize "200x" }}
+          {{ $srcset = printf "%s 200w, %s 400w" $img200.RelPermalink $resized.RelPermalink }}
         {{ else }}
           {{ $imageURL = .RelPermalink }}
           {{ $imgWidth = .Width }}
@@ -90,6 +94,8 @@
           {{ $imageURL = $resized.RelPermalink }}
           {{ $imgWidth = $resized.Width }}
           {{ $imgHeight = $resized.Height }}
+          {{ $img200 := $img.Resize "200x" }}
+          {{ $srcset = printf "%s 200w, %s 400w" $img200.RelPermalink $resized.RelPermalink }}
         {{ else }}
           {{ $imageURL = $img.RelPermalink }}
           {{ $imgWidth = $img.Width }}
@@ -157,6 +163,8 @@
         alt="{{ $eventName }}"
         {{ with $imgWidth }}width="{{ . }}"{{ end }}
         {{ with $imgHeight }}height="{{ . }}"{{ end }}
+        {{ with $srcset }}srcset="{{ . }}"{{ end }}
+        {{ with $srcset }}sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"{{ end }}
         loading="lazy"
         decoding="async"
         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
