@@ -223,7 +223,21 @@ class SelectionCriteria:
         return SelectionResult(accepted=True, reason="")
 
     def _check_excluded_locations(self, location: str, text: str) -> SelectionResult:
-        """Check for excluded locations."""
+        """Check for excluded locations.
+
+        Skips the check when the event location matches a known local
+        keyword, so that city names appearing in titles or descriptions
+        (e.g. a film about Paris screened at a Marseille venue) do not
+        cause false rejections.
+        """
+        # If the location itself is a known local venue, trust it
+        if location and self.geography.local_keywords:
+            loc_normalized = location.lower().replace("-", " ").replace("_", " ")
+            for local_kw in self.geography.local_keywords:
+                kw_normalized = local_kw.lower().replace("-", " ").replace("_", " ")
+                if kw_normalized in loc_normalized or loc_normalized in kw_normalized:
+                    return SelectionResult(accepted=True, reason="")
+
         check_text = f"{location} {text}".lower()
 
         for excluded_loc in self.geography.exclude_locations:

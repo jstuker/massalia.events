@@ -3,6 +3,7 @@
 import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pytest
 import yaml
@@ -48,6 +49,7 @@ class TestSelectionCriteria:
             geography=GeographyConfig(
                 required_location="Marseille",
                 exclude_locations=["Paris", "Lyon"],
+                local_keywords=["videodrome 2", "videodrome2", "la friche", "mucem"],
             ),
             dates=DatesConfig(
                 min_days_ahead=0,
@@ -145,6 +147,31 @@ class TestSelectionCriteria:
             name="Concert à Paris",
             date=future_date,
             location="Paris",
+            category="concert",
+        )
+        assert result.accepted is False
+        assert "Paris" in result.reason
+
+    def test_accept_excluded_city_in_title_at_local_venue(self, criteria):
+        """Test that an excluded city name in the title does not reject
+        an event whose location is a known local venue."""
+        future_date = datetime.now(ZoneInfo("Europe/Paris")) + timedelta(days=7)
+        result = criteria.evaluate(
+            name="La Commune (Paris, 1871) de Peter Watkins",
+            date=future_date,
+            location="videodrome-2",
+            description="Film screening at Videodrome 2",
+            category="exposition",
+        )
+        assert result.accepted is True
+
+    def test_reject_excluded_location_without_local_venue(self, criteria):
+        """Test that excluded city is still rejected when the venue is not local."""
+        future_date = datetime.now(ZoneInfo("Europe/Paris")) + timedelta(days=7)
+        result = criteria.evaluate(
+            name="Concert à Paris",
+            date=future_date,
+            location="Salle Pleyel",
             category="concert",
         )
         assert result.accepted is False
