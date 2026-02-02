@@ -46,6 +46,9 @@
 
 {{/* Get event image - prefer thumbnail for card display */}}
 {{ $imageURL := "" }}
+{{ $imgWidth := 0 }}
+{{ $imgHeight := 0 }}
+{{ $srcset := "" }}
 {{ with $page.Params.image }}
   {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
     {{ $imageURL = . }}
@@ -55,14 +58,24 @@
     {{ $thumbImg := resources.Get $thumbPath }}
     {{ with $thumbImg }}
       {{ $imageURL = .RelPermalink }}
+      {{ $imgWidth = .Width }}
+      {{ $imgHeight = .Height }}
     {{ else }}
       {{/* Fall back to original image with resize */}}
       {{ $img := resources.Get . }}
       {{ with $img }}
         {{ if not $disableImageOptimization }}
-          {{ $imageURL = (.Resize "400x").RelPermalink }}
+          {{ $resized := .Resize "400x" }}
+          {{ $imageURL = $resized.RelPermalink }}
+          {{ $imgWidth = $resized.Width }}
+          {{ $imgHeight = $resized.Height }}
+          {{/* Generate responsive srcset for card images */}}
+          {{ $img200 := .Resize "200x" }}
+          {{ $srcset = printf "%s 200w, %s 400w" $img200.RelPermalink $resized.RelPermalink }}
         {{ else }}
           {{ $imageURL = .RelPermalink }}
+          {{ $imgWidth = .Width }}
+          {{ $imgHeight = .Height }}
         {{ end }}
       {{ end }}
     {{ end }}
@@ -77,9 +90,16 @@
       {{ $img := $images.GetMatch . }}
       {{ with $img }}
         {{ if not $disableImageOptimization }}
-          {{ $imageURL = ($img.Resize "400x").RelPermalink }}
+          {{ $resized := $img.Resize "400x" }}
+          {{ $imageURL = $resized.RelPermalink }}
+          {{ $imgWidth = $resized.Width }}
+          {{ $imgHeight = $resized.Height }}
+          {{ $img200 := $img.Resize "200x" }}
+          {{ $srcset = printf "%s 200w, %s 400w" $img200.RelPermalink $resized.RelPermalink }}
         {{ else }}
           {{ $imageURL = $img.RelPermalink }}
+          {{ $imgWidth = $img.Width }}
+          {{ $imgHeight = $img.Height }}
         {{ end }}
       {{ end }}
     {{ end }}
@@ -141,6 +161,10 @@
       <img
         src="{{ $imageURL }}"
         alt="{{ $eventName }}"
+        {{ with $imgWidth }}width="{{ . }}"{{ end }}
+        {{ with $imgHeight }}height="{{ . }}"{{ end }}
+        {{ with $srcset }}srcset="{{ . }}"{{ end }}
+        {{ with $srcset }}sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"{{ end }}
         loading="lazy"
         decoding="async"
         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"

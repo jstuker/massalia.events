@@ -74,8 +74,11 @@
     "communaute" "background-color: #3b82f6; color: white;"
 }}
 
-{{/* Get event image */}}
+{{/* Get event image with dimensions and responsive srcset */}}
 {{ $imageURL := "" }}
+{{ $imgWidth := 0 }}
+{{ $imgHeight := 0 }}
+{{ $srcset := "" }}
 {{ with $page.Params.image }}
   {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
     {{ $imageURL = . }}
@@ -83,9 +86,18 @@
     {{ $img := resources.Get . }}
     {{ with $img }}
       {{ if not $disableImageOptimization }}
-        {{ $imageURL = (.Resize "1200x").RelPermalink }}
+        {{ $resized := .Resize "1200x" }}
+        {{ $imageURL = $resized.RelPermalink }}
+        {{ $imgWidth = $resized.Width }}
+        {{ $imgHeight = $resized.Height }}
+        {{/* Generate responsive srcset for multiple breakpoints */}}
+        {{ $img600 := .Resize "600x" }}
+        {{ $img900 := .Resize "900x" }}
+        {{ $srcset = printf "%s 600w, %s 900w, %s 1200w" $img600.RelPermalink $img900.RelPermalink $resized.RelPermalink }}
       {{ else }}
         {{ $imageURL = .RelPermalink }}
+        {{ $imgWidth = .Width }}
+        {{ $imgHeight = .Height }}
       {{ end }}
     {{ end }}
   {{ end }}
@@ -99,9 +111,17 @@
       {{ $img := $images.GetMatch . }}
       {{ with $img }}
         {{ if not $disableImageOptimization }}
-          {{ $imageURL = ($img.Resize "1200x").RelPermalink }}
+          {{ $resized := $img.Resize "1200x" }}
+          {{ $imageURL = $resized.RelPermalink }}
+          {{ $imgWidth = $resized.Width }}
+          {{ $imgHeight = $resized.Height }}
+          {{ $img600 := $img.Resize "600x" }}
+          {{ $img900 := $img.Resize "900x" }}
+          {{ $srcset = printf "%s 600w, %s 900w, %s 1200w" $img600.RelPermalink $img900.RelPermalink $resized.RelPermalink }}
         {{ else }}
           {{ $imageURL = $img.RelPermalink }}
+          {{ $imgWidth = $img.Width }}
+          {{ $imgHeight = $img.Height }}
         {{ end }}
       {{ end }}
     {{ end }}
@@ -149,6 +169,12 @@
         <img
           src="{{ $imageURL }}"
           alt="{{ $eventName }}"
+          {{ with $imgWidth }}width="{{ . }}"{{ end }}
+          {{ with $imgHeight }}height="{{ . }}"{{ end }}
+          {{ with $srcset }}srcset="{{ . }}"{{ end }}
+          {{ with $srcset }}sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 900px"{{ end }}
+          fetchpriority="high"
+          decoding="async"
           class="h-full w-full object-cover"
         />
       </div>
