@@ -1,5 +1,5 @@
 ---
-title: LaLeçon
+title: La Leçon
 date: '2026-02-13T01:05:00+01:00'
 draft: false
 expiryDate: '2026-02-14T00:00:00+01:00'
@@ -10,7 +10,7 @@ description: 'Avertissement : certaines scènes de violences sexistes et sexuell
 categories:
 - theatre
 locations:
-- lorsque-le-langage-devient-instrument-de-domination-que-peut-il-advenir-sinon-le-pire-robin-renucci-porte-au-plateau-la-modernite-du-texte-de-ionesco-et-son-theatre-violemment-comique-et-dramatique
+- la-criee
 dates:
 - vendredi-13-fevrier
 tags: []

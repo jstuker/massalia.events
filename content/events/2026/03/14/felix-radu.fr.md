@@ -10,7 +10,7 @@ description: Le concert de Felix Radu mêle écriture ciselée, humour subtil et
 categories:
 - musique
 locations:
-- scene-mediterrannee
+- scene-mediterranee
 dates:
 - samedi-14-mars
 tags: []

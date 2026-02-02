@@ -878,3 +878,18 @@
   aliases: []
   body: "Le Theatre Olympe de Gouges est un theatre a l'italienne situe au coeur du centre historique de Montauban. Construit vers 1740 sur l'emplacement d'un ancien jeu de paume et agrandi en 1849, il propose une programmation variee de theatre, musique, danse, cirque et humour."
 
+
+# ============================================================
+# Duplicate stubs removed — these are now covered by aliases
+# in their canonical entries:
+#
+# 1-cour-de-clastres      → saint-sauveur-daubagne
+# 15-rue-grignan           → temple-grignan
+# 3-montee-saint-esprit    → theatre-du-lacydon
+# cinema-eden-theatre      → cinema-eden
+# halle-de-la-chaudronnerie → chaudronnerie
+# le-cabaret-aleatoire     → cabaret-aleatoire
+# le-theatre-des-salins    → les-salins
+# scene-mediterrannee      → scene-mediterranee
+# ============================================================
+

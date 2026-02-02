@@ -10,7 +10,7 @@ description: Mandragora All Night Long propose un marathon électro où Mandrago
 categories:
 - musique
 locations:
-- le-cabaret-aleatoire
+- cabaret-aleatoire
 dates:
 - samedi-21-mars
 tags: []

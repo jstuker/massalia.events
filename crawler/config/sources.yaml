@@ -225,6 +225,25 @@ sources:
       "Folk": "musique"
       "Rock": "musique"
 
+  # Videodrome 2 - Independent cinema in Marseille (6th arrondissement)
+  # Screenings, ciné-clubs, ciné-concerts, and youth programming
+  - name: "Videodrome 2"
+    id: "videodrome2"
+    url: "https://www.videodrome2.fr/accueil/cinema-marseille/"
+    parser: "videodrome2"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "Les séances de cinéma": "art"
+      "Les cycles Jeune Public": "art"
+      "LSF": "art"
+      "Cinéma": "art"
+      "Projection": "art"
+      "Ciné-concert": "musique"
+      "Atelier": "communaute"
+
   # Le Makeda - Concert and performance venue in Marseille
   # Salle de concerts & spectacles / DJ set / expositions
   - name: "Le Makeda"

@@ -10,7 +10,7 @@ description: Kill Me explore une danse autobiographique où Marina Otero pousse 
 categories:
 - danse
 locations:
-- le-theatre-des-salins
+- les-salins
 dates:
 - mardi-10-fevrier
 tags: []

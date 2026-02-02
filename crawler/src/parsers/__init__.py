@@ -10,6 +10,7 @@ from .lafriche import LaFricheParser
 from .lemakeda import LeMakedaParser
 from .loeuvre import LoeuvreParser
 from .shotgun import ShotgunParser
+from .videodrome2 import Videodrome2Parser
 
 PARSERS = {
     "lafriche": LaFricheParser,
@@ -21,6 +22,7 @@ PARSERS = {
     "cepacsilo": CepacSiloParser,
     "lacriee": LaCrieeParser,
     "lemakeda": LeMakedaParser,
+    "videodrome2": Videodrome2Parser,
     "generic": ConfigurableEventParser,
 }
 
@@ -68,6 +70,7 @@ __all__ = [
     "KlemenisParser",
     "LoeuvreParser",
     "ShotgunParser",
+    "Videodrome2Parser",
     "get_parser",
     "list_parsers",
 ]

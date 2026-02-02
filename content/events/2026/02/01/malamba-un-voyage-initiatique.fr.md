@@ -10,7 +10,7 @@ description: Malamba un Voyage Initiatique mêle danse, théâtre et arts scéno
 categories:
 - theatre
 locations:
-- 3-montee-saint-esprit
+- theatre-du-lacydon
 dates:
 - dimanche-01-fevrier
 tags: []
