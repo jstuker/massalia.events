@@ -24,6 +24,21 @@ googleAnalytics = "G-3G7FRRWSQZ"
 
 [imaging]
   anchor = 'Center'
+  quality = 80
+  resampleFilter = 'Lanczos'
+
+[imaging.exif]
+  disableDate = true
+  disableLatLong = true
+  includeFields = ''
+
+[minify]
+  minifyOutput = true
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepWhitespace = false
+    [minify.tdewolff.css]
+      keepCSS2 = false
 
 [taxonomies]
   category = "categories"
