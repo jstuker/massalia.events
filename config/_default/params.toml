@@ -9,7 +9,7 @@ colorScheme = "blowfish"
 defaultAppearance = "light" # valid options: light or dark
 autoSwitchAppearance = true
 
-logo = "img/massalia-events.svg"
+logo = "img/logo.png"
 
 enableA11y = false
 enableSearch = true
