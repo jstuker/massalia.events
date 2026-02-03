@@ -76,18 +76,19 @@
   </div>
 </section>
 
-{{/* Filter expired events */}}
+{{/* Filter expired events and sort by date (soonest first) */}}
 {{ $allPages := .Pages }}
 {{ $activeEvents := partial "filter-active-events.html" (dict "pages" $allPages) }}
+{{ $sortedEvents := sort $activeEvents ".Date" "asc" }}
+
+{{/* Paginate the filtered and sorted events */}}
+{{ $paginator := .Paginate $sortedEvents }}
 
 {{/* Event Cards Grid - uses same event-card.html partial as homepage */}}
-{{ if gt (len $activeEvents) 0 }}
-  {{/* Sort events chronologically (soonest first) */}}
-  {{ $sortedEvents := sort $activeEvents ".Date" "asc" }}
-
+{{ if gt (len $paginator.Pages) 0 }}
   <section class="event-cards-container" role="region" aria-label="Liste des événements">
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mx-auto max-w-5xl">
-      {{ range $sortedEvents }}
+      {{ range $paginator.Pages }}
         <div class="event-card-wrapper w-full max-w-sm">
           {{ partial "event-card.html" . }}
         </div>
