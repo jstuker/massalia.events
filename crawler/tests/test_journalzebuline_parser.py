@@ -142,6 +142,19 @@ def sample_verse_html_venue_in_strong():
 
 
 @pytest.fixture
+def sample_verse_html_bernardines():
+    """Article HTML with Théâtre des Bernardines in <strong> tag (no link)."""
+    return """
+    <div class="entry-content">
+        <p>A review of a show.</p>
+        <pre class="wp-block-verse"><mark style="background-color:rgba(0, 0, 0, 0)"
+      class="has-inline-color has-luminous-vivid-orange-color">Du 3 au 7 février</mark><br>
+<strong>Théâtre des Bernardines, </strong>Marseille</pre>
+    </div>
+    """
+
+
+@pytest.fixture
 def sample_api_article():
     """Sample WordPress REST API article response."""
     return {
@@ -423,6 +436,13 @@ class TestExtractVerseBlocks:
         assert len(blocks) == 1
         assert "Le Zef" in blocks[0]["venue_name"]
         assert "Du 3 au 5 février" in blocks[0]["date_text"]
+
+    def test_theatre_des_bernardines_in_strong(self, sample_verse_html_bernardines):
+        """Théâtre des Bernardines in <strong> tag should be extracted."""
+        blocks = _extract_verse_blocks(sample_verse_html_bernardines)
+        assert len(blocks) == 1
+        assert "Bernardines" in blocks[0]["venue_name"]
+        assert "Du 3 au 7 février" in blocks[0]["date_text"]
 
 
 # ── Test _is_book_block ────────────────────────────────────────────

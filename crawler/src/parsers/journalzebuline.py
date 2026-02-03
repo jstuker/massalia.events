@@ -147,6 +147,9 @@ MARSEILLE_VENUE_KEYWORDS = {
     "le grand théâtre de provence",
     "le grand theatre de provence",
     "pavillon noir",
+    "théâtre des bernardines",
+    "theatre des bernardines",
+    "bernardines",
 }
 
 

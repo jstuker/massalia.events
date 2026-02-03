@@ -9,7 +9,8 @@ startTime: '20:00'
 description: Né de l’écriture et de l’interprétation d’Éric Feldman, mis en scène et élaboré en collaboration avec Olivier Veillon, On ne jouait pas à la pétanque dans...
 categories:
 - theatre
-locations: []
+locations:
+- theatre-des-bernardines
 dates:
 - samedi-07-fevrier
 tags:

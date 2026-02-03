@@ -356,6 +356,9 @@ class BaseCrawler(ABC):
             "theatre du lacydon": "theatre-du-lacydon",
             "théâtre off": "theatre-off",
             "theatre off": "theatre-off",
+            "théâtre des bernardines": "theatre-des-bernardines",
+            "theatre des bernardines": "theatre-des-bernardines",
+            "bernardines": "theatre-des-bernardines",
         }
 
         raw_lower = raw_location.lower()
