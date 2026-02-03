@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{/*
-  Events list page - shows all non-expired events sorted by date (most recent first)
+  Events list page - shows non-expired events sorted by date, paginated
 */}}
 
 {{ .Scratch.Set "scope" "list" }}
@@ -15,14 +15,18 @@
   <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
 </header>
 
-{{/* Filter expired events using our custom partial */}}
+{{/* Filter expired events and sort by date (soonest first) */}}
 {{ $allPages := .Pages }}
 {{ $activeEvents := partial "filter-active-events.html" (dict "pages" $allPages) }}
+{{ $sortedEvents := sort $activeEvents ".Date" "asc" }}
 
-{{/* Events list sorted by date, soonest first */}}
-{{ if gt (len $activeEvents) 0 }}
+{{/* Paginate the filtered and sorted events */}}
+{{ $paginator := .Paginate $sortedEvents }}
+
+{{/* Events list */}}
+{{ if gt (len $paginator.Pages) 0 }}
   <section class="mt-6 w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-    {{ range sort $activeEvents ".Date" "asc" }}
+    {{ range $paginator.Pages }}
       {{ partial "event-card.html" (dict "page" . "showSourceBadge" true) }}
     {{ end }}
   </section>
