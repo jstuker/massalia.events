@@ -271,6 +271,38 @@ sources:
       "Ateliers": "communaute"
       "Evenement immersif & multisensoriel": "communaute"
 
+  # Le Zef - Scene nationale de Marseille (formerly Theatre du Merlan)
+  # Major venue in 14th arrondissement hosting theatre, dance, music, and art
+  - name: "Le Zef - Scene nationale de Marseille"
+    id: "lezef"
+    url: "https://www.lezef.org/fr/saison/25-26"
+    parser: "lezef"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "danse": "danse"
+      "DANSE": "danse"
+      "musique": "musique"
+      "MUSIQUE": "musique"
+      "theatre": "theatre"
+      "THEATRE": "theatre"
+      "théâtre": "theatre"
+      "THÉÂTRE": "theatre"
+      "cirque": "theatre"
+      "CIRQUE": "theatre"
+      "magie": "theatre"
+      "MAGIE": "theatre"
+      "expo": "art"
+      "EXPO": "art"
+      "cinema": "art"
+      "CINEMA": "art"
+      "cinéma": "art"
+      "CINÉMA": "art"
+      "cuisine": "communaute"
+      "CUISINE": "communaute"
+
 # Default settings applied to all sources unless overridden
 defaults:
   enabled: true
