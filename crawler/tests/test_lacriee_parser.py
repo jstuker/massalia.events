@@ -11,6 +11,7 @@ from src.parsers.lacriee import (
     _extract_event_urls_from_html,
     _find_venue_in_lines,
     _generate_source_id,
+    _is_external_venue,
     _parse_french_date,
     _parse_french_time,
     _parse_showtimes_from_html,
@@ -60,6 +61,7 @@ def sample_listing_html():
 @pytest.fixture
 def sample_detail_html():
     """Sample event detail page with multiple dates."""
+    # Dates are in the future (after Feb 3, 2026)
     return """
     <html>
     <head>
@@ -78,7 +80,7 @@ def sample_detail_html():
 
         <div>
             <h3>Jeudi</h3>
-            <p>29 janvier 2026</p>
+            <p>5 mars 2026</p>
             <p>20h</p>
             <p>Représentation</p>
             <p>Première</p>
@@ -88,7 +90,7 @@ def sample_detail_html():
 
         <div>
             <h3>Vendredi</h3>
-            <p>30 janvier 2026</p>
+            <p>6 mars 2026</p>
             <p>20h</p>
             <p>Représentation</p>
             <p>La Criée - Salle Déméter</p>
@@ -96,7 +98,7 @@ def sample_detail_html():
 
         <div>
             <h3>Samedi</h3>
-            <p>31 janvier 2026</p>
+            <p>7 mars 2026</p>
             <p>18h15</p>
             <p>Représentation</p>
             <p>La Criée - Salle Déméter</p>
@@ -104,7 +106,7 @@ def sample_detail_html():
 
         <div>
             <h3>Tournée</h3>
-            <p>3 mars 2026</p>
+            <p>15 avril 2026</p>
             <p>20h30</p>
             <p>Théâtre du Bois de l'Aune - Aix-en-Provence</p>
         </div>
@@ -327,17 +329,17 @@ class TestParseShowtimesFromHtml:
 
     def test_parses_date_components(self, sample_detail_html):
         showtimes = _parse_showtimes_from_html(sample_detail_html)
-        # First showtime: 29 janvier 2026, 20h
+        # First showtime: 5 mars 2026, 20h
         first = showtimes[0]
         assert first["datetime"].year == 2026
-        assert first["datetime"].month == 1
-        assert first["datetime"].day == 29
+        assert first["datetime"].month == 3
+        assert first["datetime"].day == 5
         assert first["datetime"].hour == 20
         assert first["datetime"].minute == 0
 
     def test_parses_time_with_minutes(self, sample_detail_html):
         showtimes = _parse_showtimes_from_html(sample_detail_html)
-        # Third showtime: 31 janvier 2026, 18h15
+        # Third showtime: 7 mars 2026, 18h15
         times_with_minutes = [st for st in showtimes if st["datetime"].minute == 15]
         assert len(times_with_minutes) >= 1
         assert times_with_minutes[0]["datetime"].hour == 18
@@ -403,6 +405,46 @@ class TestFindVenueInLines:
         ]
         venue = _find_venue_in_lines(lines, 0)
         assert venue is None
+
+    def test_finds_university_venue(self):
+        """Test that university venues are detected."""
+        lines = [
+            "Représentation",
+            "Aix-Marseille Université",
+            "Prendre des places",
+        ]
+        venue = _find_venue_in_lines(lines, 0)
+        assert venue is not None
+        assert "Université" in venue
+
+
+# ── Test _is_external_venue ───────────────────────────────────────
+
+
+class TestIsExternalVenue:
+    """Tests for external venue detection."""
+
+    def test_criee_venue_is_not_external(self):
+        assert _is_external_venue("La Criée - Salle Déméter") is False
+        assert _is_external_venue("La Criée - Salle Ouranos") is False
+
+    def test_university_is_external(self):
+        assert _is_external_venue("Aix-Marseille Université") is True
+        assert _is_external_venue("Avec Aix-Marseille Université") is True
+
+    def test_aix_en_provence_is_external(self):
+        assert _is_external_venue("Théâtre du Bois de l'Aune - Aix-en-Provence") is True
+
+    def test_none_is_not_external(self):
+        """None venue (undetected) should not be considered external."""
+        assert _is_external_venue(None) is False
+
+    def test_empty_string_is_not_external(self):
+        assert _is_external_venue("") is False
+
+    def test_criee_with_university_is_not_external(self):
+        """If venue explicitly mentions La Criée, it's not external."""
+        assert _is_external_venue("La Criée - Université partenaire") is False
 
 
 # ── Test _generate_source_id ──────────────────────────────────────
@@ -619,3 +661,49 @@ class TestLaCrieeParserIntegration:
 
         assert len(events) == 1
         assert "la-criee" in events[0].locations
+
+    def test_filters_external_venue_tour_dates(self, parser):
+        """Test that tour dates at external venues (e.g., universities) are filtered out."""
+        detail_html = """
+        <html>
+        <head>
+            <meta property="og:image" content="https://theatre-lacriee.com/storage/2026/01/test.jpg">
+        </head>
+        <body>
+            <h1>Test Event</h1>
+            <div>Théâtre</div>
+            <p>A test event description that is long enough to be extracted as the description.</p>
+
+            <div>
+                <h3>Mercredi</h3>
+                <p>10 mars 2026</p>
+                <p>20h</p>
+                <p>La Criée - Salle Déméter</p>
+            </div>
+
+            <div>
+                <h3>Tournée</h3>
+                <p>15 mars 2026</p>
+                <p>20h</p>
+                <p>Aix-Marseille Université</p>
+            </div>
+        </body>
+        </html>
+        """
+        listing_html = """
+        <html><body>
+            <a href="/programmation/evenements/test-event">Test Event</a>
+        </body></html>
+        """
+        parser.http_client.get_text.side_effect = [detail_html]
+
+        html_parser = HTMLParser(
+            listing_html,
+            "https://theatre-lacriee.com",
+        )
+        events = parser.parse_events(html_parser)
+
+        # Should only have the La Criée date, not the university tour date
+        assert len(events) == 1
+        assert events[0].start_datetime.day == 10
+        assert events[0].start_datetime.month == 3

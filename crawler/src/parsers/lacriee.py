@@ -180,7 +180,7 @@ def _parse_showtimes_from_html(html: str) -> list[dict]:
                 showtimes.append(
                     {
                         "datetime": event_dt,
-                        "venue": venue or "La Criée",
+                        "venue": venue,
                     }
                 )
                 continue
@@ -240,12 +240,48 @@ def _find_venue_in_lines(lines: list[str], start_idx: int) -> str | None:
             return line
         if "zef" in line_lower or "théâtre" in line_lower:
             return line
+        # External venue indicators (universities, tour venues)
+        if "université" in line_lower or "universite" in line_lower:
+            return line
 
         # If it looks like an address or venue (contains comma or starts with capital)
         if "," in line and any(c.isdigit() for c in line):
             return line
 
     return None
+
+
+def _is_external_venue(venue_text: str | None) -> bool:
+    """
+    Check if a venue is external (not at La Criée).
+
+    Tour dates at universities or other external venues should not be
+    captured as La Criée events.
+
+    Args:
+        venue_text: The venue text from the page
+
+    Returns:
+        True if the venue is external, False if it's at La Criée
+    """
+    if not venue_text:
+        return False
+
+    venue_lower = venue_text.lower()
+
+    # External venue indicators
+    external_indicators = [
+        "université",
+        "universite",
+        "aix-en-provence",
+        "aix en provence",
+    ]
+
+    # If venue explicitly mentions La Criée, it's not external
+    if "la criée" in venue_lower or "lacriée" in venue_lower:
+        return False
+
+    return any(indicator in venue_lower for indicator in external_indicators)
 
 
 class LaCrieeParser(BaseCrawler):
@@ -356,9 +392,17 @@ class LaCrieeParser(BaseCrawler):
             if dt < now:
                 continue
 
-            # Determine location
-            venue_text = st.get("venue", "La Criée")
-            location = self.map_location(venue_text)
+            # Get venue text (None if not found by parser)
+            venue_text = st.get("venue")
+
+            # Skip tour dates at external venues (e.g., universities)
+            # These should not be captured as La Criée events
+            if _is_external_venue(venue_text):
+                logger.debug(f"Skipping external venue showtime: {venue_text}")
+                continue
+
+            # Determine location (default to La Criée if no venue specified)
+            location = self.map_location(venue_text or "La Criée")
 
             event = Event(
                 name=name,
