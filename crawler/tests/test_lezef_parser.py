@@ -685,3 +685,74 @@ class TestLeZefParserIntegration:
         assert any("artiste" in t for t in tags_lower) or any(
             "groupe" in t for t in tags_lower
         )
+
+    def test_ongoing_exhibition_uses_today(self, parser):
+        """Test that ongoing exhibitions with past startDate use today's date."""
+        # Create an exhibition that started in the past but ends in the future
+        json_ld = json.dumps(
+            {
+                "@type": "WebPage",
+                "mainEntity": {
+                    "@type": "Event",
+                    "name": "Ongoing Exhibition",
+                    "startDate": "2025-09-01",  # Past date
+                    "endDate": "2026-12-31",  # Future date
+                    "description": "An ongoing exhibition.",
+                },
+            }
+        )
+        html = f"""
+        <html>
+        <head><script type="application/ld+json">{json_ld}</script></head>
+        <body>
+            <p class="category"><a class="expo">EXPO</a></p>
+            <h1>Ongoing Exhibition</h1>
+        </body>
+        </html>
+        """
+        parser.http_client.get_text.return_value = html
+
+        event = parser._parse_detail_page(
+            "https://www.lezef.org/fr/saison/25-26/ongoing-exhibition"
+        )
+
+        assert event is not None
+        assert event.name == "Ongoing Exhibition"
+        # The event date should be today (not the past startDate)
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+
+        today = datetime.now(ZoneInfo("Europe/Paris")).date()
+        assert event.start_datetime.date() == today
+        # Time should be 10:00 for exhibitions
+        assert event.start_datetime.hour == 10
+
+    def test_past_event_without_enddate_is_skipped(self, parser):
+        """Test that past events without endDate are still skipped."""
+        json_ld = json.dumps(
+            {
+                "@type": "WebPage",
+                "mainEntity": {
+                    "@type": "Event",
+                    "name": "Past Event",
+                    "startDate": "2025-01-01",  # Past date, no endDate
+                    "description": "A past event.",
+                },
+            }
+        )
+        html = f"""
+        <html>
+        <head><script type="application/ld+json">{json_ld}</script></head>
+        <body>
+            <p class="category"><a class="theatre">THEATRE</a></p>
+            <h1>Past Event</h1>
+        </body>
+        </html>
+        """
+        parser.http_client.get_text.return_value = html
+
+        event = parser._parse_detail_page(
+            "https://www.lezef.org/fr/saison/25-26/past-event"
+        )
+
+        assert event is None  # Should be skipped

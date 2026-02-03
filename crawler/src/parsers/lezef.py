@@ -370,11 +370,28 @@ class LeZefParser(BaseCrawler):
             # Default to 20:00 if no time found (common showtime)
             start_datetime = start_datetime.replace(hour=20, minute=0)
 
-        # Skip past events
+        # Handle past events - check if it's an ongoing exhibition
         now = datetime.now(PARIS_TZ)
+        is_ongoing_exhibition = False
         if start_datetime < now:
-            logger.debug(f"Skipping past event: {name} ({start_datetime})")
-            return None
+            # Check if there's an endDate in the future (ongoing exhibition)
+            end_date_str = json_ld.get("endDate", "")
+            if end_date_str:
+                end_datetime = _parse_iso_date(end_date_str)
+                if end_datetime and end_datetime > now:
+                    # Ongoing exhibition - use today as the event date
+                    logger.debug(
+                        f"Ongoing exhibition: {name} "
+                        f"({start_date_str} to {end_date_str})"
+                    )
+                    start_datetime = now.replace(
+                        hour=10, minute=0, second=0, microsecond=0
+                    )
+                    is_ongoing_exhibition = True
+
+            if not is_ongoing_exhibition:
+                logger.debug(f"Skipping past event: {name} ({start_datetime})")
+                return None
 
         # Extract description (prefer JSON-LD, fallback to HTML)
         description = json_ld.get("description", "").strip()
