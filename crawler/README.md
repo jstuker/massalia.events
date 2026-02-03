@@ -292,55 +292,51 @@ keywords:
 
 ## Venue Location Pages
 
-When the Shotgun crawler discovers events at venues, it extracts venue metadata (address, coordinates, website) from JSON-LD and exports it to `crawler/data/venues-shotgun.json` after each crawl. However, **Hugo location pages are not created automatically** — they require a manual step.
+Events reference venues by slug (e.g., `la-friche`, `klap`). Each venue needs a location page for the site to display venue information and link events properly.
 
-### After a crawl: check for new venues
+### After a crawl: generate venue pages
 
-Compare venue slugs in events against existing location pages:
+Run the venue page generator script to automatically detect and create pages for new venues:
 
 ```bash
-# List venue slugs referenced by Shotgun events but missing a location page
-diff \
-  <(grep -rh 'sourceId: shotgun:' ../content/events/ -l \
-    | xargs grep -h '^- ' \
-    | grep -A1 'locations:' \
-    | grep '^- ' | sed 's/^- //' | sort -u) \
-  <(ls ../content/locations/ | sort) \
-  | grep '<'
+# From project root (not crawler directory)
+cd ..
+
+# Preview what would be created
+python scripts/generate-venue-pages.py --dry-run
+
+# Generate pages
+python scripts/generate-venue-pages.py
 ```
 
-If new venues appear, follow these steps:
+The script:
+1. Scans all event files for location slugs
+2. Compares against known venues in `crawler/data/venues.yaml`
+3. Appends stub entries for new venues to `venues.yaml`
+4. Creates `content/locations/[slug]/_index.fr.md` pages
 
-### Creating location pages for new venues
+### Improving venue details
 
-1. **Check exported venue data** for addresses and coordinates:
+New venues are added as stubs with auto-generated titles. For better pages:
+
+1. **Edit `crawler/data/venues.yaml`** to fill in:
+   - `title` — Display name
+   - `description` — 1-2 sentence French description
+   - `address`, `website`, `type`
+   - `body` — Longer description for the page
+
+2. **Check Shotgun metadata** for addresses (if the venue came from Shotgun):
    ```bash
-   cat crawler/data/venues-shotgun.json | python -m json.tool
+   cat data/venues-shotgun.json | python -m json.tool
    ```
 
-2. **Add new entries to `crawler/data/venues.yaml`** with:
-   - `slug` — must match the slug in event `locations:` fields
-   - `title` — venue display name
-   - `description` — 1-2 sentence French description (factual: venue type + location + what they host)
-   - `address`, `website`, `type`, `aliases`
-   - `body` — longer French description for the page content
-
-3. **Generate pages:**
+3. **Regenerate the page:**
    ```bash
-   # Preview
-   python scripts/generate-venue-pages.py --dry-run
-
-   # Create pages (skips existing)
-   python scripts/generate-venue-pages.py
+   rm -rf ../content/locations/[slug]
+   python ../scripts/generate-venue-pages.py
    ```
 
-4. **Add slug mappings** to `BaseCrawler.map_location()` in `crawler/src/crawler.py` so future crawls resolve the venue name to the correct slug.
-
-5. **Verify** with `hugo server` that new location pages render and events link correctly.
-
-### TODO: Automate new venue detection
-
-The current workflow requires manually checking for new venues after each crawl. A post-crawl check that warns about missing location pages would close this gap. See [Issue #79 Task 6 retrospective] for context.
+4. **Verify** with `hugo server` that new location pages render correctly.
 
 ## Adding New Parsers
 
@@ -482,8 +478,9 @@ python crawl.py run
 # Check status
 python crawl.py status
 
-# Return to project root
+# Return to project root and generate venue pages
 cd ..
+python scripts/generate-venue-pages.py
 
 # Preview locally
 hugo server

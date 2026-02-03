@@ -4,14 +4,15 @@ This document describes the complete workflow for updating massalia.events with 
 
 ## Overview
 
-The publishing workflow consists of six steps:
+The publishing workflow consists of seven steps:
 
 1. **Prepare** - Ensure local environment is ready
 2. **Crawl** - Run crawler to fetch new events
-3. **Review** - Check crawler output and logs
-4. **Commit** - Stage and commit new content
-5. **Push** - Push to GitHub to trigger deployment
-6. **Verify** - Check live site for new content
+3. **Venues** - Generate location pages for new venues
+4. **Review** - Check crawler output and logs
+5. **Commit** - Stage and commit new content
+6. **Push** - Push to GitHub to trigger deployment
+7. **Verify** - Check live site for new content
 
 ## Prerequisites
 
@@ -109,13 +110,77 @@ python crawl.py run --source lafriche
 python crawl.py status
 ```
 
-## Step 3: Review Results
+## Step 3: Generate Venue Pages
+
+After crawling, check for new venues and generate location pages.
+
+### Preview New Venues
+
+```bash
+# Return to project root first
+cd ..
+
+# Preview what would be created
+python scripts/generate-venue-pages.py --dry-run
+```
+
+Expected output:
+```
+Loading venues from: crawler/data/venues.yaml
+Found 85 venues in venues.yaml
+
+Scanning event files for new location slugs...
+  Found 2 new slug(s):
+    DRY  new-club-marseille
+    DRY  salle-example
+
+DRY RUN - no files will be written
+  DRY   new-club-marseille/
+        title: New Club Marseille
+        type: Lieu
+  DRY   salle-example/
+        title: Salle Example
+        type: Lieu
+
+Venues discovered: 2, Pages created: 2, Pages skipped: 83
+```
+
+### Generate Pages
+
+```bash
+# Create pages for new venues
+python scripts/generate-venue-pages.py
+```
+
+### Fill in Venue Details (Optional)
+
+New venues are added as stubs. For better pages, edit `crawler/data/venues.yaml`:
+
+```yaml
+- slug: new-club-marseille
+  title: "New Club Marseille"
+  description: "Club de musique dans le centre de Marseille."
+  address: "123 rue Example, 13001 Marseille"
+  website: "https://example.com/"
+  type: "Club"
+  aliases: []
+  body: "Description longue du lieu..."
+```
+
+Then regenerate the page:
+```bash
+# Delete old page and regenerate
+rm -rf content/locations/new-club-marseille
+python scripts/generate-venue-pages.py
+```
+
+## Step 4: Review Results
 
 ### Check Git Status
 
 ```bash
-# Return to project root
-cd ..
+# Ensure you're at project root
+# (already there from venue generation step)
 
 # See what files were created/modified
 git status
@@ -164,7 +229,7 @@ cat crawler/logs/crawler.log
 grep ERROR crawler/logs/crawler.log
 ```
 
-## Step 4: Commit Changes
+## Step 5: Commit Changes
 
 ### Stage Files
 
@@ -208,7 +273,7 @@ Add events from 2026-01-27 crawl
 - Skipped 3 private events
 ```
 
-## Step 5: Push to GitHub
+## Step 6: Push to GitHub
 
 ```bash
 # Push to main branch
@@ -217,7 +282,7 @@ git push origin main
 
 This triggers the GitHub Actions deployment workflow automatically.
 
-## Step 6: Verify Deployment
+## Step 7: Verify Deployment
 
 ### Check GitHub Actions
 
@@ -252,7 +317,8 @@ Use this checklist for routine content updates:
 - [ ] `python crawl.py run --dry-run` (preview)
 - [ ] `python crawl.py run` (execute)
 - [ ] `python crawl.py status` (verify success)
-- [ ] `cd .. && git status` (review changes)
+- [ ] `cd .. && python scripts/generate-venue-pages.py` (create location pages)
+- [ ] `git status` (review changes)
 - [ ] `git add -A && git commit -m "Add events from [date] crawl"`
 - [ ] `git push origin main`
 - [ ] Check GitHub Actions for successful deployment
@@ -271,7 +337,9 @@ git pull origin main
 cd crawler && source venv/bin/activate
 python crawl.py run --dry-run    # Preview
 python crawl.py run              # Execute
-cd .. && hugo server             # Preview locally
+cd ..
+python scripts/generate-venue-pages.py  # Create venue pages
+hugo server                      # Preview locally
 git add -A
 git commit -m "Add events from $(date +%Y-%m-%d) crawl"
 git push origin main             # Deploy
@@ -297,6 +365,10 @@ python crawl.py run --log-level DEBUG
 
 # View log file
 cat logs/crawler.log | tail -50
+
+# Generate venue pages (from project root)
+python scripts/generate-venue-pages.py --dry-run  # Preview
+python scripts/generate-venue-pages.py            # Execute
 ```
 
 ### Keyboard Shortcuts
