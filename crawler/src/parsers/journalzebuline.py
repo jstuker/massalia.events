@@ -168,8 +168,30 @@ def _parse_french_date(text, reference_year=None):
     Returns:
         datetime or None if parsing failed
     """
+    dates = _parse_all_french_dates(text, reference_year)
+    return dates[0] if dates else None
+
+
+def _parse_all_french_dates(text, reference_year=None):
+    """
+    Parse a French date string and return ALL dates.
+
+    Handles formats:
+    - "30 janvier" (single date) -> [Jan 30]
+    - "Du 3 au 5 février" (date range) -> [Feb 3, Feb 4, Feb 5]
+    - "2, 3 et 5 février" (list of days) -> [Feb 2, Feb 3, Feb 5]
+    - "23 et 24 janvier" (two days) -> [Jan 23, Jan 24]
+    - "Jusqu'au 31 janvier" (until date) -> [Jan 31]
+
+    Args:
+        text: French date string
+        reference_year: Year to use if not specified in the text
+
+    Returns:
+        List of datetime objects (empty if parsing failed)
+    """
     if not text:
-        return None
+        return []
 
     if reference_year is None:
         reference_year = datetime.now().year
@@ -179,37 +201,55 @@ def _parse_french_date(text, reference_year=None):
     # Remove "a venir" prefix
     text_clean = re.sub(r"^[àa]\s+venir\s*", "", text_clean).strip()
 
-    # Pattern: "Du DD au DD mois [YYYY]"
+    # Pattern: "Du DD au DD mois [YYYY]" - expand to all dates in range
     range_match = re.search(
-        r"du\s+(\d{1,2})\s+(?:\w+\s+)?au\s+\d{1,2}\s+(\w+)(?:\s+(\d{4}))?",
+        r"du\s+(\d{1,2})\s+(?:\w+\s+)?au\s+(\d{1,2})\s+(\w+)(?:\s+(\d{4}))?",
         text_clean,
     )
     if range_match:
-        day = int(range_match.group(1))
-        month_name = range_match.group(2)
-        year = int(range_match.group(3)) if range_match.group(3) else reference_year
+        start_day = int(range_match.group(1))
+        end_day = int(range_match.group(2))
+        month_name = range_match.group(3)
+        year = int(range_match.group(4)) if range_match.group(4) else reference_year
         month = FRENCH_MONTHS.get(month_name)
         if month:
-            try:
-                return datetime(year, month, day, 20, 0, tzinfo=PARIS_TZ)
-            except ValueError:
-                pass
+            dates = []
+            for day in range(start_day, end_day + 1):
+                try:
+                    dates.append(datetime(year, month, day, 20, 0, tzinfo=PARIS_TZ))
+                except ValueError:
+                    pass
+            if dates:
+                return dates
 
-    # Pattern: "DD et DD mois [YYYY]" (returns first date)
-    multi_match = re.search(
-        r"(\d{1,2})\s+et\s+\d{1,2}\s+(\w+)(?:\s+(\d{4}))?",
+    # Pattern: "DD, DD et DD mois [YYYY]" (list with commas and 'et')
+    list_match = re.search(
+        r"((?:\d{1,2}\s*,\s*)*\d{1,2})\s+et\s+(\d{1,2})\s+(\w+)(?:\s+(\d{4}))?",
         text_clean,
     )
-    if multi_match:
-        day = int(multi_match.group(1))
-        month_name = multi_match.group(2)
-        year = int(multi_match.group(3)) if multi_match.group(3) else reference_year
+    if list_match:
+        days_before_et = list_match.group(1)
+        last_day = int(list_match.group(2))
+        month_name = list_match.group(3)
+        year = int(list_match.group(4)) if list_match.group(4) else reference_year
         month = FRENCH_MONTHS.get(month_name)
         if month:
+            dates = []
+            # Parse all days before 'et'
+            for day_str in re.findall(r"\d{1,2}", days_before_et):
+                try:
+                    dates.append(
+                        datetime(year, month, int(day_str), 20, 0, tzinfo=PARIS_TZ)
+                    )
+                except ValueError:
+                    pass
+            # Add the day after 'et'
             try:
-                return datetime(year, month, day, 20, 0, tzinfo=PARIS_TZ)
+                dates.append(datetime(year, month, last_day, 20, 0, tzinfo=PARIS_TZ))
             except ValueError:
                 pass
+            if dates:
+                return dates
 
     # Pattern: "Jusqu'au DD mois [YYYY]"
     jusquau_match = re.search(
@@ -223,7 +263,7 @@ def _parse_french_date(text, reference_year=None):
         month = FRENCH_MONTHS.get(month_name)
         if month:
             try:
-                return datetime(year, month, day, 20, 0, tzinfo=PARIS_TZ)
+                return [datetime(year, month, day, 20, 0, tzinfo=PARIS_TZ)]
             except ValueError:
                 pass
 
@@ -239,11 +279,11 @@ def _parse_french_date(text, reference_year=None):
         month = FRENCH_MONTHS.get(month_name)
         if month:
             try:
-                return datetime(year, month, day, 20, 0, tzinfo=PARIS_TZ)
+                return [datetime(year, month, day, 20, 0, tzinfo=PARIS_TZ)]
             except ValueError:
                 pass
 
-    return None
+    return []
 
 
 def _extract_verse_blocks(html_content):
@@ -311,6 +351,28 @@ def _extract_verse_blocks(html_content):
                 block_info["venue_name"] = link_text
                 block_info["venue_url"] = href
                 break
+
+        # Fallback: extract venue from <strong> tags if no link found
+        if not block_info["venue_name"]:
+            strong_elements = verse.select("strong")
+            for strong in strong_elements:
+                strong_text = strong.get_text().strip()
+                # Skip if it's a date or "A venir" label
+                if _looks_like_date(strong_text):
+                    continue
+                if re.match(r"[àa]\s+venir", strong_text, re.IGNORECASE):
+                    continue
+                # Skip very short text or text with too many words (likely not a venue)
+                if len(strong_text) < 3 or len(strong_text.split()) > 6:
+                    continue
+                # Check if this looks like a known Marseille venue
+                strong_lower = strong_text.lower()
+                for keyword in MARSEILLE_VENUE_KEYWORDS:
+                    if keyword in strong_lower:
+                        block_info["venue_name"] = strong_text
+                        break
+                if block_info["venue_name"]:
+                    break
 
         # Extract city from text after the venue link
         verse_text = verse.get_text(separator="|").strip()
@@ -715,9 +777,9 @@ class JournalZebulineParser(BaseCrawler):
                 )
                 continue
 
-            # Parse date
-            event_date = _parse_french_date(block["date_text"], reference_year)
-            if not event_date:
+            # Parse all dates from the date text
+            event_dates = _parse_all_french_dates(block["date_text"], reference_year)
+            if not event_dates:
                 logger.debug(
                     f"Could not parse date '{block['date_text']}' in article: {title}"
                 )
@@ -731,31 +793,35 @@ class JournalZebulineParser(BaseCrawler):
             # Build event name (use article title)
             event_name = title
 
-            # Generate source ID
-            source_id = f"journalzebuline:{article_id}"
-            if len(verse_blocks) > 1:
-                # Multiple events in one article - add index
-                block_idx = verse_blocks.index(block)
-                source_id = f"journalzebuline:{article_id}-{block_idx}"
-
             # Build tags from article tags
             event_tags = [t.lower() for t in tag_names[:5] if len(t) < 50]
 
-            try:
-                event = Event(
-                    name=event_name,
-                    event_url=article_url,
-                    start_datetime=event_date,
-                    description=description,
-                    image=image_url,
-                    categories=[category],
-                    locations=locations,
-                    tags=event_tags,
-                    source_id=source_id,
-                )
-                events.append(event)
-            except ValueError as e:
-                logger.warning(f"Failed to create event from article '{title}': {e}")
+            # Create an event for each date
+            block_idx = verse_blocks.index(block)
+            for date_idx, event_date in enumerate(event_dates):
+                # Generate source ID - include block and date index for uniqueness
+                if len(verse_blocks) > 1 or len(event_dates) > 1:
+                    source_id = f"journalzebuline:{article_id}-{block_idx}-{date_idx}"
+                else:
+                    source_id = f"journalzebuline:{article_id}"
+
+                try:
+                    event = Event(
+                        name=event_name,
+                        event_url=article_url,
+                        start_datetime=event_date,
+                        description=description,
+                        image=image_url,
+                        categories=[category],
+                        locations=locations,
+                        tags=event_tags,
+                        source_id=source_id,
+                    )
+                    events.append(event)
+                except ValueError as e:
+                    logger.warning(
+                        f"Failed to create event from article '{title}': {e}"
+                    )
 
         return events
 

@@ -24,6 +24,7 @@ from src.parsers.journalzebuline import (
     _looks_like_date,
     _map_wp_categories_to_taxonomy,
     _map_wp_tags_to_category,
+    _parse_all_french_dates,
     _parse_french_date,
 )
 from src.utils.http import FetchResult
@@ -122,6 +123,20 @@ def sample_verse_html_no_blocks():
     return """
     <div class="entry-content">
         <p>This is just a regular article with no event details.</p>
+    </div>
+    """
+
+
+@pytest.fixture
+def sample_verse_html_venue_in_strong():
+    """Article HTML with venue in <strong> tag instead of link."""
+    return """
+    <div class="entry-content">
+        <p>A preview of an upcoming show.</p>
+        <pre class="wp-block-verse">CHLOÉ MACAIRE<br>
+<mark style="background-color:rgba(0, 0, 0, 0)"
+      class="has-inline-color has-luminous-vivid-orange-color">Du 3 au 5 février </mark><br>
+<strong>Le Zef</strong>, scène national de Marseille </pre>
     </div>
     """
 
@@ -305,6 +320,53 @@ class TestParseFrenchDate:
         assert dt.tzinfo == PARIS_TZ
 
 
+# ── Test _parse_all_french_dates ───────────────────────────────────
+
+
+class TestParseAllFrenchDates:
+    """Tests for parsing French dates returning all dates."""
+
+    def test_single_date(self):
+        dates = _parse_all_french_dates("30 janvier", reference_year=2026)
+        assert len(dates) == 1
+        assert dates[0].day == 30
+        assert dates[0].month == 1
+
+    def test_date_range_expands(self):
+        """Date range 'Du 3 au 5 février' should return Feb 3, 4, and 5."""
+        dates = _parse_all_french_dates("Du 3 au 5 février", reference_year=2026)
+        assert len(dates) == 3
+        assert [d.day for d in dates] == [3, 4, 5]
+        assert all(d.month == 2 for d in dates)
+
+    def test_two_days_with_et(self):
+        """'23 et 24 janvier' should return both Jan 23 and 24."""
+        dates = _parse_all_french_dates("23 et 24 janvier", reference_year=2026)
+        assert len(dates) == 2
+        assert [d.day for d in dates] == [23, 24]
+
+    def test_list_with_commas_and_et(self):
+        """'2, 3 et 5 février' should return Feb 2, 3, and 5."""
+        dates = _parse_all_french_dates("2, 3 et 5 février", reference_year=2026)
+        assert len(dates) == 3
+        assert [d.day for d in dates] == [2, 3, 5]
+
+    def test_jusquau(self):
+        dates = _parse_all_french_dates("Jusqu'au 31 janvier", reference_year=2026)
+        assert len(dates) == 1
+        assert dates[0].day == 31
+
+    def test_empty_string(self):
+        assert _parse_all_french_dates("") == []
+
+    def test_none_input(self):
+        assert _parse_all_french_dates(None) == []
+
+    def test_all_dates_have_timezone(self):
+        dates = _parse_all_french_dates("Du 3 au 5 février", reference_year=2026)
+        assert all(d.tzinfo == PARIS_TZ for d in dates)
+
+
 # ── Test _extract_verse_blocks ─────────────────────────────────────
 
 
@@ -354,6 +416,13 @@ class TestExtractVerseBlocks:
         assert any("20 et 21 janvier" in d for d in dates) or any(
             "28 au 31 janvier" in d for d in dates
         )
+
+    def test_venue_in_strong_tag(self, sample_verse_html_venue_in_strong):
+        """Venue in <strong> tag (no link) should be extracted."""
+        blocks = _extract_verse_blocks(sample_verse_html_venue_in_strong)
+        assert len(blocks) == 1
+        assert "Le Zef" in blocks[0]["venue_name"]
+        assert "Du 3 au 5 février" in blocks[0]["date_text"]
 
 
 # ── Test _is_book_block ────────────────────────────────────────────

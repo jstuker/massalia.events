@@ -1,8 +1,8 @@
 ---
 title: Les Clairvoyantes
-date: '2026-02-03T20:00:00+01:00'
+date: '2026-02-04T20:00:00+01:00'
 draft: false
-expiryDate: '2026-02-04T00:00:00+01:00'
+expiryDate: '2026-02-05T00:00:00+01:00'
 name: Les Clairvoyantes
 eventURL: https://journalzebuline.fr/les-clairvoyantes/
 startTime: '20:00'
@@ -12,7 +12,7 @@ categories:
 locations:
 - le-zef-theatre-du-merlan
 dates:
-- mardi-03-fevrier
+- mercredi-04-fevrier
 tags:
 - bouches-du-rhône
 - camille joviado
@@ -20,7 +20,7 @@ tags:
 - le zef
 - les clairvoyantes
 image: /images/events/les-clairvoyantes-a8312102.webp
-sourceId: journalzebuline:134487-0-0
+sourceId: journalzebuline:134487-0-1
 lastCrawled: '2026-02-03T08:54:16+01:00'
 expired: false
 ---
