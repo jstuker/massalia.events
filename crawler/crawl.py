@@ -26,6 +26,7 @@ import click
 import yaml
 
 from src.config import ConfigurationError, load_sources_config, validate_sources_config
+from src.deduplicator import EventDeduplicator
 from src.generators import MarkdownGenerator
 from src.logger import get_logger, setup_logging
 from src.parsers import get_parser
@@ -257,9 +258,14 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool):
         dry_run=dry_run,
     )
 
+    # Initialize deduplicator for cross-source duplicate detection
+    deduplicator = EventDeduplicator(content_dir=output_dir)
+    logger.info(f"Deduplicator initialized: {deduplicator.get_stats()}")
+
     markdown_generator = MarkdownGenerator(
         output_dir=output_dir,
         dry_run=dry_run,
+        deduplicator=deduplicator,
     )
 
     # Get sources to process
