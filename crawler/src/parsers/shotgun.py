@@ -11,17 +11,15 @@ import re
 import time
 from datetime import datetime
 from urllib.parse import urlparse
-from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
 from ..models.event import Event, slugify
 from ..models.venue import Venue
+from ..utils.french_date import FRENCH_MONTHS, PARIS_TZ
 from ..utils.parser import HTMLParser
 
 logger = get_logger(__name__)
-
-PARIS_TZ = ZoneInfo("Europe/Paris")
 
 # Maximum number of pages to crawl from the listing
 MAX_PAGES = 3
@@ -611,22 +609,8 @@ class ShotgunParser(BaseCrawler):
                 og_description.lower(),
             )
             if date_match:
-                months = {
-                    "janvier": 1,
-                    "février": 2,
-                    "mars": 3,
-                    "avril": 4,
-                    "mai": 5,
-                    "juin": 6,
-                    "juillet": 7,
-                    "août": 8,
-                    "septembre": 9,
-                    "octobre": 10,
-                    "novembre": 11,
-                    "décembre": 12,
-                }
                 day = int(date_match.group(1))
-                month = months.get(date_match.group(2))
+                month = FRENCH_MONTHS.get(date_match.group(2))
                 year = int(date_match.group(3))
                 if month:
                     try:

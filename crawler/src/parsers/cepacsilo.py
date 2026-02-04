@@ -4,16 +4,14 @@ import json
 import re
 from datetime import datetime
 from urllib.parse import urljoin
-from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
 from ..models.event import Event
+from ..utils.french_date import PARIS_TZ
 from ..utils.parser import HTMLParser
 
 logger = get_logger(__name__)
-
-PARIS_TZ = ZoneInfo("Europe/Paris")
 
 # Maximum number of listing pages to crawl
 MAX_PAGES = 10

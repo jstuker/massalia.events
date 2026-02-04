@@ -3,35 +3,14 @@
 import re
 from datetime import datetime
 from urllib.parse import urljoin
-from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
 from ..models.event import Event
+from ..utils.french_date import FRENCH_MONTHS, PARIS_TZ
 from ..utils.parser import HTMLParser
 
 logger = get_logger(__name__)
-
-PARIS_TZ = ZoneInfo("Europe/Paris")
-
-# French month name mapping
-FRENCH_MONTHS = {
-    "janvier": 1,
-    "février": 2,
-    "fevrier": 2,
-    "mars": 3,
-    "avril": 4,
-    "mai": 5,
-    "juin": 6,
-    "juillet": 7,
-    "août": 8,
-    "aout": 8,
-    "septembre": 9,
-    "octobre": 10,
-    "novembre": 11,
-    "décembre": 12,
-    "decembre": 12,
-}
 
 
 def _extract_event_urls_from_html(html: str, base_url: str = "") -> list[str]:

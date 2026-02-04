@@ -100,8 +100,8 @@ def sample_detail_html():
                 {
                     "@type": "event",
                     "name": "Cine-club LSF | Les Sourds en colere de Jacques Sangla",
-                    "startDate": "2026-02-03T08:30:00+01:00",
-                    "endDate": "2026-02-03T09:15:00+01:00",
+                    "startDate": "2026-03-03T08:30:00+01:00",
+                    "endDate": "2026-03-03T09:15:00+01:00",
                     "eventStatus": "EventScheduled",
                     "eventAttendanceMode": "OfflineEventAttendanceMode"
                 }
@@ -112,7 +112,7 @@ def sample_detail_html():
     <body>
         <h1>Cine-club LSF | Les Sourds en colere de Jacques Sangla</h1>
         <div class="entry-content">
-            <p>mardi 3 fevrier 2026 de 20h30 a 21h15</p>
+            <p>mardi 3 mars 2026 de 20h30 a 21h15</p>
             <p>Les Sourds en colere de Jacques Sangla | 2022 | France | 52 min</p>
             <p>Dans le cadre des 20 ans du programme PiSourd, le cine-club LSF
                propose la projection du film Les Sourds en colere suivi d'un
@@ -426,11 +426,11 @@ class TestParseFrenchDatetime:
 
     def test_parses_full_datetime_with_de(self):
         result = _parse_french_datetime_from_text(
-            "mardi 3 fevrier 2026 de 20h30 a 21h15"
+            "mardi 3 mars 2026 de 20h30 a 21h15"
         )
         assert result is not None
         assert result.year == 2026
-        assert result.month == 2
+        assert result.month == 3
         assert result.day == 3
         assert result.hour == 20
         assert result.minute == 30
@@ -495,7 +495,7 @@ class TestParseFrenchDatetime:
 
     def test_has_paris_timezone(self):
         result = _parse_french_datetime_from_text(
-            "3 fevrier 2026 · 20h30"
+            "3 mars 2026 · 20h30"
         )
         assert result is not None
         assert result.tzinfo == PARIS_TZ
@@ -656,7 +656,7 @@ class TestParseDetailPage:
     def test_returns_none_without_name(self, parser):
         html = """
         <html><body>
-            <p>mardi 3 fevrier 2026 de 20h30</p>
+            <p>mardi 3 mars 2026 de 20h30</p>
         </body></html>
         """
         parser.http_client.get_text.return_value = html
@@ -694,7 +694,7 @@ class TestCategoryExtraction:
         ]}
         </script>
         </head><body><h1>Test</h1>
-        <p>3 fevrier 2026 · 20h00</p></body></html>
+        <p>3 mars 2026 · 20h00</p></body></html>
         """
         parser.http_client.get_text.return_value = html
         event = parser._parse_detail_page("https://www.videodrome2.fr/test/")
@@ -710,7 +710,7 @@ class TestCategoryExtraction:
         ]}
         </script>
         </head><body><h1>Test</h1>
-        <p>3 fevrier 2026 · 14h00</p></body></html>
+        <p>3 mars 2026 · 14h00</p></body></html>
         """
         parser.http_client.get_text.return_value = html
         event = parser._parse_detail_page("https://www.videodrome2.fr/test/")
@@ -721,7 +721,7 @@ class TestCategoryExtraction:
         html = """
         <html><head></head><body>
             <h1>Test Event</h1>
-            <p>3 fevrier 2026 · 20h00</p>
+            <p>3 mars 2026 · 20h00</p>
         </body></html>
         """
         parser.http_client.get_text.return_value = html
