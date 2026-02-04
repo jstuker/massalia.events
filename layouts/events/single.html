@@ -340,30 +340,37 @@
 </article>
 
 {{/* JSON-LD structured data for SEO */}}
+{{/* Prepare location data */}}
+{{ $locationTitle := "" }}
+{{ $locationAddress := "" }}
+{{ with $page.Params.locations }}
+  {{ $locationSlug := index . 0 }}
+  {{ $locationTitle = $locationSlug | humanize | title }}
+  {{ $locationPage := site.GetPage (printf "/locations/%s" $locationSlug) }}
+  {{ with $locationPage }}
+    {{ $locationTitle = .Title }}
+    {{ $locationAddress = .Params.address | default "" }}
+  {{ end }}
+{{ end }}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": {{ $eventName | jsonify }},
-  "startDate": {{ $page.Date.Format "2006-01-02T15:04:05-07:00" | jsonify }},
-  {{ with $page.Params.description }}"description": {{ . | jsonify }},{{ end }}
-  {{ if ne $imageURL "" }}"image": {{ $imageURL | absURL | jsonify }},{{ end }}
-  {{ with $page.Params.locations }}
-    {{ $locationSlug := index . 0 }}
-    {{ with site.GetPage (printf "/locations/%s" $locationSlug) }}
-  "location": {
+  "name": "{{ $eventName | safeJS }}",
+  "startDate": "{{ $page.Date.Format "2006-01-02T15:04:05-07:00" }}",
+  {{ with $page.Params.description }}"description": "{{ . | safeJS }}",{{ end }}
+  {{ if ne $imageURL "" }}"image": "{{ $imageURL | absURL }}",{{ end }}
+  {{ if ne $locationTitle "" }}"location": {
     "@type": "Place",
-    "name": {{ .Title | jsonify }}{{ with .Params.address }},
+    "name": "{{ $locationTitle | safeJS }}"{{ if ne $locationAddress "" }},
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": {{ . | jsonify }}{{ $addr := . }}{{ $postalCodes := findRE `\d{5}` . }}{{ with $postalCodes }},
-      "addressLocality": {{ replaceRE `.*\d{5}\s*` "" $addr | jsonify }},
-      "postalCode": {{ index . 0 | jsonify }}{{ end }}
+      "streetAddress": "{{ $locationAddress | safeJS }}"{{ $postalCodes := findRE `\d{5}` $locationAddress }}{{ with $postalCodes }},
+      "postalCode": "{{ index . 0 }}",
+      "addressLocality": "{{ replaceRE `.*\d{5}\s*` "" $locationAddress | safeJS }}"{{ end }}
     }{{ end }}
-  },
-    {{ end }}
-  {{ end }}
-  {{ if ne $eventURL "" }}"url": {{ $eventURL | jsonify }},{{ end }}
+  },{{ end }}
+  {{ if ne $eventURL "" }}"url": "{{ $eventURL }}",{{ end }}
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
 }
