@@ -3,36 +3,14 @@
 import re
 from datetime import datetime
 from urllib.parse import urljoin
-from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
 from ..models.event import Event
+from ..utils.french_date import FRENCH_MONTHS, PARIS_TZ, infer_year, parse_french_time
 from ..utils.parser import HTMLParser
 
 logger = get_logger(__name__)
-
-# Paris timezone for event dates
-PARIS_TZ = ZoneInfo("Europe/Paris")
-
-# French month names mapping
-FRENCH_MONTHS = {
-    "janvier": 1,
-    "février": 2,
-    "fevrier": 2,
-    "mars": 3,
-    "avril": 4,
-    "mai": 5,
-    "juin": 6,
-    "juillet": 7,
-    "août": 8,
-    "aout": 8,
-    "septembre": 9,
-    "octobre": 10,
-    "novembre": 11,
-    "décembre": 12,
-    "decembre": 12,
-}
 
 
 class LoeuvreParser(BaseCrawler):
@@ -305,52 +283,12 @@ class LoeuvreParser(BaseCrawler):
         return None
 
     def _parse_time(self, text: str) -> tuple[int, int] | None:
-        """
-        Extract time from text.
-
-        Handles:
-        - "19:00"
-        - "20:30"
-        - "19h30"
-        - "19h"
-        """
-        if not text:
-            return None
-
-        # Match HH:MM format
-        match = re.search(r"\b(\d{1,2}):(\d{2})\b", text)
-        if match:
-            hour = int(match.group(1))
-            minute = int(match.group(2))
-            if 0 <= hour <= 23 and 0 <= minute <= 59:
-                return (hour, minute)
-
-        # Match HhMM format
-        match = re.search(r"\b(\d{1,2})[hH](\d{2})?\b", text)
-        if match:
-            hour = int(match.group(1))
-            minute = int(match.group(2)) if match.group(2) else 0
-            if 0 <= hour <= 23 and 0 <= minute <= 59:
-                return (hour, minute)
-
-        return None
+        """Extract time from text. Delegates to shared utility."""
+        return parse_french_time(text)
 
     def _infer_year(self, month: int, day: int) -> int:
-        """
-        Infer the year for a date without year.
-
-        If the date has already passed this year, assume next year.
-        """
-        now = datetime.now(PARIS_TZ)
-        try:
-            candidate = datetime(now.year, month, day, tzinfo=PARIS_TZ)
-        except ValueError:
-            return now.year
-
-        # If date is more than 30 days in the past, assume next year
-        if (now - candidate).days > 30:
-            return now.year + 1
-        return now.year
+        """Infer the year for a date without year. Delegates to shared utility."""
+        return infer_year(month, day)
 
     def _extract_description(self, parser: HTMLParser) -> str:
         """Extract event description from detail page."""

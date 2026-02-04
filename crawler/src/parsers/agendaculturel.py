@@ -13,16 +13,14 @@ import re
 import time
 from datetime import datetime
 from urllib.parse import urlparse
-from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
 from ..models.event import Event
+from ..utils.french_date import PARIS_TZ
 from ..utils.parser import HTMLParser
 
 logger = get_logger(__name__)
-
-PARIS_TZ = ZoneInfo("Europe/Paris")
 
 # Maximum number of events to process per crawl
 MAX_EVENTS = 60

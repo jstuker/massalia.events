@@ -3,19 +3,16 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import TYPE_CHECKING
-from zoneinfo import ZoneInfo
 
 from ..logger import get_logger
 from ..models.event import Event
+from ..utils.french_date import PARIS_TZ
 from ..utils.parser import HTMLParser
 
 if TYPE_CHECKING:
     from bs4 import Tag
 
 logger = get_logger(__name__)
-
-# Paris timezone for event dates
-PARIS_TZ = ZoneInfo("Europe/Paris")
 
 
 @dataclass

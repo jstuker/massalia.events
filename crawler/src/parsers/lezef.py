@@ -1,19 +1,16 @@
 """Parser for Le Zef - Scene nationale de Marseille events (lezef.org)."""
 
 import json
-import re
 from datetime import datetime
 from urllib.parse import urljoin
-from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
 from ..models.event import Event
+from ..utils.french_date import PARIS_TZ, parse_french_time
 from ..utils.parser import HTMLParser
 
 logger = get_logger(__name__)
-
-PARIS_TZ = ZoneInfo("Europe/Paris")
 
 # AJAX endpoint for fetching event listings
 AJAX_URL = "https://www.lezef.org/fr/saison_ajax"
@@ -125,6 +122,7 @@ def _extract_time_from_html(html: str) -> tuple[int, int] | None:
     Extract event time from HTML date display.
 
     Le Zef shows times like "à 19h", "à 20h30", etc.
+    Delegates to shared parse_french_time utility.
 
     Args:
         html: HTML content of detail page
@@ -132,14 +130,7 @@ def _extract_time_from_html(html: str) -> tuple[int, int] | None:
     Returns:
         Tuple of (hour, minute) or None if not found
     """
-    # Pattern: "à 19h", "à 20h30", "à 19h00"
-    time_pattern = re.compile(r"à\s*(\d{1,2})h(\d{2})?", re.IGNORECASE)
-    match = time_pattern.search(html)
-    if match:
-        hour = int(match.group(1))
-        minute = int(match.group(2)) if match.group(2) else 0
-        return (hour, minute)
-    return None
+    return parse_french_time(html)
 
 
 def _generate_source_id(url: str) -> str:

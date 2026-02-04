@@ -2,18 +2,15 @@
 
 import re
 from datetime import datetime
-from zoneinfo import ZoneInfo
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
 from ..models.event import Event
+from ..utils.french_date import FRENCH_MONTHS, PARIS_TZ
 from ..utils.parser import HTMLParser
 from .base import ConfigurableEventParser
 
 logger = get_logger(__name__)
-
-# Paris timezone for event dates
-PARIS_TZ = ZoneInfo("Europe/Paris")
 
 
 class LaFricheParser(BaseCrawler):
@@ -217,25 +214,6 @@ class LaFricheParser(BaseCrawler):
 
         text_lower = text.lower()
 
-        # French month names mapping
-        months = {
-            "janvier": 1,
-            "février": 2,
-            "fevrier": 2,
-            "mars": 3,
-            "avril": 4,
-            "mai": 5,
-            "juin": 6,
-            "juillet": 7,
-            "août": 8,
-            "aout": 8,
-            "septembre": 9,
-            "octobre": 10,
-            "novembre": 11,
-            "décembre": 12,
-            "decembre": 12,
-        }
-
         # Pattern for single date with optional time: "27 janvier 2026 à 19h30"
         single_date_pattern = (
             r"(\d{1,2})\s+(\w+)\s+(\d{4})(?:\s+[àa]\s*(\d{1,2})h(\d{2})?)?"
@@ -249,7 +227,7 @@ class LaFricheParser(BaseCrawler):
             hour = int(match.group(4)) if match.group(4) else 20
             minute = int(match.group(5)) if match.group(5) else 0
 
-            month = months.get(month_name)
+            month = FRENCH_MONTHS.get(month_name)
             if month:
                 try:
                     return datetime(year, month, day, hour, minute, tzinfo=PARIS_TZ)
@@ -265,7 +243,7 @@ class LaFricheParser(BaseCrawler):
             month_name = match.group(2)
             year = int(match.group(3))
 
-            month = months.get(month_name)
+            month = FRENCH_MONTHS.get(month_name)
             if month:
                 try:
                     return datetime(year, month, day, 20, 0, tzinfo=PARIS_TZ)
