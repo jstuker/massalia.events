@@ -1,25 +1,32 @@
 ---
-title: Djam & Timoh
-date: '2026-02-06T20:00:00+01:00'
-draft: false
-expiryDate: '2026-02-07T00:00:00+01:00'
-name: Djam & Timoh
-eventURL: https://www.lemakeda.com/evenements/djam-timoh/
-startTime: '20:00'
-description: 🔥DJAM & TIMOH 🔥 📆 Vendredi 6 février 2026 📍 Le Makeda, 103 rue Ferrari, 13005 Marseille 🎶 DJAM & TIMOH c’est l’histoire de deux frères des faubourg D’Alger m...
+alternateSources:
+- https://shotgun.live/fr/events/djam-timoh
 categories:
 - musique
-locations:
-- le-makeda
+date: '2026-02-06T20:00:00+01:00'
 dates:
 - vendredi-06-fevrier
+description: "\U0001F525DJAM & TIMOH \U0001F525 \U0001F4C6 Vendredi 6 février 2026
+  \U0001F4CD Le Makeda, 103 rue Ferrari, 13005 Marseille \U0001F3B6 DJAM & TIMOH c’est
+  l’histoire de deux frères des faubourg D’Alger m..."
+draft: false
+eventURL: https://www.lemakeda.com/evenements/djam-timoh/
+expired: false
+expiryDate: '2026-02-07T00:00:00+01:00'
+image: /images/events/djam-timoh-402ed31c.webp
+lastCrawled: '2026-02-05T13:56:35.383595'
+locations:
+- le-makeda
+name: Djam & Timoh
+sourceId: lemakeda:38656
+sourceIds:
+- lemakeda:38656
+- shotgun:djam-timoh
+startTime: '20:00'
 tags:
 - electro
 - urban world
-image: /images/events/djam-timoh-402ed31c.webp
-sourceId: lemakeda:38656
-lastCrawled: '2026-02-01T16:40:07+01:00'
-expired: false
+title: Djam & Timoh
 ---
 
 🔥DJAM & TIMOH 🔥 📆 Vendredi 6 février 2026 📍 Le Makeda, 103 rue Ferrari, 13005 Marseille 🎶 DJAM & TIMOH c’est l’histoire de deux frères des faubourg D’Alger m...

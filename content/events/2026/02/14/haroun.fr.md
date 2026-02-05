@@ -1,21 +1,24 @@
 ---
-title: HAROUN
-date: '2026-02-14T18:00:00+01:00'
-draft: false
-expiryDate: '2026-02-15T00:00:00+01:00'
-name: HAROUN
-eventURL: https://www.cepacsilo-marseille.fr/evenement/haroun/
-startTime: '18:00'
-description: ''
 categories:
 - theatre
-locations:
-- le-cepac-silo-marseille
+date: '2026-02-14T18:00:00+01:00'
 dates:
 - samedi-14-fevrier
-tags: []
-image: /images/events/haroun-348ef50c.webp
-sourceId: cepacsilo:haroun:20260214-1800
-lastCrawled: '2026-02-01T17:38:59+01:00'
+description: ''
+draft: false
+eventURL: https://www.cepacsilo-marseille.fr/evenement/haroun/
 expired: false
+expiryDate: '2026-02-15T00:00:00+01:00'
+image: /images/events/haroun-348ef50c.webp
+lastCrawled: '2026-02-05T14:11:37.464008'
+locations:
+- le-cepac-silo-marseille
+name: HAROUN
+sourceId: cepacsilo:haroun:20260214-1800
+sourceIds:
+- cepacsilo:haroun:20260214-1800
+- cepacsilo:haroun:20260214-2100
+startTime: '18:00'
+tags: []
+title: HAROUN
 ---

@@ -1,23 +1,31 @@
 ---
-title: LaLeçon
-date: '2026-03-13T20:30:00+01:00'
-draft: false
-expiryDate: '2026-03-14T00:00:00+01:00'
-name: LaLeçon
-eventURL: https://theatre-lacriee.com/programmation/evenements/la-lecon
-startTime: '20:30'
-description: 'Avertissement : certaines scènes de violences sexistes et sexuelles peuvent heurter la sensibilité du public'
 categories:
 - theatre
-locations:
-- theatre-des-trois-ponts-castelnaudary
+date: '2026-03-13T20:30:00+01:00'
 dates:
 - vendredi-13-mars
-tags: []
-image: /images/events/lalecon-eda30af2.webp
-sourceId: lacriee:la-lecon:20260313-2030
-lastCrawled: '2026-02-01T16:46:27+01:00'
+description: 'Avertissement : certaines scènes de violences sexistes et sexuelles
+  peuvent heurter la sensibilité du public'
+draft: false
+eventURL: https://theatre-lacriee.com/programmation/evenements/la-lecon
 expired: false
+expiryDate: '2026-03-14T00:00:00+01:00'
+image: /images/events/lalecon-eda30af2.webp
+lastCrawled: '2026-02-05T14:12:38.893130'
+locations:
+- theatre-des-trois-ponts-castelnaudary
+name: LaLeçon
+sourceId: lacriee:la-lecon:20260313-2030
+sourceIds:
+- lacriee:la-lecon:20260313-2030
+- lacriee:la-lecon:20260206-2115
+- lacriee:la-lecon:20260212-2000
+- lacriee:la-lecon:20260213-2000
+- lacriee:la-lecon:20260319-2000
+- lacriee:la-lecon:20260324-2000
+startTime: '20:30'
+tags: []
+title: LaLeçon
 ---
 
 Avertissement : certaines scènes de violences sexistes et sexuelles peuvent heurter la sensibilité du public
