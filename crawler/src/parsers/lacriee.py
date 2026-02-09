@@ -403,13 +403,14 @@ class LaCrieeParser(BaseCrawler):
         # Try h1 first
         h1 = parser.select_one("h1")
         if h1:
-            return h1.get_text().strip()
+            # Use separator=" " to avoid merged words when h1 has child elements
+            return " ".join(h1.get_text(separator=" ").split())
 
         # Fallback selectors
         for selector in ["h2", ".spectacle-title"]:
             elem = parser.select_one(selector)
             if elem:
-                return elem.get_text().strip()
+                return " ".join(elem.get_text(separator=" ").split())
 
         return ""
 
