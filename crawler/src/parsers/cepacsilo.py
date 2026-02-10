@@ -322,10 +322,15 @@ class CepacSiloParser(BaseCrawler):
 
         logger.info(f"Found {len(all_event_urls)} event URLs on Le Cepac Silo")
 
-        # Visit each detail page
+        # Batch-fetch all detail pages concurrently
+        pages = self.fetch_pages(all_event_urls)
+
         for event_url in all_event_urls:
+            html = pages.get(event_url, "")
+            if not html:
+                continue
             try:
-                page_events = self._parse_detail_page(event_url)
+                page_events = self._parse_detail_page(event_url, html=html)
                 events.extend(page_events)
             except Exception as e:
                 logger.warning(f"Failed to parse event from {event_url}: {e}")
@@ -372,20 +377,24 @@ class CepacSiloParser(BaseCrawler):
 
         return sorted(all_urls)
 
-    def _parse_detail_page(self, event_url: str) -> list[Event]:
+    def _parse_detail_page(
+        self, event_url: str, html: str | None = None
+    ) -> list[Event]:
         """
-        Fetch and parse an event detail page.
+        Parse an event detail page.
 
         For events with multiple showtimes, creates a separate Event
         for each future date.
 
         Args:
             event_url: URL of the event detail page
+            html: Pre-fetched HTML content (fetched if not provided)
 
         Returns:
             List of Event objects (one per showtime)
         """
-        html = self.fetch_page(event_url)
+        if html is None:
+            html = self.fetch_page(event_url)
         if not html:
             logger.warning(f"Failed to fetch detail page: {event_url}")
             return []
