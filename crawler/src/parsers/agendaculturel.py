@@ -261,44 +261,83 @@ def _screenshot_best_image(page):
     return None
 
 
-def _run_playwright_non_headless(url, timeout=60000):
+def _is_cloudflare_challenge(html):
+    """Check if HTML content is a Cloudflare challenge page."""
+    return "Verify you are human" in html or "Just a moment" in html
+
+
+class CloudflarePlaywrightSession:
+    """Manages a single non-headless Playwright browser for Cloudflare-protected sites.
+
+    Reuses one Chromium process and browser context across all pages in a crawl
+    session. The shared context preserves Cloudflare Turnstile cookies, so the
+    challenge only needs to be solved once (8s wait on the first page, 1s on
+    subsequent pages). The cookie consent banner is dismissed once per session.
+
+    If an asyncio event loop is already running, the browser runs in a
+    background thread with queue-based communication.
+
+    Usage::
+
+        with CloudflarePlaywrightSession() as session:
+            html1, _, _ = session.fetch_page("https://example.com/listing")
+            html2, img, url = session.fetch_page("https://example.com/detail", extract_image=True)
     """
-    Run Playwright in non-headless mode to bypass Cloudflare Turnstile.
 
-    Cloudflare Turnstile blocks headless browsers. Using headed mode with
-    anti-detection flags allows passing the challenge automatically.
+    FIRST_PAGE_WAIT = 8000
+    SUBSEQUENT_PAGE_WAIT = 1000
 
-    Also extracts the main event image from the page while the browser
-    is still open, since image URLs return 403 when fetched separately.
+    def __init__(self, timeout=60000):
+        self.timeout = timeout
+        self._pw = None
+        self._browser = None
+        self._context = None
+        self._use_thread = False
+        self._thread = None
+        self._request_queue = None
+        self._response_queue = None
+        self._challenge_passed = False
+        self._banner_dismissed = False
 
-    Args:
-        url: URL to navigate to
-        timeout: Page load timeout in milliseconds
+    def __enter__(self):
+        self._start()
+        return self
 
-    Returns:
-        Tuple of (html, image_bytes, image_url) where html is the page
-        content and image_bytes/image_url are the extracted image data.
-        Returns (None, None, None) on failure.
-    """
-    try:
+    def __exit__(self, *exc):
+        self._stop()
+        return False
+
+    def _start(self):
+        try:
+            from playwright.sync_api import sync_playwright  # noqa: F401
+        except ImportError:
+            logger.error(
+                "Playwright is required for the Agenda Culturel parser. "
+                "Install it with: pip install playwright && playwright install chromium"
+            )
+            raise
+
+        try:
+            self._start_direct()
+        except RuntimeError as e:
+            if "asyncio" in str(e).lower() or "event loop" in str(e).lower():
+                logger.debug("Asyncio loop detected, running Playwright in thread")
+                self._start_in_thread()
+            else:
+                raise
+
+    def _start_direct(self):
         from playwright.sync_api import sync_playwright
-    except ImportError:
-        logger.error(
-            "Playwright is required for the Agenda Culturel parser. "
-            "Install it with: pip install playwright && playwright install chromium"
-        )
-        return None, None, None
 
-    pw = sync_playwright().start()
-    try:
-        browser = pw.chromium.launch(
+        self._pw = sync_playwright().start()
+        self._browser = self._pw.chromium.launch(
             headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--window-position=-9999,-9999",
             ],
         )
-        context = browser.new_context(
+        self._context = self._browser.new_context(
             viewport={"width": 1920, "height": 1080},
             user_agent=(
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -307,65 +346,198 @@ def _run_playwright_non_headless(url, timeout=60000):
             ),
             locale="fr-FR",
         )
-        page = context.new_page()
-        page.add_init_script(
+        self._context.add_init_script(
             'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'
         )
 
-        page.goto(url, wait_until="domcontentloaded", timeout=timeout)
-        # Wait for Cloudflare challenge to complete
-        page.wait_for_timeout(8000)
+    def _start_in_thread(self):
+        import queue
+        import threading
 
-        html = page.content()
+        self._use_thread = True
+        self._request_queue = queue.Queue()
+        self._response_queue = queue.Queue()
+        ready_event = threading.Event()
+        startup_error = [None]
 
-        # Check if we're still on the challenge page
-        if "Verify you are human" in html or "Just a moment" in html:
-            logger.warning("Cloudflare challenge not passed, waiting longer...")
-            page.wait_for_timeout(10000)
-            html = page.content()
+        def worker():
+            from playwright.sync_api import sync_playwright
 
-        # Dismiss cookie consent banner (FundingChoices / Google Consent)
-        _dismiss_cookie_banner(page)
+            challenge_passed = False
+            banner_dismissed = False
 
-        # Extract event image while browser has proper cookies/session
-        image_bytes, image_url = _extract_page_image(page)
-
-        browser.close()
-        return html, image_bytes, image_url
-    except Exception as e:
-        logger.error(f"Playwright failed to load {url}: {e}")
-        return None, None, None
-    finally:
-        pw.stop()
-
-
-def _run_playwright_in_thread(url, timeout=60000):
-    """
-    Run Playwright in a separate thread to avoid asyncio conflicts.
-
-    Args:
-        url: URL to navigate to
-        timeout: Page load timeout in milliseconds
-
-    Returns:
-        Tuple of (html, image_bytes, image_url), or (None, None, None)
-        on failure.
-    """
-    try:
-        return _run_playwright_non_headless(url, timeout)
-    except RuntimeError as e:
-        if "asyncio" in str(e).lower() or "event loop" in str(e).lower():
-            logger.debug("Asyncio loop detected, running Playwright in thread")
+            pw = sync_playwright().start()
             try:
-                from concurrent.futures import ThreadPoolExecutor
+                browser = pw.chromium.launch(
+                    headless=False,
+                    args=[
+                        "--disable-blink-features=AutomationControlled",
+                        "--window-position=-9999,-9999",
+                    ],
+                )
+                try:
+                    context = browser.new_context(
+                        viewport={"width": 1920, "height": 1080},
+                        user_agent=(
+                            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                            "Chrome/120.0.0.0 Safari/537.36"
+                        ),
+                        locale="fr-FR",
+                    )
+                    context.add_init_script(
+                        'Object.defineProperty(navigator, "webdriver", '
+                        "{get: () => undefined})"
+                    )
+                    ready_event.set()
 
-                with ThreadPoolExecutor(max_workers=1) as executor:
-                    future = executor.submit(_run_playwright_non_headless, url, timeout)
-                    return future.result(timeout=timeout / 1000 + 30)
-            except Exception as thread_err:
-                logger.error(f"Playwright thread failed for {url}: {thread_err}")
-                return None, None, None
-        raise
+                    while True:
+                        msg = self._request_queue.get()
+                        if msg is None:
+                            break
+                        url, timeout, extract_image = msg
+                        try:
+                            page = context.new_page()
+                            try:
+                                page.goto(
+                                    url,
+                                    wait_until="domcontentloaded",
+                                    timeout=timeout,
+                                )
+                                if not challenge_passed:
+                                    page.wait_for_timeout(
+                                        CloudflarePlaywrightSession.FIRST_PAGE_WAIT
+                                    )
+                                else:
+                                    page.wait_for_timeout(
+                                        CloudflarePlaywrightSession.SUBSEQUENT_PAGE_WAIT
+                                    )
+
+                                html = page.content()
+                                if _is_cloudflare_challenge(html):
+                                    logger.warning(
+                                        "Cloudflare challenge detected, "
+                                        "waiting longer..."
+                                    )
+                                    page.wait_for_timeout(10000)
+                                    html = page.content()
+
+                                if not _is_cloudflare_challenge(html):
+                                    challenge_passed = True
+
+                                if not banner_dismissed:
+                                    _dismiss_cookie_banner(page)
+                                    banner_dismissed = True
+
+                                image_bytes = None
+                                image_url = None
+                                if extract_image:
+                                    image_bytes, image_url = _extract_page_image(page)
+
+                                self._response_queue.put((html, image_bytes, image_url))
+                            finally:
+                                page.close()
+                        except Exception as e:
+                            logger.error(
+                                f"Playwright thread: failed to load {url}: {e}"
+                            )
+                            self._response_queue.put((None, None, None))
+                finally:
+                    browser.close()
+            except Exception as e:
+                startup_error[0] = e
+                ready_event.set()
+            finally:
+                pw.stop()
+
+        self._thread = threading.Thread(target=worker, daemon=True)
+        self._thread.start()
+        ready_event.wait(timeout=30)
+
+        if startup_error[0]:
+            raise startup_error[0]
+
+    def fetch_page(self, url, extract_image=False):
+        """Fetch a page using the shared browser context.
+
+        Creates a new tab, navigates to the URL, waits for Cloudflare
+        challenge (full wait on first page, brief wait thereafter),
+        extracts content, and closes the tab.
+
+        Args:
+            url: URL to navigate to
+            extract_image: Whether to extract the page's main image
+
+        Returns:
+            Tuple of (html, image_bytes, image_url). image_bytes and
+            image_url are None unless extract_image is True.
+        """
+        if self._use_thread:
+            return self._fetch_in_thread(url, extract_image)
+        return self._fetch_direct(url, extract_image)
+
+    def _fetch_direct(self, url, extract_image):
+        try:
+            page = self._context.new_page()
+            try:
+                page.goto(url, wait_until="domcontentloaded", timeout=self.timeout)
+
+                if not self._challenge_passed:
+                    page.wait_for_timeout(self.FIRST_PAGE_WAIT)
+                else:
+                    page.wait_for_timeout(self.SUBSEQUENT_PAGE_WAIT)
+
+                html = page.content()
+
+                if _is_cloudflare_challenge(html):
+                    logger.warning("Cloudflare challenge detected, waiting longer...")
+                    page.wait_for_timeout(10000)
+                    html = page.content()
+
+                if not _is_cloudflare_challenge(html):
+                    self._challenge_passed = True
+
+                if not self._banner_dismissed:
+                    _dismiss_cookie_banner(page)
+                    self._banner_dismissed = True
+
+                image_bytes = None
+                image_url = None
+                if extract_image:
+                    image_bytes, image_url = _extract_page_image(page)
+
+                return html, image_bytes, image_url
+            finally:
+                page.close()
+        except Exception as e:
+            logger.error(f"Playwright failed to load {url}: {e}")
+            return None, None, None
+
+    def _fetch_in_thread(self, url, extract_image):
+        try:
+            self._request_queue.put((url, self.timeout, extract_image))
+            return self._response_queue.get(timeout=self.timeout / 1000 + 30)
+        except Exception as e:
+            logger.error(f"Playwright thread failed for {url}: {e}")
+            return None, None, None
+
+    def _stop(self):
+        if self._use_thread:
+            if self._request_queue:
+                self._request_queue.put(None)
+            if self._thread:
+                self._thread.join(timeout=10)
+        else:
+            if self._browser:
+                try:
+                    self._browser.close()
+                except Exception:
+                    pass
+            if self._pw:
+                try:
+                    self._pw.stop()
+                except Exception:
+                    pass
 
 
 def _extract_events_from_listing(html, base_url="https://13.agendaculturel.fr"):
@@ -723,16 +895,35 @@ class AgendaCulturelParser(BaseCrawler):
 
     source_name = "Agenda Culturel"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Shared Playwright browser session (set during crawl)
+        self._pw_session: CloudflarePlaywrightSession | None = None
+
     def crawl(self) -> list[Event]:
         """
         Crawl multiple category listing pages on Agenda Culturel.
 
         Overrides BaseCrawler.crawl() to iterate over CATEGORY_LISTING_URLS
-        instead of fetching a single root page.
+        instead of fetching a single root page. Wraps everything in a
+        CloudflarePlaywrightSession so one Chromium process is reused for
+        all page fetches.
 
         Returns:
             List of processed Event objects
         """
+        try:
+            with CloudflarePlaywrightSession() as session:
+                self._pw_session = session
+                return self._crawl_with_session()
+        except ImportError:
+            logger.error("Cannot crawl Agenda Culturel: Playwright not installed")
+            return []
+        finally:
+            self._pw_session = None
+
+    def _crawl_with_session(self) -> list[Event]:
+        """Execute the crawl logic with an active Playwright session."""
         logger.info(f"Starting crawl for {self.source_name}")
         self.selection_stats = {"accepted": 0, "rejected": 0}
 
@@ -817,7 +1008,7 @@ class AgendaCulturelParser(BaseCrawler):
 
     def fetch_page(self, url: str) -> str:
         """
-        Fetch page using non-headless Playwright to bypass Cloudflare.
+        Fetch page using shared non-headless Playwright session.
 
         Args:
             url: URL to fetch
@@ -826,12 +1017,16 @@ class AgendaCulturelParser(BaseCrawler):
             HTML content as string, or empty string on failure
         """
         logger.info(f"Fetching with Playwright (non-headless): {url}")
-        html, _, _ = _run_playwright_in_thread(url)
+        if not self._pw_session:
+            logger.warning("No Playwright session available")
+            return ""
+
+        html, _, _ = self._pw_session.fetch_page(url)
         if not html:
             return ""
 
         # Verify we got actual content, not a challenge page
-        if "Verify you are human" in html or "Just a moment" in html:
+        if _is_cloudflare_challenge(html):
             logger.error(f"Cloudflare challenge not bypassed for: {url}")
             return ""
 
@@ -915,14 +1110,20 @@ class AgendaCulturelParser(BaseCrawler):
         """
         logger.debug(f"Loading event detail page: {event_url}")
 
+        if not self._pw_session:
+            logger.warning("No Playwright session available")
+            return None
+
         # Fetch HTML and image in the same Playwright session
-        html, image_bytes, image_url = _run_playwright_in_thread(event_url)
+        html, image_bytes, image_url = self._pw_session.fetch_page(
+            event_url, extract_image=True
+        )
         if not html:
             logger.warning(f"Failed to load detail page: {event_url}")
             return None
 
         # Verify we got actual content, not a challenge page
-        if "Verify you are human" in html or "Just a moment" in html:
+        if _is_cloudflare_challenge(html):
             logger.error(f"Cloudflare challenge not bypassed for: {event_url}")
             return None
 
