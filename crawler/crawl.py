@@ -185,8 +185,16 @@ def cli(ctx, config: Path, log_level: str | None, log_file: Path | None):
     default=False,
     help="Skip selection criteria filtering (include all events)",
 )
+@click.option(
+    "--concurrency",
+    "-c",
+    type=int,
+    default=5,
+    show_default=True,
+    help="Max concurrent threads for detail page fetches (1 = sequential)",
+)
 @click.pass_context
-def run(ctx, source: str | None, dry_run: bool, skip_selection: bool):
+def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrency: int):
     """
     Run the crawler to fetch and process events.
 
@@ -337,6 +345,7 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool):
                 http_client=http_client,
                 image_downloader=image_downloader,
                 markdown_generator=markdown_generator,
+                max_workers=concurrency,
             )
 
             events = parser.crawl()
