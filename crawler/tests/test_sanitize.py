@@ -1,7 +1,5 @@
 """Tests for the sanitize_description utility."""
 
-import pytest
-
 from src.utils.sanitize import sanitize_description
 
 
@@ -81,13 +79,13 @@ class TestXSSVectorRemoval:
         assert "javascript:" not in result
 
     def test_strips_event_handlers(self):
-        text = 'onerror=alert(1) onload=evil()'
+        text = "onerror=alert(1) onload=evil()"
         result = sanitize_description(text)
         assert "onerror=" not in result
         assert "onload=" not in result
 
     def test_full_xss_img_tag(self):
-        text = 'See <img src=x onerror=alert(1)> this'
+        text = "See <img src=x onerror=alert(1)> this"
         result = sanitize_description(text)
         assert "<img" not in result
         assert "onerror=" not in result

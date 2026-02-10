@@ -3,7 +3,6 @@
 import html
 import re
 
-
 # Pattern to match HTML tags
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
 
