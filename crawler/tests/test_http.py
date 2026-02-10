@@ -8,7 +8,14 @@ from unittest.mock import MagicMock, patch
 import httpx
 import pytest
 
-from src.utils.http import FetchResult, HTTPClient, RateLimiter, ResponseCache
+from src.utils.http import (
+    FetchResult,
+    HTTPClient,
+    RateLimiter,
+    ResponseCache,
+    SSRFError,
+    validate_url,
+)
 
 
 class TestFetchResult:
@@ -402,4 +409,163 @@ class TestHTTPClientIntegration:
         result = client.fetch("https://httpbin.org/status/404")
         assert result.success is False
         assert result.status_code == 404
+        client.close()
+
+
+# ── Test validate_url ───────────────────────────────────────────────
+
+
+class TestValidateUrlAllowed:
+    """Verify legitimate external URLs pass validation."""
+
+    def test_allows_https(self):
+        assert validate_url("https://example.com") == "https://example.com"
+
+    def test_allows_http(self):
+        assert validate_url("http://example.com") == "http://example.com"
+
+    def test_allows_external_with_path(self):
+        url = "https://massalia.events/events/2026/01/concert"
+        assert validate_url(url) == url
+
+    def test_allows_external_with_port(self):
+        url = "https://example.com:8080/api"
+        assert validate_url(url) == url
+
+    def test_allows_real_venue_urls(self):
+        urls = [
+            "https://shotgun.live/fr/events/123",
+            "https://www.lafriche.org/agenda/concert",
+            "https://www.lemakeda.com/events/456",
+            "https://www.cepacsilo-marseille.fr/evenement/show",
+        ]
+        for url in urls:
+            assert validate_url(url) == url
+
+
+class TestValidateUrlRejectsSchemes:
+    """Verify non-HTTP schemes are blocked."""
+
+    def test_rejects_file_scheme(self):
+        with pytest.raises(SSRFError, match="non-HTTP scheme"):
+            validate_url("file:///etc/passwd")
+
+    def test_rejects_ftp_scheme(self):
+        with pytest.raises(SSRFError, match="non-HTTP scheme"):
+            validate_url("ftp://files.example.com/data")
+
+    def test_rejects_data_scheme(self):
+        with pytest.raises(SSRFError, match="non-HTTP scheme"):
+            validate_url("data:text/html,<script>alert(1)</script>")
+
+    def test_rejects_javascript_scheme(self):
+        with pytest.raises(SSRFError, match="non-HTTP scheme"):
+            validate_url("javascript:alert(1)")
+
+    def test_rejects_empty_string(self):
+        with pytest.raises(SSRFError):
+            validate_url("")
+
+    def test_rejects_none_like(self):
+        with pytest.raises(SSRFError):
+            validate_url("")
+
+
+class TestValidateUrlRejectsPrivateIPs:
+    """Verify private/reserved IP ranges are blocked."""
+
+    def test_rejects_loopback_127(self):
+        with pytest.raises(SSRFError, match="private/reserved"):
+            validate_url("http://127.0.0.1/admin")
+
+    def test_rejects_loopback_127_other(self):
+        with pytest.raises(SSRFError, match="private/reserved"):
+            validate_url("http://127.0.0.2:8080/")
+
+    def test_rejects_10_network(self):
+        with pytest.raises(SSRFError, match="private/reserved"):
+            validate_url("http://10.0.0.1/internal")
+
+    def test_rejects_172_16_network(self):
+        with pytest.raises(SSRFError, match="private/reserved"):
+            validate_url("http://172.16.0.1/")
+
+    def test_rejects_172_31_network(self):
+        with pytest.raises(SSRFError, match="private/reserved"):
+            validate_url("http://172.31.255.255/")
+
+    def test_rejects_192_168_network(self):
+        with pytest.raises(SSRFError, match="private/reserved"):
+            validate_url("http://192.168.1.1/router")
+
+    def test_rejects_link_local(self):
+        with pytest.raises(SSRFError):
+            validate_url("http://169.254.169.254/latest/meta-data/")
+
+    def test_rejects_cloud_metadata_endpoint(self):
+        with pytest.raises(SSRFError):
+            validate_url("http://169.254.169.254/latest/api/token")
+
+    def test_rejects_ipv6_loopback(self):
+        with pytest.raises(SSRFError, match="private/reserved"):
+            validate_url("http://[::1]/admin")
+
+    def test_rejects_zero_address(self):
+        with pytest.raises(SSRFError):
+            validate_url("http://0.0.0.0/")
+
+
+class TestValidateUrlRejectsLocalhost:
+    """Verify localhost hostnames are blocked."""
+
+    def test_rejects_localhost(self):
+        with pytest.raises(SSRFError, match="localhost"):
+            validate_url("http://localhost/admin")
+
+    def test_rejects_localhost_with_port(self):
+        with pytest.raises(SSRFError, match="localhost"):
+            validate_url("http://localhost:8080/")
+
+    def test_rejects_localhost_localdomain(self):
+        with pytest.raises(SSRFError, match="localhost"):
+            validate_url("http://localhost.localdomain/")
+
+    def test_rejects_subdomain_localhost(self):
+        with pytest.raises(SSRFError, match="localhost"):
+            validate_url("http://app.localhost/")
+
+
+class TestValidateUrlInHTTPClient:
+    """Verify HTTPClient methods reject SSRF URLs."""
+
+    def test_fetch_returns_error_for_private_ip(self):
+        client = HTTPClient()
+        result = client.fetch("http://127.0.0.1/admin")
+        assert result.success is False
+        assert "private/reserved" in result.error
+        client.close()
+
+    def test_fetch_returns_error_for_metadata_endpoint(self):
+        client = HTTPClient()
+        result = client.fetch("http://169.254.169.254/latest/meta-data/")
+        assert result.success is False
+        assert "Blocked" in result.error
+        client.close()
+
+    def test_get_raises_for_private_ip(self):
+        client = HTTPClient()
+        with pytest.raises(SSRFError):
+            client.get("http://10.0.0.1/internal")
+        client.close()
+
+    def test_get_text_raises_for_localhost(self):
+        client = HTTPClient()
+        with pytest.raises(SSRFError):
+            client.get_text("http://localhost:3000/")
+        client.close()
+
+    def test_get_bytes_raises_for_private_ip(self):
+        client = HTTPClient()
+        with pytest.raises(SSRFError):
+            client.get_bytes("http://192.168.1.1/image.jpg")
         client.close()

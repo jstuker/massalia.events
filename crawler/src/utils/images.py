@@ -141,6 +141,9 @@ class ImageDownloader:
             else:
                 import httpx
 
+                from .http import validate_url
+
+                validate_url(url)
                 response = httpx.get(url, timeout=30, follow_redirects=True)
                 response.raise_for_status()
                 image_bytes = response.content

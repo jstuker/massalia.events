@@ -1,16 +1,76 @@
 """HTTP client with rate limiting, retries, and caching."""
 
 import hashlib
+import ipaddress
 import json
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
+from urllib.parse import urlparse
 
 import httpx
 
 from ..logger import get_logger
 
 logger = get_logger(__name__)
+
+
+class SSRFError(ValueError):
+    """Raised when a URL targets a private/reserved network address."""
+
+
+def validate_url(url: str) -> str:
+    """Validate a URL is safe to fetch (防SSRF).
+
+    Rejects:
+    - Non-HTTP(S) schemes
+    - Private/reserved IP ranges (127.0.0.0/8, 10.0.0.0/8, 172.16.0.0/12,
+      192.168.0.0/16, 169.254.0.0/16, ::1, etc.)
+    - Localhost hostnames
+
+    Args:
+        url: The URL to validate.
+
+    Returns:
+        The validated URL string.
+
+    Raises:
+        SSRFError: If the URL targets a disallowed destination.
+    """
+    if not url or not isinstance(url, str):
+        raise SSRFError("Empty or invalid URL")
+
+    parsed = urlparse(url)
+
+    # 1. Scheme must be http or https
+    if parsed.scheme not in ("http", "https"):
+        raise SSRFError(f"Blocked non-HTTP scheme: {parsed.scheme!r}")
+
+    hostname = parsed.hostname
+    if not hostname:
+        raise SSRFError(f"No hostname in URL: {url}")
+
+    # 2. Reject localhost hostnames
+    _lower = hostname.lower()
+    if _lower in ("localhost", "localhost.localdomain") or _lower.endswith(
+        ".localhost"
+    ):
+        raise SSRFError(f"Blocked localhost URL: {url}")
+
+    # 3. Check if hostname is an IP literal and reject private/reserved ranges
+    try:
+        addr = ipaddress.ip_address(hostname)
+    except ValueError:
+        # Not an IP literal — it's a regular hostname, which is fine
+        addr = None
+
+    if addr is not None:
+        if addr.is_private or addr.is_reserved or addr.is_loopback:
+            raise SSRFError(f"Blocked private/reserved IP: {hostname}")
+        if addr.is_link_local:
+            raise SSRFError(f"Blocked link-local IP: {hostname}")
+
+    return url
 
 
 @dataclass
@@ -281,6 +341,20 @@ class HTTPClient:
         Returns:
             FetchResult with response data or error information
         """
+        # Validate URL before any network access
+        try:
+            validate_url(url)
+        except SSRFError as e:
+            logger.warning(f"URL validation failed: {e}")
+            return FetchResult(
+                url=url,
+                status_code=0,
+                html=None,
+                headers={},
+                elapsed_ms=0,
+                error=str(e),
+            )
+
         # Check cache first
         if self.cache:
             cached = self.cache.get(url)
@@ -400,6 +474,8 @@ class HTTPClient:
         Raises:
             httpx.HTTPError: If all retries fail
         """
+        validate_url(url)  # raises SSRFError for disallowed URLs
+
         self._wait_for_rate_limit()
 
         last_error = None
