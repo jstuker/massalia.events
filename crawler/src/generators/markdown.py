@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 import yaml
 
 from ..logger import get_logger
+from ..utils.sanitize import sanitize_description
 
 if TYPE_CHECKING:
     from ..deduplicator import EventDeduplicator
@@ -167,8 +168,15 @@ class MarkdownGenerator:
         # Generate front matter
         front_matter = event.to_front_matter()
 
+        # Sanitize description in front matter and body
+        description = sanitize_description(event.description)
+        if "description" in front_matter:
+            front_matter["description"] = sanitize_description(
+                front_matter["description"]
+            )
+
         # Build file content
-        content = self._build_content(front_matter, event.description)
+        content = self._build_content(front_matter, description)
 
         if self.dry_run:
             logger.info(f"[DRY RUN] Would create: {file_path}")
