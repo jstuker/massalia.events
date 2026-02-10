@@ -1,9 +1,9 @@
 ---
-title: DvořákenAmérique
+title: Dvořák en Amérique
 date: '2026-04-27T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-28T00:00:00+02:00'
-name: DvořákenAmérique
+name: Dvořák en Amérique
 eventURL: https://theatre-lacriee.com/programmation/evenements/dvorak-en-amerique
 startTime: '20:00'
 description: '« Quand les rythmes populaires d’Europe centrale 

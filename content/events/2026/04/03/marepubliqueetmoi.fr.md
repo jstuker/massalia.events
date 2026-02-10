@@ -1,9 +1,9 @@
 ---
-title: MaRépubliqueetmoi
+title: Ma République et moi
 date: '2026-04-03T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-04T00:00:00+02:00'
-name: MaRépubliqueetmoi
+name: Ma République et moi
 eventURL: https://theatre-lacriee.com/programmation/evenements/ma-republique-et-moi
 startTime: '20:00'
 description: LE REPAS DE MALIKA | Dégustez chaque jour une sélection de plats marocains proposée par la mère d'Issam Rachyq-Ahrad et concoctée par l'équipe des grandes...

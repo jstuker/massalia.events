@@ -412,7 +412,15 @@ class LaCrieeParser(BaseCrawler):
         # Try h1 first
         h1 = parser.select_one("h1")
         if h1:
-            # Use separator=" " to avoid merged words when h1 has child elements
+            # La Criée wraps each word in a <div> and each letter in a <span>.
+            # Detect this pattern and reconstruct words from div children.
+            word_divs = h1.find_all("div", recursive=False)
+            if word_divs:
+                words = [div.get_text() for div in word_divs]
+                name = " ".join(w for w in words if w.strip())
+                if name:
+                    return name
+            # Fallback: use separator to avoid merged words from child elements
             return " ".join(h1.get_text(separator=" ").split())
 
         # Fallback selectors

@@ -1,9 +1,9 @@
 ---
-title: L’affaireL.ex.π.Re
+title: L’affaire L.ex.π.Re
 date: '2026-03-20T14:15:00+01:00'
 draft: false
 expiryDate: '2026-03-21T00:00:00+01:00'
-name: L’affaireL.ex.π.Re
+name: L’affaire L.ex.π.Re
 eventURL: https://theatre-lacriee.com/programmation/evenements/laffaire-lexpre
 startTime: '14:15'
 description: « Il y a des courriers que l’on attend plus, des colis pour le moins surprenants, des messages énigmatiques, et l’enveloppe en kraft que Max vient de...

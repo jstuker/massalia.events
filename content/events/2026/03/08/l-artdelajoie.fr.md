@@ -1,9 +1,9 @@
 ---
-title: L'Artdelajoie
+title: L'Art de la joie
 date: '2026-03-08T15:00:00+01:00'
 draft: false
 expiryDate: '2026-03-09T00:00:00+01:00'
-name: L'Artdelajoie
+name: L'Art de la joie
 eventURL: https://theatre-lacriee.com/programmation/evenements/lart-de-la-joie
 startTime: '15:00'
 description: Déconseillé aux moins de 15 ans — certaines scènes peuvent heurter la sensibilité du public.

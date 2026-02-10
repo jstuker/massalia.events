@@ -1,9 +1,9 @@
 ---
-title: Ciné-concertSatis
+title: Ciné-concert Satis
 date: '2026-04-04T20:30:00+02:00'
 draft: false
 expiryDate: '2026-04-05T00:00:00+02:00'
-name: Ciné-concertSatis
+name: Ciné-concert Satis
 eventURL: https://theatre-lacriee.com/programmation/evenements/cine-concert-satis
 startTime: '20:30'
 description: Une carte blanche aux étudiant·es de la SATIS [ École supérieure publique de Cinéma d’Aix-Marseille Université ] constituée de projections de courts...

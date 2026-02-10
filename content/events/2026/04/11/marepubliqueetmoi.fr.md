@@ -14,7 +14,7 @@ image: /images/events/marepubliqueetmoi-32f211d3.webp
 lastCrawled: '2026-02-05T14:12:39.780727'
 locations:
 - la-criee
-name: MaRépubliqueetmoi
+name: Ma République et moi
 sourceId: lacriee:ma-republique-et-moi-a-lastronef:20260411-0115
 sourceIds:
 - lacriee:ma-republique-et-moi-a-lastronef:20260411-0115
@@ -22,7 +22,7 @@ sourceIds:
 - lacriee:ma-republique-et-moi-a-lastronef:20260411-2000
 startTime: 01:15
 tags: []
-title: MaRépubliqueetmoi
+title: Ma République et moi
 ---
 
 « Issam nous invite chez sa mère. Le thé et les gâteaux sont prêts. 

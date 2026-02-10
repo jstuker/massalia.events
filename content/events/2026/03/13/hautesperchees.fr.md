@@ -1,9 +1,9 @@
 ---
-title: Hautesperchées
+title: Hautes perchées
 date: '2026-03-13T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-14T00:00:00+01:00'
-name: Hautesperchées
+name: Hautes perchées
 eventURL: https://theatre-lacriee.com/programmation/evenements/hautes-perchees
 startTime: '20:00'
 description: CINÉMA | MAR 25 NOVEMBRE 20H | En écho au spectacle découvrez ou redécouvrez Panique à Needle Park, de Jerry Schatzberg au cinéma Les Variétés sur une...

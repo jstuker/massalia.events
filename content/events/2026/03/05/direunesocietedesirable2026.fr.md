@@ -1,9 +1,9 @@
 ---
-title: Direunesociétédésirable2026
+title: Dire une société désirable 2026
 date: '2026-03-05T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-06T00:00:00+01:00'
-name: Direunesociétédésirable2026
+name: Dire une société désirable 2026
 eventURL: https://theatre-lacriee.com/programmation/evenements/dire-une-societe-desirable-2026
 startTime: '20:00'
 description: Une série de rendez-vous autour de La République de Platon pour interroger ensemble notre présent et faire du théâtre le lieu d’une assemblée citoyenne.

@@ -1,9 +1,9 @@
 ---
-title: AlexandreKantorow
+title: Alexandre Kantorow
 date: '2026-02-17T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-18T00:00:00+01:00'
-name: AlexandreKantorow
+name: Alexandre Kantorow
 eventURL: https://theatre-lacriee.com/programmation/evenements/kantorow
 startTime: '20:00'
 description: Salué à travers le monde comme l’un des plus grands pianistes de notre temps, Alexandre Kantorow nous propose un récital dont le programme met en valeur...

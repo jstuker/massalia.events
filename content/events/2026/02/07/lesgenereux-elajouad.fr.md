@@ -1,9 +1,9 @@
 ---
-title: LesGénéreux/ElAjouad
+title: Les Généreux / El Ajouad
 date: '2026-02-07T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-08T00:00:00+01:00'
-name: LesGénéreux/ElAjouad
+name: Les Généreux / El Ajouad
 eventURL: https://theatre-lacriee.com/programmation/evenements/les-genereux-el-ajouad
 startTime: '19:00'
 description: '« J’écris pour notre peuple avec une perspective fondamentale : son émancipation pleine et entière »'

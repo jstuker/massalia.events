@@ -1,9 +1,9 @@
 ---
-title: LePetitChaperonrouge
+title: Le Petit Chaperon rouge
 date: '2026-03-12T19:00:00+01:00'
 draft: false
 expiryDate: '2026-03-13T00:00:00+01:00'
-name: LePetitChaperonrouge
+name: Le Petit Chaperon rouge
 eventURL: https://theatre-lacriee.com/programmation/evenements/le-petit-chaperon-rouge
 startTime: '19:00'
 description: « Je voulais parler d’aujourd’hui à des enfants d’aujourd’hui. Raconter à nouveau, le plus simplement et le plus concrètement possible, l'histoire de cette...

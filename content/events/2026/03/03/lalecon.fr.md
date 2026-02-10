@@ -1,9 +1,9 @@
 ---
-title: LaLeçon
+title: La Leçon
 date: '2026-03-03T20:30:00+01:00'
 draft: false
 expiryDate: '2026-03-04T00:00:00+01:00'
-name: LaLeçon
+name: La Leçon
 eventURL: https://theatre-lacriee.com/programmation/evenements/la-lecon
 startTime: '20:30'
 description: 'Avertissement : certaines scènes de violences sexistes et sexuelles peuvent heurter la sensibilité du public'

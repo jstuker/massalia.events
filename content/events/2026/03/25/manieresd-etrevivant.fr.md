@@ -14,14 +14,14 @@ image: /images/events/manieresd-etrevivant-2f1f75b9.webp
 lastCrawled: '2026-02-05T14:12:39.913399'
 locations:
 - la-criee
-name: Manièresd'êtrevivant
+name: Manières d'être vivant
 sourceId: lacriee:manieres-detre-vivant:20260325-1900
 sourceIds:
 - lacriee:manieres-detre-vivant:20260325-1900
 - lacriee:manieres-detre-vivant:20260328-2000
 startTime: '19:00'
 tags: []
-title: Manièresd'êtrevivant
+title: Manières d'être vivant
 ---
 
 CINÉMA | MAR 24 MARS 20H | En écho au spectacle découvrez ou redécouvrez Grizzly Man, de Werner Herzog au cinéma Les Variétés sur une proposition du...

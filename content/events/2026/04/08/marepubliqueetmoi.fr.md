@@ -14,7 +14,7 @@ image: /images/events/marepubliqueetmoi-f54c2957.webp
 lastCrawled: '2026-02-05T14:12:39.698449'
 locations:
 - la-criee
-name: MaRépubliqueetmoi
+name: Ma République et moi
 sourceId: lacriee:ma-republique-et-moi:20260408-0115
 sourceIds:
 - lacriee:ma-republique-et-moi:20260408-0115
@@ -25,7 +25,7 @@ sourceIds:
 - lacriee:ma-republique-et-moi:20260408-1500
 startTime: 01:15
 tags: []
-title: MaRépubliqueetmoi
+title: Ma République et moi
 ---
 
 LE REPAS DE MALIKA | Dégustez chaque jour une sélection de plats marocains proposée par la mère d'Issam Rachyq-Ahrad et concoctée par l'équipe des grandes...

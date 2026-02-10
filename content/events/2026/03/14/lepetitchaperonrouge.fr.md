@@ -14,7 +14,7 @@ image: /images/events/lepetitchaperonrouge-8becd788.webp
 lastCrawled: '2026-02-05T14:12:39.310693'
 locations:
 - la-criee
-name: LePetitChaperonrouge
+name: Le Petit Chaperon rouge
 sourceId: lacriee:le-petit-chaperon-rouge:20260314-1100
 sourceIds:
 - lacriee:le-petit-chaperon-rouge:20260314-1100
@@ -22,7 +22,7 @@ sourceIds:
 - lacriee:le-petit-chaperon-rouge:20260314-1800
 startTime: '11:00'
 tags: []
-title: LePetitChaperonrouge
+title: Le Petit Chaperon rouge
 ---
 
 « Je voulais parler d’aujourd’hui à des enfants d’aujourd’hui. Raconter à nouveau, le plus simplement et le plus concrètement possible, l'histoire de cette...

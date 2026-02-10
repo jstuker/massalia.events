@@ -14,7 +14,7 @@ image: /images/events/lalecon-eda30af2.webp
 lastCrawled: '2026-02-05T14:12:38.893130'
 locations:
 - theatre-des-trois-ponts-castelnaudary
-name: LaLeçon
+name: La Leçon
 sourceId: lacriee:la-lecon:20260313-2030
 sourceIds:
 - lacriee:la-lecon:20260313-2030
@@ -25,7 +25,7 @@ sourceIds:
 - lacriee:la-lecon:20260324-2000
 startTime: '20:30'
 tags: []
-title: LaLeçon
+title: La Leçon
 ---
 
 Avertissement : certaines scènes de violences sexistes et sexuelles peuvent heurter la sensibilité du public

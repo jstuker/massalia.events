@@ -1,9 +1,9 @@
 ---
-title: Chavirerdebord
+title: Chavirer de bord
 date: '2026-02-11T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-12T00:00:00+01:00'
-name: Chavirerdebord
+name: Chavirer de bord
 eventURL: https://theatre-lacriee.com/programmation/evenements/chavirer-de-bord
 startTime: '19:00'
 description: « Je voudrais raconter le deuil, enfin le mien, je voudrais raconter la reprise de souffle, je voudrais vous parler de justice et vous raconter mon enquête,...
