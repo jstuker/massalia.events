@@ -39,8 +39,8 @@ def sanitize_description(text: str) -> str:
     if not text:
         return ""
 
-    # 1. Strip HTML tags
-    clean = _HTML_TAG_RE.sub("", text)
+    # 1. Strip HTML tags (replace with space to preserve word boundaries)
+    clean = _HTML_TAG_RE.sub(" ", text)
 
     # 2. Decode HTML entities (handles all named & numeric entities)
     clean = html.unescape(clean)
