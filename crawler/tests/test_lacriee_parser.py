@@ -192,6 +192,66 @@ def category_map():
     }
 
 
+# ── Test _extract_name ────────────────────────────────────────────
+
+
+class TestExtractName:
+    """Tests for event name extraction from detail page HTML."""
+
+    @pytest.fixture
+    def parser(self, category_map):
+        http_client = MagicMock()
+        image_downloader = MagicMock()
+        markdown_generator = MagicMock()
+        return LaCrieeParser(
+            config={
+                "name": "La Criée",
+                "id": "lacriee",
+                "url": "https://theatre-lacriee.com/programmation/spectacles",
+                "parser": "lacriee",
+                "rate_limit": {"delay_between_pages": 0.0},
+                "category_map": category_map,
+            },
+            http_client=http_client,
+            image_downloader=image_downloader,
+            markdown_generator=markdown_generator,
+        )
+
+    def test_extracts_plain_h1(self, parser):
+        html_parser = HTMLParser("<html><body><h1>La Leçon</h1></body></html>")
+        assert parser._extract_name(html_parser) == "La Leçon"
+
+    def test_extracts_h1_with_nested_spans(self, parser):
+        """Regression: h1 with child elements should preserve spaces between words."""
+        html_parser = HTMLParser(
+            "<html><body><h1><span>La</span> <span>Leçon</span></h1></body></html>"
+        )
+        assert parser._extract_name(html_parser) == "La Leçon"
+
+    def test_extracts_h1_with_adjacent_spans_no_whitespace(self, parser):
+        """Regression: h1 with adjacent child elements and no whitespace between them."""
+        html_parser = HTMLParser(
+            "<html><body><h1><span>La</span><span>Leçon</span></h1></body></html>"
+        )
+        assert parser._extract_name(html_parser) == "La Leçon"
+
+    def test_collapses_extra_whitespace(self, parser):
+        html_parser = HTMLParser(
+            "<html><body><h1>  La   Leçon  </h1></body></html>"
+        )
+        assert parser._extract_name(html_parser) == "La Leçon"
+
+    def test_falls_back_to_h2(self, parser):
+        html_parser = HTMLParser(
+            "<html><body><h2>Dom Juan</h2></body></html>"
+        )
+        assert parser._extract_name(html_parser) == "Dom Juan"
+
+    def test_returns_empty_when_no_heading(self, parser):
+        html_parser = HTMLParser("<html><body><p>No title</p></body></html>")
+        assert parser._extract_name(html_parser) == ""
+
+
 # ── Test _extract_event_urls_from_html ────────────────────────────
 
 

@@ -252,6 +252,10 @@ class SelectionCriteria:
 
     def _check_date_constraints(self, date: datetime) -> SelectionResult:
         """Check date is within allowed range."""
+        # Normalize naive datetimes to Paris timezone to avoid comparison errors
+        if date.tzinfo is None:
+            date = date.replace(tzinfo=PARIS_TZ)
+
         now = datetime.now(PARIS_TZ)
         today = now.replace(hour=0, minute=0, second=0, microsecond=0)
 

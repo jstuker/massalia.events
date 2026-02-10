@@ -8,9 +8,10 @@ from zoneinfo import ZoneInfo
 import pytest
 
 from src.models.event import Event
-from src.parsers.lemakeda import LeMakedaParser, _strip_html
+from src.parsers.lemakeda import LeMakedaParser
 from src.utils.http import FetchResult
 from src.utils.parser import HTMLParser
+from src.utils.sanitize import sanitize_description
 
 PARIS_TZ = ZoneInfo("Europe/Paris")
 
@@ -661,38 +662,38 @@ class TestParseEventsIntegration:
         assert parser.source_name == "Le Makeda"
 
 
-# ── Test _strip_html utility ────────────────────────────────────────
+# ── Test sanitize_description (replaces old _strip_html tests) ─────
 
 
-class TestStripHtml:
-    """Tests for the HTML stripping utility."""
+class TestSanitizeDescription:
+    """Tests for the shared sanitize_description utility (via lemakeda)."""
 
     def test_strips_simple_tags(self):
-        assert _strip_html("<p>Hello</p>") == "Hello"
+        assert sanitize_description("<p>Hello</p>") == "Hello"
 
     def test_strips_nested_tags(self):
-        result = _strip_html("<p>Hello <strong>World</strong></p>")
+        result = sanitize_description("<p>Hello <strong>World</strong></p>")
         assert result == "Hello World"
 
     def test_decodes_html_entities(self):
-        assert _strip_html("Rock &amp; Roll") == "Rock & Roll"
+        assert sanitize_description("Rock &amp; Roll") == "Rock & Roll"
 
     def test_decodes_smart_quotes(self):
-        result = _strip_html("&#8220;Hello&#8221;")
-        assert result == '"Hello"'
+        result = sanitize_description("&#8220;Hello&#8221;")
+        assert result == '\u201cHello\u201d'
 
     def test_collapses_whitespace(self):
-        result = _strip_html("<p>Hello</p>   <p>World</p>")
+        result = sanitize_description("<p>Hello</p>   <p>World</p>")
         assert result == "Hello World"
 
     def test_handles_empty_string(self):
-        assert _strip_html("") == ""
+        assert sanitize_description("") == ""
 
     def test_handles_nbsp(self):
-        assert _strip_html("Hello&nbsp;World") == "Hello World"
+        assert sanitize_description("Hello&nbsp;World") == "Hello World"
 
     def test_handles_plain_text(self):
-        assert _strip_html("No HTML here") == "No HTML here"
+        assert sanitize_description("No HTML here") == "No HTML here"
 
 
 # ── Test _extract_datetime ──────────────────────────────────────────
