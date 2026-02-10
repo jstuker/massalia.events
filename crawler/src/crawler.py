@@ -1,6 +1,7 @@
 """Base crawler class with common functionality."""
 
 from abc import ABC, abstractmethod
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import TYPE_CHECKING
 
 from .logger import get_logger
@@ -34,6 +35,7 @@ class BaseCrawler(ABC):
         http_client: "HTTPClient",
         image_downloader: "ImageDownloader",
         markdown_generator: "MarkdownGenerator",
+        max_workers: int = 5,
     ):
         """
         Initialize the crawler.
@@ -43,11 +45,13 @@ class BaseCrawler(ABC):
             http_client: HTTP client for fetching pages
             image_downloader: Image downloader for event images
             markdown_generator: Generator for Hugo markdown files
+            max_workers: Max concurrent threads for detail page fetches
         """
         self.config = config
         self.http_client = http_client
         self.image_downloader = image_downloader
         self.markdown_generator = markdown_generator
+        self.max_workers = max_workers
 
         self.source_name = config.get("name", self.source_name)
         self.source_id = config.get("id", "unknown")
@@ -114,6 +118,38 @@ class BaseCrawler(ABC):
         except Exception as e:
             logger.error(f"Failed to fetch {url}: {e}")
             return ""
+
+    def fetch_pages(self, urls: list[str]) -> dict[str, str]:
+        """
+        Fetch multiple pages concurrently using a thread pool.
+
+        Respects per-source rate limiting via HTTPClient. When max_workers=1,
+        behaves identically to sequential fetch_page() calls.
+
+        Args:
+            urls: List of URLs to fetch
+
+        Returns:
+            Dict mapping URL to HTML content (empty string on failure)
+        """
+        results: dict[str, str] = {}
+
+        if not urls:
+            return results
+
+        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+            future_to_url = {
+                executor.submit(self.fetch_page, url): url for url in urls
+            }
+            for future in as_completed(future_to_url):
+                url = future_to_url[future]
+                try:
+                    results[url] = future.result()
+                except Exception as e:
+                    logger.error(f"Failed to fetch {url}: {e}")
+                    results[url] = ""
+
+        return results
 
     @abstractmethod
     def parse_events(self, parser: HTMLParser) -> list[Event]:
