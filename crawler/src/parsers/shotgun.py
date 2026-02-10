@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 
 from ..crawler import BaseCrawler
 from ..logger import get_logger
-from ..models.event import Event, slugify
+from ..models.event import Event
 from ..models.venue import Venue
 from ..utils.french_date import FRENCH_MONTHS, PARIS_TZ
 from ..utils.parser import HTMLParser
@@ -28,76 +28,178 @@ MAX_PAGES = 3
 MAX_EVENTS = 50
 
 
-def _run_playwright_sync(url, timeout):
+class PlaywrightSession:
+    """Manages a single Playwright browser instance for multiple page fetches.
+
+    Reuses one Chromium process across all pages in a crawl session,
+    creating a new tab (page) per URL and closing it after extraction.
+
+    If an asyncio event loop is already running (preventing the Playwright
+    sync API from working directly), the browser runs in a background thread
+    with queue-based communication.
+
+    Usage::
+
+        with PlaywrightSession() as session:
+            html1 = session.fetch_page("https://example.com/page1")
+            html2 = session.fetch_page("https://example.com/page2")
     """
-    Run Playwright in a synchronous context.
 
-    This is the actual Playwright work, meant to be called either
-    directly or from a thread (to avoid asyncio event loop conflicts).
-    """
-    from playwright.sync_api import sync_playwright
+    def __init__(self, timeout=60000):
+        self.timeout = timeout
+        self._pw = None
+        self._browser = None
+        self._use_thread = False
+        self._thread = None
+        self._request_queue = None
+        self._response_queue = None
 
-    pw = sync_playwright().start()
-    try:
-        browser = pw.chromium.launch(headless=True)
-        page = browser.new_page()
-        page.goto(url, wait_until="networkidle", timeout=timeout)
-        page.wait_for_timeout(2000)
-        html = page.content()
-        browser.close()
-        return html
-    finally:
-        pw.stop()
+    def __enter__(self):
+        self._start()
+        return self
 
+    def __exit__(self, *exc):
+        self._stop()
+        return False
 
-def _get_playwright_page(url, timeout=60000):
-    """
-    Fetch a page using Playwright headless browser.
+    def _start(self):
+        try:
+            from playwright.sync_api import sync_playwright  # noqa: F401
+        except ImportError:
+            logger.error(
+                "Playwright is required for the Shotgun parser. "
+                "Install it with: pip install playwright && playwright install chromium"
+            )
+            raise
 
-    Shotgun.live uses Vercel bot protection that blocks standard HTTP
-    requests. Playwright renders JavaScript and passes the challenge.
+        try:
+            self._start_direct()
+        except RuntimeError as e:
+            if "asyncio" in str(e).lower() or "event loop" in str(e).lower():
+                logger.debug("Asyncio loop detected, running Playwright in thread")
+                self._start_in_thread()
+            else:
+                raise
 
-    If an asyncio event loop is already running (which prevents the
-    Playwright sync API from working directly), the browser session
-    is run in a separate thread.
+    def _start_direct(self):
+        from playwright.sync_api import sync_playwright
 
-    Args:
-        url: URL to navigate to
-        timeout: Page load timeout in milliseconds
+        self._pw = sync_playwright().start()
+        self._browser = self._pw.chromium.launch(headless=True)
 
-    Returns:
-        Tuple of (page HTML content, None) or (None, None) on failure
-    """
-    try:
-        from playwright.sync_api import sync_playwright  # noqa: F401
-    except ImportError:
-        logger.error(
-            "Playwright is required for the Shotgun parser. "
-            "Install it with: pip install playwright && playwright install chromium"
-        )
-        return None, None
+    def _start_in_thread(self):
+        import queue
+        import threading
 
-    try:
-        return _run_playwright_sync(url, timeout), None
-    except RuntimeError as e:
-        if "asyncio" in str(e).lower() or "event loop" in str(e).lower():
-            logger.debug("Asyncio loop detected, running Playwright in thread")
+        self._use_thread = True
+        self._request_queue = queue.Queue()
+        self._response_queue = queue.Queue()
+        ready_event = threading.Event()
+        startup_error = [None]
+
+        def worker():
+            from playwright.sync_api import sync_playwright
+
+            pw = sync_playwright().start()
             try:
-                from concurrent.futures import ThreadPoolExecutor
+                browser = pw.chromium.launch(headless=True)
+                try:
+                    ready_event.set()
+                    while True:
+                        msg = self._request_queue.get()
+                        if msg is None:
+                            break
+                        url, timeout = msg
+                        try:
+                            page = browser.new_page()
+                            try:
+                                page.goto(
+                                    url,
+                                    wait_until="networkidle",
+                                    timeout=timeout,
+                                )
+                                page.wait_for_timeout(2000)
+                                html = page.content()
+                                self._response_queue.put(html)
+                            finally:
+                                page.close()
+                        except Exception as e:
+                            logger.error(
+                                f"Playwright thread: failed to load {url}: {e}"
+                            )
+                            self._response_queue.put(None)
+                finally:
+                    browser.close()
+            except Exception as e:
+                startup_error[0] = e
+                ready_event.set()
+            finally:
+                pw.stop()
 
-                with ThreadPoolExecutor(max_workers=1) as executor:
-                    future = executor.submit(_run_playwright_sync, url, timeout)
-                    html = future.result(timeout=timeout / 1000 + 30)
-                return html, None
-            except Exception as thread_err:
-                logger.error(f"Playwright thread failed for {url}: {thread_err}")
-                return None, None
-        else:
+        self._thread = threading.Thread(target=worker, daemon=True)
+        self._thread.start()
+        ready_event.wait(timeout=30)
+
+        if startup_error[0]:
+            raise startup_error[0]
+
+    def fetch_page(self, url, timeout=None):
+        """Fetch a page using the shared browser instance.
+
+        Creates a new tab, navigates to the URL, extracts content,
+        and closes the tab — keeping the browser alive for reuse.
+
+        Args:
+            url: URL to navigate to
+            timeout: Page load timeout in ms (defaults to session timeout)
+
+        Returns:
+            HTML content string, or None on failure
+        """
+        timeout = timeout or self.timeout
+
+        if self._use_thread:
+            return self._fetch_in_thread(url, timeout)
+        return self._fetch_direct(url, timeout)
+
+    def _fetch_direct(self, url, timeout):
+        try:
+            page = self._browser.new_page()
+            try:
+                page.goto(url, wait_until="networkidle", timeout=timeout)
+                page.wait_for_timeout(2000)
+                return page.content()
+            finally:
+                page.close()
+        except Exception as e:
             logger.error(f"Playwright failed to load {url}: {e}")
-            return None, None
-    except Exception as e:
-        logger.error(f"Playwright failed to load {url}: {e}")
-        return None, None
+            return None
+
+    def _fetch_in_thread(self, url, timeout):
+        try:
+            self._request_queue.put((url, timeout))
+            return self._response_queue.get(timeout=timeout / 1000 + 30)
+        except Exception as e:
+            logger.error(f"Playwright thread failed for {url}: {e}")
+            return None
+
+    def _stop(self):
+        if self._use_thread:
+            if self._request_queue:
+                self._request_queue.put(None)
+            if self._thread:
+                self._thread.join(timeout=10)
+        else:
+            if self._browser:
+                try:
+                    self._browser.close()
+                except Exception:
+                    pass
+            if self._pw:
+                try:
+                    self._pw.stop()
+                except Exception:
+                    pass
 
 
 def _extract_event_urls_from_html(html, base_url="https://shotgun.live"):
@@ -393,10 +495,29 @@ class ShotgunParser(BaseCrawler):
         super().__init__(*args, **kwargs)
         # Accumulated venue data keyed by slug
         self.venues: dict[str, Venue] = {}
+        # Shared Playwright browser session (set during crawl)
+        self._pw_session: PlaywrightSession | None = None
+
+    def crawl(self) -> list[Event]:
+        """
+        Execute crawl with a shared Playwright browser session.
+
+        Wraps the base crawl in a PlaywrightSession context manager
+        so that a single Chromium process is reused for all page fetches.
+        """
+        try:
+            with PlaywrightSession() as session:
+                self._pw_session = session
+                return super().crawl()
+        except ImportError:
+            logger.error("Cannot crawl Shotgun: Playwright not installed")
+            return []
+        finally:
+            self._pw_session = None
 
     def fetch_page(self, url: str) -> str:
         """
-        Fetch page using Playwright to bypass Vercel bot protection.
+        Fetch page using shared Playwright browser session.
 
         Overrides BaseCrawler.fetch_page() which uses httpx. Shotgun.live
         returns 429 to standard HTTP clients due to Vercel's bot detection.
@@ -408,8 +529,11 @@ class ShotgunParser(BaseCrawler):
             HTML content as string, or empty string on failure
         """
         logger.info(f"Fetching with Playwright: {url}")
-        html, _ = _get_playwright_page(url)
-        return html or ""
+        if self._pw_session:
+            html = self._pw_session.fetch_page(url)
+            return html or ""
+        logger.warning("No Playwright session available")
+        return ""
 
     def parse_events(self, parser: HTMLParser) -> list[Event]:
         """
@@ -450,7 +574,7 @@ class ShotgunParser(BaseCrawler):
 
             page_url = f"{self.base_url}?page={page_num}"
             logger.info(f"Loading Shotgun listing page: {page_url}")
-            html, _ = _get_playwright_page(page_url)
+            html = self._pw_session.fetch_page(page_url) if self._pw_session else None
 
             if not html:
                 break
@@ -530,7 +654,7 @@ class ShotgunParser(BaseCrawler):
         """
         logger.debug(f"Loading event detail page: {event_url}")
 
-        html, _ = _get_playwright_page(event_url)
+        html = self._pw_session.fetch_page(event_url) if self._pw_session else None
         if not html:
             logger.warning(f"Failed to load detail page: {event_url}")
             return None
