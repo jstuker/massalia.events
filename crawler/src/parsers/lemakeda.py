@@ -16,7 +16,6 @@ Strategy:
 """
 
 import json
-import re
 from datetime import datetime
 
 from ..crawler import BaseCrawler
@@ -24,6 +23,7 @@ from ..logger import get_logger
 from ..models.event import Event
 from ..utils.french_date import PARIS_TZ
 from ..utils.parser import HTMLParser
+from ..utils.sanitize import sanitize_description
 
 logger = get_logger(__name__)
 
@@ -196,7 +196,7 @@ class LeMakedaParser(BaseCrawler):
         """Extract event title from API data."""
         title = data.get("title", "")
         if isinstance(title, str):
-            return _strip_html(title).strip()
+            return sanitize_description(title)
         return ""
 
     def _extract_datetime(self, data: dict) -> datetime | None:
@@ -226,7 +226,7 @@ class LeMakedaParser(BaseCrawler):
                 description = excerpt
 
         if description:
-            clean = _strip_html(description).strip()
+            clean = sanitize_description(description)
             # Truncate to 160 chars for consistency
             if len(clean) > 160:
                 clean = clean[:157] + "..."
@@ -288,20 +288,3 @@ class LeMakedaParser(BaseCrawler):
         return ""
 
 
-def _strip_html(text: str) -> str:
-    """Remove HTML tags from text."""
-    clean = re.sub(r"<[^>]+>", "", text)
-    # Decode common HTML entities
-    clean = clean.replace("&amp;", "&")
-    clean = clean.replace("&lt;", "<")
-    clean = clean.replace("&gt;", ">")
-    clean = clean.replace("&quot;", '"')
-    clean = clean.replace("&#8217;", "'")
-    clean = clean.replace("&#8216;", "'")
-    clean = clean.replace("&#8220;", '"')
-    clean = clean.replace("&#8221;", '"')
-    clean = clean.replace("&#038;", "&")
-    clean = clean.replace("&nbsp;", " ")
-    # Collapse whitespace
-    clean = re.sub(r"\s+", " ", clean)
-    return clean
