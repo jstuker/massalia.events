@@ -10,9 +10,9 @@ assignees: ''
 
 Add **[Website Name]** as a new event source for Massalia Events.
 
-**Website URL:** 
-**Website name:**  
-**Website id:** 
+**Website URL:**
+**Website name:**
+**Website id:**
 **Rate_limit:** requests_per_second: 0.5, delay_between_pages: 3.0
 
 ---
@@ -25,7 +25,7 @@ Before starting implementation, complete the following research:
 - [ ] Document the HTML structure of event listings
 - [ ] Document the HTML structure of individual event detail pages
 - [ ] Identify all available data fields (title, date, time, location, description, image, categories, etc.)
-- [ ] Identify events types and map them to the taxnonomy
+- [ ] Identify events types and map them to the taxonomy
 - [ ] Check for pagination or infinite scroll
 - [ ] Verify robots.txt compliance and terms of service
 - [ ] Identify rate limiting requirements
@@ -45,12 +45,12 @@ Add the new source configuration with appropriate settings:
 - name: "[Website Display Name]"
   id: "[unique-source-id]"
   url: "[agenda-page-url]"
-  parser: "[parser-name]"  # Use existing parser or create new one
+  parser: "[parser-name]"  # Must match the key registered in PARSERS dict
   enabled: true
   rate_limit:
     requests_per_second: # according to research
     delay_between_pages: # according to research
-  selectors:  # If using configurable parser
+  selectors:  # Only needed if using parser: "generic" (ConfigurableEventParser)
     event_list: "[css-selector]"
     event_item: "[css-selector]"
     name: "[css-selector]"
@@ -72,7 +72,7 @@ Add the new source configuration with appropriate settings:
 
 #### Acceptance Criteria
 - [ ] Source ID is unique and follows kebab-case convention
-- [ ] All CSS selectors are validated against live HTML
+- [ ] All CSS selectors are validated against live HTML (if using generic parser)
 - [ ] Category mapping covers all source categories
 - [ ] Rate limiting is configured to respect the website
 
@@ -83,50 +83,202 @@ Add the new source configuration with appropriate settings:
 
 ---
 
-### Task 2: Create Crawler
+### Task 2: Create Parser
 
-**File:** `crawler/src/crawlers/[source_id].py` (if custom crawler needed)
+**File:** `crawler/src/parsers/[source_id].py`
 
-If the configurable parser is insufficient, create a dedicated crawler class.
+Create a dedicated parser class that inherits from `BaseCrawler` and implements the `parse_events()` method.
+
+> **Note:** In this codebase, "parser" and "crawler" are the same thing. Each parser is a `BaseCrawler` subclass in `crawler/src/parsers/`. There is no separate `crawler/src/crawlers/` directory.
+
+#### Architecture Overview
+
+The framework handles instantiation and orchestration automatically:
+
+1. `crawl.py` reads `sources.yaml`, creates an instance of your parser class, and injects shared dependencies (`http_client`, `image_downloader`, `markdown_generator`)
+2. The framework calls your parser's `crawl()` method (inherited from `BaseCrawler`)
+3. `crawl()` fetches the source URL, wraps the HTML in an `HTMLParser` instance, and calls your `parse_events(parser)` method
+4. Your `parse_events()` returns a list of `Event` objects
+5. The framework then handles selection filtering, image downloading, and markdown generation via `process_event()` -- you do NOT need to do this yourself
 
 #### Implementation Checklist
-- [ ] Inherit from `BaseCrawler` abstract class
-- [ ] Implement `parse_events()` method
-- [ ] Handle pagination if needed
-- [ ] Extract event URLs from listing page
-- [ ] Fetch and parse individual event detail pages
+- [ ] Inherit from `BaseCrawler` (from `..crawler`)
+- [ ] Set `source_name` class attribute
+- [ ] Call `super().__init__(*args, **kwargs)` if overriding `__init__`
+- [ ] Implement `parse_events(self, parser: HTMLParser) -> list[Event]`
+- [ ] Handle pagination if needed (use `self.fetch_page()` or `self.fetch_pages()`)
 - [ ] Handle French date/time formats
-- [ ] Map categories to standard taxonomy
+- [ ] Map categories using `self.map_category()`
+- [ ] Map locations using `self.map_location()`
 - [ ] Handle edge cases (missing fields, malformed data)
 - [ ] Add proper error handling and logging
+- [ ] Register parser in `crawler/src/parsers/__init__.py`
 
 #### Code Structure
 ```python
-class [SourceName]Crawler(BaseCrawler):
-    """Crawler for [Website Name] events."""
+from ..crawler import BaseCrawler
+from ..logger import get_logger
+from ..models.event import Event
+from ..utils.parser import HTMLParser
+
+logger = get_logger(__name__)
+
+
+class [SourceName]Parser(BaseCrawler):
+    """Parser for [Website Name] events."""
 
     source_name = "[Website Display Name]"
-    source_id = "[unique-source-id]"
-    base_url = "[website-base-url]"
 
-    def parse_events(self, html: str) -> list[Event]:
-        """Parse events from the agenda page HTML."""
-        pass
+    def parse_events(self, parser: HTMLParser) -> list[Event]:
+        """
+        Parse events from [Website Name].
 
-    def _parse_detail_page(self, url: str) -> Event | None:
+        Args:
+            parser: HTMLParser instance wrapping the fetched page HTML.
+                    Provides CSS selection, text extraction, link/image
+                    resolution, and French date parsing utilities.
+
+        Returns:
+            List of Event objects (framework handles selection,
+            image download, and markdown generation)
+        """
+        events = []
+
+        # Example: extract event URLs from listing page
+        event_links = parser.select(".event-card a")
+        event_urls = [parser.get_link(link) for link in event_links]
+
+        # Fetch detail pages concurrently (respects rate limiting)
+        pages = self.fetch_pages(event_urls)
+
+        for url, html in pages.items():
+            if not html:
+                continue
+            event = self._parse_detail_page(url, html)
+            if event:
+                events.append(event)
+
+        return events
+
+    def _parse_detail_page(self, url: str, html: str) -> Event | None:
         """Parse a single event detail page."""
-        pass
+        detail = HTMLParser(html, url)
+
+        name = detail.get_text(detail.soup, "h1")
+        if not name:
+            return None
+
+        date = detail.parse_date(
+            detail.get_text(detail.soup, ".date")
+        )
+        if not date:
+            return None
+
+        return Event(
+            name=name,
+            event_url=url,
+            start_datetime=date,
+            description=detail.get_text(detail.soup, ".description"),
+            image=detail.get_image(detail.soup, ".event-image img"),
+            categories=[self.map_category(
+                detail.get_text(detail.soup, ".category")
+            )],
+            locations=[self.map_location("[venue-name]")],
+            source_id=f"[source-id]:{some_unique_id}",
+        )
+```
+
+#### Available BaseCrawler Helper Methods
+
+Your parser inherits these from `BaseCrawler` (`crawler/src/crawler.py`):
+
+| Method | Description |
+|--------|-------------|
+| `self.fetch_page(url)` | Fetch a single page, returns HTML string (empty on failure) |
+| `self.fetch_pages(urls)` | Fetch multiple pages concurrently with thread pool, returns `dict[url, html]` |
+| `self.map_category(raw)` | Map a source category string to standard taxonomy using `categories_map` from config |
+| `self.map_location(raw)` | Map a location name to a known venue slug (uses built-in lookup table) |
+| `self.source_id` | Source ID from config (e.g. `"lemakeda"`) |
+| `self.base_url` | Source URL from config |
+| `self.category_map` | Category mapping dict from config |
+| `self.http_client` | Shared HTTP client (for advanced use; prefer `fetch_page`/`fetch_pages`) |
+
+#### Available HTMLParser Methods
+
+The `parser` argument in `parse_events()` is an `HTMLParser` instance (`crawler/src/utils/parser.py`):
+
+| Method | Description |
+|--------|-------------|
+| `parser.select(selector)` | CSS select, returns `list[Tag]` |
+| `parser.select_one(selector)` | CSS select first match, returns `Tag \| None` |
+| `parser.get_text(element, selector="")` | Extract text from element or child |
+| `parser.get_attr(element, attr, selector="")` | Extract attribute value |
+| `parser.get_link(element, selector="a")` | Extract and resolve href to absolute URL |
+| `parser.get_image(element, selector="img")` | Extract and resolve image src (handles lazy loading) |
+| `parser.parse_date(text)` | Parse French dates (e.g. "26 janvier 2026", "26/01/2026") |
+| `parser.parse_time(text)` | Extract time as "HH:MM" (e.g. from "19h30") |
+| `parser.clean_text(text)` | Normalize whitespace |
+| `parser.truncate(text, max_length=160)` | Truncate at word boundary |
+| `parser.soup` | Direct access to underlying `BeautifulSoup` object |
+| `parser.base_url` | Base URL for resolving relative links |
+
+#### Event Model Fields
+
+The `Event` dataclass (`crawler/src/models/event.py`):
+
+```python
+Event(
+    # Required
+    name: str,                      # Event title
+    event_url: str,                 # Link to source page
+    start_datetime: datetime,       # Date and time (use PARIS_TZ from utils.french_date)
+
+    # Optional
+    description: str = "",          # Short description (aim for ~160 chars)
+    image: str | None = None,       # Image URL (framework downloads and converts to WebP)
+    categories: list[str] = [],     # Standard slugs: danse, musique, theatre, art, communaute
+    locations: list[str] = [],      # Venue slugs (use self.map_location())
+    tags: list[str] = [],           # Free-form tags
+    event_group_id: str | None = None,  # For multi-day events (shared across days)
+    day_of: str | None = None,      # e.g. "Jour 1 sur 3"
+    source_id: str | None = None,   # Unique ID for dedup, e.g. "lemakeda:12345"
+    draft: bool = False,
+)
+```
+
+#### Registration
+
+Add the parser to `crawler/src/parsers/__init__.py`:
+
+```python
+# Add import at top
+from .[source_id] import [SourceName]Parser
+
+# Add entry to PARSERS dict
+PARSERS = {
+    ...
+    "[source-id]": [SourceName]Parser,
+}
+
+# Add to __all__ list
+__all__ = [
+    ...
+    "[SourceName]Parser",
+]
 ```
 
 #### Acceptance Criteria
-- [ ] Crawler extracts all required fields: name, date, time, location, description, image, categories
-- [ ] Crawler handles missing optional fields gracefully
-- [ ] Crawler respects rate limiting configuration
-- [ ] Crawler logs progress and any issues encountered
+- [ ] Parser inherits from `BaseCrawler` and implements `parse_events(self, parser: HTMLParser)`
+- [ ] Parser extracts all required fields: name, event_url, start_datetime
+- [ ] Parser extracts optional fields where available: description, image, categories, locations, tags
+- [ ] Parser handles missing optional fields gracefully
+- [ ] Parser respects rate limiting (uses `self.fetch_page()`/`self.fetch_pages()`)
+- [ ] Parser logs progress and any issues encountered
 - [ ] All extracted events have valid dates in the future
+- [ ] Parser is registered in `crawler/src/parsers/__init__.py`
 
 #### Tests
-Create `crawler/tests/test_[source_id]_crawler.py`:
+Create `crawler/tests/test_[source_id]_parser.py`:
 
 - [ ] Test event URL extraction from listing page
 - [ ] Test detail page parsing with sample HTML
@@ -139,63 +291,7 @@ Create `crawler/tests/test_[source_id]_crawler.py`:
 
 ---
 
-### Task 3: Create Parser
-
-**File:** `crawler/src/parsers/[source_id].py`
-
-Create a dedicated parser if the HTML structure requires special handling.
-
-#### Implementation Checklist
-- [ ] Extract event data from HTML using BeautifulSoup
-- [ ] Parse French dates with multiple format support
-- [ ] Handle relative URLs and convert to absolute
-- [ ] Extract and clean description text
-- [ ] Extract image URLs with fallback handling
-- [ ] Parse tags and categories
-- [ ] Register parser in `crawler/src/parsers/__init__.py`
-
-#### Code Structure
-```python
-class [SourceName]Parser:
-    """Parser for [Website Name] HTML structure."""
-
-    def __init__(self, base_url: str):
-        self.base_url = base_url
-
-    def parse_listing(self, html: str) -> list[str]:
-        """Extract event URLs from listing page."""
-        pass
-
-    def parse_event(self, html: str, url: str) -> ParsedEvent | None:
-        """Parse a single event from detail page HTML."""
-        pass
-
-    def _parse_date(self, date_str: str) -> datetime | None:
-        """Parse French date string to datetime."""
-        pass
-```
-
-#### Acceptance Criteria
-- [ ] Parser handles all variations of HTML structure on the source website
-- [ ] Parser correctly extracts all available event fields
-- [ ] Parser converts relative URLs to absolute URLs
-- [ ] Parser is registered in the parser factory
-- [ ] Parser returns `None` for unparseable events (not exceptions)
-
-#### Tests
-Create `crawler/tests/test_[source_id]_parser.py`:
-
-- [ ] Test listing page parsing with real HTML samples
-- [ ] Test event detail parsing with multiple HTML samples
-- [ ] Test date parsing with various French date formats
-- [ ] Test URL resolution for relative links
-- [ ] Test handling of missing elements
-- [ ] Test image URL extraction
-- [ ] Test category and tag extraction
-
----
-
-### Task 4: Improve Deduplicator
+### Task 3: Improve Deduplicator
 
 **File:** `crawler/src/deduplicator.py`
 
@@ -240,7 +336,7 @@ Update `crawler/tests/test_deduplicator.py`:
 
 ---
 
-### Task 5: Improve Selection Criteria
+### Task 4: Improve Selection Criteria
 
 **File:** `crawler/config/selection-criteria.yaml`
 
