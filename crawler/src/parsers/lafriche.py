@@ -65,10 +65,15 @@ class LaFricheParser(BaseCrawler):
 
         logger.info(f"Found {len(event_urls)} event URLs on La Friche agenda")
 
-        # Visit each detail page to extract event information
+        # Batch-fetch all detail pages concurrently
+        pages = self.fetch_pages(event_urls)
+
         for event_url in event_urls:
+            html = pages.get(event_url, "")
+            if not html:
+                continue
             try:
-                event = self._parse_detail_page(event_url)
+                event = self._parse_detail_page(event_url, html=html)
                 if event:
                     events.append(event)
             except Exception as e:
@@ -101,18 +106,21 @@ class LaFricheParser(BaseCrawler):
 
         return list(urls)
 
-    def _parse_detail_page(self, event_url: str) -> Event | None:
+    def _parse_detail_page(
+        self, event_url: str, html: str | None = None
+    ) -> Event | None:
         """
-        Fetch and parse an event detail page.
+        Parse an event detail page.
 
         Args:
             event_url: URL of the event detail page
+            html: Pre-fetched HTML content (fetched if not provided)
 
         Returns:
             Event object or None if parsing failed
         """
-        # Fetch the detail page
-        html = self.fetch_page(event_url)
+        if html is None:
+            html = self.fetch_page(event_url)
         if not html:
             logger.warning(f"Failed to fetch detail page: {event_url}")
             return None
