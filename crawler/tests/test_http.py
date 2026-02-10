@@ -1,6 +1,7 @@
 """Tests for HTTP client module."""
 
 import tempfile
+import threading
 import time
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -8,6 +9,7 @@ from unittest.mock import MagicMock, patch
 import httpx
 import pytest
 
+from src.crawler import BaseCrawler
 from src.utils.http import (
     FetchResult,
     HTTPClient,
@@ -569,3 +571,139 @@ class TestValidateUrlInHTTPClient:
         with pytest.raises(SSRFError):
             client.get_bytes("http://192.168.1.1/image.jpg")
         client.close()
+
+
+# ── Test thread-safe RateLimiter ────────────────────────────────────
+
+
+class TestRateLimiterThreadSafety:
+    """Verify RateLimiter works correctly under concurrent access."""
+
+    def test_concurrent_waits_same_source(self):
+        """Multiple threads waiting on the same source don't corrupt state."""
+        import threading
+
+        limiter = RateLimiter(default_delay=0.05)
+        errors = []
+
+        def wait_on_source():
+            try:
+                limiter.wait("test-source")
+            except Exception as e:
+                errors.append(e)
+
+        threads = [threading.Thread(target=wait_on_source) for _ in range(5)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(timeout=5)
+
+        assert not errors
+
+    def test_concurrent_waits_different_sources(self):
+        """Different sources can proceed without blocking each other."""
+        import threading
+
+        limiter = RateLimiter(default_delay=0.05)
+        results = {}
+
+        def wait_on_source(source_id):
+            start = time.time()
+            limiter.wait(source_id)
+            results[source_id] = time.time() - start
+
+        threads = [
+            threading.Thread(target=wait_on_source, args=(f"source-{i}",))
+            for i in range(3)
+        ]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(timeout=5)
+
+        # First call per source should have no delay
+        assert len(results) == 3
+
+
+# ── Test BaseCrawler.fetch_pages ────────────────────────────────────
+
+
+class _TestCrawler(BaseCrawler):
+    """Concrete subclass for testing BaseCrawler.fetch_pages."""
+
+    source_name = "test"
+
+    def parse_events(self, parser):
+        return []
+
+
+class TestFetchPages:
+    """Tests for BaseCrawler.fetch_pages concurrent fetching."""
+
+    def _make_crawler(self, max_workers=5):
+        http_client = MagicMock()
+        config = {"name": "test", "id": "test", "url": "http://example.com"}
+        return _TestCrawler(
+            config=config,
+            http_client=http_client,
+            image_downloader=MagicMock(),
+            markdown_generator=MagicMock(),
+            max_workers=max_workers,
+        )
+
+    def test_returns_dict_of_url_to_html(self):
+        crawler = self._make_crawler()
+        crawler.http_client.get_text.side_effect = [
+            "<html>Page A</html>",
+            "<html>Page B</html>",
+        ]
+        urls = ["http://a.com/1", "http://b.com/2"]
+        result = crawler.fetch_pages(urls)
+
+        assert len(result) == 2
+        assert all(url in result for url in urls)
+        assert all("<html>" in html for html in result.values())
+
+    def test_empty_urls_returns_empty_dict(self):
+        crawler = self._make_crawler()
+        assert crawler.fetch_pages([]) == {}
+
+    def test_failed_fetch_returns_empty_string(self):
+        crawler = self._make_crawler()
+        crawler.http_client.get_text.side_effect = Exception("Network error")
+        result = crawler.fetch_pages(["http://fail.com"])
+        assert result["http://fail.com"] == ""
+
+    def test_max_workers_1_is_sequential(self):
+        """With max_workers=1, fetches happen sequentially."""
+        crawler = self._make_crawler(max_workers=1)
+        call_order = []
+
+        def mock_get(url):
+            call_order.append(url)
+            return f"<html>{url}</html>"
+
+        crawler.http_client.get_text.side_effect = mock_get
+        urls = ["http://a.com", "http://b.com", "http://c.com"]
+        result = crawler.fetch_pages(urls)
+
+        assert len(result) == 3
+        assert len(call_order) == 3
+
+    def test_concurrent_fetch_uses_threads(self):
+        """With max_workers>1, fetches run in multiple threads."""
+        crawler = self._make_crawler(max_workers=3)
+        thread_ids = []
+
+        def mock_get(url):
+            thread_ids.append(threading.current_thread().ident)
+            time.sleep(0.05)
+            return f"<html>{url}</html>"
+
+        crawler.http_client.get_text.side_effect = mock_get
+        urls = [f"http://example.com/{i}" for i in range(3)]
+        result = crawler.fetch_pages(urls)
+
+        assert len(result) == 3
+        # With 3 workers and 3 URLs, we should see multiple thread IDs
+        assert len(set(thread_ids)) > 1
