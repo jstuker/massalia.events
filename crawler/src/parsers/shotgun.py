@@ -621,7 +621,6 @@ class ShotgunParser(BaseCrawler):
         Writes accumulated venue data to crawler/data/venues-shotgun.json
         for use in generating location pages.
         """
-        import os
         from pathlib import Path
 
         data_dir = Path(__file__).parent.parent.parent / "data"
@@ -635,9 +634,7 @@ class ShotgunParser(BaseCrawler):
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(venues_data, f, indent=2, ensure_ascii=False)
 
-        logger.info(
-            f"Exported {len(self.venues)} venues to {output_path}"
-        )
+        logger.info(f"Exported {len(self.venues)} venues to {output_path}")
 
     def _parse_detail_page(self, event_url: str) -> Event | None:
         """
