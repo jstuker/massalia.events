@@ -7,8 +7,8 @@ from zoneinfo import ZoneInfo
 import pytest
 
 from src.models.event import Event
-from src.models.venue import Venue
 from src.parsers.shotgun import (
+    PlaywrightSession,
     ShotgunParser,
     _extract_event_urls_from_html,
     _extract_json_ld,
@@ -590,6 +590,133 @@ class TestMapCategoryFromJsonLd:
         assert result == "musique"
 
 
+# ── Test PlaywrightSession lifecycle ─────────────────────────────────
+
+
+class TestPlaywrightSession:
+    """Tests for PlaywrightSession browser lifecycle management."""
+
+    @patch("src.parsers.shotgun.PlaywrightSession._start_direct")
+    def test_starts_and_stops_browser(self, mock_start):
+        """Browser and Playwright are started on enter and cleaned up on exit."""
+        mock_browser = MagicMock()
+        mock_pw = MagicMock()
+
+        def setup_session(self_inner=None):
+            # _start_direct is called as a method, self is passed automatically
+            pass
+
+        mock_start.side_effect = setup_session
+
+        with PlaywrightSession() as session:
+            session._browser = mock_browser
+            session._pw = mock_pw
+
+        mock_browser.close.assert_called_once()
+        mock_pw.stop.assert_called_once()
+
+    @patch("src.parsers.shotgun.PlaywrightSession._start_direct")
+    def test_reuses_browser_for_multiple_pages(self, mock_start):
+        """Only one browser is launched for multiple page fetches."""
+        mock_browser = MagicMock()
+        mock_page = MagicMock()
+        mock_page.content.return_value = "<html>test</html>"
+        mock_browser.new_page.return_value = mock_page
+
+        with PlaywrightSession() as session:
+            session._browser = mock_browser
+            session._pw = MagicMock()
+
+            html1 = session.fetch_page("https://example.com/1")
+            html2 = session.fetch_page("https://example.com/2")
+            html3 = session.fetch_page("https://example.com/3")
+
+        assert html1 == "<html>test</html>"
+        assert html2 == "<html>test</html>"
+        assert html3 == "<html>test</html>"
+        # Three pages created
+        assert mock_browser.new_page.call_count == 3
+        # Each page was closed
+        assert mock_page.close.call_count == 3
+
+    @patch("src.parsers.shotgun.PlaywrightSession._start_direct")
+    def test_page_error_does_not_crash_browser(self, mock_start):
+        """A single page failure doesn't prevent subsequent fetches."""
+        mock_browser = MagicMock()
+
+        fail_page = MagicMock()
+        fail_page.goto.side_effect = Exception("Timeout")
+
+        ok_page = MagicMock()
+        ok_page.content.return_value = "<html>OK</html>"
+
+        mock_browser.new_page.side_effect = [fail_page, ok_page]
+
+        with PlaywrightSession() as session:
+            session._browser = mock_browser
+            session._pw = MagicMock()
+
+            result1 = session.fetch_page("https://example.com/fail")
+            result2 = session.fetch_page("https://example.com/ok")
+
+        assert result1 is None
+        assert result2 == "<html>OK</html>"
+        # Failed page is still closed
+        fail_page.close.assert_called_once()
+        ok_page.close.assert_called_once()
+
+    @patch("src.parsers.shotgun.PlaywrightSession._start_direct")
+    def test_cleanup_on_exception_in_context(self, mock_start):
+        """Browser is cleaned up even if an exception occurs inside the with block."""
+        mock_browser = MagicMock()
+        mock_pw = MagicMock()
+
+        with pytest.raises(ValueError, match="test error"):
+            with PlaywrightSession() as session:
+                session._browser = mock_browser
+                session._pw = mock_pw
+                raise ValueError("test error")
+
+        mock_browser.close.assert_called_once()
+        mock_pw.stop.assert_called_once()
+
+    @patch("src.parsers.shotgun.PlaywrightSession._start_direct")
+    def test_fetch_page_returns_none_on_failure(self, mock_start):
+        """fetch_page returns None when navigation fails."""
+        mock_browser = MagicMock()
+        mock_page = MagicMock()
+        mock_page.goto.side_effect = Exception("net::ERR_CONNECTION_REFUSED")
+        mock_browser.new_page.return_value = mock_page
+
+        with PlaywrightSession() as session:
+            session._browser = mock_browser
+            session._pw = MagicMock()
+
+            result = session.fetch_page("https://example.com/fail")
+
+        assert result is None
+
+    def test_raises_import_error_without_playwright(self):
+        """Session raises ImportError when playwright is not installed."""
+        with patch.dict(
+            "sys.modules", {"playwright": None, "playwright.sync_api": None}
+        ):
+            with pytest.raises(ImportError):
+                PlaywrightSession().__enter__()
+
+    @patch("src.parsers.shotgun.PlaywrightSession._start_direct")
+    def test_falls_back_to_thread_on_asyncio_conflict(self, mock_start_direct):
+        """Falls back to thread-based approach when asyncio loop is running."""
+        mock_start_direct.side_effect = RuntimeError(
+            "cannot run nested asyncio event loop"
+        )
+
+        with patch.object(PlaywrightSession, "_start_in_thread") as mock_start_thread:
+            session = PlaywrightSession()
+            session._start()
+            mock_start_thread.assert_called_once()
+
+
 # ── Test ShotgunParser integration ───────────────────────────────────
 
 
@@ -615,43 +742,55 @@ class TestShotgunParserIntegration:
         http_client = MagicMock()
         image_downloader = MagicMock()
         markdown_generator = MagicMock()
-        return ShotgunParser(
+        p = ShotgunParser(
             config=mock_config,
             http_client=http_client,
             image_downloader=image_downloader,
             markdown_generator=markdown_generator,
         )
+        # Pre-set a mock session so tests don't need real Playwright
+        p._pw_session = MagicMock()
+        return p
 
     def test_source_name(self, parser):
         assert parser.source_name == "Shotgun"
 
-    @patch("src.parsers.shotgun._get_playwright_page")
-    def test_fetch_page_uses_playwright(self, mock_playwright, parser):
-        """Test that fetch_page uses Playwright instead of httpx."""
-        mock_playwright.return_value = ("<html>OK</html>", None)
+    def test_fetch_page_uses_session(self, parser):
+        """Test that fetch_page delegates to the shared session."""
+        parser._pw_session.fetch_page.return_value = "<html>OK</html>"
         result = parser.fetch_page("https://shotgun.live/fr/cities/aix-marseille")
         assert result == "<html>OK</html>"
-        mock_playwright.assert_called_once()
+        parser._pw_session.fetch_page.assert_called_once_with(
+            "https://shotgun.live/fr/cities/aix-marseille"
+        )
 
-    @patch("src.parsers.shotgun._get_playwright_page")
-    def test_fetch_page_returns_empty_on_failure(self, mock_playwright, parser):
-        """Test that fetch_page returns empty string on Playwright failure."""
-        mock_playwright.return_value = (None, None)
+    def test_fetch_page_returns_empty_on_failure(self, parser):
+        """Test that fetch_page returns empty string on session failure."""
+        parser._pw_session.fetch_page.return_value = None
         result = parser.fetch_page("https://shotgun.live/fr/cities/aix-marseille")
         assert result == ""
 
-    @patch("src.parsers.shotgun._get_playwright_page")
+    def test_fetch_page_returns_empty_without_session(self, mock_config):
+        """Test that fetch_page returns empty string when no session is set."""
+        p = ShotgunParser(
+            config=mock_config,
+            http_client=MagicMock(),
+            image_downloader=MagicMock(),
+            markdown_generator=MagicMock(),
+        )
+        # _pw_session is None by default
+        result = p.fetch_page("https://shotgun.live/fr/cities/aix-marseille")
+        assert result == ""
+
     def test_parse_events_with_json_ld(
-        self, mock_playwright, parser, sample_listing_html, sample_detail_html
+        self, parser, sample_listing_html, sample_detail_html
     ):
         """Test full flow: first page via parser -> detail pages -> events."""
-        # parse_events receives first page HTML via HTMLParser argument.
-        # Playwright is only called for page 2+ listing and detail pages.
         empty_page = "<html><body></body></html>"
-        mock_playwright.side_effect = [
-            (empty_page, None),  # Listing page 2 (empty, stops pagination)
-            (sample_detail_html, None),  # Event detail 1
-            (sample_detail_html, None),  # Event detail 2
+        parser._pw_session.fetch_page.side_effect = [
+            empty_page,  # Listing page 2 (empty, stops pagination)
+            sample_detail_html,  # Event detail 1
+            sample_detail_html,  # Event detail 2
         ]
 
         # Simulate the HTMLParser that crawl() would create from fetch_page
@@ -668,16 +807,13 @@ class TestShotgunParserIntegration:
         events = parser.parse_events(html_parser)
         assert events == []
 
-    @patch("src.parsers.shotgun._get_playwright_page")
-    def test_handles_detail_page_failure(
-        self, mock_playwright, parser, sample_listing_html
-    ):
+    def test_handles_detail_page_failure(self, parser, sample_listing_html):
         """Test graceful handling when detail page fails to load."""
         empty_page = "<html><body></body></html>"
-        mock_playwright.side_effect = [
-            (empty_page, None),  # Listing page 2 (empty, stops pagination)
-            (None, None),  # First detail fails
-            (None, None),  # Second detail fails
+        parser._pw_session.fetch_page.side_effect = [
+            empty_page,  # Listing page 2 (empty, stops pagination)
+            None,  # First detail fails
+            None,  # Second detail fails
         ]
 
         html_parser = HTMLParser(sample_listing_html, "https://shotgun.live")
@@ -685,10 +821,7 @@ class TestShotgunParserIntegration:
 
         assert events == []
 
-    @patch("src.parsers.shotgun._get_playwright_page")
-    def test_handles_detail_page_without_json_ld(
-        self, mock_playwright, parser, sample_listing_html
-    ):
+    def test_handles_detail_page_without_json_ld(self, parser, sample_listing_html):
         """Test fallback when detail page has no JSON-LD."""
         detail_html = """
         <html>
@@ -702,10 +835,10 @@ class TestShotgunParserIntegration:
         </html>
         """
         empty_page = "<html><body></body></html>"
-        mock_playwright.side_effect = [
-            (empty_page, None),  # Listing page 2 (empty, stops pagination)
-            (detail_html, None),  # First event detail
-            (detail_html, None),  # Second event detail
+        parser._pw_session.fetch_page.side_effect = [
+            empty_page,  # Listing page 2 (empty, stops pagination)
+            detail_html,  # First event detail
+            detail_html,  # Second event detail
         ]
 
         html_parser = HTMLParser(sample_listing_html, "https://shotgun.live")
@@ -716,12 +849,56 @@ class TestShotgunParserIntegration:
         assert events[0].name == "Test Event"
 
     def test_skips_empty_first_page(self, parser):
-        """Test that no Playwright calls are made when first page is empty."""
+        """Test that no session calls are made when first page is empty."""
         empty_html = "<html><body></body></html>"
         html_parser = HTMLParser(empty_html, "https://shotgun.live")
         events = parser.parse_events(html_parser)
 
         assert events == []
+        parser._pw_session.fetch_page.assert_not_called()
+
+    @patch("src.parsers.shotgun.PlaywrightSession")
+    def test_crawl_creates_and_cleans_session(self, mock_session_cls, mock_config):
+        """Test that crawl() creates a session and cleans up after."""
+        mock_session = MagicMock()
+        mock_session_cls.return_value.__enter__ = MagicMock(return_value=mock_session)
+        mock_session_cls.return_value.__exit__ = MagicMock(return_value=False)
+
+        # Session returns HTML for initial page fetch, then empty for pagination
+        mock_session.fetch_page.return_value = "<html><body></body></html>"
+
+        p = ShotgunParser(
+            config=mock_config,
+            http_client=MagicMock(),
+            image_downloader=MagicMock(),
+            markdown_generator=MagicMock(),
+        )
+        p.crawl()
+
+        # Session was created as context manager
+        mock_session_cls.return_value.__enter__.assert_called_once()
+        mock_session_cls.return_value.__exit__.assert_called_once()
+        # Session is cleared after crawl
+        assert p._pw_session is None
+
+    @patch("src.parsers.shotgun.PlaywrightSession")
+    def test_crawl_handles_import_error(self, mock_session_cls, mock_config):
+        """Test that crawl() returns empty list when Playwright is not installed."""
+        mock_session_cls.return_value.__enter__ = MagicMock(
+            side_effect=ImportError("No module named 'playwright'")
+        )
+        mock_session_cls.return_value.__exit__ = MagicMock(return_value=False)
+
+        p = ShotgunParser(
+            config=mock_config,
+            http_client=MagicMock(),
+            image_downloader=MagicMock(),
+            markdown_generator=MagicMock(),
+        )
+        events = p.crawl()
+
+        assert events == []
+        assert p._pw_session is None
 
 
 # ── Test HTML fallback parsing ──────────────────────────────────────
