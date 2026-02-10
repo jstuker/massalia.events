@@ -10,8 +10,10 @@ from src.models.event import Event
 from src.parsers.agendaculturel import (
     CATEGORY_LISTING_URLS,
     AgendaCulturelParser,
+    CloudflarePlaywrightSession,
     _extract_events_from_listing,
     _extract_json_ld,
+    _is_cloudflare_challenge,
     _is_marseille_area,
     _map_category,
     _parse_event_from_json_ld,
@@ -769,41 +771,55 @@ class TestAgendaCulturelParserIntegration:
         http_client = MagicMock()
         image_downloader = MagicMock()
         markdown_generator = MagicMock()
-        return AgendaCulturelParser(
+        p = AgendaCulturelParser(
             config=mock_config,
             http_client=http_client,
             image_downloader=image_downloader,
             markdown_generator=markdown_generator,
         )
+        # Provide a mock Playwright session so fetch_page/parse_detail work
+        p._pw_session = MagicMock()
+        return p
 
     def test_source_name(self, parser):
         assert parser.source_name == "Agenda Culturel"
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
-    def test_fetch_page_uses_playwright(self, mock_pw, parser):
-        mock_pw.return_value = ("<html>OK</html>", None, None)
+    def test_fetch_page_uses_session(self, parser):
+        parser._pw_session.fetch_page.return_value = ("<html>OK</html>", None, None)
         result = parser.fetch_page("https://13.agendaculturel.fr/")
         assert result == "<html>OK</html>"
-        mock_pw.assert_called_once()
+        parser._pw_session.fetch_page.assert_called_once_with(
+            "https://13.agendaculturel.fr/"
+        )
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
-    def test_fetch_page_returns_empty_on_failure(self, mock_pw, parser):
-        mock_pw.return_value = (None, None, None)
+    def test_fetch_page_returns_empty_on_failure(self, parser):
+        parser._pw_session.fetch_page.return_value = (None, None, None)
         result = parser.fetch_page("https://13.agendaculturel.fr/")
         assert result == ""
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
-    def test_fetch_page_detects_cloudflare_challenge(self, mock_pw, parser):
-        mock_pw.return_value = ("<html>Verify you are human</html>", None, None)
+    def test_fetch_page_returns_empty_without_session(self, parser):
+        parser._pw_session = None
         result = parser.fetch_page("https://13.agendaculturel.fr/")
         assert result == ""
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
+    def test_fetch_page_detects_cloudflare_challenge(self, parser):
+        parser._pw_session.fetch_page.return_value = (
+            "<html>Verify you are human</html>",
+            None,
+            None,
+        )
+        result = parser.fetch_page("https://13.agendaculturel.fr/")
+        assert result == ""
+
     def test_parse_events_with_json_ld(
-        self, mock_pw, parser, sample_listing_html, sample_detail_html
+        self, parser, sample_listing_html, sample_detail_html
     ):
         """Test full flow: listing page -> detail pages -> events."""
-        mock_pw.return_value = (sample_detail_html, None, None)
+        parser._pw_session.fetch_page.return_value = (
+            sample_detail_html,
+            None,
+            None,
+        )
 
         html_parser = HTMLParser(sample_listing_html, "https://13.agendaculturel.fr")
         events = parser.parse_events(html_parser)
@@ -812,12 +828,9 @@ class TestAgendaCulturelParserIntegration:
         assert len(events) > 0
         assert all(isinstance(e, Event) for e in events)
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
-    def test_parse_events_handles_detail_failure(
-        self, mock_pw, parser, sample_listing_html
-    ):
+    def test_parse_events_handles_detail_failure(self, parser, sample_listing_html):
         """Test fallback to microdata when detail pages fail."""
-        mock_pw.return_value = (None, None, None)
+        parser._pw_session.fetch_page.return_value = (None, None, None)
 
         html_parser = HTMLParser(sample_listing_html, "https://13.agendaculturel.fr")
         events = parser.parse_events(html_parser)
@@ -832,12 +845,15 @@ class TestAgendaCulturelParserIntegration:
         events = parser.parse_events(html_parser)
         assert events == []
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
-    def test_parse_detail_page_saves_image(self, mock_pw, parser, sample_detail_html):
+    def test_parse_detail_page_saves_image(self, parser, sample_detail_html):
         """Test that image bytes from Playwright are saved via image_downloader."""
         fake_image_bytes = b"\x89PNG\r\n\x1a\nfake_image_data"
         fake_image_url = "https://13.agendaculturel.fr/media/storage/test.jpg"
-        mock_pw.return_value = (sample_detail_html, fake_image_bytes, fake_image_url)
+        parser._pw_session.fetch_page.return_value = (
+            sample_detail_html,
+            fake_image_bytes,
+            fake_image_url,
+        )
         parser.image_downloader.save_from_bytes.return_value = (
             "/images/events/2026/01/randjess-abc123.webp"
         )
@@ -850,10 +866,13 @@ class TestAgendaCulturelParserIntegration:
         assert event.image == "/images/events/2026/01/randjess-abc123.webp"
         parser.image_downloader.save_from_bytes.assert_called_once()
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
-    def test_parse_detail_page_no_image(self, mock_pw, parser, sample_detail_html):
+    def test_parse_detail_page_no_image(self, parser, sample_detail_html):
         """Test detail page parsing when no image is available."""
-        mock_pw.return_value = (sample_detail_html, None, None)
+        parser._pw_session.fetch_page.return_value = (
+            sample_detail_html,
+            None,
+            None,
+        )
 
         event = parser._parse_detail_page(
             "https://13.agendaculturel.fr/concert/marseille/randjess.html"
@@ -863,6 +882,14 @@ class TestAgendaCulturelParserIntegration:
         assert event.image is None
         parser.image_downloader.save_from_bytes.assert_not_called()
 
+    def test_parse_detail_page_returns_none_without_session(self, parser):
+        """Test that _parse_detail_page returns None without a session."""
+        parser._pw_session = None
+        event = parser._parse_detail_page(
+            "https://13.agendaculturel.fr/concert/marseille/randjess.html"
+        )
+        assert event is None
+
     def test_category_listing_urls_defined(self):
         assert len(CATEGORY_LISTING_URLS) == 5
         assert all(
@@ -870,29 +897,34 @@ class TestAgendaCulturelParserIntegration:
             for url in CATEGORY_LISTING_URLS
         )
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
+    @patch("src.parsers.agendaculturel.CloudflarePlaywrightSession")
     def test_crawl_iterates_category_pages(
-        self, mock_pw, parser, sample_listing_html, sample_detail_html
+        self, mock_session_cls, parser, sample_listing_html, sample_detail_html
     ):
         """Test that crawl() fetches all category listing pages."""
         category_urls = set(CATEGORY_LISTING_URLS)
+        mock_session = MagicMock()
 
-        def mock_playwright(url, timeout=60000):
+        def mock_fetch(url, extract_image=False):
             if url in category_urls:
                 return (sample_listing_html, None, None)
             return (sample_detail_html, None, None)
 
-        mock_pw.side_effect = mock_playwright
+        mock_session.fetch_page.side_effect = mock_fetch
+        mock_session.__enter__ = MagicMock(return_value=mock_session)
+        mock_session.__exit__ = MagicMock(return_value=False)
+        mock_session_cls.return_value = mock_session
 
         with patch.object(parser, "process_event", side_effect=lambda e: e):
             events = parser.crawl()
 
         assert len(events) > 0
 
-    @patch("src.parsers.agendaculturel._run_playwright_in_thread")
-    def test_crawl_deduplicates_across_pages(self, mock_pw, parser, sample_detail_html):
+    @patch("src.parsers.agendaculturel.CloudflarePlaywrightSession")
+    def test_crawl_deduplicates_across_pages(
+        self, mock_session_cls, parser, sample_detail_html
+    ):
         """Test that events appearing in multiple categories are deduplicated."""
-        # Same listing HTML returned for all category pages — same events
         listing_html = """
         <html><body>
             <div class="y-card" itemscope="" itemtype="https://schema.org/MusicEvent">
@@ -904,19 +936,44 @@ class TestAgendaCulturelParserIntegration:
         </body></html>
         """
         category_urls = set(CATEGORY_LISTING_URLS)
+        mock_session = MagicMock()
 
-        def mock_playwright(url, timeout=60000):
+        def mock_fetch(url, extract_image=False):
             if url in category_urls:
                 return (listing_html, None, None)
             return (sample_detail_html, None, None)
 
-        mock_pw.side_effect = mock_playwright
+        mock_session.fetch_page.side_effect = mock_fetch
+        mock_session.__enter__ = MagicMock(return_value=mock_session)
+        mock_session.__exit__ = MagicMock(return_value=False)
+        mock_session_cls.return_value = mock_session
 
         with patch.object(parser, "process_event", side_effect=lambda e: e):
             events = parser.crawl()
 
         # Should only have 1 event despite being on all 5 category pages
         assert len(events) == 1
+
+    @patch("src.parsers.agendaculturel.CloudflarePlaywrightSession")
+    def test_crawl_returns_empty_on_import_error(self, mock_session_cls, parser):
+        """Test that crawl returns empty list when Playwright is not installed."""
+        mock_session_cls.side_effect = ImportError("No module named 'playwright'")
+        events = parser.crawl()
+        assert events == []
+
+    @patch("src.parsers.agendaculturel.CloudflarePlaywrightSession")
+    def test_crawl_cleans_up_session(self, mock_session_cls, parser):
+        """Test that _pw_session is cleaned up after crawl completes."""
+        mock_session = MagicMock()
+        mock_session.fetch_page.return_value = (None, None, None)
+        mock_session.__enter__ = MagicMock(return_value=mock_session)
+        mock_session.__exit__ = MagicMock(return_value=False)
+        mock_session_cls.return_value = mock_session
+
+        parser.crawl()
+
+        # Session should be cleaned up (set to None in finally block)
+        assert parser._pw_session is None
 
 
 # ── Test HTML fallback parsing ────────────────────────────────────────
@@ -999,3 +1056,189 @@ class TestHtmlFallbackParsing:
         event = parser._parse_from_html(html, "https://example.com/test.html")
         assert event is not None
         assert event.image is None
+
+
+# ── Test _is_cloudflare_challenge ──────────────────────────────────
+
+
+class TestIsCloudflareChallenge:
+    """Tests for the Cloudflare challenge detection helper."""
+
+    def test_detects_verify_human(self):
+        assert _is_cloudflare_challenge("<html>Verify you are human</html>")
+
+    def test_detects_just_a_moment(self):
+        assert _is_cloudflare_challenge("<html>Just a moment</html>")
+
+    def test_normal_html_passes(self):
+        assert not _is_cloudflare_challenge("<html><body>Hello world</body></html>")
+
+    def test_empty_string_passes(self):
+        assert not _is_cloudflare_challenge("")
+
+
+# ── Test CloudflarePlaywrightSession ──────────────────────────────
+
+
+class TestCloudflarePlaywrightSession:
+    """Tests for the CloudflarePlaywrightSession context manager."""
+
+    def _make_session_with_mocks(self):
+        """Create a CloudflarePlaywrightSession with mock browser internals."""
+        session = CloudflarePlaywrightSession()
+        session._pw = MagicMock()
+        session._browser = MagicMock()
+        session._context = MagicMock()
+        return session
+
+    def test_stops_browser_on_cleanup(self):
+        """Test that _stop() closes the browser and stops playwright."""
+        session = self._make_session_with_mocks()
+        mock_browser = session._browser
+        mock_pw = session._pw
+
+        session._stop()
+
+        mock_browser.close.assert_called_once()
+        mock_pw.stop.assert_called_once()
+
+    def test_context_manager_protocol(self):
+        """Test __enter__ / __exit__ protocol."""
+        session = CloudflarePlaywrightSession()
+
+        with (
+            patch.object(session, "_start") as mock_start,
+            patch.object(session, "_stop") as mock_stop,
+        ):
+            with session as s:
+                assert s is session
+                mock_start.assert_called_once()
+            mock_stop.assert_called_once()
+
+    def test_fetch_page_returns_html(self):
+        """Test that fetch_page returns HTML content."""
+        session = self._make_session_with_mocks()
+        mock_page = MagicMock()
+        session._context.new_page.return_value = mock_page
+        mock_page.content.return_value = "<html>Test Content</html>"
+
+        html, img_bytes, img_url = session._fetch_direct("https://example.com", False)
+
+        assert html == "<html>Test Content</html>"
+        assert img_bytes is None
+        assert img_url is None
+        mock_page.close.assert_called_once()
+
+    def test_first_page_waits_longer(self):
+        """Test that the first page gets FIRST_PAGE_WAIT, subsequent get SUBSEQUENT_PAGE_WAIT."""
+        session = self._make_session_with_mocks()
+        mock_page = MagicMock()
+        session._context.new_page.return_value = mock_page
+        mock_page.content.return_value = "<html>Normal Page</html>"
+
+        # First page: should wait FIRST_PAGE_WAIT
+        session._fetch_direct("https://example.com/page1", False)
+        mock_page.wait_for_timeout.assert_any_call(
+            CloudflarePlaywrightSession.FIRST_PAGE_WAIT
+        )
+
+        # After first page, challenge_passed should be True
+        assert session._challenge_passed
+
+        mock_page.reset_mock()
+        mock_page.content.return_value = "<html>Page 2</html>"
+
+        # Second page: should wait SUBSEQUENT_PAGE_WAIT
+        session._fetch_direct("https://example.com/page2", False)
+        mock_page.wait_for_timeout.assert_any_call(
+            CloudflarePlaywrightSession.SUBSEQUENT_PAGE_WAIT
+        )
+
+    def test_fetch_handles_page_error(self):
+        """Test that a single page error doesn't crash the session."""
+        session = self._make_session_with_mocks()
+        session._context.new_page.side_effect = Exception("Page crash")
+
+        html, img_bytes, img_url = session._fetch_direct("https://example.com", False)
+
+        assert html is None
+        assert img_bytes is None
+
+    def test_cookie_banner_dismissed_once(self):
+        """Test that the cookie banner is only dismissed on the first page."""
+        session = self._make_session_with_mocks()
+        mock_page = MagicMock()
+        session._context.new_page.return_value = mock_page
+        mock_page.content.return_value = "<html>Normal Page</html>"
+
+        with patch("src.parsers.agendaculturel._dismiss_cookie_banner") as mock_dismiss:
+            session._fetch_direct("https://example.com/page1", False)
+            assert mock_dismiss.call_count == 1
+
+            session._fetch_direct("https://example.com/page2", False)
+            # Still only 1 call — banner already dismissed
+            assert mock_dismiss.call_count == 1
+
+    def test_import_error_on_start(self):
+        """Test that ImportError is raised when Playwright is not installed."""
+        with patch.dict(
+            "sys.modules", {"playwright": None, "playwright.sync_api": None}
+        ):
+            session = CloudflarePlaywrightSession()
+            with pytest.raises(ImportError):
+                session._start()
+
+    def test_asyncio_fallback_to_thread(self):
+        """Test that asyncio RuntimeError triggers thread-based fallback."""
+        session = CloudflarePlaywrightSession()
+
+        with (
+            patch.object(
+                session,
+                "_start_direct",
+                side_effect=RuntimeError("Cannot run in asyncio event loop"),
+            ),
+            patch.object(session, "_start_in_thread") as mock_thread_start,
+        ):
+            session._start()
+            mock_thread_start.assert_called_once()
+
+    def test_fetch_delegates_to_thread_when_use_thread(self):
+        """Test that fetch_page delegates to _fetch_in_thread when _use_thread is set."""
+        session = CloudflarePlaywrightSession()
+        session._use_thread = True
+
+        with patch.object(
+            session,
+            "_fetch_in_thread",
+            return_value=("<html>Thread</html>", None, None),
+        ) as mock_thread_fetch:
+            result = session.fetch_page("https://example.com")
+            mock_thread_fetch.assert_called_once_with("https://example.com", False)
+            assert result == ("<html>Thread</html>", None, None)
+
+    def test_fetch_delegates_to_direct_when_not_thread(self):
+        """Test that fetch_page delegates to _fetch_direct when _use_thread is False."""
+        session = self._make_session_with_mocks()
+        session._use_thread = False
+
+        with patch.object(
+            session,
+            "_fetch_direct",
+            return_value=("<html>Direct</html>", None, None),
+        ) as mock_direct_fetch:
+            result = session.fetch_page("https://example.com")
+            mock_direct_fetch.assert_called_once_with("https://example.com", False)
+            assert result == ("<html>Direct</html>", None, None)
+
+    def test_thread_stop_sends_sentinel(self):
+        """Test that _stop() sends None to request queue for thread shutdown."""
+        session = CloudflarePlaywrightSession()
+        session._use_thread = True
+        session._request_queue = MagicMock()
+        session._thread = MagicMock()
+
+        session._stop()
+
+        session._request_queue.put.assert_called_once_with(None)
+        session._thread.join.assert_called_once_with(timeout=10)
