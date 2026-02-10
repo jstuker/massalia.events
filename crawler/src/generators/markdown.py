@@ -168,12 +168,11 @@ class MarkdownGenerator:
         # Generate front matter
         front_matter = event.to_front_matter()
 
-        # Sanitize description in front matter and body
+        # Sanitize all text fields in front matter
+        for key in ("title", "name", "description"):
+            if key in front_matter and isinstance(front_matter[key], str):
+                front_matter[key] = sanitize_description(front_matter[key])
         description = sanitize_description(event.description)
-        if "description" in front_matter:
-            front_matter["description"] = sanitize_description(
-                front_matter["description"]
-            )
 
         # Build file content
         content = self._build_content(front_matter, description)
