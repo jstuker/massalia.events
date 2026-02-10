@@ -1,27 +1,31 @@
 ---
-title: Le Lac des cygnes
-date: '2026-02-14T20:00:00+01:00'
-draft: false
-expiryDate: '2026-02-15T00:00:00+01:00'
-name: Le Lac des cygnes
-eventURL: https://journalzebuline.fr/le-lac-des-cygnes-2/
-startTime: '20:00'
-description: Au Grand Théâtre de Provence, Angelin Preljocaj reprend sa version de l’incontournable Lac des cygnes créée en 2020. Cette pièce chorégraphique est une...
 categories:
 - danse
-locations: []
+date: '2026-02-14T20:00:00+01:00'
 dates:
 - samedi-14-fevrier
+description: Au Grand Théâtre de Provence, Angelin Preljocaj reprend sa version de
+  l’incontournable Lac des cygnes créée en 2020. Cette pièce chorégraphique est une...
+draft: false
+eventURL: https://journalzebuline.fr/le-lac-des-cygnes-2/
+expired: false
+expiryDate: '2026-02-15T00:00:00+01:00'
+image: /images/events/le-lac-des-cygnes-af77967d.webp
+lastCrawled: '2026-02-10T20:28:52.092322'
+locations: []
+name: Le Lac des cygnes
+sourceId: journalzebuline:134651-0-4
+sourceIds:
+- journalzebuline:134651-0-4
+- journalzebuline:134651-0-0
+startTime: '20:00'
 tags:
 - a la une
 - angelin preljocaj
 - bouches-du-rhône
 - danse
 - grand théâtre de provence
-image: /images/events/le-lac-des-cygnes-af77967d.webp
-sourceId: journalzebuline:134651-0-4
-lastCrawled: '2026-02-05T14:08:41+01:00'
-expired: false
+title: Le Lac des cygnes
 ---
 
 Au Grand Théâtre de Provence, Angelin Preljocaj reprend sa version de l’incontournable Lac des cygnes créée en 2020. Cette pièce chorégraphique est une...
