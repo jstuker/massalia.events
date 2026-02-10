@@ -3,6 +3,7 @@
 import hashlib
 import ipaddress
 import json
+import threading
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -114,6 +115,7 @@ class RateLimiter:
         self.default_delay = default_delay
         self._last_request: dict[str, float] = {}
         self._source_delays: dict[str, float] = {}
+        self._lock = threading.Lock()
 
     def set_delay(self, source_id: str, delay: float):
         """
@@ -123,26 +125,32 @@ class RateLimiter:
             source_id: Source identifier
             delay: Delay in seconds between requests
         """
-        self._source_delays[source_id] = delay
+        with self._lock:
+            self._source_delays[source_id] = delay
 
     def wait(self, source_id: str):
         """
         Wait if needed to respect rate limiting for a source.
 
+        Thread-safe: acquires a lock to check/update last request time.
+
         Args:
             source_id: Source identifier
         """
-        delay = self._source_delays.get(source_id, self.default_delay)
-        now = time.time()
+        with self._lock:
+            delay = self._source_delays.get(source_id, self.default_delay)
+            now = time.time()
 
-        if source_id in self._last_request:
-            elapsed = now - self._last_request[source_id]
-            if elapsed < delay:
-                wait_time = delay - elapsed
-                logger.debug(f"Rate limiting [{source_id}]: waiting {wait_time:.2f}s")
-                time.sleep(wait_time)
+            if source_id in self._last_request:
+                elapsed = now - self._last_request[source_id]
+                if elapsed < delay:
+                    wait_time = delay - elapsed
+                    logger.debug(
+                        f"Rate limiting [{source_id}]: waiting {wait_time:.2f}s"
+                    )
+                    time.sleep(wait_time)
 
-        self._last_request[source_id] = time.time()
+            self._last_request[source_id] = time.time()
 
 
 class ResponseCache:
