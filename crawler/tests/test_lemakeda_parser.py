@@ -9,9 +9,9 @@ import pytest
 
 from src.models.event import Event
 from src.parsers.lemakeda import LeMakedaParser
-from src.utils.sanitize import sanitize_description
 from src.utils.http import FetchResult
 from src.utils.parser import HTMLParser
+from src.utils.sanitize import sanitize_description
 
 PARIS_TZ = ZoneInfo("Europe/Paris")
 

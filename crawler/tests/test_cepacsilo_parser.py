@@ -130,8 +130,8 @@ def sample_single_date_detail():
             "@context": "https://schema.org",
             "@type": "Event",
             "name": "D'JAL",
-            "startDate": "2026-02-06T20:30:00.000000Z",
-            "endDate": "2026-02-06T20:30:00.000000Z",
+            "startDate": "2026-12-06T20:30:00.000000Z",
+            "endDate": "2026-12-06T20:30:00.000000Z",
             "eventStatus": "https://schema.org/EventScheduled",
             "location": {
                 "@type": "Place",
@@ -163,7 +163,7 @@ def sample_single_date_detail():
             <p>D'jal revient avec un nouveau spectacle mêlant personnages dingues et situations folles!</p>
         </div>
         <ul>
-            <li>vendredi 06 février 2026 · 20h30</li>
+            <li>dimanche 06 décembre 2026 · 20h30</li>
         </ul>
     </body>
     </html>
