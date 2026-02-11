@@ -7,7 +7,7 @@
 .PHONY: help build serve clean check install crawl crawl-preview \
         update-theme check-theme validate-config check-links check-links-all \
         validate-content cleanup cleanup-all expire-events mark-expired \
-        delete-expired maintenance
+        delete-expired maintenance venues venues-audit
 
 # Default target
 .DEFAULT_GOAL := help
@@ -75,6 +75,14 @@ crawl-preview:
 ## crawl-status: Show last crawl status
 crawl-status:
 	@cd crawler && source venv/bin/activate 2>/dev/null || true && python crawl.py status
+
+## venues: Discover new venues, add stubs, generate Hugo pages
+venues:
+	@cd crawler && source venv/bin/activate 2>/dev/null || true && python crawl.py venues sync
+
+## venues-audit: Audit venue data for completeness and duplicates
+venues-audit:
+	@cd crawler && source venv/bin/activate 2>/dev/null || true && python crawl.py venues audit
 
 ## validate: Validate crawler configuration
 validate:

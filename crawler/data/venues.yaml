@@ -320,6 +320,8 @@
   address: "Rue Fort du Sanctuaire, 13006 Marseille"
   website: "https://www.notredamedelagarde.com/"
   type: "Monument historique"
+  search_names:
+    - "notre-dame"
   aliases:
     - "/locations/bonne-mere/"
     - "/locations/ndg/"
@@ -691,6 +693,9 @@
   address: "1 rue Mission de France, 13001 Marseille"
   website: "https://www.theatre-oeuvre.com/"
   type: "Theatre"
+  search_names:
+    - "la mesón"
+    - "la meson"
   aliases: []
   body: "Le Theatre de l'Oeuvre, cree en 1937, est installe depuis 1965 a quelques pas de la Canebiere dans le quartier de Belsunce. Sa salle a l'italienne de 170 places propose une programmation de theatre, musiques actuelles, danse et spectacles jeune public."
 
@@ -763,6 +768,8 @@
   address: "Avenue Raimu, 13014 Marseille"
   website: "https://www.lezef.org/"
   type: "Theatre"
+  search_names:
+    - "le zef"
   aliases:
     - "/locations/le-merlan/"
     - "/locations/theatre-du-merlan/"
@@ -892,4 +899,202 @@
 # le-theatre-des-salins    → les-salins
 # scene-mediterrannee      → scene-mediterranee
 # ============================================================
+
+# ============================================================
+# Venues migrated from hardcoded map_location() dict
+# ============================================================
+
+- slug: videodrome-2
+  title: "Videodrome 2"
+  description: "Cinema associatif et lieu culturel dans le quartier de la Plaine a Marseille."
+  address: "49 Cours Julien, 13006 Marseille"
+  website: "https://www.videodrome2.fr/"
+  type: "Cinema"
+  search_names:
+    - "vidéodrome"
+    - "videodrome2"
+  aliases: []
+  body: "Videodrome 2 est un cinema associatif et lieu culturel situe dans le quartier de la Plaine a Marseille. Le lieu programme des projections, des cine-concerts, des rencontres et des evenements culturels."
+
+- slug: ballet-national-de-marseille
+  title: "Ballet National de Marseille"
+  description: "Centre choregraphique national au sein de La Friche la Belle de Mai."
+  address: "20 boulevard de Gabès, 13003 Marseille"
+  website: "https://www.ballet-de-marseille.com/"
+  type: "Centre choregraphique"
+  aliases: []
+  body: "Le Ballet National de Marseille est un centre choregraphique national situe au sein de La Friche la Belle de Mai. Fonde en 1972, il est un lieu majeur de la creation choregraphique contemporaine."
+
+- slug: opera-de-marseille
+  title: "Opera de Marseille"
+  description: "Opera municipal de Marseille, salle de 1 800 places inauguree en 1787."
+  address: "2 rue Moliere, 13001 Marseille"
+  website: "https://opera.marseille.fr/"
+  type: "Opera"
+  aliases:
+    - "/locations/opera/"
+  body: "L'Opera de Marseille est un opera municipal situe sur la rue Moliere. Inaugure en 1787 et reconstruit en 1924 apres un incendie, il dispose d'une salle de 1 800 places et programme des operas, ballets et concerts symphoniques."
+
+- slug: le-moulin
+  title: "Le Moulin"
+  description: "Salle de concerts et musiques actuelles a Marseille."
+  address: "47 boulevard Perrier, 13008 Marseille"
+  website: "https://www.lemoulin.org/"
+  type: "Salle de concert"
+  aliases: []
+  body: "Le Moulin est une salle de concerts dediee aux musiques actuelles, situee dans le 8e arrondissement de Marseille."
+
+- slug: l-alhambra
+  title: "L'Alhambra"
+  description: "Salle de cinema et de spectacles dans le quartier de Saint-Mauront a Marseille."
+  address: "2 rue du Cinema, 13003 Marseille"
+  website: ""
+  type: "Salle de spectacle"
+  aliases: []
+  body: "L'Alhambra est une salle de cinema et de spectacles situee dans le quartier de Saint-Mauront dans le 3e arrondissement de Marseille."
+
+- slug: theatre-joliette
+  title: "Theatre Joliette"
+  description: "Theatre dans le quartier de la Joliette a Marseille."
+  address: "2 place Henri Verneuil, 13002 Marseille"
+  website: "https://www.theatrejoliette.fr/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre Joliette est un theatre situe dans le quartier de la Joliette a Marseille, proposant une programmation de theatre, danse et musique."
+
+- slug: theatre-nono
+  title: "Theatre Nono"
+  description: "Theatre associatif dans le 15e arrondissement de Marseille."
+  address: "80 chemin de Saint-Henri a Saint-Andre, 13016 Marseille"
+  website: "https://www.theatrenono.com/"
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre Nono est un theatre associatif situe dans le 16e arrondissement de Marseille, proposant du theatre, des concerts et des spectacles jeune public."
+
+- slug: theatre-gyptis
+  title: "Theatre Gyptis"
+  description: "Theatre de quartier dans le 3e arrondissement de Marseille."
+  address: "136 rue Loubon, 13003 Marseille"
+  website: "https://www.theatregyptis.com/"
+  type: "Theatre"
+  search_names:
+    - "gyptis"
+  aliases: []
+  body: "Le Theatre Gyptis est un theatre de quartier situe dans le 3e arrondissement de Marseille, proposant une programmation de theatre, danse et performances."
+
+- slug: la-minoterie
+  title: "La Minoterie"
+  description: "Lieu de creation et de spectacle a Marseille."
+  address: "21 rue d'Aubagne, 13001 Marseille"
+  website: "https://www.laminoterie.com/"
+  type: "Salle de spectacle"
+  aliases: []
+  body: "La Minoterie est un lieu de creation et de spectacle situe dans le centre de Marseille."
+
+- slug: 3-bisf
+  title: "3 bisF"
+  description: "Lieu d'arts contemporains dans l'ancien hopital Montperrin a Aix-en-Provence."
+  address: "109 avenue du Petit Barthelemy, 13100 Aix-en-Provence"
+  website: "https://www.3bisf.com/"
+  type: "Centre d'art"
+  aliases: []
+  body: "3 bisF est un lieu d'arts contemporains situe dans l'ancien hopital psychiatrique Montperrin a Aix-en-Provence. Il programme des expositions, des performances et des residences d'artistes."
+
+- slug: les-bancs-publics
+  title: "Les Bancs Publics"
+  description: "Lieu d'experimentation artistique dans le quartier de la Joliette a Marseille."
+  address: "10 rue Saint-Antoine, 13002 Marseille"
+  website: "https://lesbancspublics.com/"
+  type: "Centre d'art"
+  aliases: []
+  body: "Les Bancs Publics est un lieu d'experimentation artistique situe dans le quartier de la Joliette a Marseille, proposant des expositions, performances et evenements."
+
+- slug: montevideo
+  title: "Montevideo"
+  description: "Centre d'art et de creation contemporaine a Marseille."
+  address: "3 impasse Montevideo, 13006 Marseille"
+  website: "https://montevideo-marseille.com/"
+  type: "Centre d'art"
+  search_names:
+    - "montévidéo"
+  aliases: []
+  body: "Montevideo est un centre d'art et de creation contemporaine situe dans le 6e arrondissement de Marseille, accueillant des expositions, residences et evenements artistiques."
+
+- slug: pavillon-noir
+  title: "Pavillon Noir"
+  description: "Centre choregraphique national d'Aix-en-Provence."
+  address: "530 avenue Mozart, 13100 Aix-en-Provence"
+  website: "https://www.preljocaj.org/"
+  type: "Centre choregraphique"
+  aliases: []
+  body: "Le Pavillon Noir est le centre choregraphique national d'Aix-en-Provence, dirige par Angelin Preljocaj. Ce batiment concu par Rudy Ricciotti accueille des spectacles de danse contemporaine."
+
+- slug: frac-marseille
+  title: "FRAC Provence-Alpes-Cote d'Azur"
+  description: "Fonds regional d'art contemporain a Marseille."
+  address: "20 boulevard de Dunkerque, 13002 Marseille"
+  website: "https://www.frac-provence-alpes-cotedazur.org/"
+  type: "Musee"
+  search_names:
+    - "frac"
+  aliases: []
+  body: "Le FRAC Provence-Alpes-Cote d'Azur est un fonds regional d'art contemporain situe dans le quartier de la Joliette a Marseille, dans un batiment concu par Kengo Kuma."
+
+- slug: bmvr-alcazar
+  title: "BMVR Alcazar"
+  description: "Bibliotheque municipale a vocation regionale de Marseille."
+  address: "58 Cours Belsunce, 13001 Marseille"
+  website: "https://www.bmvr.marseille.fr/"
+  type: "Bibliotheque"
+  search_names:
+    - "alcazar"
+  aliases: []
+  body: "La BMVR Alcazar est la bibliotheque municipale a vocation regionale de Marseille, situee sur le Cours Belsunce dans un ancien music-hall Art deco."
+
+- slug: musee-cantini
+  title: "Musee Cantini"
+  description: "Musee d'art moderne et contemporain dans un hotel particulier du XVIIe siecle."
+  address: "19 rue Grignan, 13006 Marseille"
+  website: "https://musees.marseille.fr/musee-cantini"
+  type: "Musee"
+  aliases: []
+  body: "Le Musee Cantini est un musee d'art moderne et contemporain situe dans un hotel particulier du XVIIe siecle dans le 6e arrondissement de Marseille."
+
+- slug: theatre-off
+  title: "Theatre Off"
+  description: "Theatre dans le quartier de la Joliette a Marseille."
+  address: "23 rue de la Joliette, 13002 Marseille"
+  website: ""
+  type: "Theatre"
+  aliases: []
+  body: "Le Theatre Off est un theatre situe dans le quartier de la Joliette a Marseille."
+
+- slug: theatre-des-bernardines
+  title: "Theatre des Bernardines"
+  description: "Theatre dans le quartier des Bernardines a Marseille."
+  address: "17 boulevard Garibaldi, 13001 Marseille"
+  website: ""
+  type: "Theatre"
+  search_names:
+    - "bernardines"
+  aliases: []
+  body: "Le Theatre des Bernardines est un theatre situe dans le quartier des Bernardines a Marseille."
+
+- slug: vl
+  title: "VL"
+  description: "Lieu evenementiel a Marseille."
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: mira
+  title: "Mira"
+  description: "Lieu de creation numerique et artistique a Marseille."
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
 

@@ -32,6 +32,7 @@ from src.logger import get_logger, setup_logging
 from src.parsers import get_parser
 from src.selection import load_selection_criteria
 from src.utils import HTTPClient, ImageDownloader
+from src.venue_manager import VenueManager
 
 # Paris timezone for Marseille events
 PARIS_TZ = ZoneInfo("Europe/Paris")
@@ -266,6 +267,10 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrenc
         dry_run=dry_run,
     )
 
+    # Initialize venue manager for location mapping
+    venues_file = config_dir / "data" / "venues.yaml"
+    venue_manager = VenueManager(venues_file)
+
     # Initialize deduplicator for cross-source duplicate detection
     deduplicator = EventDeduplicator(content_dir=output_dir)
     logger.info(f"Deduplicator initialized: {deduplicator.get_stats()}")
@@ -346,6 +351,7 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrenc
                 image_downloader=image_downloader,
                 markdown_generator=markdown_generator,
                 max_workers=concurrency,
+                venue_manager=venue_manager,
             )
 
             events = parser.crawl()
@@ -759,6 +765,239 @@ def clean(ctx, before: datetime | None, dry_run: bool, delete: bool):
     if error_count > 0:
         click.echo(click.style(f"Errors: {error_count}", fg="red"))
     click.echo("=" * 50)
+
+
+@cli.group()
+@click.pass_context
+def venues(ctx):
+    """
+    Venue management commands.
+
+    Audit, sync, and deduplicate venue data from venues.yaml.
+    """
+    pass
+
+
+@venues.command()
+@click.pass_context
+def audit(ctx):
+    """
+    Audit venue data for completeness and issues.
+
+    Reports missing fields, potential duplicates, and unmapped locations.
+    """
+    cfg = ctx.obj["config"]
+    config_dir = ctx.obj["config_dir"]
+
+    # Setup logging
+    setup_logging_from_config(
+        cfg, config_dir, ctx.obj["log_level"], ctx.obj["log_file"]
+    )
+
+    venues_file = config_dir / "data" / "venues.yaml"
+    vm = VenueManager(venues_file)
+
+    output_dir = config_dir / cfg.get("output_dir", "../content/events")
+    result = vm.audit(output_dir)
+
+    click.echo("\n" + "=" * 60)
+    click.echo(click.style("VENUE AUDIT REPORT", bold=True))
+    click.echo("=" * 60)
+    click.echo(f"  Total venues: {result.total_venues}")
+
+    # Missing fields
+    if result.missing_fields:
+        click.echo(
+            click.style(f"\n  Venues with missing fields: {len(result.missing_fields)}", fg="yellow")
+        )
+        for item in result.missing_fields:
+            fields = ", ".join(item["fields"])
+            click.echo(f"    {item['slug']}: {fields}")
+    else:
+        click.echo(click.style("\n  All venues have complete fields", fg="green"))
+
+    # Duplicates
+    if result.duplicates:
+        click.echo(
+            click.style(f"\n  Potential duplicates: {len(result.duplicates)}", fg="yellow")
+        )
+        for dup in result.duplicates:
+            click.echo(
+                f"    {dup.slug_a} <-> {dup.slug_b} "
+                f"({dup.match_type}, {dup.similarity:.0%})"
+            )
+    else:
+        click.echo(click.style("\n  No duplicate venues detected", fg="green"))
+
+    # Unmapped locations
+    if result.unmapped_locations:
+        click.echo(
+            click.style(
+                f"\n  Unmapped location slugs: {len(result.unmapped_locations)}",
+                fg="yellow",
+            )
+        )
+        for slug in result.unmapped_locations:
+            click.echo(f"    {slug}")
+    else:
+        click.echo(click.style("\n  All event locations are mapped", fg="green"))
+
+    click.echo("\n" + "=" * 60)
+
+
+@venues.command()
+@click.option(
+    "--dry-run",
+    "-n",
+    is_flag=True,
+    default=False,
+    help="Preview without writing files",
+)
+@click.pass_context
+def sync(ctx, dry_run: bool):
+    """
+    Discover new venues and generate Hugo pages.
+
+    Scans event files for unknown location slugs, adds stub entries
+    to venues.yaml, and generates Hugo location pages.
+    """
+    cfg = ctx.obj["config"]
+    config_dir = ctx.obj["config_dir"]
+
+    # Setup logging
+    setup_logging_from_config(
+        cfg, config_dir, ctx.obj["log_level"], ctx.obj["log_file"]
+    )
+
+    venues_file = config_dir / "data" / "venues.yaml"
+    vm = VenueManager(venues_file)
+
+    output_dir = config_dir / cfg.get("output_dir", "../content/events")
+    locations_dir = config_dir.parent / "content" / "locations"
+
+    if dry_run:
+        click.echo(click.style("DRY RUN MODE - No files will be written", fg="yellow"))
+
+    # Step 1: Discover unmapped locations
+    click.echo("\nScanning event files for new location slugs...")
+    new_slugs = vm.discover_unmapped(output_dir)
+
+    if new_slugs:
+        click.echo(f"  Found {len(new_slugs)} new slug(s):")
+        for slug in new_slugs:
+            action = "DRY" if dry_run else "ADD"
+            click.echo(f"    {action}  {slug}")
+
+        if not dry_run:
+            new_venues = vm.append_stubs(new_slugs)
+            click.echo(f"  Added {len(new_venues)} stub entries to venues.yaml")
+    else:
+        click.echo("  No new slugs found.")
+
+    # Step 2: Generate Hugo location pages
+    click.echo("\nGenerating Hugo location pages...")
+    created = 0
+    skipped = 0
+
+    for venue in vm.venues:
+        slug = venue.get("slug", "")
+        if not slug:
+            continue
+
+        venue_dir = locations_dir / slug
+        page_path = venue_dir / "_index.fr.md"
+
+        if page_path.exists():
+            skipped += 1
+            continue
+
+        if dry_run:
+            click.echo(f"  DRY   {slug}/")
+        else:
+            venue_dir.mkdir(parents=True, exist_ok=True)
+            content = _generate_venue_page(venue)
+            page_path.write_text(content, encoding="utf-8")
+            click.echo(f"  CREATE {slug}/")
+
+        created += 1
+
+    click.echo(
+        f"\nVenues discovered: {len(new_slugs)}, "
+        f"Pages created: {created}, Pages skipped: {skipped}"
+    )
+
+
+@venues.command()
+@click.pass_context
+def dedup(ctx):
+    """
+    Detect and report potential duplicate venues.
+    """
+    cfg = ctx.obj["config"]
+    config_dir = ctx.obj["config_dir"]
+
+    # Setup logging
+    setup_logging_from_config(
+        cfg, config_dir, ctx.obj["log_level"], ctx.obj["log_file"]
+    )
+
+    venues_file = config_dir / "data" / "venues.yaml"
+    vm = VenueManager(venues_file)
+
+    duplicates = vm.find_duplicates()
+
+    click.echo("\n" + "=" * 60)
+    click.echo(click.style("VENUE DUPLICATE REPORT", bold=True))
+    click.echo("=" * 60)
+
+    if duplicates:
+        click.echo(f"  Found {len(duplicates)} potential duplicate(s):\n")
+        for dup in duplicates:
+            click.echo(
+                f"    {dup.slug_a} <-> {dup.slug_b} "
+                f"({dup.match_type}, similarity: {dup.similarity:.0%})"
+            )
+    else:
+        click.echo(click.style("  No duplicates detected", fg="green"))
+
+    click.echo("\n" + "=" * 60)
+
+
+def _generate_venue_page(venue: dict) -> str:
+    """Generate _index.fr.md content for a venue."""
+    title = venue.get("title", "")
+    description = venue.get("description", "")
+    address = venue.get("address", "")
+    website = venue.get("website", "")
+    venue_type = venue.get("type", "Salle de spectacle")
+    aliases = venue.get("aliases", [])
+    body = venue.get("body", "")
+
+    lines = [
+        "---",
+        f'title: "{title}"',
+        f'description: "{description}"',
+        "",
+        "# Informations du lieu",
+        f'address: "{address}"',
+        f'website: "{website}"',
+        f'type: "{venue_type}"',
+        "",
+        "# Aliases pour le crawler (variations du nom)",
+        "aliases:",
+    ]
+
+    for alias in aliases or []:
+        lines.append(f'  - "{alias}"')
+
+    lines.append("---")
+    lines.append("")
+
+    if body:
+        lines.append(body)
+        lines.append("")
+
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":
