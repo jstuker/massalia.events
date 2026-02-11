@@ -271,6 +271,30 @@ sources:
       "Ateliers": "communaute"
       "Evenement immersif & multisensoriel": "communaute"
 
+  # Cité de la Musique - World music and concert venue in Marseille
+  # Hosts concerts, open stages, and music events at Auditorium and Club 27
+  - name: "Cité de la Musique"
+    id: "citemusique"
+    url: "https://www.citemusique-marseille.com/concerts-spectacles/"
+    parser: "citemusique"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "concert": "musique"
+      "musique-du-monde": "musique"
+      "jazz": "musique"
+      "musique-classique": "musique"
+      "musique-contemporaine": "musique"
+      "musique-electroacoustique": "musique"
+      "scene-ouverte": "musique"
+      "spectacle": "theatre"
+      "jeune-public": "theatre"
+      "rencontre": "communaute"
+      "projection": "art"
+      "conference": "communaute"
+
   # Le Zef - Scene nationale de Marseille (formerly Theatre du Merlan)
   # Major venue in 14th arrondissement hosting theatre, dance, music, and art
   - name: "Le Zef - Scene nationale de Marseille"
