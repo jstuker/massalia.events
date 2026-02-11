@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from .selection import SelectionCriteria
     from .utils.http import HTTPClient
     from .utils.images import ImageDownloader
+    from .venue_manager import VenueManager
 
 logger = get_logger(__name__)
 
@@ -36,6 +37,7 @@ class BaseCrawler(ABC):
         image_downloader: "ImageDownloader",
         markdown_generator: "MarkdownGenerator",
         max_workers: int = 5,
+        venue_manager: "VenueManager | None" = None,
     ):
         """
         Initialize the crawler.
@@ -46,12 +48,14 @@ class BaseCrawler(ABC):
             image_downloader: Image downloader for event images
             markdown_generator: Generator for Hugo markdown files
             max_workers: Max concurrent threads for detail page fetches
+            venue_manager: Optional VenueManager for location mapping
         """
         self.config = config
         self.http_client = http_client
         self.image_downloader = image_downloader
         self.markdown_generator = markdown_generator
         self.max_workers = max_workers
+        self.venue_manager = venue_manager
 
         self.source_name = config.get("name", self.source_name)
         self.source_id = config.get("id", "unknown")
@@ -177,6 +181,12 @@ class BaseCrawler(ABC):
         Returns:
             Processed event, or None if skipped/rejected
         """
+        # Remap locations through VenueManager (slugified -> canonical slug)
+        if self.venue_manager and event.locations:
+            event.locations = [
+                self.venue_manager.map_location(loc) for loc in event.locations
+            ]
+
         # Apply selection criteria if configured
         if self.selection_criteria:
             result = self.selection_criteria.evaluate(
@@ -271,136 +281,14 @@ class BaseCrawler(ABC):
         """
         Map source location to standard taxonomy slug.
 
+        Delegates to VenueManager when available, otherwise returns as-is.
+
         Args:
             raw_location: Location name from source
 
         Returns:
             Location slug
         """
-        # Known location mappings
-        known_locations = {
-            # Existing venues
-            "klap": "klap",
-            "la friche": "la-friche",
-            "friche": "la-friche",
-            "la criee": "la-criee",
-            "la criée": "la-criee",
-            "criee": "la-criee",
-            "criée": "la-criee",
-            "chateau de servieres": "chateau-de-servieres",
-            "servieres": "chateau-de-servieres",
-            "notre dame de la garde": "notre-dame-de-la-garde",
-            "notre-dame": "notre-dame-de-la-garde",
-            # Shotgun venues
-            "baby club": "baby-club",
-            "bohemia": "bohemia",
-            "boum marseille": "boum-marseille",
-            "boum": "boum-marseille",
-            "bounce club": "bounce-club-marseille",
-            "bounce club marseille": "bounce-club-marseille",
-            "cabaret aleatoire": "cabaret-aleatoire",
-            "cabaret aléatoire": "cabaret-aleatoire",
-            "danceteria": "danceteria",
-            "esquina tropical": "esquina-tropical",
-            "francois rouzier": "francois-rouzier",
-            "françois rouzier": "francois-rouzier",
-            "ipn club": "ipn-club-aix",
-            "ipn club aix": "ipn-club-aix",
-            "la traverse de balkis": "la-traverse-de-balkis",
-            "traverse de balkis": "la-traverse-de-balkis",
-            "la wo": "la-wo-marseille",
-            "la wo marseille": "la-wo-marseille",
-            "le bazar": "le-bazar",
-            "le bouge": "le-bouge-marseille",
-            "le bougé": "le-bouge-marseille",
-            "le bouge marseille": "le-bouge-marseille",
-            "le chapiteau": "le-chapiteau-marseille",
-            "le chapiteau marseille": "le-chapiteau-marseille",
-            "le makeda": "le-makeda",
-            "makeda": "le-makeda",
-            "le nucleaire": "le-nucleaire-marseille",
-            "le nucléaire": "le-nucleaire-marseille",
-            "le nucleaire marseille": "le-nucleaire-marseille",
-            "level up project": "level-up-project",
-            "mama shelter": "mama-shelter-marseille",
-            "mama shelter marseille": "mama-shelter-marseille",
-            "manray": "manray-club",
-            "manray club": "manray-club",
-            "mira": "mira",
-            "rockypop": "rockypop-marseille",
-            "rockypop marseille": "rockypop-marseille",
-            "shafro": "shafro",
-            "sunny comedy club": "sunny-comedy-club",
-            "the pablo club": "the-pablo-club",
-            "pablo club": "the-pablo-club",
-            "unite 22": "unite-22",
-            "unité 22": "unite-22",
-            "vice versa": "vice-versa-marseille",
-            "vice versa marseille": "vice-versa-marseille",
-            "vl": "vl",
-            # Videodrome 2
-            "videodrome 2": "videodrome-2",
-            "videodrome2": "videodrome-2",
-            "vidéodrome 2": "videodrome-2",
-            "vidéodrome": "videodrome-2",
-            # Journal Zébuline venues
-            "le zef": "le-zef-theatre-du-merlan",
-            "mucem": "mucem",
-            "théâtre de l'oeuvre": "theatre-de-l-oeuvre",
-            "theatre de l'oeuvre": "theatre-de-l-oeuvre",
-            "théâtre de l'œuvre": "theatre-de-l-oeuvre",
-            "la mesón": "theatre-de-l-oeuvre",
-            "la meson": "theatre-de-l-oeuvre",
-            "le merlan": "le-zef-theatre-du-merlan",
-            "theatre du merlan": "le-zef-theatre-du-merlan",
-            "théâtre du merlan": "le-zef-theatre-du-merlan",
-            "ballet national de marseille": "ballet-national-de-marseille",
-            "opéra de marseille": "opera-de-marseille",
-            "opera de marseille": "opera-de-marseille",
-            "le silo": "le-cepac-silo-marseille",
-            "cepac silo": "le-cepac-silo-marseille",
-            "le cepac silo": "le-cepac-silo-marseille",
-            "espace julien": "espace-julien",
-            "le moulin": "le-moulin",
-            "mac marseille": "mac-marseille",
-            "l'alhambra": "l-alhambra",
-            "théâtre joliette": "theatre-joliette",
-            "theatre joliette": "theatre-joliette",
-            "théâtre toursky": "scene-mediterranee",
-            "theatre toursky": "scene-mediterranee",
-            "théâtre nono": "theatre-nono",
-            "theatre nono": "theatre-nono",
-            "théâtre gyptis": "theatre-gyptis",
-            "theatre gyptis": "theatre-gyptis",
-            "gyptis": "theatre-gyptis",
-            "la minoterie": "la-minoterie",
-            "3 bisf": "3-bisf",
-            "les bancs publics": "les-bancs-publics",
-            "montévidéo": "montevideo",
-            "montevideo": "montevideo",
-            "pavillon noir": "pavillon-noir",
-            "frac marseille": "frac-marseille",
-            "bmvr alcazar": "bmvr-alcazar",
-            "alcazar": "bmvr-alcazar",
-            "musée cantini": "musee-cantini",
-            "musee cantini": "musee-cantini",
-            "le grand théâtre de provence": "grand-theatre-de-provence",
-            "le grand theatre de provence": "grand-theatre-de-provence",
-            "grand théâtre de provence": "grand-theatre-de-provence",
-            "grand theatre de provence": "grand-theatre-de-provence",
-            "théâtre du lacydon": "theatre-du-lacydon",
-            "theatre du lacydon": "theatre-du-lacydon",
-            "théâtre off": "theatre-off",
-            "theatre off": "theatre-off",
-            "théâtre des bernardines": "theatre-des-bernardines",
-            "theatre des bernardines": "theatre-des-bernardines",
-            "bernardines": "theatre-des-bernardines",
-        }
-
-        raw_lower = raw_location.lower()
-        for key, slug in known_locations.items():
-            if key in raw_lower:
-                return slug
-
-        # Return as-is if not found (will be slugified by Event model)
+        if self.venue_manager:
+            return self.venue_manager.map_location(raw_location)
         return raw_location

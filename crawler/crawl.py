@@ -32,12 +32,14 @@ from src.logger import get_logger, setup_logging
 from src.parsers import get_parser
 from src.selection import load_selection_criteria
 from src.utils import HTTPClient, ImageDownloader
+from src.venue_manager import VenueManager
 
 # Paris timezone for Marseille events
 PARIS_TZ = ZoneInfo("Europe/Paris")
 
 # Status file for tracking crawl results
 STATUS_FILE = ".crawl_status.json"
+SOURCES_STATUS_FILE = ".crawl_sources_status.json"
 
 # Global flag for interrupt handling
 _interrupted = False
@@ -98,6 +100,25 @@ def load_status(config_dir: Path) -> dict | None:
         return None
     with open(status_path, encoding="utf-8") as f:
         return json.load(f)
+
+
+def load_sources_status(config_dir: Path) -> dict:
+    """Load per-source crawl status from file."""
+    status_path = config_dir / SOURCES_STATUS_FILE
+    if not status_path.exists():
+        return {}
+    with open(status_path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_source_status(config_dir: Path, source_id: str, result: dict) -> None:
+    """Update a single source's status entry and write back."""
+    sources_status = load_sources_status(config_dir)
+    result["timestamp"] = datetime.now(PARIS_TZ).isoformat()
+    sources_status[source_id] = result
+    status_path = config_dir / SOURCES_STATUS_FILE
+    with open(status_path, "w", encoding="utf-8") as f:
+        json.dump(sources_status, f, indent=2)
 
 
 def signal_handler(signum, frame):
@@ -193,8 +214,21 @@ def cli(ctx, config: Path, log_level: str | None, log_file: Path | None):
     show_default=True,
     help="Max concurrent threads for detail page fetches (1 = sequential)",
 )
+@click.option(
+    "--stale",
+    type=int,
+    default=None,
+    help="Only crawl sources not run in the last N days",
+)
 @click.pass_context
-def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrency: int):
+def run(
+    ctx,
+    source: str | None,
+    dry_run: bool,
+    skip_selection: bool,
+    concurrency: int,
+    stale: int | None,
+):
     """
     Run the crawler to fetch and process events.
 
@@ -266,6 +300,10 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrenc
         dry_run=dry_run,
     )
 
+    # Initialize venue manager for location mapping
+    venues_file = config_dir / "data" / "venues.yaml"
+    venue_manager = VenueManager(venues_file)
+
     # Initialize deduplicator for cross-source duplicate detection
     deduplicator = EventDeduplicator(content_dir=output_dir)
     logger.info(f"Deduplicator initialized: {deduplicator.get_stats()}")
@@ -294,6 +332,39 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrenc
     if not sources_list:
         logger.warning("No sources to process")
         return
+
+    # Filter by staleness if --stale is specified
+    if stale is not None:
+        sources_status = load_sources_status(config_dir)
+        now = datetime.now(PARIS_TZ)
+        filtered = []
+        for src in sources_list:
+            src_info = sources_status.get(src.id, {})
+            ts = src_info.get("timestamp", "")
+            if not ts:
+                filtered.append(src)  # Never run
+                continue
+            try:
+                last_run = datetime.fromisoformat(ts)
+                age_days = (now - last_run).total_seconds() / 86400
+                if age_days > stale:
+                    filtered.append(src)
+            except (ValueError, TypeError):
+                filtered.append(src)  # Invalid timestamp, include it
+
+        skipped = len(sources_list) - len(filtered)
+        if skipped:
+            click.echo(
+                click.style(
+                    f"Skipping {skipped} source(s) run within the last {stale} day(s)",
+                    fg="cyan",
+                )
+            )
+        sources_list = filtered
+
+        if not sources_list:
+            click.echo("All sources are up to date, nothing to crawl.")
+            return
 
     # Process each source with progress display
     total_events = 0
@@ -346,6 +417,7 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrenc
                 image_downloader=image_downloader,
                 markdown_generator=markdown_generator,
                 max_workers=concurrency,
+                venue_manager=venue_manager,
             )
 
             events = parser.crawl()
@@ -362,17 +434,48 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrenc
                 total_rejected += rejected
                 click.echo(f"    -> {accepted} accepted, {rejected} rejected")
             else:
+                accepted = event_count
+                rejected = 0
                 total_accepted += event_count
                 click.echo(f"    -> {event_count} events found")
+
+            if not dry_run:
+                save_source_status(
+                    config_dir,
+                    src.id,
+                    {
+                        "status": "success",
+                        "events_accepted": accepted,
+                        "events_rejected": rejected,
+                    },
+                )
 
         except ValueError as e:
             logger.warning(f"Parser not available for {src.name}: {e}")
             total_errors += 1
+            if not dry_run:
+                save_source_status(
+                    config_dir,
+                    src.id,
+                    {
+                        "status": "error",
+                        "error": str(e),
+                    },
+                )
         except Exception as e:
             logger.error(f"Error processing {src.name}: {e}")
             total_errors += 1
             if effective_log_level == "DEBUG":
                 logger.exception("Full traceback:")
+            if not dry_run:
+                save_source_status(
+                    config_dir,
+                    src.id,
+                    {
+                        "status": "error",
+                        "error": str(e),
+                    },
+                )
 
     # Summary
     click.echo("\n" + "=" * 50)
@@ -617,6 +720,58 @@ def status(ctx):
 
     click.echo("=" * 50)
 
+    # Per-source status
+    sources_status = load_sources_status(config_dir)
+    if sources_status:
+        click.echo("\n" + "=" * 70)
+        click.echo(click.style("PER-SOURCE STATUS", bold=True))
+        click.echo("=" * 70)
+        click.echo(
+            f"  {'SOURCE ID':<20} {'LAST RUN':<20} {'EVENTS':<10} {'STATUS':<10}"
+        )
+        click.echo("  " + "-" * 66)
+
+        now = datetime.now(PARIS_TZ)
+
+        # Sort by timestamp (oldest first, never-run sources first)
+        def sort_key(item):
+            ts = item[1].get("timestamp", "")
+            return ts if ts else ""
+
+        for source_id, info in sorted(sources_status.items(), key=sort_key):
+            ts = info.get("timestamp", "")
+            src_status = info.get("status", "unknown")
+            accepted = info.get("events_accepted", 0)
+
+            # Format timestamp and determine staleness color
+            if ts:
+                try:
+                    run_time = datetime.fromisoformat(ts)
+                    age_days = (now - run_time).total_seconds() / 86400
+                    time_str = run_time.strftime("%Y-%m-%d %H:%M")
+                    if age_days < 2:
+                        time_colored = click.style(time_str, fg="green")
+                    elif age_days < 7:
+                        time_colored = click.style(time_str, fg="yellow")
+                    else:
+                        time_colored = click.style(time_str, fg="red")
+                except (ValueError, TypeError):
+                    time_colored = ts[:16]
+            else:
+                time_colored = click.style("never", fg="red")
+
+            status_colored = (
+                click.style(src_status, fg="green")
+                if src_status == "success"
+                else click.style(src_status, fg="red")
+            )
+
+            click.echo(
+                f"  {source_id:<20} {time_colored:<29} {accepted:<10} {status_colored}"
+            )
+
+        click.echo("=" * 70)
+
 
 @cli.command()
 @click.option(
@@ -759,6 +914,244 @@ def clean(ctx, before: datetime | None, dry_run: bool, delete: bool):
     if error_count > 0:
         click.echo(click.style(f"Errors: {error_count}", fg="red"))
     click.echo("=" * 50)
+
+
+@cli.group()
+@click.pass_context
+def venues(ctx):
+    """
+    Venue management commands.
+
+    Audit, sync, and deduplicate venue data from venues.yaml.
+    """
+    pass
+
+
+@venues.command()
+@click.pass_context
+def audit(ctx):
+    """
+    Audit venue data for completeness and issues.
+
+    Reports missing fields, potential duplicates, and unmapped locations.
+    """
+    cfg = ctx.obj["config"]
+    config_dir = ctx.obj["config_dir"]
+
+    # Setup logging
+    setup_logging_from_config(
+        cfg, config_dir, ctx.obj["log_level"], ctx.obj["log_file"]
+    )
+
+    venues_file = config_dir / "data" / "venues.yaml"
+    vm = VenueManager(venues_file)
+
+    output_dir = config_dir / cfg.get("output_dir", "../content/events")
+    result = vm.audit(output_dir)
+
+    click.echo("\n" + "=" * 60)
+    click.echo(click.style("VENUE AUDIT REPORT", bold=True))
+    click.echo("=" * 60)
+    click.echo(f"  Total venues: {result.total_venues}")
+
+    # Missing fields
+    if result.missing_fields:
+        click.echo(
+            click.style(
+                f"\n  Venues with missing fields: {len(result.missing_fields)}",
+                fg="yellow",
+            )
+        )
+        for item in result.missing_fields:
+            fields = ", ".join(item["fields"])
+            click.echo(f"    {item['slug']}: {fields}")
+    else:
+        click.echo(click.style("\n  All venues have complete fields", fg="green"))
+
+    # Duplicates
+    if result.duplicates:
+        click.echo(
+            click.style(
+                f"\n  Potential duplicates: {len(result.duplicates)}", fg="yellow"
+            )
+        )
+        for dup in result.duplicates:
+            click.echo(
+                f"    {dup.slug_a} <-> {dup.slug_b} "
+                f"({dup.match_type}, {dup.similarity:.0%})"
+            )
+    else:
+        click.echo(click.style("\n  No duplicate venues detected", fg="green"))
+
+    # Unmapped locations
+    if result.unmapped_locations:
+        click.echo(
+            click.style(
+                f"\n  Unmapped location slugs: {len(result.unmapped_locations)}",
+                fg="yellow",
+            )
+        )
+        for slug in result.unmapped_locations:
+            click.echo(f"    {slug}")
+    else:
+        click.echo(click.style("\n  All event locations are mapped", fg="green"))
+
+    click.echo("\n" + "=" * 60)
+
+
+@venues.command()
+@click.option(
+    "--dry-run",
+    "-n",
+    is_flag=True,
+    default=False,
+    help="Preview without writing files",
+)
+@click.pass_context
+def sync(ctx, dry_run: bool):
+    """
+    Discover new venues and generate Hugo pages.
+
+    Scans event files for unknown location slugs, adds stub entries
+    to venues.yaml, and generates Hugo location pages.
+    """
+    cfg = ctx.obj["config"]
+    config_dir = ctx.obj["config_dir"]
+
+    # Setup logging
+    setup_logging_from_config(
+        cfg, config_dir, ctx.obj["log_level"], ctx.obj["log_file"]
+    )
+
+    venues_file = config_dir / "data" / "venues.yaml"
+    vm = VenueManager(venues_file)
+
+    output_dir = config_dir / cfg.get("output_dir", "../content/events")
+    locations_dir = config_dir.parent / "content" / "locations"
+
+    if dry_run:
+        click.echo(click.style("DRY RUN MODE - No files will be written", fg="yellow"))
+
+    # Step 1: Discover unmapped locations
+    click.echo("\nScanning event files for new location slugs...")
+    new_slugs = vm.discover_unmapped(output_dir)
+
+    if new_slugs:
+        click.echo(f"  Found {len(new_slugs)} new slug(s):")
+        for slug in new_slugs:
+            action = "DRY" if dry_run else "ADD"
+            click.echo(f"    {action}  {slug}")
+
+        if not dry_run:
+            new_venues = vm.append_stubs(new_slugs)
+            click.echo(f"  Added {len(new_venues)} stub entries to venues.yaml")
+    else:
+        click.echo("  No new slugs found.")
+
+    # Step 2: Generate Hugo location pages
+    click.echo("\nGenerating Hugo location pages...")
+    created = 0
+    skipped = 0
+
+    for venue in vm.venues:
+        slug = venue.get("slug", "")
+        if not slug:
+            continue
+
+        venue_dir = locations_dir / slug
+        page_path = venue_dir / "_index.fr.md"
+
+        if page_path.exists():
+            skipped += 1
+            continue
+
+        if dry_run:
+            click.echo(f"  DRY   {slug}/")
+        else:
+            venue_dir.mkdir(parents=True, exist_ok=True)
+            content = _generate_venue_page(venue)
+            page_path.write_text(content, encoding="utf-8")
+            click.echo(f"  CREATE {slug}/")
+
+        created += 1
+
+    click.echo(
+        f"\nVenues discovered: {len(new_slugs)}, "
+        f"Pages created: {created}, Pages skipped: {skipped}"
+    )
+
+
+@venues.command()
+@click.pass_context
+def dedup(ctx):
+    """
+    Detect and report potential duplicate venues.
+    """
+    cfg = ctx.obj["config"]
+    config_dir = ctx.obj["config_dir"]
+
+    # Setup logging
+    setup_logging_from_config(
+        cfg, config_dir, ctx.obj["log_level"], ctx.obj["log_file"]
+    )
+
+    venues_file = config_dir / "data" / "venues.yaml"
+    vm = VenueManager(venues_file)
+
+    duplicates = vm.find_duplicates()
+
+    click.echo("\n" + "=" * 60)
+    click.echo(click.style("VENUE DUPLICATE REPORT", bold=True))
+    click.echo("=" * 60)
+
+    if duplicates:
+        click.echo(f"  Found {len(duplicates)} potential duplicate(s):\n")
+        for dup in duplicates:
+            click.echo(
+                f"    {dup.slug_a} <-> {dup.slug_b} "
+                f"({dup.match_type}, similarity: {dup.similarity:.0%})"
+            )
+    else:
+        click.echo(click.style("  No duplicates detected", fg="green"))
+
+    click.echo("\n" + "=" * 60)
+
+
+def _generate_venue_page(venue: dict) -> str:
+    """Generate _index.fr.md content for a venue."""
+    title = venue.get("title", "")
+    description = venue.get("description", "")
+    address = venue.get("address", "")
+    website = venue.get("website", "")
+    venue_type = venue.get("type", "Salle de spectacle")
+    aliases = venue.get("aliases", [])
+    body = venue.get("body", "")
+
+    lines = [
+        "---",
+        f'title: "{title}"',
+        f'description: "{description}"',
+        "",
+        "# Informations du lieu",
+        f'address: "{address}"',
+        f'website: "{website}"',
+        f'type: "{venue_type}"',
+        "",
+        "# Aliases pour le crawler (variations du nom)",
+        "aliases:",
+    ]
+
+    for alias in aliases or []:
+        lines.append(f'  - "{alias}"')
+
+    lines.append("---")
+    lines.append("")
+
+    if body:
+        lines.append(body)
+        lines.append("")
+
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":
