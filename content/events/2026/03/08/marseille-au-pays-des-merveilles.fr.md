@@ -10,7 +10,7 @@ description: Le Muséum d’histoire naturelle propose jusqu’au 8 mars Aliçe 
 categories:
 - art
 locations:
-- alice-et-les-droles-d-oiseaux
+- museum-histoire-naturelle
 dates:
 - dimanche-08-mars
 tags:

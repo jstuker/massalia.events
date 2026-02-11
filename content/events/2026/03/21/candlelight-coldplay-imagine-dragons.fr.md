@@ -10,7 +10,7 @@ description: Sous la lueur de milliers de bougies, Candlelight réinvente les gr
 categories:
 - musique
 locations:
-- 14-boulevard-carnot
+- centre-congres-aix
 dates:
 - samedi-21-mars
 tags: []

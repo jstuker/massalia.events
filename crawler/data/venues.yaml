@@ -4,14 +4,14 @@
 # Synced from location pages. Do not edit manually unless necessary.
 # Re-sync with: python sync_venues.py
 
-- slug: 14-boulevard-carnot
+- slug: centre-congres-aix
   title: "Centre de Congres d'Aix-en-Provence"
   description: "Centre de congres et salle de spectacles au coeur d'Aix-en-Provence."
   address: "14 boulevard Carnot, 13100 Aix-en-Provence"
   website: "https://www.aixenprovence-congres.com/"
   type: "Lieu"
   aliases:
-    - "/locations/centre-congres-aix/"
+    - "/locations/14-boulevard-carnot/"
   body: "Le Centre de Congres d'Aix-en-Provence est un espace modulable situe au coeur de la ville, a 500 metres du Cours Mirabeau, disposant d'un amphitheatre de 496 places et de salles de reception de 610 m2."
 
 - slug: 15-impasse-jules-auvergne
@@ -23,14 +23,14 @@
   aliases: []
   body: ""
 
-- slug: 162-164-boulevard-mireille-lauze
+- slug: florida-palace
   title: "Florida Palace"
   description: "Complexe evenementiel de 3500 m2 a Marseille, avec espaces modulables pouvant accueillir jusqu'a 2000 personnes."
   address: "162-164 boulevard Mireille Lauze, 13010 Marseille"
   website: "https://www.floridapalace-marseille.com/"
   type: "Lieu"
   aliases:
-    - "/locations/florida-palace/"
+    - "/locations/162-164-boulevard-mireille-lauze/"
   body: "Le Florida Palace est un complexe evenementiel de 3500 m2 situe dans le 10e arrondissement de Marseille, proposant des espaces modulables pour tous types d'evenements, pouvant accueillir entre 20 et 2000 personnes."
 
 - slug: 3-bisf
@@ -61,13 +61,14 @@
   aliases: []
   body: ""
 
-- slug: alice-et-les-droles-d-oiseaux
+- slug: museum-histoire-naturelle
   title: "Museum d'Histoire Naturelle de Marseille"
   description: "Museum d'histoire naturelle dans l'aile droite du Palais Longchamp, fonde en 1819."
   address: "Palais Longchamp, Boulevard Philippon, 13004 Marseille"
   website: "https://musees.marseille.fr/museum-dhistoire-naturelle-de-marseille-mhnm-0"
   type: "Musee"
-  aliases: []
+  aliases:
+    - "/locations/alice-et-les-droles-d-oiseaux/"
   body: "Le Museum d'Histoire Naturelle de Marseille est installe dans l'aile droite du Palais Longchamp depuis 1869. Fonde en 1819 et labellise Musee de France depuis 2002, il presente l'exposition permanente Terre d'Evolution inauguree en 2020. L'entree aux collections permanentes est gratuite."
 
 - slug: arena-du-pays-d-aix

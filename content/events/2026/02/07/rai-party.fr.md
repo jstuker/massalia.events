@@ -10,7 +10,7 @@ description: Raï Party réunit les grandes voix du raï pour un concert festif 
 categories:
 - musique
 locations:
-- 162-164-boulevard-mireille-lauze
+- florida-palace
 dates:
 - samedi-07-fevrier
 tags: []
