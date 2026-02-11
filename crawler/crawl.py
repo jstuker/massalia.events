@@ -39,6 +39,7 @@ PARIS_TZ = ZoneInfo("Europe/Paris")
 
 # Status file for tracking crawl results
 STATUS_FILE = ".crawl_status.json"
+SOURCES_STATUS_FILE = ".crawl_sources_status.json"
 
 # Global flag for interrupt handling
 _interrupted = False
@@ -99,6 +100,25 @@ def load_status(config_dir: Path) -> dict | None:
         return None
     with open(status_path, encoding="utf-8") as f:
         return json.load(f)
+
+
+def load_sources_status(config_dir: Path) -> dict:
+    """Load per-source crawl status from file."""
+    status_path = config_dir / SOURCES_STATUS_FILE
+    if not status_path.exists():
+        return {}
+    with open(status_path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_source_status(config_dir: Path, source_id: str, result: dict) -> None:
+    """Update a single source's status entry and write back."""
+    sources_status = load_sources_status(config_dir)
+    result["timestamp"] = datetime.now(PARIS_TZ).isoformat()
+    sources_status[source_id] = result
+    status_path = config_dir / SOURCES_STATUS_FILE
+    with open(status_path, "w", encoding="utf-8") as f:
+        json.dump(sources_status, f, indent=2)
 
 
 def signal_handler(signum, frame):
@@ -194,8 +214,21 @@ def cli(ctx, config: Path, log_level: str | None, log_file: Path | None):
     show_default=True,
     help="Max concurrent threads for detail page fetches (1 = sequential)",
 )
+@click.option(
+    "--stale",
+    type=int,
+    default=None,
+    help="Only crawl sources not run in the last N days",
+)
 @click.pass_context
-def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrency: int):
+def run(
+    ctx,
+    source: str | None,
+    dry_run: bool,
+    skip_selection: bool,
+    concurrency: int,
+    stale: int | None,
+):
     """
     Run the crawler to fetch and process events.
 
@@ -300,6 +333,39 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrenc
         logger.warning("No sources to process")
         return
 
+    # Filter by staleness if --stale is specified
+    if stale is not None:
+        sources_status = load_sources_status(config_dir)
+        now = datetime.now(PARIS_TZ)
+        filtered = []
+        for src in sources_list:
+            src_info = sources_status.get(src.id, {})
+            ts = src_info.get("timestamp", "")
+            if not ts:
+                filtered.append(src)  # Never run
+                continue
+            try:
+                last_run = datetime.fromisoformat(ts)
+                age_days = (now - last_run).total_seconds() / 86400
+                if age_days > stale:
+                    filtered.append(src)
+            except (ValueError, TypeError):
+                filtered.append(src)  # Invalid timestamp, include it
+
+        skipped = len(sources_list) - len(filtered)
+        if skipped:
+            click.echo(
+                click.style(
+                    f"Skipping {skipped} source(s) run within the last {stale} day(s)",
+                    fg="cyan",
+                )
+            )
+        sources_list = filtered
+
+        if not sources_list:
+            click.echo("All sources are up to date, nothing to crawl.")
+            return
+
     # Process each source with progress display
     total_events = 0
     total_accepted = 0
@@ -368,17 +434,48 @@ def run(ctx, source: str | None, dry_run: bool, skip_selection: bool, concurrenc
                 total_rejected += rejected
                 click.echo(f"    -> {accepted} accepted, {rejected} rejected")
             else:
+                accepted = event_count
+                rejected = 0
                 total_accepted += event_count
                 click.echo(f"    -> {event_count} events found")
+
+            if not dry_run:
+                save_source_status(
+                    config_dir,
+                    src.id,
+                    {
+                        "status": "success",
+                        "events_accepted": accepted,
+                        "events_rejected": rejected,
+                    },
+                )
 
         except ValueError as e:
             logger.warning(f"Parser not available for {src.name}: {e}")
             total_errors += 1
+            if not dry_run:
+                save_source_status(
+                    config_dir,
+                    src.id,
+                    {
+                        "status": "error",
+                        "error": str(e),
+                    },
+                )
         except Exception as e:
             logger.error(f"Error processing {src.name}: {e}")
             total_errors += 1
             if effective_log_level == "DEBUG":
                 logger.exception("Full traceback:")
+            if not dry_run:
+                save_source_status(
+                    config_dir,
+                    src.id,
+                    {
+                        "status": "error",
+                        "error": str(e),
+                    },
+                )
 
     # Summary
     click.echo("\n" + "=" * 50)
@@ -623,6 +720,58 @@ def status(ctx):
 
     click.echo("=" * 50)
 
+    # Per-source status
+    sources_status = load_sources_status(config_dir)
+    if sources_status:
+        click.echo("\n" + "=" * 70)
+        click.echo(click.style("PER-SOURCE STATUS", bold=True))
+        click.echo("=" * 70)
+        click.echo(
+            f"  {'SOURCE ID':<20} {'LAST RUN':<20} {'EVENTS':<10} {'STATUS':<10}"
+        )
+        click.echo("  " + "-" * 66)
+
+        now = datetime.now(PARIS_TZ)
+
+        # Sort by timestamp (oldest first, never-run sources first)
+        def sort_key(item):
+            ts = item[1].get("timestamp", "")
+            return ts if ts else ""
+
+        for source_id, info in sorted(sources_status.items(), key=sort_key):
+            ts = info.get("timestamp", "")
+            src_status = info.get("status", "unknown")
+            accepted = info.get("events_accepted", 0)
+
+            # Format timestamp and determine staleness color
+            if ts:
+                try:
+                    run_time = datetime.fromisoformat(ts)
+                    age_days = (now - run_time).total_seconds() / 86400
+                    time_str = run_time.strftime("%Y-%m-%d %H:%M")
+                    if age_days < 2:
+                        time_colored = click.style(time_str, fg="green")
+                    elif age_days < 7:
+                        time_colored = click.style(time_str, fg="yellow")
+                    else:
+                        time_colored = click.style(time_str, fg="red")
+                except (ValueError, TypeError):
+                    time_colored = ts[:16]
+            else:
+                time_colored = click.style("never", fg="red")
+
+            status_colored = (
+                click.style(src_status, fg="green")
+                if src_status == "success"
+                else click.style(src_status, fg="red")
+            )
+
+            click.echo(
+                f"  {source_id:<20} {time_colored:<29} {accepted:<10} {status_colored}"
+            )
+
+        click.echo("=" * 70)
+
 
 @cli.command()
 @click.option(
@@ -808,7 +957,10 @@ def audit(ctx):
     # Missing fields
     if result.missing_fields:
         click.echo(
-            click.style(f"\n  Venues with missing fields: {len(result.missing_fields)}", fg="yellow")
+            click.style(
+                f"\n  Venues with missing fields: {len(result.missing_fields)}",
+                fg="yellow",
+            )
         )
         for item in result.missing_fields:
             fields = ", ".join(item["fields"])
@@ -819,7 +971,9 @@ def audit(ctx):
     # Duplicates
     if result.duplicates:
         click.echo(
-            click.style(f"\n  Potential duplicates: {len(result.duplicates)}", fg="yellow")
+            click.style(
+                f"\n  Potential duplicates: {len(result.duplicates)}", fg="yellow"
+            )
         )
         for dup in result.duplicates:
             click.echo(
