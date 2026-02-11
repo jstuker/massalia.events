@@ -268,7 +268,7 @@ def _parse_all_french_dates(text, reference_year=None):
     return []
 
 
-def _extract_verse_blocks(html_content):
+def _extract_verse_blocks(html_content, venue_manager=None):
     """
     Extract event info from wp-block-verse blocks in article HTML.
 
@@ -280,6 +280,7 @@ def _extract_verse_blocks(html_content):
 
     Args:
         html_content: Article body HTML (content.rendered from WP API)
+        venue_manager: Optional VenueManager for fallback venue matching
 
     Returns:
         List of dicts with keys: date_text, venue_name, venue_url, city,
@@ -354,6 +355,26 @@ def _extract_verse_blocks(html_content):
                         block_info["venue_name"] = strong_text
                         break
                 if block_info["venue_name"]:
+                    break
+
+        # Fallback: try VenueManager matching if no venue found from keywords
+        if not block_info["venue_name"] and venue_manager:
+            strong_elements = verse.select("strong")
+            for strong in strong_elements:
+                strong_text = strong.get_text().strip()
+                # Skip dates and "A venir" labels
+                if _looks_like_date(strong_text):
+                    continue
+                if re.match(r"[àa]\s+venir", strong_text, re.IGNORECASE):
+                    continue
+                # Skip very short text or text with too many words
+                if len(strong_text) < 3 or len(strong_text.split()) > 6:
+                    continue
+                # Try VenueManager - if the result differs from the input,
+                # a known venue was matched
+                mapped = venue_manager.map_location(strong_text)
+                if mapped != strong_text:
+                    block_info["venue_name"] = strong_text
                     break
 
         # Extract city from text after the venue link
@@ -610,19 +631,13 @@ class JournalZebulineParser(BaseCrawler):
                 if result.status_code == 400:
                     logger.debug(f"Reached end of pagination at page {page}")
                     break
-                logger.error(
-                    f"API error on page {page}: HTTP {result.status_code}"
-                )
+                logger.error(f"API error on page {page}: HTTP {result.status_code}")
                 break
 
             # Read total pages from headers on first request
             if total_pages is None:
-                total_pages = self._get_header_int(
-                    result.headers, "X-WP-TotalPages", 1
-                )
-                total_articles = self._get_header_int(
-                    result.headers, "X-WP-Total", 0
-                )
+                total_pages = self._get_header_int(result.headers, "X-WP-TotalPages", 1)
+                total_articles = self._get_header_int(result.headers, "X-WP-Total", 0)
                 logger.info(
                     f"Journal Zébuline API: {total_articles} articles "
                     f"across {total_pages} pages"
@@ -734,7 +749,7 @@ class JournalZebulineParser(BaseCrawler):
             category = tag_category
 
         # Extract event details from verse blocks
-        verse_blocks = _extract_verse_blocks(content_html)
+        verse_blocks = _extract_verse_blocks(content_html, self.venue_manager)
 
         if not verse_blocks:
             logger.debug(f"No verse blocks found in article: {title}")

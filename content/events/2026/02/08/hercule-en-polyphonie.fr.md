@@ -9,7 +9,7 @@ startTime: '20:00'
 description: Patrick Burgan compose pour Musicatreize une œuvre chorale inspirée du mythe d'Hercule. Une première de création à découvrir au foyer de l'Opéra de...
 categories:
 - musique
-locations: []
+locations: ["opera-de-marseille"]
 dates:
 - dimanche-08-fevrier
 tags:

@@ -9,7 +9,7 @@ startTime: '20:00'
 description: Weather, première exposition personnelle en France de l’artiste cinéaste et vidéaste Yuyan Wang, a été conçue spécialement pour le 3 bis f à Aix-en-Provence
 categories:
 - art
-locations: []
+locations: ["3-bisf"]
 dates:
 - samedi-21-mars
 tags:

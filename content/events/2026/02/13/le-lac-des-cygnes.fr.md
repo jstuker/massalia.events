@@ -9,7 +9,7 @@ startTime: '20:00'
 description: Au Grand Théâtre de Provence, Angelin Preljocaj reprend sa version de l’incontournable Lac des cygnes créée en 2020. Cette pièce chorégraphique est une...
 categories:
 - danse
-locations: []
+locations: ["grand-theatre-de-provence"]
 dates:
 - vendredi-13-fevrier
 tags:

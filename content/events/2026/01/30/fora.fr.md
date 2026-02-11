@@ -9,7 +9,7 @@ startTime: '20:00'
 description: Dans le cadre de l’Entre2 Biac organisée par Archaos, pôle national du cirque, Alice Rende, une des artistes de la « Bande » du Zef, présente un solo de...
 categories:
 - theatre
-locations: []
+locations: ["le-zef-theatre-du-merlan"]
 dates:
 - vendredi-30-janvier
 tags:

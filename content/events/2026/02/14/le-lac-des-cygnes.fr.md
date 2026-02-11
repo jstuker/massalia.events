@@ -12,7 +12,7 @@ expired: false
 expiryDate: '2026-02-15T00:00:00+01:00'
 image: /images/events/le-lac-des-cygnes-af77967d.webp
 lastCrawled: '2026-02-10T20:28:52.092322'
-locations: []
+locations: ["grand-theatre-de-provence"]
 name: Le Lac des cygnes
 sourceId: journalzebuline:134651-0-4
 sourceIds:

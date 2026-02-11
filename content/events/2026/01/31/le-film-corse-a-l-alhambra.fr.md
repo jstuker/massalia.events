@@ -9,7 +9,7 @@ startTime: '20:00'
 description: Ce 31 janvier, le cinéma marseillais accueille le festival Arte Mare. L’occasion de découvrir trois films corses en avant-première
 categories:
 - art
-locations: []
+locations: ["l-alhambra"]
 dates:
 - samedi-31-janvier
 tags:
