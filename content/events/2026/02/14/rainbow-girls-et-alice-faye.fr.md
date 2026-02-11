@@ -10,7 +10,7 @@ description: Folk intimiste et pop raffinée se rencontrent avec Rainbow Girls e
 categories:
 - musique
 locations:
-- theatre-de-l-oeuvre-marseille
+- theatre-de-l-oeuvre
 dates:
 - samedi-14-fevrier
 tags: []

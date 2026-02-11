@@ -10,7 +10,7 @@ description: Bruits Marrons fait vibrer une écriture chorégraphique percutante
 categories:
 - danse
 locations:
-- 20-boulevard-de-gabes
+- ballet-national-de-marseille
 dates:
 - samedi-07-fevrier
 tags: []

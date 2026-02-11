@@ -10,7 +10,7 @@ description: It is a new chapter. A new beginning. A fresh era of exclusive elec
 categories:
 - musique
 locations:
-- ipn-club-aix
+- ipn-aix-en-provence
 dates:
 - vendredi-30-janvier
 tags:

@@ -2,7 +2,7 @@
 title: "Sunny Comedy Club"
 description: "Club de comedie a Marseille, proposant des spectacles d'humour et de stand-up."
 address: ""
-website: "https://linktr.ee/lesunny"
+website: "https://lesunny.fr/"
 type: "Collectif"
 aliases:
   - "/locations/sunny-comedy/"

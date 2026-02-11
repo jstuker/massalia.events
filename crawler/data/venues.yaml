@@ -1098,3 +1098,458 @@
   aliases: []
   body: ""
 
+
+# ============================================================
+# Auto-discovered venues (stub entries -- fill in details)
+# ============================================================
+
+- slug: 14-boulevard-carnot
+  title: "14 Boulevard Carnot"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: 15-impasse-jules-auvergne
+  title: "15 Impasse Jules Auvergne"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: 162-164-boulevard-mireille-lauze
+  title: "162 164 Boulevard Mireille Lauze"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: 20-boulevard-de-gabes
+  title: "20 Boulevard de Gabes"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: adama-records
+  title: "Adama Records"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: assumrecords
+  title: "Assumrecords"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: back-to-bac
+  title: "Back To Bac"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: barta-club
+  title: "Barta Club"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: bi-pole
+  title: "Bi Pole"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: bpm-mars
+  title: "Bpm Mars"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: cafe-theatre-de-la-fontaine-d-argent
+  title: "Cafe Theatre de la Fontaine d Argent"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: collectif-la-nuit
+  title: "Collectif la Nuit"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: connexion-sud
+  title: "Connexion Sud"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: delta-festival
+  title: "Delta Festival"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: festival-basses-frequences
+  title: "Festival Basses Frequences"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: honey-b
+  title: "Honey B"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: inda-agengy
+  title: "Inda Agengy"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: ipn-aix-en-provence
+  title: "Ipn Aix en Provence"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: je-dis-techno
+  title: "Je Dis Techno"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: kizunaosaka
+  title: "Kizunaosaka"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: l-antidote
+  title: "L Antidote"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: l-estaminet-matinal
+  title: "L Estaminet Matinal"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: l-odeon-theatre-municipal-de-marseille
+  title: "L Odeon Theatre Municipal de Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-dame-noir
+  title: "La Dame Noir"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-dar
+  title: "La Dar"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-garance
+  title: "La Garance"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-manufacture
+  title: "La Manufacture"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-manufacture-amphitheatre
+  title: "La Manufacture Amphitheatre"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: laperch
+  title: "Laperch"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: latte
+  title: "Latte"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: le-molotov
+  title: "Le Molotov"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: les-nuits-de-mamour
+  title: "Les Nuits de Mamour"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: marsatac
+  title: "Marsatac"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: mega-lune
+  title: "Mega Lune"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: menace-rekords
+  title: "Menace Rekords"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: naho-club
+  title: "Naho Club"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: novotel-marseille-vieux-port
+  title: "Novotel Marseille Vieux Port"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: pasino-d-aix-en-provence
+  title: "Pasino d Aix en Provence"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: planete-51
+  title: "Planete 51"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: salle-guy-obino
+  title: "Salle Guy Obino"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: talent
+  title: "Talent"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: tandem-scene-de-musiques-actuelles-departementale
+  title: "Tandem Scene de Musiques Actuelles Departementale"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: the-session-marseille
+  title: "The Session Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-de-l-oeuvre-marseille
+  title: "Theatre de l Oeuvre Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-de-la-gare
+  title: "Theatre de la Gare"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-du-bois-de-l-aune
+  title: "Theatre du Bois de l Aune"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: transverse-club
+  title: "Transverse Club"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: trouble-fete
+  title: "Trouble Fete"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: vendettek
+  title: "Vendettek"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: vertigo-marseille
+  title: "Vertigo Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+

@@ -1,7 +1,7 @@
 ---
 title: "Esquina Tropical"
 description: "Lieu dedie aux musiques et danses latines et tropicales a Marseille."
-address: ""
+address: "142 Avenue Pierre Mendes France, 13008 Marseille"
 website: "https://esquinatropical.fr/"
 type: "Salle de danse"
 aliases:
