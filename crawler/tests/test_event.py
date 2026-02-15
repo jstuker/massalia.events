@@ -19,6 +19,22 @@ class TestSlugify:
         assert slugify("Château de Servières") == "chateau-de-servieres"
         assert slugify("Noël en fête") == "noel-en-fete"
 
+    def test_french_ligatures(self):
+        assert slugify("Cœur de Marseille") == "coeur-de-marseille"
+        assert slugify("Curriculum vitæ") == "curriculum-vitae"
+
+    def test_non_french_diacritics(self):
+        """Ensure all Unicode diacritics are transliterated, not just French."""
+        assert slugify("Dvořák Symphony") == "dvorak-symphony"
+        assert slugify("Müller & Söhne") == "muller-sohne"
+        assert slugify("Señor López") == "senor-lopez"
+
+    def test_no_percent_encoding(self):
+        """URLs must be pure ASCII with no percent-encoded characters."""
+        result = slugify("Élan Vital")
+        assert "%" not in result
+        assert result == "elan-vital"
+
     def test_special_characters(self):
         assert slugify("Event #1 - 2026!") == "event-1-2026"
         assert slugify("Concert @ La Friche") == "concert-la-friche"
