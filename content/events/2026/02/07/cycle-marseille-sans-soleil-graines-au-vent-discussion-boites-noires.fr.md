@@ -1,5 +1,6 @@
 ---
 title: 'Cycle Marseille sans soleil | Graines au vent + Discussion : Boîtes noires'
+slug: cycle-marseille-sans-soleil-graines-au-vent-discussion-boites-noires
 date: '2026-02-07T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-08T00:00:00+01:00'

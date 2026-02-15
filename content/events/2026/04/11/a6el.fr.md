@@ -1,5 +1,6 @@
 ---
 title: A6EL
+slug: a6el
 date: '2026-04-11T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-12T00:00:00+02:00'

@@ -1,5 +1,6 @@
 ---
 title: Bad Bitch By Night Stann & Mixterio
+slug: bad-bitch-by-night-stann-mixterio
 date: '2026-02-05T23:59:00+01:00'
 draft: false
 expiryDate: '2026-02-06T00:00:00+01:00'

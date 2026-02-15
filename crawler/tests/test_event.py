@@ -150,6 +150,7 @@ class TestEvent:
         fm = sample_event.to_front_matter()
 
         assert fm["title"] == "Concert de Jazz"
+        assert fm["slug"] == "concert-de-jazz"
         assert fm["name"] == "Concert de Jazz"
         assert fm["eventURL"] == "https://lafriche.org/concert-jazz"
         assert fm["startTime"] == "20:00"

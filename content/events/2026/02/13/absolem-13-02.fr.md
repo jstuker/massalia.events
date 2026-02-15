@@ -1,5 +1,6 @@
 ---
 title: Absolem 13.02
+slug: absolem-13-02
 date: '2026-02-13T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-14T00:00:00+01:00'

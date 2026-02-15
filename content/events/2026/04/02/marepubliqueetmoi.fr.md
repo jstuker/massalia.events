@@ -1,5 +1,6 @@
 ---
 title: Ma République et moi
+slug: ma-republique-et-moi
 date: '2026-04-02T14:15:00+02:00'
 draft: false
 expiryDate: '2026-04-03T00:00:00+02:00'

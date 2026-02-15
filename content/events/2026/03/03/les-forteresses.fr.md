@@ -1,5 +1,6 @@
 ---
 title: Les Forteresses
+slug: les-forteresses
 date: '2026-03-03T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-04T00:00:00+01:00'

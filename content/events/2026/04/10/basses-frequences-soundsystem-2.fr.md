@@ -1,5 +1,6 @@
 ---
 title: 'Basses Fréquences Soundsystem #2'
+slug: basses-frequences-soundsystem-2
 date: '2026-04-10T22:00:00+02:00'
 draft: false
 expiryDate: '2026-04-11T00:00:00+02:00'

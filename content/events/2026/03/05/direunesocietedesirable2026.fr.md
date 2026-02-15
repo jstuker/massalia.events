@@ -1,5 +1,6 @@
 ---
 title: Dire une société désirable 2026
+slug: dire-une-societe-desirable-2026
 date: '2026-03-05T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-06T00:00:00+01:00'

@@ -1,5 +1,6 @@
 ---
 title: BABEL MUSIC XP
+slug: babel-music-xp
 date: '2026-03-19T14:30:00+01:00'
 draft: false
 expiryDate: '2026-03-20T00:00:00+01:00'

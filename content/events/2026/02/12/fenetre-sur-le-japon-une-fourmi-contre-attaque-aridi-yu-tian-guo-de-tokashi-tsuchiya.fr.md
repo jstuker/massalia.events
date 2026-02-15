@@ -24,6 +24,7 @@ sourceIds:
 startTime: '20:30'
 tags: []
 title: Fenêtre sur le Japon | Une fourmi contre-attaque  [アリ地獄天国] de Tokashi Tsuchiya
+slug: fenetre-sur-le-japon-une-fourmi-contre-attaque-aridi-yu-tian-guo-de-tokashi-tsuchiya
 ---
 
 En partenariat avec le festival Fenêtre sur le Japon Une fourmi contre-attaque  [アリ地獄天国] de Tokachi Tsuchiya| 2019 | Japon | 1h38 | Vostfr En présence de...

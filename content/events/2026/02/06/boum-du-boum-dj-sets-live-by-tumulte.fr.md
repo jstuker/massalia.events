@@ -1,5 +1,6 @@
 ---
 title: Boum Du Boum - Dj Sets & Live By Tumulte
+slug: boum-du-boum-dj-sets-live-by-tumulte
 date: '2026-02-06T22:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

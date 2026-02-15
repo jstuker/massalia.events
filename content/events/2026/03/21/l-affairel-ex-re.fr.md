@@ -22,6 +22,7 @@ sourceIds:
 startTime: '20:00'
 tags: []
 title: L’affaire L.ex.π.Re
+slug: laffaire-l-ex-p-re
 ---
 
 « Il y a des courriers que l’on attend plus, des colis pour le moins surprenants, des messages énigmatiques, et l’enveloppe en kraft que Max vient de...

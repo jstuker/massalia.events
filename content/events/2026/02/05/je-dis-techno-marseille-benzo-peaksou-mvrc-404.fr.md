@@ -1,5 +1,6 @@
 ---
 title: Je Dis Techno - Marseille (Benzo / Peaksou / Mvrc.404)
+slug: je-dis-techno-marseille-benzo-peaksou-mvrc-404
 date: '2026-02-05T23:00:00+01:00'
 draft: false
 expiryDate: '2026-02-06T00:00:00+01:00'

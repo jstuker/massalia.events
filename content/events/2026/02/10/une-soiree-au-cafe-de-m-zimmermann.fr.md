@@ -1,5 +1,6 @@
 ---
 title: Une Soirée au Café de M. Zimmermann
+slug: une-soiree-au-cafe-de-m-zimmermann
 date: '2026-02-10T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-11T00:00:00+01:00'

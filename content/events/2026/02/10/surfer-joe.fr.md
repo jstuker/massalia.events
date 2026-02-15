@@ -1,5 +1,6 @@
 ---
 title: Surfer Joe
+slug: surfer-joe
 date: '2026-02-10T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-11T00:00:00+01:00'

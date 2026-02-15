@@ -1,5 +1,6 @@
 ---
 title: Ema, Vv8 / Premier Quartier
+slug: ema-vv8-premier-quartier
 date: '2026-02-06T21:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

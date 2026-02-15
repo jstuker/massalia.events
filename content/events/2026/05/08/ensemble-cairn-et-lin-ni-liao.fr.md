@@ -1,5 +1,6 @@
 ---
 title: ENSEMBLE CAIRN ET LIN-NI LIAO
+slug: ensemble-cairn-et-lin-ni-liao
 date: '2026-05-08T21:00:00+02:00'
 draft: false
 expiryDate: '2026-05-09T00:00:00+02:00'

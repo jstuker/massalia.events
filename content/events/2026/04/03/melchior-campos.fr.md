@@ -1,5 +1,6 @@
 ---
 title: MELCHIOR CAMPOS
+slug: melchior-campos
 date: '2026-04-03T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-04T00:00:00+02:00'

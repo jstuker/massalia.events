@@ -22,6 +22,7 @@ sourceIds:
 startTime: '15:00'
 tags: []
 title: Un pays supplémentaire
+slug: un-pays-supplementaire
 ---
 
 « Avoir la musique dans sa vie, cela revient à disposer d'un monde supplémentaire, tout un domaine d'émotions, de perceptions. C’est aussi une façon de...

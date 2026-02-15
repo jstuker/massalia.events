@@ -1,5 +1,6 @@
 ---
 title: Jean dans la salle
+slug: jean-dans-la-salle
 date: '2026-02-01T18:00:00+01:00'
 draft: false
 expiryDate: '2026-02-02T00:00:00+01:00'

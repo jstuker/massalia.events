@@ -29,6 +29,7 @@ tags:
 - josette baïz
 - christian ubl & gilles clément
 title: Oiseau
+slug: oiseau
 ---
 
 Le petit Mustafa perd son père dans un accident. Dans sa classe, Paméla vit elle aussi un deuil : la disparition de son chien. Ce chagrin partagé les rend...

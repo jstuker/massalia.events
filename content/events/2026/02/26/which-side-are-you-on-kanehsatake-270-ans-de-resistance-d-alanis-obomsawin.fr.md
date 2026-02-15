@@ -1,5 +1,6 @@
 ---
 title: 'Which side are you on? | Kanehsatake : 270 ans de résistance d''Alanis Obomsawin'
+slug: which-side-are-you-on-kanehsatake-270-ans-de-resistance-d-alanis-obomsawin
 date: '2026-02-26T19:30:00+01:00'
 draft: false
 expiryDate: '2026-02-27T00:00:00+01:00'

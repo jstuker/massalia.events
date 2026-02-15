@@ -1,5 +1,6 @@
 ---
 title: Karaboum ! Karaoké Hosté Par Orion
+slug: karaboum-karaoke-hoste-par-orion
 date: '2026-01-28T20:00:00+01:00'
 draft: false
 expiryDate: '2026-01-29T00:00:00+01:00'

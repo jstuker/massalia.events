@@ -1,5 +1,6 @@
 ---
 title: 'Même Pas Peur ! #10 | The Changeling (L''enfant du diable) de Peter Medak'
+slug: meme-pas-peur-10-the-changeling-l-enfant-du-diable-de-peter-medak
 date: '2026-02-08T17:30:00+01:00'
 draft: false
 expiryDate: '2026-02-09T00:00:00+01:00'

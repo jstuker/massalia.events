@@ -1,5 +1,6 @@
 ---
 title: Adopte un Groove w/ Rorre Ecco & Adieu Byzance
+slug: adopte-un-groove-w-rorre-ecco-adieu-byzance
 date: '2026-02-14T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-15T00:00:00+01:00'

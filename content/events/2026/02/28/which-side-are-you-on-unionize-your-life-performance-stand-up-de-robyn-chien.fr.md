@@ -1,5 +1,6 @@
 ---
 title: Which side are you on? | Unionize your life! Performance - stand-up de Robyn Chien
+slug: which-side-are-you-on-unionize-your-life-performance-stand-up-de-robyn-chien
 date: '2026-02-28T17:00:00+01:00'
 draft: false
 expiryDate: '2026-03-01T00:00:00+01:00'

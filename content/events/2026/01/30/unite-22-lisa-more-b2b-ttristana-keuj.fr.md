@@ -1,5 +1,6 @@
 ---
 title: 'Unité.22 : Lisa More B2b Ttristana, Keuj'
+slug: unite-22-lisa-more-b2b-ttristana-keuj
 date: '2026-01-30T20:00:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

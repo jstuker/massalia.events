@@ -1,5 +1,6 @@
 ---
 title: Dvořák en Amérique
+slug: dvorak-en-amerique
 date: '2026-04-27T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-28T00:00:00+02:00'

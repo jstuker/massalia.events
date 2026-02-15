@@ -1,5 +1,6 @@
 ---
 title: Flox + X Stick
+slug: flox-x-stick
 date: '2026-04-23T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-24T00:00:00+02:00'

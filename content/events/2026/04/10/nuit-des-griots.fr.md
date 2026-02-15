@@ -1,5 +1,6 @@
 ---
 title: NUIT DES GRIOTS
+slug: nuit-des-griots
 date: '2026-04-10T20:30:00+02:00'
 draft: false
 expiryDate: '2026-04-11T00:00:00+02:00'

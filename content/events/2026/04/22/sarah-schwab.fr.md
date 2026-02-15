@@ -1,5 +1,6 @@
 ---
 title: Sarah Schwab
+slug: sarah-schwab
 date: '2026-04-22T20:30:00+02:00'
 draft: false
 expiryDate: '2026-04-23T00:00:00+02:00'

@@ -1,5 +1,6 @@
 ---
 title: 'Hotel By Shafro #4 @Mama Shelter'
+slug: hotel-by-shafro-4-mama-shelter
 date: '2026-01-29T20:00:00+01:00'
 draft: false
 expiryDate: '2026-01-30T00:00:00+01:00'

@@ -24,4 +24,5 @@ sourceIds:
 startTime: '20:00'
 tags: []
 title: THE AVENER
+slug: the-avener
 ---

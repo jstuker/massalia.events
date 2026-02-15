@@ -22,6 +22,7 @@ sourceIds:
 startTime: '19:00'
 tags: []
 title: Manières d'être vivant
+slug: manieres-d-etre-vivant
 ---
 
 CINÉMA | MAR 24 MARS 20H | En écho au spectacle découvrez ou redécouvrez Grizzly Man, de Werner Herzog au cinéma Les Variétés sur une proposition du...

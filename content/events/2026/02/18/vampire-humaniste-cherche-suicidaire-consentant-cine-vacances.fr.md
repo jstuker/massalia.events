@@ -1,5 +1,6 @@
 ---
 title: Vampire humaniste cherche suicidaire consentant  - Ciné-Vacances
+slug: vampire-humaniste-cherche-suicidaire-consentant-cine-vacances
 date: '2026-02-18T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-19T00:00:00+01:00'

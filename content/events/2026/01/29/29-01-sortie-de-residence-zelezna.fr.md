@@ -1,5 +1,6 @@
 ---
 title: '29/01 | Sortie De Résidence : Zelezna'
+slug: 29-01-sortie-de-residence-zelezna
 date: '2026-01-29T19:00:00+01:00'
 draft: false
 expiryDate: '2026-01-30T00:00:00+01:00'

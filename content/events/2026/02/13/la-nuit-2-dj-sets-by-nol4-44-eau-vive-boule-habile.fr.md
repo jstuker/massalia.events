@@ -1,5 +1,6 @@
 ---
 title: 'La Nuit #2 - Dj Sets By Nol4.44 // Eau Vive // Boule_Habile'
+slug: la-nuit-2-dj-sets-by-nol4-44-eau-vive-boule-habile
 date: '2026-02-13T21:00:00+01:00'
 draft: false
 expiryDate: '2026-02-14T00:00:00+01:00'

@@ -1,5 +1,6 @@
 ---
 title: Holiday On Ice, Horizons
+slug: holiday-on-ice-horizons
 date: '2026-03-13T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-14T00:00:00+01:00'

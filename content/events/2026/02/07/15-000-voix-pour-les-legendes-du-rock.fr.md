@@ -1,5 +1,6 @@
 ---
 title: 15 000 Voix Pour Les Legendes Du Rock
+slug: 15-000-voix-pour-les-legendes-du-rock
 date: '2026-02-07T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-08T00:00:00+01:00'

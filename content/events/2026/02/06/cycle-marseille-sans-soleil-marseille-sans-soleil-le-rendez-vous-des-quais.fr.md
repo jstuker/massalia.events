@@ -1,5 +1,6 @@
 ---
 title: Cycle Marseille sans soleil | Marseille sans soleil + Le Rendez-vous des quais
+slug: cycle-marseille-sans-soleil-marseille-sans-soleil-le-rendez-vous-des-quais
 date: '2026-02-06T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

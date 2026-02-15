@@ -23,6 +23,7 @@ sourceIds:
 startTime: 01:15
 tags: []
 title: Ma République et moi
+slug: ma-republique-et-moi
 ---
 
 « Issam nous invite chez sa mère. Le thé et les gâteaux sont prêts. 

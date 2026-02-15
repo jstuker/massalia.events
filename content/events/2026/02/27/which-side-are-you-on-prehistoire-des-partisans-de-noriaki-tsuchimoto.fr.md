@@ -1,5 +1,6 @@
 ---
 title: Which side are you on? | Préhistoire des partisans de Noriaki Tsuchimoto
+slug: which-side-are-you-on-prehistoire-des-partisans-de-noriaki-tsuchimoto
 date: '2026-02-27T19:30:00+01:00'
 draft: false
 expiryDate: '2026-02-28T00:00:00+01:00'

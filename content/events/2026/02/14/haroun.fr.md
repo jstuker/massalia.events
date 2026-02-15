@@ -21,4 +21,5 @@ sourceIds:
 startTime: '18:00'
 tags: []
 title: HAROUN
+slug: haroun
 ---

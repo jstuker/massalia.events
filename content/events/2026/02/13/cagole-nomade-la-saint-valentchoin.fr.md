@@ -1,5 +1,6 @@
 ---
 title: 'Cagole Nomade : La Saint Valentchoin'
+slug: cagole-nomade-la-saint-valentchoin
 date: '2026-02-13T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-14T00:00:00+01:00'

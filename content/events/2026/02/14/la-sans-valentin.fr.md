@@ -1,5 +1,6 @@
 ---
 title: La Sans Valentin
+slug: la-sans-valentin
 date: '2026-02-14T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-15T00:00:00+01:00'

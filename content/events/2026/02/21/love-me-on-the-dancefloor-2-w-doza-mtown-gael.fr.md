@@ -1,5 +1,6 @@
 ---
 title: 'Love Me On The Dancefloor #2 W/ Doza (Mtown), Gaël'
+slug: love-me-on-the-dancefloor-2-w-doza-mtown-gael
 date: '2026-02-21T23:00:00+01:00'
 draft: false
 expiryDate: '2026-02-22T00:00:00+01:00'

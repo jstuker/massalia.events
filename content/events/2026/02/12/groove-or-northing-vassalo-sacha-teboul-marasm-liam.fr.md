@@ -1,5 +1,6 @@
 ---
 title: 'Groove Or Northing : Vassalo + Sacha Teboul + Marasm + Liam'
+slug: groove-or-northing-vassalo-sacha-teboul-marasm-liam
 date: '2026-02-12T23:59:00+01:00'
 draft: false
 expiryDate: '2026-02-13T00:00:00+01:00'

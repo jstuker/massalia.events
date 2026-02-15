@@ -26,6 +26,7 @@ startTime: '20:00'
 tags:
 - transe percussive
 title: Sekouss
+slug: sekouss
 ---
 
 🔥 SEKOUSS🔥 📅 Jeudi 12 février 2026 📍Le Makeda, 103 rue Ferrari, 13005 Marseille SEKOUSS revient au Makeda après une série de dates complètes qui ont renversé...

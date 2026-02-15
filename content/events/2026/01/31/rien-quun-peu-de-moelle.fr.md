@@ -1,5 +1,6 @@
 ---
 title: Rien qu’un peu de moelle
+slug: rien-quun-peu-de-moelle
 date: '2026-01-31T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-01T00:00:00+01:00'

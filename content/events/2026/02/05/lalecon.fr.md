@@ -1,5 +1,6 @@
 ---
 title: La Leçon
+slug: la-lecon
 date: '2026-02-05T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-06T00:00:00+01:00'

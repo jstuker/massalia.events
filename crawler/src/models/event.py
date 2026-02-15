@@ -151,6 +151,7 @@ class Event:
 
         fm = {
             "title": self.title,
+            "slug": self.slug,
             "date": format_datetime(self.date),
             "draft": self.draft,
             "expiryDate": format_datetime(self.expiry_date),

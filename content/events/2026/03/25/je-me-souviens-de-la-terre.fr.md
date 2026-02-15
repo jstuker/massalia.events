@@ -1,5 +1,6 @@
 ---
 title: Je me souviens de la terre
+slug: je-me-souviens-de-la-terre
 date: '2026-03-25T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-26T00:00:00+01:00'

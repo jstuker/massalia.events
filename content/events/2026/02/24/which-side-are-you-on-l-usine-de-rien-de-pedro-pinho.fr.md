@@ -1,5 +1,6 @@
 ---
 title: Which side are you on? | L'Usine de rien de Pedro Pinho
+slug: which-side-are-you-on-l-usine-de-rien-de-pedro-pinho
 date: '2026-02-24T19:30:00+01:00'
 draft: false
 expiryDate: '2026-02-25T00:00:00+01:00'

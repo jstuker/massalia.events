@@ -25,6 +25,7 @@ sourceIds:
 startTime: '23:00'
 tags: []
 title: Pata Negra invite Radio Merv’
+slug: pata-negra-invite-radio-merv
 ---
 
 💗PATA NEGRA INVITE RADIO MERV’ 💗 📅 Vendredi 13 février 2026 – 23h 📍Le Makeda, 103 rue Ferrari, 13005 Marseille « Faire de la musique c’est bien, avec des cop...

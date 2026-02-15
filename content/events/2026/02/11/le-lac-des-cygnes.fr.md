@@ -1,5 +1,6 @@
 ---
 title: Le Lac des cygnes
+slug: le-lac-des-cygnes
 date: '2026-02-11T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-12T00:00:00+01:00'

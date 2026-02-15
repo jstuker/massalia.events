@@ -1,5 +1,6 @@
 ---
 title: Hld – Le Molotov
+slug: hld-le-molotov
 date: '2026-02-12T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-13T00:00:00+01:00'

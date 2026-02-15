@@ -1,5 +1,6 @@
 ---
 title: Trouble Fête • La Part II
+slug: trouble-fete-la-part-ii
 date: '2026-02-13T21:00:00+01:00'
 draft: false
 expiryDate: '2026-02-14T00:00:00+01:00'

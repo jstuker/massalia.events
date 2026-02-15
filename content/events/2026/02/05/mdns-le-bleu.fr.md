@@ -27,6 +27,7 @@ tags:
 - punk
 - rock indé
 title: MDNS ⸱ Le Bleu
+slug: mdns-le-bleu
 ---
 
 🎶MDNS 🎶 📅Jeudi 5 février 2026 📍 Le Makeda, 103 rue Ferrari, 13005 Marseille 🎤MDNS Né dans la banlieue lilloise, MDNS (prononcé « MADNESS ») transforme l&rsqu...

@@ -1,5 +1,6 @@
 ---
 title: TRIO PYTHÉAS
+slug: trio-pytheas
 date: '2026-05-09T19:30:00+02:00'
 draft: false
 expiryDate: '2026-05-10T00:00:00+02:00'

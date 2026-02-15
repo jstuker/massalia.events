@@ -1,5 +1,6 @@
 ---
 title: Greg Lion (Trax Records) Au Bouge
+slug: greg-lion-trax-records-au-bouge
 date: '2026-01-30T22:00:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

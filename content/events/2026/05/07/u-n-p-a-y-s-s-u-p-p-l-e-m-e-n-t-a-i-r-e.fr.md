@@ -1,5 +1,6 @@
 ---
 title: Un pays supplémentaire
+slug: un-pays-supplementaire
 date: '2026-05-07T09:30:00+02:00'
 draft: false
 expiryDate: '2026-05-08T00:00:00+02:00'

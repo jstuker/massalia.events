@@ -26,6 +26,7 @@ tags:
 - danse
 - grand théâtre de provence
 title: Le Lac des cygnes
+slug: le-lac-des-cygnes
 ---
 
 Au Grand Théâtre de Provence, Angelin Preljocaj reprend sa version de l’incontournable Lac des cygnes créée en 2020. Cette pièce chorégraphique est une...

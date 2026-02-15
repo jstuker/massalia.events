@@ -1,5 +1,6 @@
 ---
 title: ARA MALIKIAN
+slug: ara-malikian
 date: '2026-03-23T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-24T00:00:00+01:00'

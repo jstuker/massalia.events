@@ -1,5 +1,6 @@
 ---
 title: Which side are you on? x Regards coopératifs | Les fantômes de l'usine + Demain l'usine
+slug: which-side-are-you-on-x-regards-cooperatifs-les-fantomes-de-l-usine-demain-l-usine
 date: '2026-02-25T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-26T00:00:00+01:00'

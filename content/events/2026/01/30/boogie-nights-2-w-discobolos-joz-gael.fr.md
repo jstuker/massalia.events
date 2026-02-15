@@ -1,5 +1,6 @@
 ---
 title: 'Boogie Nights #2 W/ Discobolos, Joz, Gael'
+slug: boogie-nights-2-w-discobolos-joz-gael
 date: '2026-01-30T22:30:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

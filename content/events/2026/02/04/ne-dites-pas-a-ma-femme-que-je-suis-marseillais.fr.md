@@ -1,5 +1,6 @@
 ---
 title: Ne dites pas à ma femme que je suis marseillais !
+slug: ne-dites-pas-a-ma-femme-que-je-suis-marseillais
 date: '2026-02-04T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-05T00:00:00+01:00'

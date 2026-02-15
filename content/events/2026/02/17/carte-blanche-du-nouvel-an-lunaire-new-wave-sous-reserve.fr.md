@@ -1,5 +1,6 @@
 ---
 title: Carte blanche du Nouvel An Lunaire | New Wave [sous réserve]
+slug: carte-blanche-du-nouvel-an-lunaire-new-wave-sous-reserve
 date: '2026-02-17T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-18T00:00:00+01:00'

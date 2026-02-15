@@ -1,5 +1,6 @@
 ---
 title: 'Urban Nation By Ipn : Hip Hop Music 11.02'
+slug: urban-nation-by-ipn-hip-hop-music-11-02
 date: '2026-02-11T23:50:00+01:00'
 draft: false
 expiryDate: '2026-02-12T00:00:00+01:00'

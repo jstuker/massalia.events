@@ -1,5 +1,6 @@
 ---
 title: Yeko – La Nuit des Griots
+slug: yeko-la-nuit-des-griots
 date: '2026-04-09T21:00:00+02:00'
 draft: false
 expiryDate: '2026-04-10T00:00:00+02:00'

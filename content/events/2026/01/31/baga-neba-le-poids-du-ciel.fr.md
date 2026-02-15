@@ -1,5 +1,6 @@
 ---
 title: BаГа неба – Le poids du ciel
+slug: baga-neba-le-poids-du-ciel
 date: '2026-01-31T18:00:00+01:00'
 draft: false
 expiryDate: '2026-02-01T00:00:00+01:00'

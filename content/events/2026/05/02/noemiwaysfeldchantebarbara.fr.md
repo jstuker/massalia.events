@@ -22,6 +22,7 @@ sourceIds:
 startTime: 01:10
 tags: []
 title: Noëmi Waysfeld chante Barbara
+slug: noemi-waysfeld-chante-barbara
 ---
 
 La poésie et la musicalité de Barbara résonnent à travers des titres connus et moins connus de la chanteuse, portés par une sensible sobriété.

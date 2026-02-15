@@ -1,5 +1,6 @@
 ---
 title: Delta Party By Fg - Soirée De Lancement Édition 2026
+slug: delta-party-by-fg-soiree-de-lancement-edition-2026
 date: '2026-02-05T18:00:00+01:00'
 draft: false
 expiryDate: '2026-02-06T00:00:00+01:00'

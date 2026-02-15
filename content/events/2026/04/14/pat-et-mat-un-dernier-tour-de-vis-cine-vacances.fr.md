@@ -1,5 +1,6 @@
 ---
 title: Pat et mat, un dernier tour de vis   - Ciné-Vacances
+slug: pat-et-mat-un-dernier-tour-de-vis-cine-vacances
 date: '2026-04-14T10:00:00+02:00'
 draft: false
 expiryDate: '2026-04-15T00:00:00+02:00'

@@ -1,5 +1,6 @@
 ---
 title: Soul Train Spéciale Cold Sweat
+slug: soul-train-speciale-cold-sweat
 date: '2026-02-28T22:30:00+01:00'
 draft: false
 expiryDate: '2026-03-01T00:00:00+01:00'
