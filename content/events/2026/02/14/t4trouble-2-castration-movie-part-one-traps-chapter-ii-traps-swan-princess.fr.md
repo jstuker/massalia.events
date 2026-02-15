@@ -1,5 +1,6 @@
 ---
 title: 'T4Trouble #2 | Castration Movie Part One : Traps [Chapter II. Traps Swan Princess]'
+slug: t4trouble-2-castration-movie-part-one-traps-chapter-ii-traps-swan-princess
 date: '2026-02-14T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-15T00:00:00+01:00'

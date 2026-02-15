@@ -1,5 +1,6 @@
 ---
 title: ERROR.tpg X Chrysalide
+slug: error-tpg-x-chrysalide
 date: '2026-02-27T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-28T00:00:00+01:00'

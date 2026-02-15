@@ -1,5 +1,6 @@
 ---
 title: Master-Classes à destination des artistes chorégraphiques pros et pré-pros
+slug: master-classes-a-destination-des-artistes-choregraphiques-pros-et-pre-pros
 date: '2026-03-18T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-19T00:00:00+01:00'

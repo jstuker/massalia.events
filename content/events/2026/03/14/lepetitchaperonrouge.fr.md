@@ -23,6 +23,7 @@ sourceIds:
 startTime: '11:00'
 tags: []
 title: Le Petit Chaperon rouge
+slug: le-petit-chaperon-rouge
 ---
 
 « Je voulais parler d’aujourd’hui à des enfants d’aujourd’hui. Raconter à nouveau, le plus simplement et le plus concrètement possible, l'histoire de cette...

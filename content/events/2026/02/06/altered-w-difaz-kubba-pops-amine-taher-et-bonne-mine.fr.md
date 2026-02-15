@@ -1,5 +1,6 @@
 ---
 title: Altered W/Difaz, Kubba, Pops, Amine Taher Et Bonne Mine
+slug: altered-w-difaz-kubba-pops-amine-taher-et-bonne-mine
 date: '2026-02-06T22:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

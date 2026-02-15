@@ -1,5 +1,6 @@
 ---
 title: LA FLEMME (Festival Avec Le Temps)
+slug: la-flemme-festival-avec-le-temps
 date: '2026-03-12T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-13T00:00:00+01:00'

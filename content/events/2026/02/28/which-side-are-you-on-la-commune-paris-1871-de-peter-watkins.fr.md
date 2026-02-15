@@ -1,5 +1,6 @@
 ---
 title: Which side are you on? | La Commune (Paris, 1871) de Peter Watkins
+slug: which-side-are-you-on-la-commune-paris-1871-de-peter-watkins
 date: '2026-02-28T19:00:00+01:00'
 draft: false
 expiryDate: '2026-03-01T00:00:00+01:00'

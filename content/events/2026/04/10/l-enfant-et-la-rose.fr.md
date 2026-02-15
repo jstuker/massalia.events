@@ -1,5 +1,6 @@
 ---
 title: L'enfant et la rose
+slug: l-enfant-et-la-rose
 date: '2026-04-10T10:00:00+02:00'
 draft: false
 expiryDate: '2026-04-11T00:00:00+02:00'

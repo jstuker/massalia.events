@@ -1,41 +1,18 @@
 """Event data model matching Hugo front matter schema."""
 
-import re
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
+from slugify import slugify as _slugify
+
 
 def slugify(text: str) -> str:
-    """Convert text to URL-friendly slug."""
-    # Lowercase and normalize
-    slug = text.lower()
-    # Replace accented characters
-    replacements = {
-        "é": "e",
-        "è": "e",
-        "ê": "e",
-        "ë": "e",
-        "à": "a",
-        "â": "a",
-        "ä": "a",
-        "î": "i",
-        "ï": "i",
-        "ô": "o",
-        "ö": "o",
-        "û": "u",
-        "ü": "u",
-        "ù": "u",
-        "ç": "c",
-        "œ": "oe",
-        "æ": "ae",
-    }
-    for char, replacement in replacements.items():
-        slug = slug.replace(char, replacement)
-    # Replace non-alphanumeric with hyphens
-    slug = re.sub(r"[^a-z0-9]+", "-", slug)
-    # Remove leading/trailing hyphens
-    slug = slug.strip("-")
-    return slug
+    """Convert text to URL-friendly ASCII slug.
+
+    Uses python-slugify to transliterate all Unicode characters to ASCII,
+    producing human-readable URLs without percent-encoded characters.
+    """
+    return _slugify(text)
 
 
 def format_french_date(dt: datetime) -> str:
@@ -174,6 +151,7 @@ class Event:
 
         fm = {
             "title": self.title,
+            "slug": self.slug,
             "date": format_datetime(self.date),
             "draft": self.draft,
             "expiryDate": format_datetime(self.expiry_date),

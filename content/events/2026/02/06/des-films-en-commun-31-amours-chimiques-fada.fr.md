@@ -1,5 +1,6 @@
 ---
 title: 'Des films en commun #31 | Amours Chimiques + Fada'
+slug: des-films-en-commun-31-amours-chimiques-fada
 date: '2026-02-06T18:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

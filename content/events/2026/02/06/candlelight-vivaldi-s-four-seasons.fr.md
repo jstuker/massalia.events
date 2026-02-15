@@ -1,5 +1,6 @@
 ---
 title: 'Candlelight: Vivaldi''s Four Seasons'
+slug: candlelight-vivaldi-s-four-seasons
 date: '2026-02-06T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

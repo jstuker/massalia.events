@@ -1,5 +1,6 @@
 ---
 title: Karolina Hartian - Live & Easy Au Rockypop Marseille
+slug: karolina-hartian-live-easy-au-rockypop-marseille
 date: '2026-02-06T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

@@ -1,5 +1,6 @@
 ---
 title: 'Même Pas Peur ! #10 | Burnt offerings (Trauma) de Dan Curtis'
+slug: meme-pas-peur-10-burnt-offerings-trauma-de-dan-curtis
 date: '2026-02-08T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-09T00:00:00+01:00'

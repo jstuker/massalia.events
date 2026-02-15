@@ -26,6 +26,7 @@ sourceIds:
 startTime: '20:30'
 tags: []
 title: La Leçon
+slug: la-lecon
 ---
 
 Avertissement : certaines scènes de violences sexistes et sexuelles peuvent heurter la sensibilité du public

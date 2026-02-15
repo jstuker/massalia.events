@@ -1,5 +1,6 @@
 ---
 title: Menace Rekords W/Dogbee, Mydriax, Cust & Highlex
+slug: menace-rekords-w-dogbee-mydriax-cust-highlex
 date: '2026-01-30T22:00:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

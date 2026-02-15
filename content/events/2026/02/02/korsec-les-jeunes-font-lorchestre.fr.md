@@ -1,5 +1,6 @@
 ---
 title: Korsec, les jeunes font l’orchestre
+slug: korsec-les-jeunes-font-lorchestre
 date: '2026-02-02T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-03T00:00:00+01:00'

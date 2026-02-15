@@ -1,5 +1,6 @@
 ---
 title: Guêpes, grenouilles et monstres
+slug: guepes-grenouilles-et-monstres
 date: '2026-05-07T14:15:00+02:00'
 draft: false
 expiryDate: '2026-05-08T00:00:00+02:00'

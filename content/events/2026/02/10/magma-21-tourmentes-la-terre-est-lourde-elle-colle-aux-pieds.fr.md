@@ -1,5 +1,6 @@
 ---
 title: 'MAGMA #21 | Tourmentes, la terre est lourde elle colle aux pieds'
+slug: magma-21-tourmentes-la-terre-est-lourde-elle-colle-aux-pieds
 date: '2026-02-10T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-11T00:00:00+01:00'

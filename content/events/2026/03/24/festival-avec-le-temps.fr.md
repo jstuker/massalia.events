@@ -1,5 +1,6 @@
 ---
 title: Festival Avec le Temps
+slug: festival-avec-le-temps
 date: '2026-03-24T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-25T00:00:00+01:00'

@@ -1,5 +1,6 @@
 ---
 title: Vel + Israfil B2b Mau (Métaphore Collectif) @ Petit Cab
+slug: vel-israfil-b2b-mau-metaphore-collectif-petit-cab
 date: '2026-02-13T23:00:00+01:00'
 draft: false
 expiryDate: '2026-02-14T00:00:00+01:00'

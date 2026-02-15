@@ -1,5 +1,6 @@
 ---
 title: LE NON-LIEU S’INVITE AU VIDEODROME 2 | Max et les ferrailleurs de Claude Sautet
+slug: le-non-lieu-sinvite-au-videodrome-2-max-et-les-ferrailleurs-de-claude-sautet
 date: '2026-02-05T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-06T00:00:00+01:00'

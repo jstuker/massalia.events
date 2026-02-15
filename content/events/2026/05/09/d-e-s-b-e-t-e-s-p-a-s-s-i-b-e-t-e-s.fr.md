@@ -1,5 +1,6 @@
 ---
 title: Des bêtes pas si bêtes
+slug: des-betes-pas-si-betes
 date: '2026-05-09T16:00:00+02:00'
 draft: false
 expiryDate: '2026-05-10T00:00:00+02:00'

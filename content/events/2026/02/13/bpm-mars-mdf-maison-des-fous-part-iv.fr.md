@@ -1,5 +1,6 @@
 ---
 title: Bpm Mars - Mdf - Maison Des Fous - Part. IV
+slug: bpm-mars-mdf-maison-des-fous-part-iv
 date: '2026-02-13T21:00:00+01:00'
 draft: false
 expiryDate: '2026-02-14T00:00:00+01:00'

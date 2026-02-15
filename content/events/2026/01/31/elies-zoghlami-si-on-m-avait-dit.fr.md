@@ -1,5 +1,6 @@
 ---
 title: Elies Zoghlami, Si On M'avait Dit
+slug: elies-zoghlami-si-on-m-avait-dit
 date: '2026-01-31T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-01T00:00:00+01:00'

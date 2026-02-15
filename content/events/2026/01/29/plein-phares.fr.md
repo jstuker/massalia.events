@@ -1,5 +1,6 @@
 ---
 title: Plein phares
+slug: plein-phares
 date: '2026-01-29T20:00:00+01:00'
 draft: false
 expiryDate: '2026-01-30T00:00:00+01:00'

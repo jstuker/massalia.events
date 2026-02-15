@@ -1,5 +1,6 @@
 ---
 title: "Festival de Marseille - Jour 3"
+slug: festival-de-marseille-jour-3
 date: 2026-02-08T14:00:00+01:00
 draft: false
 expiryDate: 2026-02-09T00:00:00+01:00

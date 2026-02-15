@@ -1,5 +1,6 @@
 ---
 title: Je Dis Techno - Marseille W/ Røad | Pardi | Wakkun
+slug: je-dis-techno-marseille-w-road-pardi-wakkun
 date: '2026-02-12T23:00:00+01:00'
 draft: false
 expiryDate: '2026-02-13T00:00:00+01:00'

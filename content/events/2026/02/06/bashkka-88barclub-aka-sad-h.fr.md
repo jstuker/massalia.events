@@ -1,5 +1,6 @@
 ---
 title: Bashkka + 88BarClub Aka SAD.H
+slug: bashkka-88barclub-aka-sad-h
 date: '2026-02-06T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

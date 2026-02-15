@@ -1,5 +1,6 @@
 ---
 title: On ne jouait pas à la pétanque dans le ghetto de Varsovie
+slug: on-ne-jouait-pas-a-la-petanque-dans-le-ghetto-de-varsovie
 date: '2026-02-06T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

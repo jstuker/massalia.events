@@ -1,5 +1,6 @@
 ---
 title: '06/02 | Club Cabaret : Va Funkulo Présente House Nation'
+slug: 06-02-club-cabaret-va-funkulo-presente-house-nation
 date: '2026-02-06T23:00:00+01:00'
 draft: false
 expiryDate: '2026-02-07T00:00:00+01:00'

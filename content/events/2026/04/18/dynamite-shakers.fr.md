@@ -1,5 +1,6 @@
 ---
 title: Dynamite Shakers
+slug: dynamite-shakers
 date: '2026-04-18T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-19T00:00:00+02:00'

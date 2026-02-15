@@ -1,5 +1,6 @@
 ---
 title: Keroué · Le Môme
+slug: keroue-le-mome
 date: '2026-02-18T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-19T00:00:00+01:00'

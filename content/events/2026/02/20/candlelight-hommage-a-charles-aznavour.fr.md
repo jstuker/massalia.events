@@ -24,6 +24,7 @@ sourceIds:
 startTime: '20:00'
 tags: []
 title: 'Candlelight: Hommage à Charles Aznavour'
+slug: candlelight-hommage-a-charles-aznavour
 ---
 
 Porté par le charme des bougies, Candlelight rend hommage à Charles Aznavour dans un concert intimiste où un quatuor à cordes revisite La Bohème,...

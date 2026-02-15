@@ -1,5 +1,6 @@
 ---
 title: Babel Music XP – AHMED EID & ILYF · DUCASSE
+slug: babel-music-xp-ahmed-eid-ilyf-ducasse
 date: '2026-03-19T23:00:00+01:00'
 draft: false
 expiryDate: '2026-03-20T00:00:00+01:00'

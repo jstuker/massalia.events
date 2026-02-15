@@ -1,5 +1,6 @@
 ---
 title: Alexandre Kantorow
+slug: alexandre-kantorow
 date: '2026-02-16T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-17T00:00:00+01:00'

@@ -1,5 +1,6 @@
 ---
 title: About Love and Death (élégie pour Raimund Hoghe)
+slug: about-love-and-death-elegie-pour-raimund-hoghe
 date: '2026-04-28T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-29T00:00:00+02:00'

@@ -1,5 +1,6 @@
 ---
 title: TINTAMARRES – Eric Broitmann
+slug: tintamarres-eric-broitmann
 date: '2026-03-02T18:30:00+01:00'
 draft: false
 expiryDate: '2026-03-03T00:00:00+01:00'

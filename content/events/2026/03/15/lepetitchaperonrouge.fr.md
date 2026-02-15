@@ -1,5 +1,6 @@
 ---
 title: Le Petit Chaperon rouge
+slug: le-petit-chaperon-rouge
 date: '2026-03-15T16:00:00+01:00'
 draft: false
 expiryDate: '2026-03-16T00:00:00+01:00'

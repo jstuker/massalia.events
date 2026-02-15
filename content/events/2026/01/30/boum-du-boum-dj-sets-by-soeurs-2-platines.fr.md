@@ -1,5 +1,6 @@
 ---
 title: Boum Du Boum - Dj Sets By Soeurs 2 Platines
+slug: boum-du-boum-dj-sets-by-soeurs-2-platines
 date: '2026-01-30T22:00:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

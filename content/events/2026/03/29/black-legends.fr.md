@@ -1,5 +1,6 @@
 ---
 title: Black Legends
+slug: black-legends
 date: '2026-03-29T20:00:00+02:00'
 draft: false
 expiryDate: '2026-03-30T00:00:00+02:00'

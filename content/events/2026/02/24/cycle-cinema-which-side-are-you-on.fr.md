@@ -1,5 +1,6 @@
 ---
 title: Cycle cinéma | Which side are you on?
+slug: cycle-cinema-which-side-are-you-on
 date: '2026-02-24T19:30:00+01:00'
 draft: false
 expiryDate: '2026-02-25T00:00:00+01:00'

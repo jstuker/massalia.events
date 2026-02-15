@@ -1,5 +1,6 @@
 ---
 title: 'SOUNDTRACK #3 | Hedwig and the Angry Inch de John Cameron Mitchell'
+slug: soundtrack-3-hedwig-and-the-angry-inch-de-john-cameron-mitchell
 date: '2026-02-21T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-22T00:00:00+01:00'

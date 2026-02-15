@@ -1,5 +1,6 @@
 ---
 title: 'Psy''apéro #24 By Level Up'
+slug: psy-apero-24-by-level-up
 date: '2026-01-30T20:30:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

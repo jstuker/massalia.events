@@ -1,5 +1,6 @@
 ---
 title: LE NON-LIEU S’INVITE AU VIDEODROME 2 | Les choses de la vie de Claude Sautet
+slug: le-non-lieu-sinvite-au-videodrome-2-les-choses-de-la-vie-de-claude-sautet
 date: '2026-02-04T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-05T00:00:00+01:00'

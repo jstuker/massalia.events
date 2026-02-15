@@ -1,5 +1,6 @@
 ---
 title: Which side are you on? | La Machette et le marteau de Gabriel Glissant
+slug: which-side-are-you-on-la-machette-et-le-marteau-de-gabriel-glissant
 date: '2026-02-25T18:00:00+01:00'
 draft: false
 expiryDate: '2026-02-26T00:00:00+01:00'

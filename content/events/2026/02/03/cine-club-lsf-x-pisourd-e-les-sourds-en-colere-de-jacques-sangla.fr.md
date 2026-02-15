@@ -1,5 +1,6 @@
 ---
 title: Ciné-club LSF x PiSourd·e | Les Sourds en colère de Jacques Sangla
+slug: cine-club-lsf-x-pisourd-e-les-sourds-en-colere-de-jacques-sangla
 date: '2026-02-03T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-04T00:00:00+01:00'

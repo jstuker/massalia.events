@@ -1,5 +1,6 @@
 ---
 title: Vel + Israfil b2b Mau (Metaphore Collectif)
+slug: vel-israfil-b2b-mau-metaphore-collectif
 date: '2026-02-13T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-14T00:00:00+01:00'

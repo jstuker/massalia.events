@@ -1,5 +1,6 @@
 ---
 title: 'Le Mauvais Œil 83 : Cult Pump'
+slug: le-mauvais-oeil-83-cult-pump
 date: '2026-03-25T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-26T00:00:00+01:00'

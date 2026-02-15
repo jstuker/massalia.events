@@ -1,5 +1,6 @@
 ---
 title: 'Rave Frequency #9'
+slug: rave-frequency-9
 date: '2026-02-10T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-11T00:00:00+01:00'

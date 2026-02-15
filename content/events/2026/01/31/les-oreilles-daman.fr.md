@@ -1,5 +1,6 @@
 ---
 title: Les Oreilles d’Aman
+slug: les-oreilles-daman
 date: '2026-01-31T19:00:00+01:00'
 draft: false
 expiryDate: '2026-02-01T00:00:00+01:00'

@@ -21,6 +21,7 @@ sourceIds:
 startTime: 02:00
 tags: []
 title: Carmen.
+slug: carmen
 ---
 
 La Criée lève l'ancre au ZEF Av. Raimu, 13014 Marseille

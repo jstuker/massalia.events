@@ -1,5 +1,6 @@
 ---
 title: La Boum du Samedi (Mars)
+slug: la-boum-du-samedi-mars
 date: '2026-03-14T23:00:00+01:00'
 draft: false
 expiryDate: '2026-03-15T00:00:00+01:00'

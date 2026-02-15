@@ -1,5 +1,6 @@
 ---
 title: 'Médecine et cinéma | Responsabilité médicale, irresponsabilité pénale : Moi Pierre Rivière, ayant égorgé ma mère, ma sœur et mon frère'
+slug: medecine-et-cinema-responsabilite-medicale-irresponsabilite-penale-moi-pierre-riviere-ayant-egorge-ma-mere-ma-soeur-et-mon-frere
 date: '2026-02-22T18:00:00+01:00'
 draft: false
 expiryDate: '2026-02-23T00:00:00+01:00'

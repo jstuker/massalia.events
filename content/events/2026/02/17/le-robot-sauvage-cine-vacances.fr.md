@@ -1,5 +1,6 @@
 ---
 title: Le robot sauvage  - Ciné-Vacances
+slug: le-robot-sauvage-cine-vacances
 date: '2026-02-17T20:00:00+01:00'
 draft: false
 expiryDate: '2026-02-18T00:00:00+01:00'

@@ -1,5 +1,6 @@
 ---
 title: 'Canal 18 : 2 Fréquences (House + Techno)'
+slug: canal-18-2-frequences-house-techno
 date: '2026-02-12T23:59:00+01:00'
 draft: false
 expiryDate: '2026-02-13T00:00:00+01:00'

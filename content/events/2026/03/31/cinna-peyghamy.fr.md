@@ -1,5 +1,6 @@
 ---
 title: CINNA PEYGHAMY
+slug: cinna-peyghamy
 date: '2026-03-31T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-01T00:00:00+02:00'

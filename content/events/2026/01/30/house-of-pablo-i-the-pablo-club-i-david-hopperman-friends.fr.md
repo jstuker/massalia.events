@@ -1,5 +1,6 @@
 ---
 title: House Of Pablo I The Pablo Club I David Hopperman & Friends
+slug: house-of-pablo-i-the-pablo-club-i-david-hopperman-friends
 date: '2026-01-30T23:59:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

@@ -1,5 +1,6 @@
 ---
 title: "ArcHIVivantEs #3 | (In)visible women + Zap (Act Up Paris, été 1995)"
+slug: archivivantes-3-in-visible-women-zap-act-up-paris-ete-1995
 date: '2026-02-11T20:30:00+01:00'
 draft: false
 expiryDate: '2026-02-12T00:00:00+01:00'

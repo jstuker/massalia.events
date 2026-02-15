@@ -26,6 +26,7 @@ startTime: '20:00'
 tags:
 - théâtre d'improvisation
 title: 'Cabaret d’impro théâtral des Tarp’impros #7'
+slug: cabaret-dimpro-theatral-des-tarpimpros-7
 ---
 
 Venez assister en exclusivité au Makeda, au spectacle d’improvisation des Tarp’impros de Marseille. Cette ligue d’impro à part entière a été crée il y a un a...

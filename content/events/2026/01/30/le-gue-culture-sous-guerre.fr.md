@@ -1,5 +1,6 @@
 ---
 title: Le Gué – Culture sous guerre
+slug: le-gue-culture-sous-guerre
 date: '2026-01-30T17:00:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

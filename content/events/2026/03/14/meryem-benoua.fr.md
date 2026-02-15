@@ -1,5 +1,6 @@
 ---
 title: Meryem Benoua
+slug: meryem-benoua
 date: '2026-03-14T20:30:00+01:00'
 draft: false
 expiryDate: '2026-03-15T00:00:00+01:00'

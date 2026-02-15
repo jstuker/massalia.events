@@ -1,5 +1,6 @@
 ---
 title: Jeudi Tb ! - 12 Février (By Monday Niasquéw)
+slug: jeudi-tb-12-fevrier-by-monday-niasquew
 date: '2026-02-12T22:00:00+01:00'
 draft: false
 expiryDate: '2026-02-13T00:00:00+01:00'

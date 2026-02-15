@@ -26,6 +26,7 @@ sourceIds:
 startTime: 01:15
 tags: []
 title: Ma République et moi
+slug: ma-republique-et-moi
 ---
 
 LE REPAS DE MALIKA | Dégustez chaque jour une sélection de plats marocains proposée par la mère d'Issam Rachyq-Ahrad et concoctée par l'équipe des grandes...

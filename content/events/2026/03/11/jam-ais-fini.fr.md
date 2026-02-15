@@ -1,5 +1,6 @@
 ---
 title: Jam-ais fini !
+slug: jam-ais-fini
 date: '2026-03-11T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-12T00:00:00+01:00'

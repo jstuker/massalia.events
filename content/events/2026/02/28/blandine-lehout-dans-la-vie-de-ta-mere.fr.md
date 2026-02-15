@@ -1,5 +1,6 @@
 ---
 title: Blandine Lehout dans La Vie de ta Mère
+slug: blandine-lehout-dans-la-vie-de-ta-mere
 date: '2026-02-28T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-01T00:00:00+01:00'

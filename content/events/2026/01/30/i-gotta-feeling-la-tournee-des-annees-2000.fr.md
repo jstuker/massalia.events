@@ -1,5 +1,6 @@
 ---
 title: I Gotta Feeling, La Tournée des Années 2000
+slug: i-gotta-feeling-la-tournee-des-annees-2000
 date: '2026-01-30T20:00:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

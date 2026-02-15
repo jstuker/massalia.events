@@ -1,5 +1,6 @@
 ---
 title: Ozi, la voix de la forêt  - Ciné-Vacances
+slug: ozi-la-voix-de-la-foret-cine-vacances
 date: '2026-04-14T20:00:00+02:00'
 draft: false
 expiryDate: '2026-04-15T00:00:00+02:00'

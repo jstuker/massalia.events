@@ -1,5 +1,6 @@
 ---
 title: 'Timing. By Ipn : Sylvain Armand'
+slug: timing-by-ipn-sylvain-armand
 date: '2026-01-30T23:50:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

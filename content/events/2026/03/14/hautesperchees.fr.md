@@ -23,6 +23,7 @@ sourceIds:
 startTime: 02:35
 tags: []
 title: Hautes perchées
+slug: hautes-perchees
 ---
 
 CINÉMA | MAR 25 NOVEMBRE 20H | En écho au spectacle découvrez ou redécouvrez Panique à Needle Park, de Jerry Schatzberg au cinéma Les Variétés sur une...

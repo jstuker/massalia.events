@@ -1,5 +1,6 @@
 ---
 title: Say My Name RnB w/ Soon X Thug Dance X MRbenoitD
+slug: say-my-name-rnb-w-soon-x-thug-dance-x-mrbenoitd
 date: '2026-02-20T22:30:00+01:00'
 draft: false
 expiryDate: '2026-02-21T00:00:00+01:00'

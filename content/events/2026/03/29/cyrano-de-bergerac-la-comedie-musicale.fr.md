@@ -1,5 +1,6 @@
 ---
 title: CYRANO DE BERGERAC, LA COMÉDIE MUSICALE
+slug: cyrano-de-bergerac-la-comedie-musicale
 date: '2026-03-29T17:00:00+02:00'
 draft: false
 expiryDate: '2026-03-30T00:00:00+02:00'

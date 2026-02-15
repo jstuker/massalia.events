@@ -1,5 +1,6 @@
 ---
 title: De l'amour
+slug: de-l-amour
 date: '2026-03-01T20:00:00+01:00'
 draft: false
 expiryDate: '2026-03-02T00:00:00+01:00'

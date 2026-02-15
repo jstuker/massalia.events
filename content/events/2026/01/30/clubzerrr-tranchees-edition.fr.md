@@ -1,5 +1,6 @@
 ---
 title: Clubzerrr - Tranchees Edition
+slug: clubzerrr-tranchees-edition
 date: '2026-01-30T21:00:00+01:00'
 draft: false
 expiryDate: '2026-01-31T00:00:00+01:00'

@@ -1,5 +1,6 @@
 ---
 title: L’affaire L.ex.π.Re
+slug: laffaire-l-ex-p-re
 date: '2026-03-20T14:15:00+01:00'
 draft: false
 expiryDate: '2026-03-21T00:00:00+01:00'
