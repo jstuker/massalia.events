@@ -1,8 +1,74 @@
 {
   "citemusique": {
     "status": "success",
-    "events_accepted": 24,
+    "events_accepted": 1,
+    "events_rejected": 6,
+    "timestamp": "2026-02-18T14:03:37.892550+01:00"
+  },
+  "klap": {
+    "status": "success",
+    "events_accepted": 1,
+    "events_rejected": 4,
+    "timestamp": "2026-02-18T13:38:43.025472+01:00"
+  },
+  "lafriche": {
+    "status": "success",
+    "events_accepted": 7,
+    "events_rejected": 8,
+    "timestamp": "2026-02-18T13:38:59.792879+01:00"
+  },
+  "agendaculturel": {
+    "status": "success",
+    "events_accepted": 35,
     "events_rejected": 7,
-    "timestamp": "2026-02-11T08:24:49.323179+01:00"
+    "timestamp": "2026-02-18T13:44:23.307498+01:00"
+  },
+  "shotgun": {
+    "status": "success",
+    "events_accepted": 37,
+    "events_rejected": 4,
+    "timestamp": "2026-02-18T13:50:26.041145+01:00"
+  },
+  "journalzebuline": {
+    "status": "success",
+    "events_accepted": 23,
+    "events_rejected": 2852,
+    "timestamp": "2026-02-18T14:01:38.420512+01:00"
+  },
+  "cepacsilo": {
+    "status": "success",
+    "events_accepted": 1,
+    "events_rejected": 62,
+    "timestamp": "2026-02-18T14:02:16.023853+01:00"
+  },
+  "lacriee": {
+    "status": "success",
+    "events_accepted": 23,
+    "events_rejected": 12,
+    "timestamp": "2026-02-18T14:02:37.115767+01:00"
+  },
+  "loeuvre": {
+    "status": "success",
+    "events_accepted": 0,
+    "events_rejected": 1,
+    "timestamp": "2026-02-18T14:02:43.381437+01:00"
+  },
+  "videodrome2": {
+    "status": "success",
+    "events_accepted": 5,
+    "events_rejected": 0,
+    "timestamp": "2026-02-18T14:02:56.037951+01:00"
+  },
+  "lemakeda": {
+    "status": "success",
+    "events_accepted": 2,
+    "events_rejected": 5,
+    "timestamp": "2026-02-18T14:03:01.334438+01:00"
+  },
+  "lezef": {
+    "status": "success",
+    "events_accepted": 1,
+    "events_rejected": 4,
+    "timestamp": "2026-02-18T14:04:47.636007+01:00"
   }
 }
