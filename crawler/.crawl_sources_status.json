@@ -70,5 +70,11 @@
     "events_accepted": 1,
     "events_rejected": 4,
     "timestamp": "2026-02-18T14:04:47.636007+01:00"
+  },
+  "espacejulien": {
+    "status": "success",
+    "events_accepted": 35,
+    "events_rejected": 33,
+    "timestamp": "2026-02-21T17:01:26.504156+01:00"
   }
 }

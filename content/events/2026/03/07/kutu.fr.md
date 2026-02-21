@@ -1,28 +1,35 @@
 ---
-title: Kutu
-slug: kutu
-date: '2026-03-07T20:00:00+01:00'
-draft: false
-expiryDate: '2026-03-08T00:00:00+01:00'
-name: Kutu
-eventURL: https://www.lemakeda.com/evenements/kutu/
-startTime: '20:00'
-description: Kutu, collectif fondé par Théo Ceccaldi en 2020, mêle improvisation, jazz, électro et traditions vocales éthiopiennes inspirées des Azmari. Le projet naît ap...
+alternateSources:
+- https://espace-julien.com/agenda/kutu
 categories:
 - musique
-locations:
-- le-makeda
+date: '2026-03-07T20:00:00+01:00'
 dates:
 - samedi-07-mars
+description: Kutu, collectif fondé par Théo Ceccaldi en 2020, mêle improvisation,
+  jazz, électro et traditions vocales éthiopiennes inspirées des Azmari. Le projet
+  naît ap...
+draft: false
+eventURL: https://www.lemakeda.com/evenements/kutu/
+expired: false
+expiryDate: '2026-03-08T00:00:00+01:00'
+image: /images/events/kutu-a52deef4.webp
+lastCrawled: '2026-02-21T17:00:56.173011'
+locations:
+- le-makeda
+name: Kutu
+slug: kutu
+sourceId: lemakeda:38265
+sourceIds:
+- lemakeda:38265
+- espacejulien:kutu
+startTime: '20:00'
 tags:
 - electro
 - jazz
 - pop
 - world
-image: /images/events/kutu-a52deef4.webp
-sourceId: lemakeda:38265
-lastCrawled: '2026-02-01T16:40:26+01:00'
-expired: false
+title: Kutu
 ---
 
 Kutu, collectif fondé par Théo Ceccaldi en 2020, mêle improvisation, jazz, électro et traditions vocales éthiopiennes inspirées des Azmari. Le projet naît ap...
