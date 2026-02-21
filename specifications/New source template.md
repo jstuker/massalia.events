@@ -114,12 +114,16 @@ The framework handles instantiation and orchestration automatically:
 - [ ] Add proper error handling and logging
 - [ ] Register parser in `crawler/src/parsers/__init__.py`
 
-#### Code Structure
+#### Code Structure — HTML Scraping Pattern
+
+Use this pattern when the source is a standard website with HTML event listings:
+
 ```python
 from ..crawler import BaseCrawler
 from ..logger import get_logger
 from ..models.event import Event
 from ..utils.parser import HTMLParser
+from ..utils.sanitize import sanitize_description
 
 logger = get_logger(__name__)
 
@@ -188,6 +192,141 @@ class [SourceName]Parser(BaseCrawler):
         )
 ```
 
+#### Code Structure — REST API Pattern
+
+Use this pattern when the source exposes a REST API (e.g. WordPress REST API, Tribe Events Calendar). Several existing parsers (Le Makeda, Journal Zébuline) use this approach. The key difference is that `parse_events()` fetches JSON from the API directly using `self.http_client.fetch()`, ignoring the HTMLParser argument from the base class.
+
+```python
+import json
+from datetime import datetime
+
+from ..crawler import BaseCrawler
+from ..logger import get_logger
+from ..models.event import Event
+from ..utils.french_date import PARIS_TZ
+from ..utils.parser import HTMLParser
+from ..utils.sanitize import sanitize_description
+
+logger = get_logger(__name__)
+
+# API configuration
+API_BASE = "https://[website]/wp-json/[api-path]"
+PER_PAGE = 50
+
+
+class [SourceName]Parser(BaseCrawler):
+    """Parser for [Website Name] events via REST API."""
+
+    source_name = "[Website Display Name]"
+
+    def parse_events(self, parser: HTMLParser) -> list[Event]:
+        """
+        Parse events from [Website Name] REST API.
+
+        The HTMLParser argument is ignored since we fetch structured
+        JSON from the API directly.
+
+        Args:
+            parser: HTMLParser (unused, required by base class interface)
+
+        Returns:
+            List of Event objects
+        """
+        events = []
+        api_events = self._fetch_api_events()
+
+        for event_data in api_events:
+            try:
+                event = self._parse_event(event_data)
+                if event:
+                    events.append(event)
+            except Exception as e:
+                logger.warning(f"Failed to parse event: {e}")
+
+        return events
+
+    def _fetch_api_events(self) -> list[dict]:
+        """Fetch all events from the API with pagination."""
+        all_events = []
+        page = 1
+        delay = self.config.get("rate_limit", {}).get("delay_between_pages", 3.0)
+
+        while True:
+            url = f"{API_BASE}/events?per_page={PER_PAGE}&page={page}"
+
+            try:
+                result = self.http_client.fetch(url, source_id=self.source_id)
+            except Exception as e:
+                logger.error(f"Failed to fetch API page {page}: {e}")
+                break
+
+            if not result.success:
+                if result.status_code in (400, 404):
+                    break  # End of pagination
+                logger.error(f"API error on page {page}: HTTP {result.status_code}")
+                break
+
+            try:
+                data = json.loads(result.html)
+            except (ValueError, TypeError) as e:
+                logger.error(f"Failed to parse API response: {e}")
+                break
+
+            events = data.get("events", [])
+            if not events:
+                break
+
+            all_events.extend(events)
+
+            # Check pagination (adapt to the specific API)
+            total_pages = data.get("total_pages", 1)
+            if page >= total_pages:
+                break
+
+            page += 1
+            import time
+            time.sleep(delay)
+
+        return all_events
+
+    def _parse_event(self, data: dict) -> Event | None:
+        """Parse a single event from API data."""
+        name = sanitize_description(data.get("title", ""))
+        if not name:
+            return None
+
+        # Parse datetime (adapt format to the specific API)
+        start_date_str = data.get("start_date", "")
+        if not start_date_str:
+            return None
+        try:
+            dt = datetime.strptime(start_date_str, "%Y-%m-%d %H:%M:%S")
+            start_datetime = dt.replace(tzinfo=PARIS_TZ)
+        except ValueError:
+            return None
+
+        event_url = data.get("url", "")
+        if not event_url:
+            return None
+
+        description = sanitize_description(data.get("description", ""))
+        if len(description) > 160:
+            description = description[:157] + "..."
+
+        return Event(
+            name=name,
+            event_url=event_url,
+            start_datetime=start_datetime,
+            description=description,
+            image=data.get("image", {}).get("url"),
+            categories=[self.map_category(
+                data.get("category", "")
+            )],
+            locations=[self.map_location("[venue-name]")],
+            source_id=f"[source-id]:{data.get('id', '')}",
+        )
+```
+
 #### Available BaseCrawler Helper Methods
 
 Your parser inherits these from `BaseCrawler` (`crawler/src/crawler.py`):
@@ -196,12 +335,23 @@ Your parser inherits these from `BaseCrawler` (`crawler/src/crawler.py`):
 |--------|-------------|
 | `self.fetch_page(url)` | Fetch a single page, returns HTML string (empty on failure) |
 | `self.fetch_pages(urls)` | Fetch multiple pages concurrently with thread pool, returns `dict[url, html]` |
+| `self.http_client.fetch(url, source_id=self.source_id)` | Low-level HTTP fetch returning a result object with `.success`, `.status_code`, `.html`, `.headers`. Use this for API-based parsers that need status codes or response headers (e.g. pagination). For simple HTML fetches, prefer `fetch_page`/`fetch_pages`. |
 | `self.map_category(raw)` | Map a source category string to standard taxonomy using `categories_map` from config |
-| `self.map_location(raw)` | Map a location name to a known venue slug (uses built-in lookup table) |
+| `self.map_location(raw)` | Map a location name to a known venue slug (delegates to `VenueManager`) |
+| `self.venue_manager` | `VenueManager` instance for advanced venue matching (fuzzy matching, alias resolution). Available on `self` when provided during init. For simple lookups, prefer `self.map_location()`. |
+| `self.config` | Source configuration dict from `sources.yaml`. Useful for reading rate limits (`self.config.get("rate_limit", {})`) and other source-specific settings. |
 | `self.source_id` | Source ID from config (e.g. `"lemakeda"`) |
 | `self.base_url` | Source URL from config |
-| `self.category_map` | Category mapping dict from config |
-| `self.http_client` | Shared HTTP client (for advanced use; prefer `fetch_page`/`fetch_pages`) |
+| `self.category_map` | Category mapping dict from config. **Note:** In `sources.yaml` this key is `categories_map` (plural), but `crawl.py` translates it to `category_map` (singular) when constructing the config dict passed to the parser. |
+| `self.http_client` | Shared HTTP client instance (see `http_client.fetch()` above) |
+
+#### Available Utilities
+
+| Utility | Import | Description |
+|---------|--------|-------------|
+| `sanitize_description(text)` | `from ..utils.sanitize import sanitize_description` | Strip HTML tags, decode entities, and normalize whitespace in description text. Recommended for cleaning API responses or HTML-rich content. |
+| `PARIS_TZ` | `from ..utils.french_date import PARIS_TZ` | Paris timezone object for constructing timezone-aware datetimes |
+| `FRENCH_MONTHS` | `from ..utils.french_date import FRENCH_MONTHS` | Dict mapping French month names to month numbers |
 
 #### Available HTMLParser Methods
 
