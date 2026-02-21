@@ -327,6 +327,28 @@ sources:
       "cuisine": "communaute"
       "CUISINE": "communaute"
 
+  # Espace Julien - Music and performance venue on Cours Julien in Marseille
+  # Also manages Le Makeda and Cafe Julien venues
+  - name: "Espace Julien"
+    id: "espacejulien"
+    url: "https://espace-julien.com/agenda"
+    parser: "espacejulien"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "blues-jazz": "musique"
+      "chanson": "musique"
+      "electro": "musique"
+      "festival-avec-le-temps": "communaute"
+      "humour": "theatre"
+      "l-ej-c-est-le-s": "communaute"
+      "pop": "musique"
+      "rap-hip-hop": "musique"
+      "rnb-soul": "musique"
+      "rock": "musique"
+
 # Default settings applied to all sources unless overridden
 defaults:
   enabled: true

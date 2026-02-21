@@ -4,6 +4,7 @@ from .agendaculturel import AgendaCulturelParser
 from .base import ConfigurableEventParser, ParsedEvent, SelectorConfig
 from .cepacsilo import CepacSiloParser
 from .citemusique import CiteMusiqueParser
+from .espacejulien import EspaceJulienParser
 from .journalzebuline import JournalZebulineParser
 from .klemenis import KlemenisParser
 from .lacriee import LaCrieeParser
@@ -22,6 +23,7 @@ PARSERS = {
     "agendaculturel": AgendaCulturelParser,
     "journalzebuline": JournalZebulineParser,
     "cepacsilo": CepacSiloParser,
+    "espacejulien": EspaceJulienParser,
     "citemusique": CiteMusiqueParser,
     "lacriee": LaCrieeParser,
     "lemakeda": LeMakedaParser,
@@ -64,6 +66,7 @@ def list_parsers() -> list[str]:
 __all__ = [
     "AgendaCulturelParser",
     "CepacSiloParser",
+    "EspaceJulienParser",
     "CiteMusiqueParser",
     "ConfigurableEventParser",
     "JournalZebulineParser",
