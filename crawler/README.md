@@ -23,7 +23,10 @@ The crawler fetches events from configured sources, extracts event data, downloa
 2. Create a virtual environment:
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate            # bash/zsh
+   source venv/bin/activate.fish       # fish
+   source venv/bin/activate.csh        # csh/tcsh
+   venv\Scripts\activate               # Windows
    ```
 
 3. Install dependencies:
@@ -466,8 +469,9 @@ ruff format src/
 DAILY CRAWL COMMANDS
 ====================
 
-# Setup
-cd crawler && source venv/bin/activate
+# Setup (pick your shell)
+cd crawler && source venv/bin/activate            # bash/zsh
+cd crawler && source venv/bin/activate.fish       # fish
 
 # Preview (always run first)
 python crawl.py run --dry-run

@@ -1,12 +1,312 @@
 {
+  "aix-qui": {
+    "name": "Aix Qui ?",
+    "slug": "aix-qui",
+    "street_address": "ancien, Chemin du Coton Rouge, 13100 Aix-en-Provence, France",
+    "postal_code": "13100",
+    "city": "Aix-En-Provence",
+    "latitude": 43.5122969,
+    "longitude": 5.4546886,
+    "source_url": "https://shotgun.live/fr/venues/aixqui"
+  },
   "baby-club": {
-    "name": "Baby Club",
+    "name": "Baby club",
     "slug": "baby-club",
-    "street_address": "2 Rue André Poggioli",
+    "street_address": "2 Rue André Poggioli, 13006 Marseille, France",
     "postal_code": "13006",
     "city": "Marseille",
-    "latitude": 43.2919,
-    "longitude": 5.3838,
+    "latitude": 43.2940988,
+    "longitude": 5.3854241,
     "source_url": "https://shotgun.live/fr/venues/baby-club"
+  },
+  "baker-party": {
+    "name": "BAKER PARTY",
+    "slug": "baker-party",
+    "street_address": "8 Rue Neuve Sainte-Catherine, 13007 Marseille, France",
+    "postal_code": "13007",
+    "city": "Marseille",
+    "latitude": 43.2924448,
+    "longitude": 5.3708827,
+    "source_url": "https://shotgun.live/fr/venues/baker-party"
+  },
+  "bi-pole": {
+    "name": "Bi:pole",
+    "slug": "bi-pole",
+    "street_address": "41 Rue Jobin, 13003 Marseille, France",
+    "postal_code": "13003",
+    "city": "Marseille",
+    "latitude": 43.31048,
+    "longitude": 5.3901924,
+    "source_url": "https://shotgun.live/fr/venues/bi-pole"
+  },
+  "boum-marseille": {
+    "name": "BOUM Marseille",
+    "slug": "boum-marseille",
+    "street_address": "21 Rue André Poggioli, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2934532,
+    "longitude": 5.3852521,
+    "source_url": "https://shotgun.live/fr/venues/boum-marseille"
+  },
+  "cabaret-aleatoire": {
+    "name": "Cabaret Aléatoire",
+    "slug": "cabaret-aleatoire",
+    "street_address": "41 Rue Jobin, 13003 Marseille, France",
+    "postal_code": "13003",
+    "city": "Marseille",
+    "latitude": 43.309633,
+    "longitude": 5.3903188,
+    "source_url": "https://shotgun.live/fr/venues/cabaretaleatoire"
+  },
+  "danceteria": {
+    "name": "danceteria",
+    "slug": "danceteria",
+    "street_address": "18 Rue Saint-Saëns, 13001 Marseille, France",
+    "postal_code": "13001",
+    "city": "Marseille",
+    "latitude": 43.2938344,
+    "longitude": 5.3751483,
+    "source_url": "https://shotgun.live/fr/venues/danceteria"
+  },
+  "darkside-events": {
+    "name": "Darkside Events",
+    "slug": "darkside-events",
+    "street_address": "40 Boulevard Jacques Saadé, 13002 Marseille, France",
+    "postal_code": "13002",
+    "city": "Marseille",
+    "latitude": 43.3003721,
+    "longitude": 5.364239,
+    "source_url": "https://shotgun.live/fr/venues/darkside-events"
+  },
+  "faranight-clubbing": {
+    "name": "FaraNight Clubbing",
+    "slug": "faranight-clubbing",
+    "street_address": "7 Montée Commandant de Robien, 13011 Marseille, France",
+    "postal_code": "13011",
+    "city": "Marseille",
+    "latitude": 43.2899542,
+    "longitude": 5.4841275,
+    "source_url": "https://shotgun.live/fr/venues/fara-night-clubbing"
+  },
+  "groovity-marseille": {
+    "name": "Groovity Marseille",
+    "slug": "groovity-marseille",
+    "street_address": "31 Rue d'Endoume, 13007 Marseille, France",
+    "postal_code": "13007",
+    "city": "Marseille",
+    "latitude": 43.290356,
+    "longitude": 5.3664955,
+    "source_url": "https://shotgun.live/fr/venues/groovity-marseille"
+  },
+  "inda-agengy": {
+    "name": "INDA AGENGY",
+    "slug": "inda-agengy",
+    "street_address": "56 Promenade Général Charles de Gaulle, 83140 Six-Fours-les-Plages, France",
+    "postal_code": "83140",
+    "city": "Six-Fours-Les-Plages",
+    "latitude": 43.1087494,
+    "longitude": 5.8137627,
+    "source_url": "https://shotgun.live/fr/venues/inda"
+  },
+  "ipn-aix-en-provence": {
+    "name": "IPN Aix-en-Provence",
+    "slug": "ipn-aix-en-provence",
+    "street_address": "23 Cours Sextius, 13100 Aix-en-Provence, France",
+    "postal_code": "13100",
+    "city": "Aix-En-Provence",
+    "latitude": 43.5288065,
+    "longitude": 5.4440602,
+    "source_url": "https://shotgun.live/fr/venues/ipnaix"
+  },
+  "jardins-suspendus": {
+    "name": "Jardins Suspendus",
+    "slug": "jardins-suspendus",
+    "street_address": "3 Quai du Port, 13002 Marseille, France",
+    "postal_code": "13002",
+    "city": "Marseille",
+    "latitude": 43.2950374,
+    "longitude": 5.3639169,
+    "source_url": "https://shotgun.live/fr/venues/jardins-suspendus"
+  },
+  "jeanne-dj": {
+    "name": "Jeanne.DJ",
+    "slug": "jeanne-dj",
+    "street_address": "17 Rue André Poggioli, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2935918,
+    "longitude": 5.3853563,
+    "source_url": "https://shotgun.live/fr/venues/jeanne-dj"
+  },
+  "le-bouge-marseille": {
+    "name": "Le Bouge Marseille",
+    "slug": "le-bouge-marseille",
+    "street_address": "21 Cours Honoré d'Estienne d'Orves, 13001 Marseille, France",
+    "postal_code": "13001",
+    "city": "Marseille",
+    "latitude": 43.2926142,
+    "longitude": 5.37373,
+    "source_url": "https://shotgun.live/fr/venues/le-bouge-marseille"
+  },
+  "le-chapiteau-marseille": {
+    "name": "Le Chapiteau - marseille",
+    "slug": "le-chapiteau-marseille",
+    "street_address": "38 Traverse Notre Dame du Bon Secours, 13003 Marseille, France",
+    "postal_code": "13003",
+    "city": "Marseille",
+    "latitude": 43.3148239,
+    "longitude": 5.3862458,
+    "source_url": "https://shotgun.live/fr/venues/le-chapiteau-marseille"
+  },
+  "le-makeda": {
+    "name": "Le Makeda",
+    "slug": "le-makeda",
+    "street_address": "103 Rue Ferrari, 13005 Marseille, France",
+    "postal_code": "13005",
+    "city": "Marseille",
+    "latitude": 43.2932951,
+    "longitude": 5.3918093,
+    "source_url": "https://shotgun.live/fr/venues/le-makeda"
+  },
+  "le-marzac": {
+    "name": "LE MARZAC",
+    "slug": "le-marzac",
+    "street_address": "2 Quai de la Joliette, 13002 Marseille, France",
+    "postal_code": "13002",
+    "city": "Marseille",
+    "latitude": 43.3042488,
+    "longitude": 5.3653558,
+    "source_url": "https://shotgun.live/fr/venues/le-marzac"
+  },
+  "le-nucleaire-marseille": {
+    "name": "Le Nucléaire Marseille",
+    "slug": "le-nucleaire-marseille",
+    "street_address": "15 Rue André Poggioli, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2936464,
+    "longitude": 5.3853972,
+    "source_url": "https://shotgun.live/fr/venues/le-nucleaire-marseille"
+  },
+  "les-interges": {
+    "name": "LES INTERGÉS",
+    "slug": "les-interges",
+    "street_address": "1 Rue des Trois Rois, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2944966,
+    "longitude": 5.3846011,
+    "source_url": "https://shotgun.live/fr/venues/les-interges"
+  },
+  "m-town-circle": {
+    "name": "M.Town Circle",
+    "slug": "m-town-circle",
+    "street_address": "40 Boulevard Jacques Saadé, 13002 Marseille, France",
+    "postal_code": "13002",
+    "city": "Marseille",
+    "latitude": 43.3003721,
+    "longitude": 5.364239,
+    "source_url": "https://shotgun.live/fr/venues/mtowncircle"
+  },
+  "mama-shelter-marseille": {
+    "name": "MAMA SHELTER - MARSEILLE",
+    "slug": "mama-shelter-marseille",
+    "street_address": "64 Rue de la Loubière, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2905044,
+    "longitude": 5.3888934,
+    "source_url": "https://shotgun.live/fr/venues/mama-shelter-marseille"
+  },
+  "manray-club": {
+    "name": "Manray club",
+    "slug": "manray-club",
+    "street_address": "38 Rue Saint-Saëns, 13001 Marseille, France",
+    "postal_code": "13001",
+    "city": "Marseille",
+    "latitude": 43.2932522,
+    "longitude": 5.3725898,
+    "source_url": "https://shotgun.live/fr/venues/manrayclub"
+  },
+  "origins-techno": {
+    "name": "ORIGINS TECHNO",
+    "slug": "origins-techno",
+    "street_address": "141 Route Léon Lachamp, 13009 Marseille, France",
+    "postal_code": "13009",
+    "city": "Marseille",
+    "latitude": 43.2489538,
+    "longitude": 5.4406028,
+    "source_url": "https://shotgun.live/fr/venues/origins-techno"
+  },
+  "rockypop-marseille": {
+    "name": "RockyPop Marseille",
+    "slug": "rockypop-marseille",
+    "street_address": "60 Rue du Rouet, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2829677,
+    "longitude": 5.3871689,
+    "source_url": "https://shotgun.live/fr/venues/rocky-pop-marseille"
+  },
+  "spicy-wave": {
+    "name": "Spicy Wave",
+    "slug": "spicy-wave",
+    "street_address": "44 Cours Julien, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2947156,
+    "longitude": 5.3827035,
+    "source_url": "https://shotgun.live/fr/venues/spicy-wave"
+  },
+  "sunny-comedy-club": {
+    "name": "SUNNY COMEDY CLUB",
+    "slug": "sunny-comedy-club",
+    "street_address": "5 Rue Jean-Marc Cathala, 13002 Marseille, France",
+    "postal_code": "13002",
+    "city": "Marseille",
+    "latitude": 43.301299,
+    "longitude": 5.3711523,
+    "source_url": "https://shotgun.live/fr/venues/sunny-comedy-club"
+  },
+  "sunrave": {
+    "name": "SUNRAVE",
+    "slug": "sunrave",
+    "street_address": "1 Rue des Trois Rois, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.2944966,
+    "longitude": 5.3846011,
+    "source_url": "https://shotgun.live/fr/venues/sunrave"
+  },
+  "unite-22": {
+    "name": "Unité.22",
+    "slug": "unite-22",
+    "street_address": "22 Rue Jobin, 13003 Marseille, France",
+    "postal_code": "13003",
+    "city": "Marseille",
+    "latitude": 43.3105232,
+    "longitude": 5.389208,
+    "source_url": "https://shotgun.live/fr/venues/unite-22"
+  },
+  "vertigo-marseille": {
+    "name": "Vertigo Marseille",
+    "slug": "vertigo-marseille",
+    "street_address": "75 Rue Sainte, 13007 Marseille, France",
+    "postal_code": "13007",
+    "city": "Marseille",
+    "latitude": 43.2915848,
+    "longitude": 5.3716131,
+    "source_url": "https://shotgun.live/fr/venues/vertigo-marseille"
+  },
+  "vice-versa-marseille": {
+    "name": "vice.versa.marseille",
+    "slug": "vice-versa-marseille",
+    "street_address": "40 Rue des Trois Rois, 13006 Marseille, France",
+    "postal_code": "13006",
+    "city": "Marseille",
+    "latitude": 43.293427,
+    "longitude": 5.3850598,
+    "source_url": "https://shotgun.live/fr/venues/vice-versa-marseille"
   }
 }
