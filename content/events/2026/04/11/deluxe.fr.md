@@ -1,22 +1,28 @@
 ---
-title: DELUXE
-slug: deluxe
-date: '2026-04-11T20:00:00+02:00'
-draft: false
-expiryDate: '2026-04-12T00:00:00+02:00'
-name: DELUXE
-eventURL: https://www.cepacsilo-marseille.fr/evenement/deluxe/
-startTime: '20:00'
-description: ''
+alternateSources:
+- https://13.agendaculturel.fr/concert/marseille/deluxe.html
 categories:
 - musique
-locations:
-- le-cepac-silo-marseille
+date: '2026-04-11T20:00:00+02:00'
 dates:
 - samedi-11-avril
-tags: []
-image: /images/events/deluxe-a35adc7c.webp
-sourceId: cepacsilo:deluxe:20260411-2000
-lastCrawled: '2026-02-01T17:38:59+01:00'
+description: Le concert Deluxe mêle funk, hip hop et électro dans un show explosif
+  où chaque morceau célèbre la créativité et l’énergie live. Le groupe Deluxe embarque...
+draft: false
+eventURL: https://www.cepacsilo-marseille.fr/evenement/deluxe/
 expired: false
+expiryDate: '2026-04-12T00:00:00+02:00'
+image: /images/events/deluxe-a35adc7c.webp
+lastCrawled: '2026-03-01T20:20:27.842988'
+locations:
+- le-cepac-silo-marseille
+name: DELUXE
+slug: deluxe
+sourceId: cepacsilo:deluxe:20260411-2000
+sourceIds:
+- cepacsilo:deluxe:20260411-2000
+- agendaculturel:concert/marseille/deluxe
+startTime: '20:00'
+tags: []
+title: DELUXE
 ---
