@@ -1498,3 +1498,512 @@
   aliases: []
   body: ""
 
+
+# ============================================================
+# Auto-discovered venues (stub entries -- fill in details)
+# ============================================================
+
+- slug: 1-rue-des-trois-rois
+  title: "1 Rue des Trois Rois"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: absolem
+  title: "Absolem"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: aix-qui
+  title: "Aix Qui"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: baker-party
+  title: "Baker Party"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: bibliotheque-du-merlan
+  title: "Bibliotheque du Merlan"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: blum-marseille
+  title: "Blum Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: boite-a-malice
+  title: "Boite a Malice"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: boom-boom-marseille
+  title: "Boom Boom Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: boulevard-leo-lagrange
+  title: "Boulevard Leo Lagrange"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: cafe-julien
+  title: "Cafe Julien"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: chapelle-du-mejan
+  title: "Chapelle du Mejan"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: dionysiac-tour
+  title: "Dionysiac Tour"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: esplanade-du-j4
+  title: "Esplanade du J4"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: fai-virar
+  title: "Fai Virar"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: faranight-clubbing
+  title: "Faranight Clubbing"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: gellor-events
+  title: "Gellor Events"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: groovity-marseille
+  title: "Groovity Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: hardcult
+  title: "Hardcult"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: jardins-suspendus
+  title: "Jardins Suspendus"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: jeanne-dj
+  title: "Jeanne Dj"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: kuroiheya
+  title: "Kuroiheya"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: l-affranchi
+  title: "L Affranchi"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-bringue-girls-only
+  title: "La Bringue Girls Only"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-cale-vieux-port
+  title: "La Cale Vieux Port"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-degaine-marseille
+  title: "La Degaine Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-gadji-girls-only
+  title: "La Gadji Girls Only"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-mescla-festival
+  title: "La Mescla Festival"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-mez
+  title: "La Mez"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: le-marzac
+  title: "Le Marzac"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: le-pole
+  title: "Le Pole"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: les-folies-mondaines-de-madame
+  title: "Les Folies Mondaines de Madame"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: les-forteresses
+  title: "Les Forteresses"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: les-interges
+  title: "Les Interges"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: m-town-circle
+  title: "M Town Circle"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: nhow-marseille
+  title: "Nhow Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: omic
+  title: "Omic"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: origins-techno
+  title: "Origins Techno"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: paloma-bar-a-cocktails
+  title: "Paloma Bar a Cocktails"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: papacito
+  title: "Papacito"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: ph4-records
+  title: "Ph4 Records"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: pop-club-marseille
+  title: "Pop Club Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: pulse-friction-marseille
+  title: "Pulse Friction Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: rond-point-du-prado
+  title: "Rond Point du Prado"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: rooftop-massilia-beach
+  title: "Rooftop Massilia Beach"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: shakespeare-club
+  title: "Shakespeare Club"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: spicy-wave
+  title: "Spicy Wave"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: static
+  title: "Static"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: sunrave
+  title: "Sunrave"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-de-fontblanche
+  title: "Theatre de Fontblanche"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-des-chartreux
+  title: "Theatre des Chartreux"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-du-bois-de-l-aune
+  title: "Theatre du Bois de l Aune"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: tormento
+  title: "Tormento"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: tos-event
+  title: "Tos Event"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: trackass
+  title: "Trackass"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: white-rabbit
+  title: "White Rabbit"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: zinzin-family
+  title: "Zinzin Family"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
