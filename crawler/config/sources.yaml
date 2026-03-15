@@ -327,6 +327,26 @@ sources:
       "cuisine": "communaute"
       "CUISINE": "communaute"
 
+  # Théâtre Joliette - Theatre in the Joliette district of Marseille
+  # Hosts theatre, dance, performance, poetry, and circus events
+  - name: "Théâtre Joliette"
+    id: "theatrejoliette"
+    url: "https://www.theatrejoliette.fr/programmation/25-26"
+    parser: "theatrejoliette"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "théâtre": "theatre"
+      "theatre": "theatre"
+      "danse": "danse"
+      "poésie": "communaute"
+      "marionnette": "theatre"
+      "cirque": "theatre"
+      "performance": "theatre"
+      "slam": "communaute"
+
   # Espace Julien - Music and performance venue on Cours Julien in Marseille
   # Also manages Le Makeda and Cafe Julien venues
   - name: "Espace Julien"
