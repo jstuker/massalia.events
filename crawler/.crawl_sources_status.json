@@ -76,5 +76,11 @@
     "events_accepted": 9,
     "events_rejected": 32,
     "timestamp": "2026-03-13T12:40:51.354668+01:00"
+  },
+  "theatrejoliette": {
+    "status": "success",
+    "events_accepted": 10,
+    "events_rejected": 0,
+    "timestamp": "2026-03-15T17:09:58.770649+01:00"
   }
 }
