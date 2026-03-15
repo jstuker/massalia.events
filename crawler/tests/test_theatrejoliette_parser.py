@@ -32,36 +32,27 @@ def sample_listing_html():
     <html>
     <body>
         <h2>Événements à venir</h2>
-        <div class="tile_item tile_simple">
-            <a href="/programmation/25-26/minga-de-una-casa-en-ruinas">
-                <div class="image__contain"></div>
-                <div class="tile__inner">
-                    <span class="label_status">théâtre</span>
-                    <h3>Minga de una casa en ruinas</h3>
-                    <time>19-20 mars 2026</time>
-                </div>
-            </a>
-        </div>
-        <div class="tile_item tile_simple">
-            <a href="/programmation/25-26/good-sex">
-                <div class="image__contain"></div>
-                <div class="tile__inner">
-                    <span class="label_status">théâtre</span>
-                    <h3>Good Sex</h3>
-                    <time>24-27 mars 2026</time>
-                </div>
-            </a>
-        </div>
-        <div class="tile_item tile_simple">
-            <a href="/programmation/25-26/ni-ni-ya-mo-mo">
-                <div class="image__contain"></div>
-                <div class="tile__inner">
-                    <span class="label_status">danse</span>
-                    <h3>Ni ni ya mo mo</h3>
-                    <time>20 mai 2026</time>
-                </div>
-            </a>
-        </div>
+        <article class="grid_item tile_item tile_event tile__has_link_global">
+            <div class="tile__inner">
+                <h3 class="tile__heading">Minga de una casa en ruinas</h3>
+                <ul class="list__categories categories"><li class="list__item">théâtre</li></ul>
+                <p><a href="/programmation/25-26/minga-de-una-casa-en-ruinas">+ d'info</a></p>
+            </div>
+        </article>
+        <article class="grid_item tile_item tile_event tile__has_link_global">
+            <div class="tile__inner">
+                <h3 class="tile__heading">Good Sex</h3>
+                <ul class="list__categories categories"><li class="list__item">théâtre</li></ul>
+                <p><a href="/programmation/25-26/good-sex">+ d'info</a></p>
+            </div>
+        </article>
+        <article class="grid_item tile_item tile_event tile__has_link_global">
+            <div class="tile__inner">
+                <h3 class="tile__heading">Ni ni ya mo mo</h3>
+                <ul class="list__categories categories"><li class="list__item">danse</li></ul>
+                <p><a href="/programmation/25-26/ni-ni-ya-mo-mo">+ d'info</a></p>
+            </div>
+        </article>
     </body>
     </html>
     """
@@ -200,12 +191,12 @@ class TestExtractEventUrls:
 
     def test_deduplicates_urls(self):
         html = """
-        <div class="tile_item tile_simple">
-            <a href="/programmation/25-26/test-event">Link 1</a>
-        </div>
-        <div class="tile_item tile_simple">
-            <a href="/programmation/25-26/test-event">Link 2</a>
-        </div>
+        <article class="grid_item tile_item tile_event">
+            <p><a href="/programmation/25-26/test-event">Link 1</a></p>
+        </article>
+        <article class="grid_item tile_item tile_event">
+            <p><a href="/programmation/25-26/test-event">Link 2</a></p>
+        </article>
         """
         parser = HTMLParser(
             html,

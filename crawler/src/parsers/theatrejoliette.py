@@ -30,8 +30,8 @@ def _extract_event_urls(parser: HTMLParser) -> list[str]:
     """
     urls = set()
 
-    for tile in parser.select(".tile_item.tile_simple"):
-        link = tile.select_one("a[href]")
+    for article in parser.select("article.tile_event"):
+        link = article.select_one('a[href*="/programmation/"]')
         if not link:
             continue
 
@@ -42,7 +42,11 @@ def _extract_event_urls(parser: HTMLParser) -> list[str]:
         if href.startswith("/"):
             href = f"{BASE_URL}{href}"
 
-        if "/programmation/" in href and href != parser.base_url:
+        # Skip the listing page URL itself
+        if href.rstrip("/") == parser.base_url.rstrip("/"):
+            continue
+
+        if "/programmation/" in href:
             urls.add(href)
 
     return sorted(urls)
@@ -157,7 +161,7 @@ def _extract_category_from_html(html: str) -> str | None:
     """
     parser = HTMLParser(html, "")
 
-    for selector in [".label_status", ".tag"]:
+    for selector in [".list__categories .list__item", ".label_status", ".tag"]:
         elem = parser.select_one(selector)
         if elem:
             text = elem.get_text().strip().lower()
