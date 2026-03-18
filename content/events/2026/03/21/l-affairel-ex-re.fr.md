@@ -1,4 +1,6 @@
 ---
+alternateSources:
+- https://journalzebuline.fr/laffaire-l-ex-%cf%80-re/
 categories:
 - theatre
 date: '2026-03-21T20:00:00+01:00'
@@ -11,7 +13,7 @@ eventURL: https://theatre-lacriee.com/programmation/evenements/laffaire-lexpre
 expired: false
 expiryDate: '2026-03-22T00:00:00+01:00'
 image: /images/events/l-affairel-ex-re-fe69e0e5.webp
-lastCrawled: '2026-03-01T20:38:32.617009'
+lastCrawled: '2026-03-18T16:49:03.079876'
 locations:
 - la-criee
 name: L’affaire L.ex.π.Re
@@ -22,6 +24,7 @@ sourceIds:
 - lacriee:laffaire-lexpre:20260320-2000
 - lacriee:laffaire-lexpre:20260321-0120
 - lacriee:laffaire-lexpre:20260319-2000
+- journalzebuline:135388-0-3
 startTime: '20:00'
 tags: []
 title: L’affaire L.ex.π.Re

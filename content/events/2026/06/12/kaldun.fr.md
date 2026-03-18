@@ -1,0 +1,24 @@
+---
+title: Kaldûn
+slug: kaldun
+date: '2026-06-12T20:00:00+02:00'
+draft: false
+expiryDate: '2026-06-13T00:00:00+02:00'
+name: Kaldûn
+eventURL: https://theatre-lacriee.com/programmation/evenements/kaldun
+startTime: '20:00'
+description: « – Tu vois l’arbre là-bas, et l’autre plus loin ? Tu vois les arbres de là à là-bas ? Et ben tout ça maintenant c’est chez moi. – Pourquoi ? – Parce que je...
+categories:
+- theatre
+locations:
+- la-criee
+dates:
+- vendredi-12-juin
+tags: []
+image: /images/events/kaldun-acd39cc8.webp
+sourceId: lacriee:kaldun:20260612-2000
+lastCrawled: '2026-03-18T16:50:00+01:00'
+expired: false
+---
+
+« – Tu vois l’arbre là-bas, et l’autre plus loin ? Tu vois les arbres de là à là-bas ? Et ben tout ça maintenant c’est chez moi. – Pourquoi ? – Parce que je...

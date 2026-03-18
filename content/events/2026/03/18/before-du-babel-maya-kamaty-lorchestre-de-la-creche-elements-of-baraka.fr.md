@@ -1,6 +1,7 @@
 ---
 alternateSources:
 - https://13.agendaculturel.fr/concert/marseille/before-du-babel-maya-kamaty-l-orchestre-de-la-creche-et-elem.html
+- https://shotgun.live/fr/events/beforebabel
 categories:
 - musique
 date: '2026-03-18T20:00:00+01:00'
@@ -14,7 +15,7 @@ eventURL: https://www.lemakeda.com/evenements/before-du-babel-maya-kamaty-lorche
 expired: false
 expiryDate: '2026-03-19T00:00:00+01:00'
 image: /images/events/before-du-babel-maya-kamaty-lorchestre-de-la-crech-240ef0f1.webp
-lastCrawled: '2026-03-01T20:20:27.220246'
+lastCrawled: '2026-03-18T16:47:44.358498'
 locations:
 - le-makeda
 name: 'Before du Babel : Maya Kamaty + L’Orchestre de la Crèche + Elements of Baraka'
@@ -23,6 +24,7 @@ sourceId: lemakeda:39662
 sourceIds:
 - lemakeda:39662
 - agendaculturel:concert/marseille/before-du-babel-maya-kamaty-l-orchestre-de-la-creche-et-elem
+- shotgun:beforebabel
 startTime: '20:00'
 tags:
 - musique électronique
