@@ -2007,3 +2007,220 @@
   aliases: []
   body: ""
 
+
+# ============================================================
+# Auto-discovered venues (stub entries -- fill in details)
+# ============================================================
+
+- slug: abbaye-st-victor
+  title: "Abbaye St Victor"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: adjm-event-marseille
+  title: "Adjm Event Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: centre-photo-marseille
+  title: "Centre Photo Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: cicada
+  title: "Cicada"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: jam-promotion
+  title: "Jam Promotion"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: kollectif-kharma
+  title: "Kollectif Kharma"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-caravelle-marseille
+  title: "La Caravelle Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: le-grand-barathon
+  title: "Le Grand Barathon"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: le-marlin
+  title: "Le Marlin"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: maison-m
+  title: "Maison M"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: marseille-comedy-club
+  title: "Marseille Comedy Club"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: musical-riot
+  title: "Musical Riot"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: musicame-france
+  title: "Musicame France"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: owarm13
+  title: "Owarm13"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: parc-borely-marseille
+  title: "Parc Borely Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: pata-negra-loves-u
+  title: "Pata Negra Loves U"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: prostpagande
+  title: "Prostpagande"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: solstitium
+  title: "Solstitium"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-de-lodeon
+  title: "Theatre de Lodeon"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-du-carre-rond
+  title: "Theatre du Carre Rond"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: une-epopee-humaine-et-politique-qui-nous-plonge-dans-lhistoire-meconnue-et-passionnante-de-la-nouvelle-caledonie-portee-par-15-artistes-venu-es-de-trois-continents-dans-un-puissant-souffle-musical
+  title: "Une Epopee Humaine et Politique Qui Nous Plonge Dans Lhistoire Meconnue et Passionnante de la Nouvelle Caledonie Portee Par 15 Artistes Venu Es de Trois Continents Dans Un Puissant Souffle Musical"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: zef
+  title: "Zef"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+
+# ============================================================
+# Auto-discovered venues (stub entries -- fill in details)
+# ============================================================
+
+- slug: le-criee
+  title: "Le Criee"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+

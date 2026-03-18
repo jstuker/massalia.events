@@ -11,7 +11,7 @@ description: « – Tu vois l’arbre là-bas, et l’autre plus loin ? Tu vois 
 categories:
 - theatre
 locations:
-- une-epopee-humaine-et-politique-qui-nous-plonge-dans-lhistoire-meconnue-et-passionnante-de-la-nouvelle-caledonie-portee-par-15-artistes-venu-es-de-trois-continents-dans-un-puissant-souffle-musical
+- la-criee
 dates:
 - samedi-13-juin
 tags: []
