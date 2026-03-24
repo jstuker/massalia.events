@@ -1,24 +1,29 @@
 ---
-title: Kaldûn
-slug: kaldun
-date: '2026-06-13T02:05:00+02:00'
-draft: false
-expiryDate: '2026-06-14T00:00:00+02:00'
-name: Kaldûn
-eventURL: https://theatre-lacriee.com/programmation/evenements/kaldun
-startTime: 02:05
-description: « – Tu vois l’arbre là-bas, et l’autre plus loin ? Tu vois les arbres de là à là-bas ? Et ben tout ça maintenant c’est chez moi. – Pourquoi ? – Parce que je...
 categories:
 - theatre
-locations:
-- la-criee
+date: '2026-06-13T02:05:00+02:00'
 dates:
 - samedi-13-juin
-tags: []
-image: /images/events/kaldun-acd39cc8.webp
-sourceId: lacriee:kaldun:20260613-0205
-lastCrawled: '2026-03-18T16:50:00+01:00'
+description: « – Tu vois l’arbre là-bas, et l’autre plus loin ? Tu vois les arbres
+  de là à là-bas ? Et ben tout ça maintenant c’est chez moi. – Pourquoi ? – Parce
+  que je...
+draft: false
+eventURL: https://theatre-lacriee.com/programmation/evenements/kaldun
 expired: false
+expiryDate: '2026-06-14T00:00:00+02:00'
+image: /images/events/kaldun-acd39cc8.webp
+lastCrawled: '2026-03-24T11:45:36.292831'
+locations:
+- la-criee
+name: Kaldûn
+slug: kaldun
+sourceId: lacriee:kaldun:20260613-0205
+sourceIds:
+- lacriee:kaldun:20260613-0205
+- lacriee:kaldun:20260613-2000
+startTime: 02:05
+tags: []
+title: Kaldûn
 ---
 
 « – Tu vois l’arbre là-bas, et l’autre plus loin ? Tu vois les arbres de là à là-bas ? Et ben tout ça maintenant c’est chez moi. – Pourquoi ? – Parce que je...
