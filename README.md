@@ -67,9 +67,12 @@ massalia.events/
 ### Setup (one-time)
 
 ```bash
-# Clone repository
-git clone https://github.com/jstuker/massalia.events.git
+# Clone repository (--recurse-submodules pulls the Blowfish theme)
+git clone --recurse-submodules https://github.com/jstuker/massalia.events.git
 cd massalia.events
+
+# If you already cloned without --recurse-submodules, init the theme manually:
+git submodule update --init --recursive
 
 # Set up crawler
 cd crawler

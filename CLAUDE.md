@@ -11,6 +11,11 @@ Massalia Events is a static website that aggregates cultural events from multipl
 
 ## Common Commands
 
+### Initial Setup
+```bash
+git submodule update --init --recursive  # Required: pulls Blowfish theme
+```
+
 ### Development
 ```bash
 make serve               # Start Hugo dev server at localhost:1313
