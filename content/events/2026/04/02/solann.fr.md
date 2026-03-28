@@ -17,7 +17,7 @@ dates:
 tags: []
 image: /images/events/2026/04/solann-4834109c.webp
 sourceId: agendaculturel:concert/marseille/solann
-lastCrawled: '2026-03-24T11:28:07+01:00'
+lastCrawled: '2026-03-28T15:30:05+01:00'
 expired: false
 ---
 

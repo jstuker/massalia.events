@@ -18,7 +18,7 @@ tags:
 - vwa
 image: /images/events/vwa-langages-sciences-sociales-et-cinema-j-avancer-939d9a8d.webp
 sourceId: videodrome2:vwa-langages-sciences-sociales-et-cinema-javancerai-vers-toi-avec-les-yeux-dun-s
-lastCrawled: '2026-03-24T11:46:01+01:00'
+lastCrawled: '2026-03-28T15:49:44+01:00'
 expired: false
 ---
 

@@ -18,7 +18,7 @@ tags:
 - grainsdelumiere2026
 image: /images/events/grains-de-lumiere-carte-blanche-a-guillaume-caille-768d6c45.webp
 sourceId: videodrome2:grains-de-lumiere-carte-blanche-a-guillaume-cailleau
-lastCrawled: '2026-03-24T11:45:56+01:00'
+lastCrawled: '2026-03-28T15:49:23+01:00'
 expired: false
 ---
 

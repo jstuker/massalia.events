@@ -18,7 +18,7 @@ tags:
 - iliennes2026
 image: /images/events/festival-iliennes-2eme-edition-regards-haitiens-7dd2278e.webp
 sourceId: videodrome2:festival-iliennes-2eme-edition-regards-haitiens
-lastCrawled: '2026-03-24T11:45:55+01:00'
+lastCrawled: '2026-03-28T15:49:22+01:00'
 expired: false
 ---
 

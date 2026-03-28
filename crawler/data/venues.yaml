@@ -2224,3 +2224,175 @@
   aliases: []
   body: ""
 
+
+# ============================================================
+# Auto-discovered venues (stub entries -- fill in details)
+# ============================================================
+
+- slug: 40-rue-espariat
+  title: "40 Rue Espariat"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: 5-rue-du-chantier
+  title: "5 Rue du Chantier"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: after-run-marseille
+  title: "After Run Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: eglise-du-saint-esprit
+  title: "Eglise du Saint Esprit"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: festival-de-paques
+  title: "Festival de Paques"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: foyer-ernest-reyer
+  title: "Foyer Ernest Reyer"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: itslaruche
+  title: "Itslaruche"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: kumquat
+  title: "Kumquat"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: liquid-disco
+  title: "Liquid Disco"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: lusine
+  title: "Lusine"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: portail-coucou
+  title: "Portail Coucou"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: purple-bar-a-cocktails-dansant
+  title: "Purple Bar a Cocktails Dansant"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-l-archange
+  title: "Theatre l Archange"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theodasson
+  title: "Theodasson"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: thermostat-9
+  title: "Thermostat 9"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: tribematik
+  title: "Tribematik"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: vybz
+  title: "Vybz"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+
+# ============================================================
+# Auto-discovered venues (stub entries -- fill in details)
+# ============================================================
+
+- slug: atelier-sevin-doering
+  title: "Atelier Sevin Doering"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+

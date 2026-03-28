@@ -18,7 +18,7 @@ tags:
 - soundtrack
 image: /images/events/soundtrack-4-only-lovers-left-alive-de-jim-jarmusc-ee8a4bd0.webp
 sourceId: videodrome2:soundtrack-4-only-lovers-left-alive-de-jim-jarmusch
-lastCrawled: '2026-03-24T11:46:00+01:00'
+lastCrawled: '2026-03-28T15:49:39+01:00'
 expired: false
 ---
 

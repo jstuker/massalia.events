@@ -12,7 +12,7 @@ eventURL: https://theatre-lacriee.com/programmation/evenements/kaldun
 expired: false
 expiryDate: '2026-06-14T00:00:00+02:00'
 image: /images/events/kaldun-acd39cc8.webp
-lastCrawled: '2026-03-24T11:45:36.292831'
+lastCrawled: '2026-03-28T15:49:02.425628'
 locations:
 - la-criee
 name: Kaldûn

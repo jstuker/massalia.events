@@ -60,28 +60,47 @@ massalia.events/
 
 ### Prerequisites
 
-- Python 3.11+
-- Hugo (extended version)
-- Git
+Install these tools before setting up the project:
 
-### Setup (one-time)
+| Tool | Min Version | Install (macOS) | Purpose |
+|------|-------------|-----------------|---------|
+| **Git** | any | `brew install git` | Version control |
+| **Python** | 3.11+ | `brew install python` | Crawler runtime |
+| **Hugo** | 0.154+ (extended) | `brew install hugo` | Static site generator |
+| **Go** | 1.21+ (optional) | `brew install go` | Hugo modules |
+
+Verify with:
+```bash
+git --version
+python3 --version    # Must be 3.11 or higher
+hugo version         # Must show "extended"
+```
+
+### New Machine Setup (one-time)
 
 ```bash
-# Clone repository (--recurse-submodules pulls the Blowfish theme)
+# 1. Install system dependencies (macOS with Homebrew)
+brew install git python hugo
+
+# 2. Clone repository (--recurse-submodules pulls the Blowfish theme)
 git clone --recurse-submodules https://github.com/jstuker/massalia.events.git
 cd massalia.events
 
 # If you already cloned without --recurse-submodules, init the theme manually:
 git submodule update --init --recursive
 
-# Set up crawler
+# 3. Set up crawler Python environment
 cd crawler
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# For Shotgun (requires browser automation)
+# 4. For Shotgun and AgendaCulturel parsers (browser automation)
 pip install playwright && playwright install chromium
+
+# 5. Verify everything works
+make check             # Check Hugo + Git + theme
+cd crawler && python crawl.py validate   # Check crawler config
 ```
 
 ### Daily Workflow

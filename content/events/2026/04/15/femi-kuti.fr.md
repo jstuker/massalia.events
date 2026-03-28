@@ -17,7 +17,7 @@ dates:
 tags: []
 image: /images/events/2026/04/femi-kuti-ed2e630c.webp
 sourceId: agendaculturel:concert/aix-en-provence/femi-kuti
-lastCrawled: '2026-03-24T11:28:05+01:00'
+lastCrawled: '2026-03-28T15:30:05+01:00'
 expired: false
 ---
 

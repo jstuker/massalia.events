@@ -7,7 +7,7 @@ expiryDate: '2026-04-29T00:00:00+02:00'
 name: Grains de Lumière | Écrire la ville
 eventURL: https://www.videodrome2.fr/grains-de-lumiere-ecrire-la-ville/
 startTime: '20:00'
-description: Manifestation organisée par Grains de Lumière, conçue et réalisée par Mireille Laplace avec le soutien de la Région Sud et de la Ville de Marseille...
+description: Manifestation organisée par Grains de Lumière, conçue et réalisée par Mireille Laplace avec le soutien de la Région Sud et de la Ville de Marseille Écrire...
 categories:
 - art
 locations:
@@ -16,10 +16,10 @@ dates:
 - mardi-28-avril
 tags:
 - grainsdelumiere2026
-image: /images/events/grains-de-lumiere-ecrire-la-ville-0dd92155.webp
+image: /images/events/grains-de-lumiere-ecrire-la-ville-312bba72.webp
 sourceId: videodrome2:grains-de-lumiere-ecrire-la-ville
-lastCrawled: '2026-03-24T11:45:57+01:00'
+lastCrawled: '2026-03-28T15:49:24+01:00'
 expired: false
 ---
 
-Manifestation organisée par Grains de Lumière, conçue et réalisée par Mireille Laplace avec le soutien de la Région Sud et de la Ville de Marseille...
+Manifestation organisée par Grains de Lumière, conçue et réalisée par Mireille Laplace avec le soutien de la Région Sud et de la Ville de Marseille Écrire...

@@ -22,7 +22,7 @@ tags:
 - newsletter
 image: /images/events/lamoureux-de-madame-muscle-721ed420.webp
 sourceId: lafriche:lamoureux-de-madame-muscle
-lastCrawled: '2026-03-24T11:22:25+01:00'
+lastCrawled: '2026-03-28T15:24:43+01:00'
 expired: false
 ---
 

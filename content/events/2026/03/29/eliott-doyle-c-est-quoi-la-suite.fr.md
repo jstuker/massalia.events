@@ -17,7 +17,7 @@ dates:
 tags: []
 image: /images/events/2026/03/eliott-doyle-c-est-quoi-la-suite-2adf05f9.webp
 sourceId: agendaculturel:theatre/marseille/eliott-doyle-c-est-quoi-la-suite
-lastCrawled: '2026-03-24T11:28:08+01:00'
+lastCrawled: '2026-03-28T15:30:05+01:00'
 expired: false
 ---
 
