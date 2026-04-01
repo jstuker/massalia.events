@@ -22,8 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DART_SASS_VERSION: 1.98.0
-      GO_VERSION: 1.26.0
-      HUGO_VERSION: 0.157.0
+      GO_VERSION: 1.26.1
+      HUGO_VERSION: 0.159.1
       NODE_VERSION: 24.14.0
       TZ: Europe/Paris
     steps:
@@ -43,7 +43,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Create directory for user-specific executable files
         run: |
           mkdir -p "${HOME}/.local"
@@ -106,5 +106,5 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
