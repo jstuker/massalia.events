@@ -348,6 +348,32 @@ sources:
       "slam": "communaute"
       "création": "theatre"
 
+  # Biennale des écritures du réel - Théâtre La Cité
+  # Multidisciplinary festival: theatre, film, lectures, concerts, performances
+  # Events take place at various venues across Marseille
+  - name: "Biennale des écritures du réel"
+    id: "ecrituresdureel"
+    url: "https://www.theatrelacite.com/biennales/biennale-8/programmation"
+    parser: "ecrituresdureel"
+    enabled: true
+    rate_limit:
+      requests_per_second: 0.5
+      delay_between_pages: 3.0
+    categories_map:
+      "spectacle": "theatre"
+      "film": "art"
+      "lecture performée": "theatre"
+      "concert narratif": "musique"
+      "concert": "musique"
+      "rencontre": "communaute"
+      "création radiophonique": "art"
+      "performance": "theatre"
+      "DJ SET": "musique"
+      "repas partagé": "communaute"
+      "atelier": "communaute"
+      "lecture": "communaute"
+      "installation": "art"
+
   # Espace Julien - Music and performance venue on Cours Julien in Marseille
   # Also manages Le Makeda and Cafe Julien venues
   - name: "Espace Julien"
