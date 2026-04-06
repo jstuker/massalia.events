@@ -11,7 +11,7 @@ description: Raphaël Cohen et Vincent TDI présentent 30/30, un spectacle de th
 categories:
 - theatre
 locations:
-- 15-impasse-jules-auvergne
+- La-grange-studio-15
 dates:
 - samedi-11-avril
 tags: []
