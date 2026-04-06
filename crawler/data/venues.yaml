@@ -2396,3 +2396,341 @@
   aliases: []
   body: ""
 
+
+# ============================================================
+# Auto-discovered venues (stub entries -- fill in details)
+# ============================================================
+
+- slug: 18-rue-neuve-ste-catherine
+  title: "18 Rue Neuve Ste Catherine"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: 22-rue-jobin
+  title: "22 Rue Jobin"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: artplexe-canebiere
+  title: "Artplexe Canebiere"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: black-angus
+  title: "Black Angus"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: blaisy-records
+  title: "Blaisy Records"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: blakkout
+  title: "Blakkout"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: bonbonne
+  title: "Bonbonne"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: carlala
+  title: "Carlala"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: centre-social-del-rio
+  title: "Centre Social Del Rio"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: centre-social-les-musardises
+  title: "Centre Social les Musardises"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: centre-social-les-musardises-centre-social-del-rio
+  title: "Centre Social les Musardises Centre Social Del Rio"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: centre-social-saint-mauront
+  title: "Centre Social Saint Mauront"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: cinema-les-varietes
+  title: "Cinema les Varietes"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: coconut-groove
+  title: "Coconut Groove"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: college-edgar-quinet
+  title: "College Edgar Quinet"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: derapage
+  title: "Derapage"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: domaine-la-ferme-hi-bride
+  title: "Domaine la Ferme Hi Bride"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: envol-production
+  title: "Envol Production"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: espace-culturel-busserine
+  title: "Espace Culturel Busserine"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: hardpulsefr
+  title: "Hardpulsefr"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: kryptonite-events
+  title: "Kryptonite Events"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: la-nuit-des-griots
+  title: "La Nuit des Griots"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: lamam-la-maison-des-arts-de-marseille
+  title: "Lamam la Maison des Arts de Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: lamuse-gueule-comedy-club
+  title: "Lamuse Gueule Comedy Club"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: lastronef
+  title: "Lastronef"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: librairie-maupetit
+  title: "Librairie Maupetit"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: pluriels
+  title: "Pluriels"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: polux
+  title: "Polux"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: r2-le-rooftop
+  title: "R2 le Rooftop"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: rafale-production
+  title: "Rafale Production"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: soweto-l-esprit-sl
+  title: "Soweto l Esprit Sl"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: sport-beach-marseille
+  title: "Sport Beach Marseille"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: sprezzaclub
+  title: "Sprezzaclub"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: technopol
+  title: "Technopol"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-la-cite
+  title: "Theatre la Cite"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: theatre-la-cite-lycee-professionnel-la-floride
+  title: "Theatre la Cite Lycee Professionnel la Floride"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+
+- slug: zonazu
+  title: "Zonazu"
+  description: ""
+  address: ""
+  website: ""
+  type: "Lieu"
+  aliases: []
+  body: ""
+

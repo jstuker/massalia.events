@@ -1,12 +1,12 @@
 ---
-title: "1 Rue des Trois Rois"
+title: "L’Ekonature"
 description: ""
 
 # Informations du lieu
-address: ""
-website: ""
+address: "1 rue des Trois Rois, 13006 Marseill"
+website: "https://www.facebook.com/lekonature/"
 type: "Lieu"
 
 # Aliases pour le crawler (variations du nom)
-aliases:
+aliases: "1 Rue des Trois Rois"
 ---

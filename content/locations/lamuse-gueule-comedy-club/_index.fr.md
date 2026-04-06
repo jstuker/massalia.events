@@ -1,12 +1,12 @@
 ---
-title: "Eglise du Saint Esprit"
+title: "Lamuse Gueule Comedy Club"
 description: ""
 
 # Informations du lieu
 address: ""
-website: "40 Rue Espariat, 13100 Aix-en-Provence"
+website: ""
 type: "Lieu"
 
 # Aliases pour le crawler (variations du nom)
-aliases: "40 Rue Espariat"
+aliases:
 ---
