@@ -1,6 +1,7 @@
 ---
 alternateSources:
 - https://espace-julien.com/agenda/dynamite-shakers
+- https://13.agendaculturel.fr/concert/marseille/dynamite-shakers.html
 categories:
 - musique
 date: '2026-04-18T20:00:00+02:00'
@@ -13,7 +14,7 @@ eventURL: https://www.lemakeda.com/evenements/dynamite-shakers/
 expired: false
 expiryDate: '2026-04-19T00:00:00+02:00'
 image: /images/events/dynamite-shakers-331da1df.webp
-lastCrawled: '2026-02-21T17:01:18.749150'
+lastCrawled: '2026-04-14T13:43:41.545422'
 locations:
 - le-makeda
 name: Dynamite Shakers
@@ -22,6 +23,7 @@ sourceId: lemakeda:38178
 sourceIds:
 - lemakeda:38178
 - espacejulien:dynamite-shakers
+- agendaculturel:concert/marseille/dynamite-shakers
 startTime: '20:00'
 tags:
 - rock
