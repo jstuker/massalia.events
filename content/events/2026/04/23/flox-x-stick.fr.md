@@ -1,6 +1,7 @@
 ---
 alternateSources:
 - https://13.agendaculturel.fr/concert/marseille/flox-x-stick.html
+- https://shotgun.live/fr/events/flox-xstick
 categories:
 - musique
 date: '2026-04-23T20:00:00+02:00'
@@ -14,7 +15,7 @@ eventURL: https://www.lemakeda.com/evenements/flox-x-stick/
 expired: false
 expiryDate: '2026-04-24T00:00:00+02:00'
 image: /images/events/flox-x-stick-48d27e8f.webp
-lastCrawled: '2026-04-14T13:43:42.263093'
+lastCrawled: '2026-04-22T16:38:52.656980'
 locations:
 - le-makeda
 name: Flox + X Stick
@@ -23,6 +24,7 @@ sourceId: lemakeda:39322
 sourceIds:
 - lemakeda:39322
 - agendaculturel:concert/marseille/flox-x-stick
+- shotgun:flox-xstick
 startTime: '20:00'
 tags:
 - dub

@@ -4,5 +4,5 @@ description: "Promoteur d'evenements musicaux a Marseille, organisant des soiree
 address: ""
 website: ""
 type: "Promoteur"
-aliases:
+aliases: []
 ---

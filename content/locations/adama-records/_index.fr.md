@@ -4,5 +4,5 @@ description: "Label de musique electronique specialise dans les genres progressi
 address: ""
 website: ""
 type: "Label"
-aliases:
+aliases: []
 ---

@@ -4,5 +4,5 @@ description: "Promoteur de soirees dans la region Aix-Marseille."
 address: ""
 website: ""
 type: "Promoteur"
-aliases:
+aliases: []
 ---

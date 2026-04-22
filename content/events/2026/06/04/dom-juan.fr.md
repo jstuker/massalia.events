@@ -11,7 +11,7 @@ eventURL: https://theatre-lacriee.com/programmation/evenements/dom-juan
 expired: false
 expiryDate: '2026-06-05T00:00:00+02:00'
 image: /images/events/dom-juan-4be81a49.webp
-lastCrawled: '2026-03-13T12:37:49.727942'
+lastCrawled: '2026-04-22T16:50:33.037138'
 locations:
 - la-criee
 name: Dom Juan
@@ -23,6 +23,8 @@ sourceIds:
 - lacriee:dom-juan:20260605-1815
 - lacriee:dom-juan:20260605-2000
 - lacriee:dom-juan:20260606-2000
+- lacriee:dom-juan:20260607-0230
+- lacriee:dom-juan:20260607-1600
 startTime: '20:00'
 tags: []
 title: Dom Juan
