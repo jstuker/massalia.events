@@ -1,6 +1,6 @@
 disabled = false
-languageCode = "fr"
-languageName = "Français"
+locale = "fr"
+label = "Français"
 weight = 1
 title = "Massalia Events | Les prochains événements à Marseille"
 
