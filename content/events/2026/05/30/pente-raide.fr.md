@@ -1,24 +1,28 @@
 ---
-title: Pente Raide
-slug: pente-raide
-date: '2026-05-30T01:30:00+02:00'
-draft: false
-expiryDate: '2026-05-31T00:00:00+02:00'
-name: Pente Raide
-eventURL: https://theatre-lacriee.com/programmation/evenements/pente-raide
-startTime: 01:30
-description: 'Avec Pente raide, Samira Negrouche et Marin Fouqué prennent le risque d’un échange sans filet : un face-à-face escarpé, dans lequel se percutent les...'
 categories:
 - theatre
-locations:
-- salle-ouranos-19h
+date: '2026-05-30T01:30:00+02:00'
 dates:
 - samedi-30-mai
-tags: []
-image: /images/events/pente-raide-ab948d10.webp
-sourceId: lacriee:pente-raide:20260530-0130
-lastCrawled: '2026-04-22T16:50:42+01:00'
+description: 'Avec Pente raide, Samira Negrouche et Marin Fouqué prennent le risque
+  d’un échange sans filet : un face-à-face escarpé, dans lequel se percutent les...'
+draft: false
+eventURL: https://theatre-lacriee.com/programmation/evenements/pente-raide
 expired: false
+expiryDate: '2026-05-31T00:00:00+02:00'
+image: /images/events/pente-raide-ab948d10.webp
+lastCrawled: '2026-05-18T10:43:24.976476'
+locations:
+- salle-ouranos-19h
+name: Pente Raide
+slug: pente-raide
+sourceId: lacriee:pente-raide:20260530-0130
+sourceIds:
+- lacriee:pente-raide:20260530-0130
+- lacriee:pente-raide:20260530-1900
+startTime: 01:30
+tags: []
+title: Pente Raide
 ---
 
 Avec Pente raide, Samira Negrouche et Marin Fouqué prennent le risque d’un échange sans filet : un face-à-face escarpé, dans lequel se percutent les...
