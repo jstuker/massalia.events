@@ -1,25 +1,32 @@
 ---
-title: Zeid Hamdan – Le Makeda Marseille
-slug: zeid-hamdan-le-makeda-marseille
-date: '2026-05-28T20:00:00+02:00'
-draft: false
-expiryDate: '2026-05-29T00:00:00+02:00'
-name: Zeid Hamdan – Le Makeda Marseille
-eventURL: https://www.lemakeda.com/evenements/zeid-hamdan-le-makeda-marseille/
-startTime: '20:00'
-description: Zeid Hamdan 📅 Jeudi 28 Mai 2026- 20h 📍Le Makeda, 103 rue Ferrari, 13005 Marseille Le producteur libanais Zeid Hamdan, surnommé “Pope of lebanese underground”...
+alternateSources:
+- https://shotgun.live/fr/events/zeid-hamdan-le-makeda-marseille
 categories:
 - musique
-locations:
-- le-makeda
+date: '2026-05-28T20:00:00+02:00'
 dates:
 - jeudi-28-mai
+description: "Zeid Hamdan \U0001F4C5 Jeudi 28 Mai 2026- 20h \U0001F4CDLe Makeda, 103
+  rue Ferrari, 13005 Marseille Le producteur libanais Zeid Hamdan, surnommé “Pope
+  of lebanese underground”..."
+draft: false
+eventURL: https://www.lemakeda.com/evenements/zeid-hamdan-le-makeda-marseille/
+expired: false
+expiryDate: '2026-05-29T00:00:00+02:00'
+image: /images/events/zeid-hamdan-le-makeda-marseille-e871b8f3.webp
+lastCrawled: '2026-05-28T13:25:19.773315'
+locations:
+- le-makeda
+name: Zeid Hamdan – Le Makeda Marseille
+slug: zeid-hamdan-le-makeda-marseille
+sourceId: lemakeda:40099
+sourceIds:
+- lemakeda:40099
+- shotgun:zeid-hamdan-le-makeda-marseille
+startTime: '20:00'
 tags:
 - arabic new pop
-image: /images/events/zeid-hamdan-le-makeda-marseille-e871b8f3.webp
-sourceId: lemakeda:40099
-lastCrawled: '2026-04-14T14:00:49+01:00'
-expired: false
+title: Zeid Hamdan – Le Makeda Marseille
 ---
 
 Zeid Hamdan 📅 Jeudi 28 Mai 2026- 20h 📍Le Makeda, 103 rue Ferrari, 13005 Marseille Le producteur libanais Zeid Hamdan, surnommé “Pope of lebanese underground”...
