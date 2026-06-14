@@ -2,91 +2,89 @@
   "citemusique": {
     "status": "success",
     "events_accepted": 0,
-    "events_rejected": 0,
-    "timestamp": "2026-05-28T13:39:14.486127+02:00"
+    "events_rejected": 1,
+    "timestamp": "2026-06-14T15:33:32.461287+02:00"
   },
   "klap": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-05-28T13:14:18.504078+02:00"
+    "timestamp": "2026-06-14T15:16:09.966421+02:00"
   },
   "lafriche": {
     "status": "success",
     "events_accepted": 8,
-    "events_rejected": 8,
-    "timestamp": "2026-05-28T13:14:37.053202+02:00"
+    "events_rejected": 13,
+    "timestamp": "2026-06-14T15:16:31.873259+02:00"
   },
   "agendaculturel": {
-    "status": "success",
-    "events_accepted": 27,
-    "events_rejected": 13,
-    "timestamp": "2026-05-28T13:20:10.032720+02:00"
+    "status": "error",
+    "error": "BrowserType.launch: Executable doesn't exist at /Users/jstuker/Library/Caches/ms-playwright/chromium-1223/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+    "timestamp": "2026-06-14T15:16:35.096948+02:00"
   },
   "shotgun": {
-    "status": "success",
-    "events_accepted": 39,
-    "events_rejected": 2,
-    "timestamp": "2026-05-28T13:25:58.844986+02:00"
+    "status": "error",
+    "error": "It looks like you are using Playwright Sync API inside the asyncio loop.\nPlease use the Async API instead.",
+    "timestamp": "2026-06-14T15:16:35.100559+02:00"
   },
   "journalzebuline": {
     "status": "success",
-    "events_accepted": 11,
-    "events_rejected": 3163,
-    "timestamp": "2026-05-28T13:37:07.903493+02:00"
+    "events_accepted": 16,
+    "events_rejected": 416,
+    "timestamp": "2026-06-14T15:32:32.143932+02:00"
   },
   "cepacsilo": {
     "status": "success",
-    "events_accepted": 4,
-    "events_rejected": 90,
-    "timestamp": "2026-05-28T13:37:48.266027+02:00"
+    "events_accepted": 1,
+    "events_rejected": 94,
+    "timestamp": "2026-06-14T15:33:07.847994+02:00"
   },
   "lacriee": {
     "status": "success",
-    "events_accepted": 23,
-    "events_rejected": 0,
-    "timestamp": "2026-05-28T13:38:04.260162+02:00"
+    "events_accepted": 0,
+    "events_rejected": 1,
+    "timestamp": "2026-06-14T15:33:16.158443+02:00"
   },
   "loeuvre": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-05-28T13:38:04.858026+02:00"
+    "timestamp": "2026-06-14T15:33:16.943247+02:00"
   },
   "videodrome2": {
     "status": "success",
-    "events_accepted": 24,
+    "events_accepted": 2,
     "events_rejected": 1,
-    "timestamp": "2026-05-28T13:38:50.476949+02:00"
+    "timestamp": "2026-06-14T15:33:27.950160+02:00"
   },
   "lemakeda": {
     "status": "success",
-    "events_accepted": 12,
-    "events_rejected": 9,
-    "timestamp": "2026-05-28T13:39:07.114752+02:00"
+    "events_accepted": 0,
+    "events_rejected": 0,
+    "timestamp": "2026-06-14T15:33:28.786843+02:00"
   },
   "lezef": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-05-28T13:40:37.380092+02:00"
+    "timestamp": "2026-06-14T15:34:51.503471+02:00"
   },
   "espacejulien": {
     "status": "success",
     "events_accepted": 0,
-    "events_rejected": 41,
-    "timestamp": "2026-05-28T13:41:16.235161+02:00"
+    "events_rejected": 47,
+    "timestamp": "2026-06-14T15:35:36.144414+02:00"
   },
   "theatrejoliette": {
     "status": "success",
-    "events_accepted": 0,
+    "events_accepted": 1,
     "events_rejected": 0,
-    "timestamp": "2026-05-28T13:40:50.068716+02:00"
+    "timestamp": "2026-06-14T15:35:05.464616+02:00"
   },
   "ecrituresdureel": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-05-28T13:41:02.357216+02:00"
+    "timestamp": "2026-06-14T15:35:18.160357+02:00"
   }
 }
