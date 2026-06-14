@@ -18,14 +18,16 @@
     "timestamp": "2026-06-14T15:16:31.873259+02:00"
   },
   "agendaculturel": {
-    "status": "error",
-    "error": "BrowserType.launch: Executable doesn't exist at /Users/jstuker/Library/Caches/ms-playwright/chromium-1223/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
-    "timestamp": "2026-06-14T15:16:35.096948+02:00"
+    "status": "success",
+    "events_accepted": 28,
+    "events_rejected": 16,
+    "timestamp": "2026-06-14T15:52:53.008662+02:00"
   },
   "shotgun": {
-    "status": "error",
-    "error": "It looks like you are using Playwright Sync API inside the asyncio loop.\nPlease use the Async API instead.",
-    "timestamp": "2026-06-14T15:16:35.100559+02:00"
+    "status": "success",
+    "events_accepted": 36,
+    "events_rejected": 3,
+    "timestamp": "2026-06-14T15:58:28.004887+02:00"
   },
   "journalzebuline": {
     "status": "success",
