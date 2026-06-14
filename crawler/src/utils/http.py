@@ -3,6 +3,7 @@
 import hashlib
 import ipaddress
 import json
+import ssl
 import threading
 import time
 from dataclasses import dataclass, field
@@ -432,7 +433,7 @@ class HTTPClient:
 
                 logger.warning(f"HTTP {status} for {url}, retrying...")
 
-            except httpx.SSLError as e:
+            except ssl.SSLError as e:
                 elapsed_ms = (time.time() - start_time) * 1000
                 last_error = f"SSL error: {str(e)}"
                 logger.error(f"SSL error for {url}: {e}")
