@@ -7,23 +7,34 @@ test.describe('Event Detail Pages', () => {
     await expect(page.locator('main')).toBeVisible();
   });
 
+  // Events expire (expiryDate in front matter), so hardcoded event URLs
+  // eventually 404. Navigate via the first event link on the listing instead.
+  async function gotoFirstEvent(page) {
+    await page.goto('/events/');
+    const href = await page
+      .locator('main a[href*="/events/2"]')
+      .first()
+      .getAttribute('href');
+    expect(href).toBeTruthy();
+    await page.goto(href!);
+  }
+
   test('individual event page loads correctly', async ({ page }) => {
-    // Navigate to a known event page
-    await page.goto('/events/2026/01/27/concert-la-friche/');
+    await gotoFirstEvent(page);
 
-    // Check page loads
+    // Check page loads with a real event title, not the 404 page
     await expect(page.locator('main')).toBeVisible();
-
-    // Check for event title in heading
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(/Concert/i);
+    const heading = page.getByRole('heading', { level: 1 });
+    await expect(heading).not.toBeEmpty();
+    await expect(heading).not.toContainText(/Page non trouvée/i);
   });
 
   test('event page displays event metadata', async ({ page }) => {
-    await page.goto('/events/2026/01/27/concert-la-friche/');
+    await gotoFirstEvent(page);
 
     // Check for category or location link
-    const hasCategory = await page.getByText(/musique/i).count();
-    const hasLocation = await page.getByText(/friche/i).count();
+    const hasCategory = await page.locator('a[href*="/categories/"]').count();
+    const hasLocation = await page.locator('a[href*="/locations/"]').count();
 
     // Should have at least one of these
     expect(hasCategory + hasLocation).toBeGreaterThan(0);
