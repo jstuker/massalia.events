@@ -389,8 +389,15 @@ class LaCrieeParser(BaseCrawler):
                 logger.debug(f"Skipping external venue showtime: {venue_text}")
                 continue
 
-            # Determine location (default to La Criée if no venue specified)
-            location = self.map_location(venue_text or "La Criée")
+            # Determine location (default to La Criée if no venue specified).
+            # Room lines like "La Criée - Salle Déméter" or "20h - Salle
+            # Ouranos" are all La Criée; collapse them so they don't spawn
+            # bogus venues downstream.
+            venue_lower = (venue_text or "").lower()
+            if not venue_text or "crié" in venue_lower or "criee" in venue_lower or "salle" in venue_lower:
+                location = self.map_location("La Criée")
+            else:
+                location = self.map_location(venue_text)
 
             event = Event(
                 name=name,

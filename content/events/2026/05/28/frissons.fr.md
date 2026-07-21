@@ -14,7 +14,7 @@ expiryDate: '2026-05-29T00:00:00+02:00'
 image: /images/events/frissons-19a0f8ad.webp
 lastCrawled: '2026-05-18T10:43:23.815859'
 locations:
-- salle-ouranos-21h
+- la-criee
 name: Frissons
 slug: frissons
 sourceId: lacriee:frissons:20260528-0100

@@ -25,6 +25,17 @@ PARIS_TZ = ZoneInfo("Europe/Paris")
 # ── Fixtures ────────────────────────────────────────────────────────
 
 
+@pytest.fixture(autouse=True)
+def _frozen_now(freeze_time):
+    """Freeze 'now' at the date the fixtures below were written."""
+    freeze_time(
+        "2026-03-15T12:00:00+01:00",
+        "src.parsers.theatrejoliette",
+        "src.utils.french_date",
+        "src.utils.parser",
+    )
+
+
 @pytest.fixture
 def sample_listing_html():
     """Sample Théâtre Joliette listing page with event tiles."""

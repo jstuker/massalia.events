@@ -13,7 +13,7 @@ expiryDate: '2026-07-09T00:00:00+02:00'
 image: /images/events/apres-moi-le-deluge-c10150d6.webp
 lastCrawled: '2026-05-18T10:43:20.740227'
 locations:
-- 19h-le-5-juillet-21h-les-6-7-juillet-et-20h-le-8-juillet-salle-demeter
+- la-criee
 name: Après moi le Déluge
 slug: apres-moi-le-deluge
 sourceId: lacriee:apres-moi-le-deluge:20260708-0115

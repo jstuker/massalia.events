@@ -13,7 +13,7 @@ expiryDate: '2026-04-29T00:00:00+02:00'
 image: /images/events/il-faut-de-l-eau-de-la-pierre-et-du-feu-e9a3ee21.webp
 lastCrawled: '2026-05-18T10:43:24.023893'
 locations:
-- salle-ouranos-21h
+- la-criee
 name: Il faut de l'eau, de la pierre et du feu
 slug: il-faut-de-l-eau-de-la-pierre-et-du-feu
 sourceId: lacriee:il-faut-de-leau-de-la-pierre-et-du-feu:20260428-0100

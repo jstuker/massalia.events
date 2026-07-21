@@ -193,7 +193,7 @@ def main():
         # Don't print unchanged to reduce noise
 
     # Summary
-    print(f"\nSummary:")
+    print("\nSummary:")
     print(f"  Created:   {stats['created']}")
     print(f"  Updated:   {stats['updated']}")
     print(f"  Unchanged: {stats['unchanged']}")

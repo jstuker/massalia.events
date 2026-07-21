@@ -13,7 +13,7 @@ expiryDate: '2026-05-29T00:00:00+02:00'
 image: /images/events/20-pierres-092a8f0c.webp
 lastCrawled: '2026-05-18T10:43:18.655783'
 locations:
-- salle-ouranos-19h
+- la-criee
 name: 20 pierres
 slug: 20-pierres
 sourceId: lacriee:20-pierres:20260528-0100

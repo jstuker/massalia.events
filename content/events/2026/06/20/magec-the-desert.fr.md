@@ -12,7 +12,7 @@ expiryDate: '2026-06-21T00:00:00+02:00'
 image: /images/events/magec-the-desert-2898b462.webp
 lastCrawled: '2026-05-18T10:43:24.841231'
 locations:
-- 20h30-salle-demeter
+- la-criee
 name: Magec / The Desert
 slug: magec-the-desert
 sourceId: lacriee:magec-the-desert:20260620-0110

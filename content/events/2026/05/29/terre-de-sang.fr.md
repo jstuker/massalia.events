@@ -14,7 +14,7 @@ expiryDate: '2026-05-30T00:00:00+02:00'
 image: /images/events/terre-de-sang-ef7b0ccd.webp
 lastCrawled: '2026-05-18T10:43:26.301120'
 locations:
-- salle-demeter-20h30
+- la-criee
 name: Terre de sang
 slug: terre-de-sang
 sourceId: lacriee:terre-de-sang:20260529-0100

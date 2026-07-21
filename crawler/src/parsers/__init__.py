@@ -3,8 +3,8 @@
 from .agendaculturel import AgendaCulturelParser
 from .base import ConfigurableEventParser, ParsedEvent, SelectorConfig
 from .cepacsilo import CepacSiloParser
-from .ecrituresdureel import EcrituresDuReelParser
 from .citemusique import CiteMusiqueParser
+from .ecrituresdureel import EcrituresDuReelParser
 from .espacejulien import EspaceJulienParser
 from .journalzebuline import JournalZebulineParser
 from .klemenis import KlemenisParser

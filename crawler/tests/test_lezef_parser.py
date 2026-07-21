@@ -26,6 +26,17 @@ PARIS_TZ = ZoneInfo("Europe/Paris")
 # ── Fixtures ────────────────────────────────────────────────────────
 
 
+@pytest.fixture(autouse=True)
+def _frozen_now(freeze_time):
+    """Freeze 'now' at the date the fixtures below were written."""
+    freeze_time(
+        "2026-02-03T12:00:00+01:00",
+        "src.parsers.lezef",
+        "src.utils.french_date",
+        "src.utils.parser",
+    )
+
+
 @pytest.fixture
 def sample_ajax_html():
     """Sample Le Zef AJAX listing response with event cards."""
@@ -718,12 +729,11 @@ class TestLeZefParserIntegration:
 
         assert event is not None
         assert event.name == "Ongoing Exhibition"
-        # The event date should be today (not the past startDate)
-        from datetime import datetime
-        from zoneinfo import ZoneInfo
+        # The event date should be today (not the past startDate);
+        # 'today' is the frozen 'now' from the _frozen_now fixture
+        from datetime import date
 
-        today = datetime.now(ZoneInfo("Europe/Paris")).date()
-        assert event.start_datetime.date() == today
+        assert event.start_datetime.date() == date(2026, 2, 3)
         # Time should be 10:00 for exhibitions
         assert event.start_datetime.hour == 10
 

@@ -13,7 +13,7 @@ expiryDate: '2026-06-01T00:00:00+02:00'
 image: /images/events/l-imparfait-6e536bca.webp
 lastCrawled: '2026-05-18T10:43:24.638617'
 locations:
-- salle-ouranos-17h
+- la-criee
 name: L'imparfait
 slug: l-imparfait
 sourceId: lacriee:limparfait:20260531-0100

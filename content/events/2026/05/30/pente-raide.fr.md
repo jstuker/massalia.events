@@ -13,7 +13,7 @@ expiryDate: '2026-05-31T00:00:00+02:00'
 image: /images/events/pente-raide-ab948d10.webp
 lastCrawled: '2026-05-18T10:43:24.976476'
 locations:
-- salle-ouranos-19h
+- la-criee
 name: Pente Raide
 slug: pente-raide
 sourceId: lacriee:pente-raide:20260530-0130

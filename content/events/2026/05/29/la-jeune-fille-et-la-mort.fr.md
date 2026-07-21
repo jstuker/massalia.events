@@ -13,7 +13,7 @@ expiryDate: '2026-05-30T00:00:00+02:00'
 image: /images/events/la-jeune-fille-et-la-mort-476ddba1.webp
 lastCrawled: '2026-05-18T10:43:24.501909'
 locations:
-- salle-ouranos-19h
+- la-criee
 name: La jeune fille et la mort
 slug: la-jeune-fille-et-la-mort
 sourceId: lacriee:la-jeune-fille-et-la-mort:20260529-0100

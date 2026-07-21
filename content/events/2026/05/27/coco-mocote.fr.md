@@ -13,7 +13,7 @@ expiryDate: '2026-05-28T00:00:00+02:00'
 image: /images/events/coco-mocote-5e63d145.webp
 lastCrawled: '2026-05-18T10:43:23.084930'
 locations:
-- salle-ouranos-10h
+- la-criee
 name: Coco Mocote
 slug: coco-mocote
 sourceId: lacriee:coco-mocote:20260527-0100

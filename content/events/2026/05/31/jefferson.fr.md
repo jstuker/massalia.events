@@ -13,7 +13,7 @@ expiryDate: '2026-06-01T00:00:00+02:00'
 image: /images/events/jefferson-e220fddc.webp
 lastCrawled: '2026-05-18T10:43:24.163432'
 locations:
-- salle-ouranos-11h
+- la-criee
 name: Jefferson
 slug: jefferson
 sourceId: lacriee:jefferson:20260531-0100

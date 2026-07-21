@@ -26,6 +26,17 @@ PARIS_TZ = ZoneInfo("Europe/Paris")
 # ── Fixtures ────────────────────────────────────────────────────────
 
 
+@pytest.fixture(autouse=True)
+def _frozen_now(freeze_time):
+    """Freeze 'now' at the date the fixtures below were written."""
+    freeze_time(
+        "2026-02-21T12:00:00+01:00",
+        "src.parsers.espacejulien",
+        "src.utils.french_date",
+        "src.utils.parser",
+    )
+
+
 @pytest.fixture
 def sample_listing_html():
     """Sample Espace Julien listing page with event cards."""

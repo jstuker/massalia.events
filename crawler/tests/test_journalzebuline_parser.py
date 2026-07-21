@@ -955,7 +955,7 @@ class TestCrawlFlow:
             image_downloader=MagicMock(),
             markdown_generator=markdown_generator,
         )
-        events = parser.crawl()
+        parser.crawl()
 
         # Should have called fetch twice (page 1 and page 2)
         assert http_client.fetch.call_count == 2

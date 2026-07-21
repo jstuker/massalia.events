@@ -24,6 +24,17 @@ BASE_URL = "https://www.theatrelacite.com/biennales/biennale-8/programmation"
 # ── Fixtures ────────────────────────────────────────────────────────
 
 
+@pytest.fixture(autouse=True)
+def _frozen_now(freeze_time):
+    """Freeze 'now' at the date the fixtures below were written."""
+    freeze_time(
+        "2026-04-06T12:00:00+02:00",
+        "src.parsers.ecrituresdureel",
+        "src.utils.french_date",
+        "src.utils.parser",
+    )
+
+
 @pytest.fixture
 def sample_listing_html():
     """Sample listing page with event tiles."""

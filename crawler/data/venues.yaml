@@ -473,6 +473,9 @@
   type: "Club"
   aliases:
     - "/locations/ipn-aix-en-provence/"
+  search_names:
+    - "IPN Club"
+    - "IPN Club Aix"
   body: "L'IPN Club est une boite de nuit emblematique d'Aix-en-Provence situee sur le cours Sextius depuis 1988, proposant des soirees electro, hip-hop, house et mainstream du mardi au samedi."
 
 - slug: je-dis-techno
@@ -2825,33 +2828,6 @@
 # Auto-discovered venues (stub entries -- fill in details)
 # ============================================================
 
-- slug: 19h-le-5-juillet-21h-les-6-7-juillet-et-20h-le-8-juillet-salle-demeter
-  title: "19h le 5 Juillet 21h les 6 7 Juillet et 20h le 8 Juillet Salle Demeter"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
-- slug: 20h-salle-demeter
-  title: "20h Salle Demeter"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
-- slug: 20h30-salle-demeter
-  title: "20h30 Salle Demeter"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
 - slug: 34-projet
   title: "34 Projet"
   description: ""
@@ -3061,60 +3037,6 @@
 
 - slug: printemps-de-lart-contemporain
   title: "Printemps de Lart Contemporain"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
-- slug: salle-demeter-20h30
-  title: "Salle Demeter 20h30"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
-- slug: salle-ouranos-10h
-  title: "Salle Ouranos 10h"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
-- slug: salle-ouranos-11h
-  title: "Salle Ouranos 11h"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
-- slug: salle-ouranos-17h
-  title: "Salle Ouranos 17h"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
-- slug: salle-ouranos-19h
-  title: "Salle Ouranos 19h"
-  description: ""
-  address: ""
-  website: ""
-  type: "Lieu"
-  aliases: []
-  body: ""
-
-- slug: salle-ouranos-21h
-  title: "Salle Ouranos 21h"
   description: ""
   address: ""
   website: ""

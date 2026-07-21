@@ -13,7 +13,7 @@ expiryDate: '2026-06-29T00:00:00+02:00'
 image: /images/events/en-meme-temps-ce58cb2e.webp
 lastCrawled: '2026-05-18T10:43:23.681594'
 locations:
-- 20h-salle-demeter
+- la-criee
 name: En même temps
 slug: en-meme-temps
 sourceId: lacriee:en-meme-temps:20260628-0115
