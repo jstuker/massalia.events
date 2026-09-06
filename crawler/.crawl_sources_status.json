@@ -1,92 +1,92 @@
 {
   "citemusique": {
     "status": "success",
-    "events_accepted": 1,
+    "events_accepted": 0,
     "events_rejected": 2,
-    "timestamp": "2026-09-01T09:11:35.827892+02:00"
+    "timestamp": "2026-09-06T14:00:31.430759+02:00"
   },
   "klap": {
     "status": "success",
-    "events_accepted": 0,
-    "events_rejected": 23,
-    "timestamp": "2026-09-01T08:49:23.341306+02:00"
+    "events_accepted": 1,
+    "events_rejected": 22,
+    "timestamp": "2026-09-06T13:39:04.717322+02:00"
   },
   "lafriche": {
     "status": "success",
-    "events_accepted": 7,
-    "events_rejected": 4,
-    "timestamp": "2026-09-01T08:49:39.593140+02:00"
+    "events_accepted": 6,
+    "events_rejected": 6,
+    "timestamp": "2026-09-06T13:39:20.283912+02:00"
   },
   "agendaculturel": {
     "status": "success",
-    "events_accepted": 7,
-    "events_rejected": 8,
-    "timestamp": "2026-09-01T08:52:26.874584+02:00"
+    "events_accepted": 11,
+    "events_rejected": 2,
+    "timestamp": "2026-09-06T13:41:59.813558+02:00"
   },
   "shotgun": {
     "status": "success",
-    "events_accepted": 41,
+    "events_accepted": 40,
     "events_rejected": 1,
-    "timestamp": "2026-09-01T08:58:48.695832+02:00"
+    "timestamp": "2026-09-06T13:47:51.112188+02:00"
   },
   "journalzebuline": {
     "status": "success",
-    "events_accepted": 0,
+    "events_accepted": 9,
     "events_rejected": 3254,
-    "timestamp": "2026-09-01T09:09:35.674257+02:00"
+    "timestamp": "2026-09-06T13:58:51.673501+02:00"
   },
   "cepacsilo": {
     "status": "success",
-    "events_accepted": 9,
-    "events_rejected": 85,
-    "timestamp": "2026-09-01T09:10:32.220330+02:00"
+    "events_accepted": 5,
+    "events_rejected": 88,
+    "timestamp": "2026-09-06T13:59:48.687334+02:00"
   },
   "lacriee": {
     "status": "success",
-    "events_accepted": 1,
+    "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-09-01T09:10:40.768675+02:00"
+    "timestamp": "2026-09-06T13:59:56.338376+02:00"
   },
   "loeuvre": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 2,
-    "timestamp": "2026-09-01T09:10:42.892240+02:00"
+    "timestamp": "2026-09-06T13:59:58.443618+02:00"
   },
   "videodrome2": {
     "status": "success",
-    "events_accepted": 19,
+    "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-09-01T09:11:18.935076+02:00"
+    "timestamp": "2026-09-06T14:00:15.689143+02:00"
   },
   "lemakeda": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-09-01T09:11:19.769056+02:00"
+    "timestamp": "2026-09-06T14:00:15.972052+02:00"
   },
   "lezef": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-09-01T09:13:18.647822+02:00"
+    "timestamp": "2026-09-06T14:02:09.526914+02:00"
   },
   "espacejulien": {
     "status": "success",
-    "events_accepted": 7,
-    "events_rejected": 38,
-    "timestamp": "2026-09-01T09:13:58.288141+02:00"
+    "events_accepted": 3,
+    "events_rejected": 41,
+    "timestamp": "2026-09-06T14:02:48.534640+02:00"
   },
   "theatrejoliette": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-09-01T09:13:19.302671+02:00"
+    "timestamp": "2026-09-06T14:02:10.295228+02:00"
   },
   "ecrituresdureel": {
     "status": "success",
     "events_accepted": 0,
     "events_rejected": 0,
-    "timestamp": "2026-09-01T09:13:30.800100+02:00"
+    "timestamp": "2026-09-06T14:02:21.925556+02:00"
   }
 }
