@@ -1,0 +1,24 @@
+---
+title: MOGUIZ
+slug: moguiz
+date: '2027-01-30T20:00:00+01:00'
+draft: false
+expiryDate: '2027-01-31T00:00:00+01:00'
+name: MOGUIZ
+eventURL: https://www.cepacsilo-marseille.fr/evenement/moguiz/
+startTime: '20:00'
+description: ET SI VOTRE SOIRÉE COMMENÇAIT…LÀ… BIENVENUE A LA CAPITAINERIE DU CEPAC SILO. Ce petit espace de restauration convivial se situe dans le hall d’accueil et...
+categories:
+- communaute
+locations:
+- le-cepac-silo-marseille
+dates:
+- samedi-30-janvier
+tags: []
+image: /images/events/moguiz-7411ccad.webp
+sourceId: cepacsilo:moguiz:20270130-2000
+lastCrawled: '2026-11-02T19:01:51+01:00'
+expired: false
+---
+
+ET SI VOTRE SOIRÉE COMMENÇAIT…LÀ… BIENVENUE A LA CAPITAINERIE DU CEPAC SILO. Ce petit espace de restauration convivial se situe dans le hall d’accueil et...
